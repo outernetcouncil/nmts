@@ -1,0 +1,109 @@
+##
+# Entity and Relationship definitions for a User Terminal:
+#   model: "Generation 1.0alpha1"
+#   id: "{{ .short_name }}"
+#
+# Defines:
+#   - an EK_PLATFORM w/
+#     - coordinates
+#     - antenna (TBD)
+#     - EK_PORTs
+#     - an EK_NETWORK_NODE node w/
+#       - EK_INTERFACEs, each of which RK_TRAVERSES one of the EK_PORTs
+##
+entity {
+  id: "uuid8({{ .short_name }}/platform)"
+
+  labels { key: "display_name" value: "{{ .display_name }}" }
+  labels { key: "display_type" value: "UserTerminal" }
+  labels { key: "model" value: "Generation 1.0alpha1" }
+
+  ek_platform {
+    motion {
+{{ range .motion }}
+      entry { {{ . }} }
+{{ end }}
+    }
+  }
+}
+entity {
+  id: "uuid8({{ .short_name }}/port/antenna0)"
+  ek_port {
+    name: "antenna0"
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/platform)"
+  z: "uuid8({{ .short_name }}/port/antenna0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/port/eth0)"
+  ek_port {
+    name: "eth0"
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/platform)"
+  z: "uuid8({{ .short_name }}/port/eth0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/network_node)"
+  ek_network_node {
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/platform)"
+  z: "uuid8({{ .short_name }}/network_node)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/intf/antenna0)"
+  ek_interface {
+    name: "antenna0"
+    gse {
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/intf/antenna0)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ .short_name }}/intf/antenna0)"
+  z: "uuid8({{ .short_name }}/port/antenna0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/intf/eth0)"
+  ek_interface {
+    name: "eth0"
+    eth {
+      mac_addr: {
+        str: "{{ .interfaces.eth0.mac_address }}"
+      }
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/intf/eth0)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ .short_name }}/intf/eth0)"
+  z: "uuid8({{ .short_name }}/port/eth0)"
+}
+relationship {
+  kind: RK_CONTROLS
+  a: "uuid8(sdn_proxy_agent/primary)"
+  z: "uuid8({{ .short_name }}/network_node)"
+}
+relationship {
+  kind: RK_CONTROLS
+  a: "uuid8(sdn_proxy_agent/primary)"
+  z: "uuid8({{ .short_name }}/platform)"
+}

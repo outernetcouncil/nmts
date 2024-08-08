@@ -1,0 +1,172 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+///
+// Network Model for Temporospatial Systems (NMTS)
+///
+
+syntax = "proto3";
+
+package nmts;
+
+import "google/protobuf/field_mask.proto";
+import "proto/ek/logical/interface.proto";
+import "proto/ek/logical/logical_packet_link.proto";
+import "proto/ek/logical/network_node.proto";
+import "proto/ek/logical/route_fn.proto";
+import "proto/ek/logical/sdn_agent.proto";
+import "proto/ek/logical/switch_fn.proto";
+import "proto/ek/physical/antenna.proto";
+import "proto/ek/physical/modulation.proto";
+import "proto/ek/physical/physical_medium_link.proto";
+import "proto/ek/physical/platform.proto";
+import "proto/ek/physical/port.proto";
+import "proto/ek/physical/signal_processing_chain.proto";
+import "proto/ek/physical/transceiver.proto";
+import "proto/ek/service/uni.proto";
+
+option java_package = "org.outernetcouncil.nmts.proto";
+
+// An Entity MUST be considered invalid whenever any of the
+// following conditios are found to be true:
+//
+//   * |id| is an empty string
+//   * no |kind| field is given
+//
+// Note: by default a |kind| field that is specified but declared
+// as empty is not inherently invalid. Other message-specific fields
+// of such an Entity instance may be specified at other stages of a
+// model's lifecycle, and whether an empty specific kind message is
+// permitted is deferred to whenever consistency constraints may be
+// assessed.
+message Entity {
+  // An identifier, unique within a modeling instance.  UUIDs
+  // are recommended (see RFC 9562).
+  string id = 1;
+
+  // A custom label map that characterizes this entity.
+  //
+  // Example labels include:
+  //   { key: "display_name" value: "UT-1234" }
+  //   { key: "display_type" value: "UserTerminal" }
+  //
+  // The label map might be consulted as relationship edges are followed,
+  // depending on context and usage. Consider: an EK_PLATFORM with a
+  // display_name that RK_CONTAINS an EK_NETWORK_NODE without one. An
+  // application context seeking a display_name for the EK_NETWORK_NODE
+  // might walk the RK_CONTAINS relationship backwards to find and use
+  // the EK_PLATFORM's display_name.
+  map<string, string> labels = 2;
+
+  oneof kind {
+    ek.physical.Platform ek_platform = 11;
+    ek.physical.PhysicalMediumLink ek_physical_medium_link = 12;
+    ek.physical.Port ek_port = 13;
+    ek.logical.LogicalPacketLink ek_logical_packet_link = 20;
+    ek.logical.NetworkNode ek_network_node = 30;
+    ek.logical.Interface ek_interface = 31;
+    ek.logical.RouteFn ek_route_fn = 32;
+    ek.logical.SwitchFn ek_switch_fn = 33;
+    ek.service.Uni ek_uni = 26;
+    ek.physical.Modulator ek_modulator = 34;
+    ek.physical.Demodulator ek_demodulator = 35;
+    ek.physical.AdaptiveCodingAndModulation
+        ek_adaptive_coding_and_modulation = 36;
+    ek.physical.SignalProcessingChain ek_signal_processing_chain = 37;
+    ek.physical.Transmitter ek_transmitter = 38;
+    ek.physical.Receiver ek_receiver = 39;
+    ek.physical.Antenna ek_antenna = 40;
+    ek.logical.SdnAgent ek_sdn_agent = 100;
+  }
+}
+
+enum RK {
+  RK_UNSPECIFIED = 0;
+  RK_ORIGINATES = 1;
+  RK_TERMINATES = 2;
+  RK_TRAVERSES = 3;
+  RK_CONTAINS = 4;
+  RK_AGGREGATES = 5;
+  RK_CONTROLS = 6;
+  RK_CHARACTERIZES = 7;
+  RK_SIGNAL_TRANSITS = 8;
+}
+
+// A Relationship message MUST be considered invalid whenever any
+// of the following conditions are found:
+//
+//   * |kind| is RK_UNSPECIFIED
+//   * |a| is an empty string
+//   * |z| is an empty string
+//
+// Whether a Relationship instance is satisfies consistency
+// constraints with respect to a given model requires the presence
+// of a model, e.g. whether |a| refers to an Entity that has been
+// previously defined within the model, or whether |kind| here is
+// appropriate for the two Entities |a| and |z| (requires testing
+// the |kind| of the Entities), et cetera.
+message Relationship {
+  RK kind = 1;
+  string a = 2;
+  string z = 3;
+}
+
+// A collection of Entities and/or Relationships grouped together
+// for convenience.  Not necessarily a complete graph, often only
+// a fragment (or subgraph, "patch", et cetera).
+message Fragment {
+  repeated Entity entity = 1;
+  repeated Relationship relationship = 2;
+}
+
+// An Entity with a FieldMask indicating fields of importance.
+//
+// Fields listed in the |mask| are the fields that are
+// relevant to the context in which this message appears.
+//
+// Fields not listed in the |mask| SHALL be ignored.
+//
+// A PartialEntity is considered invalid whenever any of the
+// following conditions are found to be true:
+//
+//   * |entity| is invalid (see above)
+//   * |mask| specifies fields in a specific kind that differs
+//     from the spefic kind given in |entity|
+//   * |mask| is empty or only mentions "entity.id"
+//
+// The |id| field in |entity| is REQUIRED to be present and
+// non-empty (in order for a model instance to determine which
+// specific Entity is referenced). As such, |mask| MAY omit a
+// mention of the "entity.id".
+message PartialEntity {
+  Entity entity = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+
+// The changes required to move a model from one state to another.
+//
+// The entirety of the Delta MUST be considered invalid if any of
+// the messages it comprises are determined to be invalid. Empty
+// string entries in |deleted_ids| are considered invalid.
+//
+// Note: as with a Fragment, a single Delta applied to an existing
+// model (graph) is not required to leave the model in a consistent
+// state. When a model is assessed for logical consistency is a
+// separate concern.
+message Delta {
+  Fragment creates = 1;
+  repeated PartialEntity updates = 2;
+  repeated string deleted_ids = 3;
+  repeated Relationship deleted_relationships = 4;
+}

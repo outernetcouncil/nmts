@@ -1,0 +1,248 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// This file contains messages used to model the physical layer components of
+// modems.
+
+syntax = "proto3";
+
+package nmts.ek.physical;
+
+import "proto/ek/physical/common.proto";
+
+option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+
+// A measurement of received signal quality that describes the threshold for
+// using a particular modulation and coding (MODCOD) scheme.
+message ModcodThreshold {
+  // A human readable name (e.g. "QPSK-LDPC-2-3") describing the MODCOD.
+  // This name is not used in any logic. This is purely for human operators to
+  // associate a threshold with a MODCOD.
+  string modcod_name = 1;
+
+  // Required.
+  oneof threshold {
+    // The ratio of the power of the carrier (or signal) at the demod input to
+    // the noise power of the signal plus the power of the interfering
+    // signals, in dB.
+    double min_carrier_to_noise_plus_interference_db = 2;
+    // The power of the intended signal at the receiver output, in dBW.
+    double min_received_signal_power_dbw = 3;
+  }
+}
+
+// Models the Adaptive Coding and Modulation (ACM) configuration used by a
+// modem.
+//
+// This message is used to predict the Modulation and Coding (MODCOD) scheme
+// that would be selected by the adaptive or fixed coding and modulation.
+// This abstraction allows the model observer to determine whether a received
+// signal meets the minimum strength or noise threshold to close a link, and if
+// so, to estimate the capacity of the link based on the predicted MODCOD.
+//
+// There should be an RK_CHARACTERIZES relationship in the following direction:
+// AdaptiveCodingAndModulation --RK_CHARACTERIZES--> Modulator or
+// AdaptiveCodingAndModulation --RK_CHARACTERIZES--> Demodulator.
+//
+// If the same AdaptiveCodingAndModulation is used by many Modulators and
+// Demodulators, each RK_CHARACTERIZES relationship can have the same
+// AdaptiveCodingAndModulation as the source and different terminating
+// endpoints.
+//
+// As an example of how this message could be populated, consider the DVB-S2X
+// standard. Table 1 of the standard relates MODCODs to their ideal Es/N0:
+//
+//   Canonical MODCOD  |    Spectral efficiency  |  Ideal Es/N0 [dB] for (AWGN
+//         name        |       [bit/symbol]      |  Linear Channel)
+//                     |                         |         (Normative)
+//   -----------------------------------------------------------------------
+//        QPSK 2/9     |        0.43484          |          -2.85
+//        QPSK 13/45   |        0.567805         |          -2.03
+//        QPSK 9/20    |        0.889135         |           0.22
+//        QPSK 11/20   |        1.088581         |           1.45
+// ...
+// For reference, see ETSI TR 102 376-2 V1.2.1 (2021-01)
+// (http://www.etsi.org/standards-search).
+//
+// 1) To populate modcod_thresholds:
+//    Compute the corresponding C/N values:
+//      C/N = (Es / N0) + (symbol_rate / bandwidth)     [using dB math]
+//    Suppose (symbol_rate / bandwidth) = 1 / 1.1 = 0.9091 = -0.4139 dB.
+//
+//    Therefore, for QPSK 2/9:
+//      C/N = (-2.85 dB) + (-0.4139 dB) = -3.2639 dB
+//    This process can be repeated for each MODCOD in the table above to
+//    populate modcod_thresholds:
+//    modcod_thresholds {
+//      modcod_name: "QPSK 2/9"
+//      min_carrier_to_noise_plus_interference_db: -3.2639
+//    }
+//    modcod_thresholds {
+//      modcod_name: "QPSK 13/45"
+//      min_carrier_to_noise_plus_interference_db: -2.4439
+//    }
+//    modcod_thresholds {
+//      modcod_name: "QPSK 9/20"
+//      min_carrier_to_noise_plus_interference_db: -0.1939
+//    }
+//    modcod_thresholds {
+//      modcod_name: "QPSK 11/20"
+//      min_carrier_to_noise_plus_interference_db: 1.0361
+//    }
+//
+// 2) To populate channel_bandwidth_to_data_rates:
+//    Note that:
+//      Data rate = (spectral_efficiency) * (symbol_rate)
+//    Suppose that some part of the network uses two channel bandwidths:
+//      channel_bandwidth_hz = 110MHz = 110_000_000Hz
+//      symbol_rate = 100Msps = 100_000_000 symbols/second
+//    and
+//      channel_bandwidth_hz = 132MHz = 132_000_000Hz
+//      symbol_rate = 120Msps = 120_000_000 symbols/second.
+//
+//    Therefore, for the 100Msps channel, for QPSK 2/9:
+//      Data rate = (0.43484 bits/symbol) * (100_000_000 symbols/second)
+//                = 43_484_000 bits/second
+//    This process can be repeated for each MODCOD in the table above, for both
+//    channels, to populate channel_bandwidth_to_data_rates:
+//    channel_bandwidth_to_data_rates {
+//      channel_bandwidth_hz: 110_000_000
+//      data_rate_bps: 43_484_000   # Corresponds to QPSK 2/9.
+//      data_rate_bps: 56_780_500   # Corresponds to QPSK 13/45.
+//      data_rate_bps: 88_913_500   # Corresponds to QPSK 9/20.
+//      data_rate_bps: 108_858_100  # Corresponds to QPSK 11/20.
+//    }
+//    channel_bandwidth_to_data_rates {
+//      channel_bandwidth_hz: 132_000_000
+//      data_rate_bps: 52_180_800   # Corresponds to QPSK 2/9.
+//      data_rate_bps: 68_136_600   # Corresponds to QPSK 13/45.
+//      data_rate_bps: 106_696_200  # Corresponds to QPSK 9/20.
+//      data_rate_bps: 130_629_720  # Corresponds to QPSK 11/20.
+//    }
+//
+// 3) To populate channel_to_minimum_modcods:
+//    Suppose the network has 3 carriers which have various center frequencies
+//    and use the two channel bandwidths defined above. Suppose that the minimum
+//    MODCOD for the carrier with a center frequency of 18.286GHz is QPSK 11/20.
+//    channel_to_minimum_modcods could be populated as:
+//    channel_to_minimum_modcods {
+//      signal {
+//        center_frequency_hz: 18_055_000_000   # 18.055GHz
+//        bandwidth_hz: 110_000_000             # 110MHz
+//      }
+//      minimum_modcod_threshold_index: 0       # Corresponds to QPSK 2/9.
+//    }
+//    channel_to_minimum_modcods {
+//      signal {
+//        center_frequency_hz: 18_165_000_000   # 18.165GHz
+//        bandwidth_hz: 110_000_000             # 110MHz
+//      }
+//      minimum_modcod_threshold_index: 0       # Corresponds to QPSK 2/9.
+//    }
+//    channel_to_minimum_modcods {
+//      signal {
+//        center_frequency_hz: 18_286_000_000   # 18.286GHz
+//        bandwidth_hz: 132_000_000             # 132MHz
+//      }
+//      minimum_modcod_threshold_index: 3       # Corresponds to QPSK 11/20.
+//    }
+//
+// This approach can be tuned based on the actual modems and their measured
+// implementation loss and supported set of MODCODs, etc.
+// In many modems' Adaptive Coding and Modulation configuration, there is often
+// a table that relates some measurement of received signal quality to the
+// MODCOD that the system will choose. A similar approach as the preceding
+// example can be used to define the AdaptiveCodingAndModulation.
+message AdaptiveCodingAndModulation {
+  // The set of MODCODs available to the modem.
+  // Required.
+  repeated ModcodThreshold modcod_thresholds = 1;
+
+  // Associates a channel bandwidth with the Layer 2 data rate achievable for
+  // each threshold in modcod_thresholds.
+  message ChannelBandwidthToDataRates {
+    // Required.
+    uint64 channel_bandwidth_hz = 1;
+    // Each element is the expected Layer 2 data rate, provided that the
+    // receiver receives at least the threshold as specified by the element with
+    // the same index in modcod_thresholds.
+    // Must contain the same number of elements as modcod_thresholds.
+    // Required.
+    repeated double data_rate_bps = 2;
+  }
+  repeated ChannelBandwidthToDataRates channel_bandwidth_to_data_rates = 2;
+
+  message ChannelToMinimumModcod {
+    // Required.
+    Signal channel = 1;
+    // An index of modcod_thresholds which specifies the minimum MODCOD that can
+    // be used for this channel. Must be within [0, size of modcod_thresholds).
+    // This construct allows the SDN Controller to represent carriers with
+    // different minimum MODCODs within the same overall set of MODCODs.
+    // Defaults to 0, which results in the first entry in modcod_thresholds
+    // being considered the minimum MODCOD.
+    uint32 minimum_modcod_threshold_index = 2;
+  }
+  // The list of channels to which this set of MODCODs apply.
+  // When a Modulator or Demodulator has an RK_CHARACTERIZES relationship with
+  // this AdaptiveCodingAndModulation, this field determines the set of channels
+  // that the modem supports. The SDN Controller will consider the set of
+  // MODCODs in modcod_thresholds for these channels.
+  // Required.
+  repeated ChannelToMinimumModcod channel_to_minimum_modcods = 3;
+}
+
+// Arbitrary compatibility labels that can constrain the formation of wireless
+// links. For example, these labels can be used to indicate that links should
+// not be formed between modems which do not support the same waveforms or
+// between modems from two vendors which are not interoperable.
+message CompatibilityLabels {
+  // TODO: Consider how compatibility should be modeled.
+}
+
+// Models a modulator.
+//
+// For each set of MODCODs supported by the modulator, there should be an
+// RK_CHARACTERIZES relationship in the following direction:
+// AdaptiveCodingAndModulation --RK_CHARACTERIZES--> Modulator.
+// The channel_to_minimum_modcods field in the AdaptiveCodingAndModulation
+// determines the channels that the modulator supports and is used by the model
+// observer to determine the set of MODCOD schemes to consider for these
+// channels. Therefore, there must be an element in
+// channel_bandwidth_to_data_rates for every channel bandwidth that the modem
+// supports, and there must be an element in channel_to_minimum_modcods for
+// every carrier that the modem supports.
+message Modulator {
+  // Arbitrary compatibility labels can be used to constrain the formation of
+  // wireless links.
+  CompatibilityLabels compatibility_labels = 1;
+}
+
+// Models a demodulator.
+//
+// For each set of MODCODs supported by the demodulator, there should be an
+// RK_CHARACTERIZES relationship in the following direction:
+// AdaptiveCodingAndModulation --RK_CHARACTERIZES--> Demodulator.
+// The channel_to_minimum_modcods field in the AdaptiveCodingAndModulation
+// determines the channels that the demodulator supports and is used by the
+// model observer to determine the set of MODCOD schemes to consider for these
+// channels. Therefore, there must be an element in
+// channel_bandwidth_to_data_rates for every channel bandwidth that the modem
+// supports, and there must be an element in channel_to_minimum_modcods for
+// every carrier that the modem supports.
+message Demodulator {
+  // Arbitrary compatibility labels can be used to constrain the formation of
+  // wireless links.
+  CompatibilityLabels compatibility_labels = 1;
+}

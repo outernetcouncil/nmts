@@ -1,0 +1,9 @@
+{
+  "short_name": "POP_AZURE",
+  "display_name": "POP_AZURE",
+  "motion": [
+    "geodetic_wgs84 { longitude_deg: 8.6821 latitude_deg: 50.1109 }"
+  ],
+  "node_sid": "mpls: 100002",
+  "router_id": "100.0.0.2"
+}

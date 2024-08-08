@@ -1,0 +1,9 @@
+{
+  "short_name": "tempe_arizona",
+  "display_name": "Tempe, AZ",
+  "motion": [
+    "geodetic_wgs84 { longitude_deg: -111.901056 latitude_deg: 33.339192 }"
+  ],
+  "node_sid": "mpls: 1002",
+  "router_id": "1.0.0.2"
+}

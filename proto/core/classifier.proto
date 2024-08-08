@@ -1,0 +1,51 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.core;
+
+import "google/protobuf/field_mask.proto";
+import "proto/core/packet.proto";
+
+option java_package = "org.outernetcouncil.nmts.proto.core";
+
+// A pairing of a `PacketDescription` with a [google.protobuf.FieldMask](
+// https://protobuf.dev/reference/protobuf/google.protobuf/#field-mask).
+//
+// `PacketDescription`s have a baseline ability to represent simple
+// matching semantics, e.g. by specifying an IP prefix rather than an
+// IP address or by specifying a range of VLAN IDs rather than a single
+// VLAN ID. When the `mask` field is empty any matching operation is
+// limited to this baseline expressivity.
+//
+// When a `mask` field is non-empty it contains a complete list of
+// "paths" describing all the fields in the accompanying `packet`
+// to be examined and compared for matching. This is analogous to the
+// use of `FieldMask`s for projections and constraining update
+// operations (vis. protobuf.dev documentation above).
+message MatchPacketDescription {
+  PacketDescription packet = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+
+// Each `MatchingPacketDescription` is evaluated on its own.  Matching
+// SHOULD stop upon the first successful match.
+//
+// The ingress or egress interface to which a `PacketDescription` may be
+// applied may be inferred from context, e.g. any relevant
+// context-dependent `Relationship`s or an Entity containing this.
+message MatchAnyOneOfClassifier {
+  repeated MatchPacketDescription match = 1;
+}

@@ -1,0 +1,9 @@
+{
+  "short_name": "POP_GCP",
+  "display_name": "POP_GCP",
+  "motion": [
+    "geodetic_wgs84 { longitude_deg: -77.4933 latitude_deg: 39.0446 }"
+  ],
+  "node_sid": "mpls: 100003",
+  "router_id": "100.0.0.3"
+}
