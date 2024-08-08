@@ -1,0 +1,36 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// This file contains messages used to model physical platforms.
+
+syntax = "proto3";
+
+package nmts.ek.physical;
+
+import "proto/types/geophys/motion.proto";
+
+option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+
+// Models a physical platform, such as a ground station, satellite,
+// fixed or mobile user terminal, aircraft, ship, terrestrial vehicle, etc.
+//
+// There should be an RK_CONTAINS relationship with each antenna that is
+// attached to the platform in the following direction:
+// Platform --RK_CONTAINS--> nmts.ek.physical.Antenna.
+message Platform {
+  // The time-dynamic position and orientation. The type of motion determines
+  // the orientation axes of the platform, which are considered when determining
+  // the boresight direction for each antenna on the platform.
+  types.geophys.Motion motion = 1;
+}

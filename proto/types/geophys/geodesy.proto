@@ -1,0 +1,74 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+///
+// Planetary geodesy types.
+///
+
+syntax = "proto3";
+
+package nmts.types.geophys;
+
+option java_package = "org.outernetcouncil.nmts.proto.types.geophys";
+
+// GeodeticWgs84 and GeodeticMsl are sets of curvilinear 3D coordinates
+// with different vertical datum. These are natural choices to describe
+// the motion of terrestrial platforms.
+//
+// When a platform's motion is described using GeodeticWgs84 or GeodeticMsl,
+// the platform's axes are oriented in COORDINATE_FRAME_ECEF, such that:
+//  - The x-axis points in the local East direction.
+//  - The y-axis points in the local North direction.
+//  - The z-axis points in the direction of the normal vector to the WGS 84
+//    ellipsoid surface which passes through the point. Conceptually, the
+//    z-axis is oriented "outwards" from the Earth's surface towards space.
+
+message GeodeticWgs84 {
+  optional double longitude_deg = 1;
+  optional double latitude_deg = 2;
+
+  // The height is relative to the WGS84 ellipsoid. For reference on the
+  // vertical datum used, see the World Geodetic System - 1984 (WGS-84)
+  // Manual (Doc 9674 of the International Civil Aviation Organization).
+  optional double height_wgs84_m = 3;
+}
+
+// See above for notes on this type.
+message GeodeticMsl {
+  optional double longitude_deg = 1;
+  optional double latitude_deg = 2;
+
+  // The height is relative to mean sea level.
+  optional double height_msl_m = 3;
+}
+
+// A set of curvilinear 3D coordinates relative to the Mean Lunar Radius
+// according to the Report of the IAU/IAG Working Group on Cartographic
+// Coordinates and Rotational Elements of the Planets and satellites: 2000.
+//
+// When a platform's motion is described using this message, the platform's
+// axes are defined in the Moon's reference frame, such that:
+//  - The x-axis points in the local East direction.
+//  - The y-axis points in the local North direction.
+//  - The z-axis points in the direction of the normal vector to the
+//    reference Moon ellipsoid surface which passes through the point.
+//    Conceptually, the z-axis is oriented "outwards" from the Moon's
+//    surface towards space.
+//
+// Implies CENTRAL_BODY_MOON, where applicable.
+message SelenographicMlr {
+  optional double longitude_deg = 1;
+  optional double latitude_deg = 2;
+  optional double height_mlr_m = 3;
+}

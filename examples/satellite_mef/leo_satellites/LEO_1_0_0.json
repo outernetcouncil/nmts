@@ -1,0 +1,8 @@
+{
+  "short_name": "LEO_1_0_0",
+  "display_name": "LEO_1_0_0",
+  "motion": [
+    "keplerian_elements { semimajor_axis_m: 9000000.0 eccentricity: 0.0 inclination_deg: 30.0 argument_of_periapsis_deg: 0.0 raan_deg: 0.0 true_anomaly_deg: 0.0 epoch { seconds: 1710018491 nanos: 450749 } }"
+  ],
+  "router_id": "223.1.0.0"
+}

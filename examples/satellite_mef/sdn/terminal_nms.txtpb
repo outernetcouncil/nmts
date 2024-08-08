@@ -1,0 +1,14 @@
+##
+# A terminal Network Management System; really a proxy agent for all
+# user terminals, resident within the Azure PoP.
+##
+entity {
+  id: "uuid8(sdn_proxy_agent/primary)"
+  ek_sdn_agent {
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(POP_AZURE/network_node)"
+  z: "uuid8(sdn_proxy_agent/primary)"
+}
