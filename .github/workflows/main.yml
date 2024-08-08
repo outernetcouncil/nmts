@@ -24,13 +24,16 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.cache/bazelisk
             ~/.cache/bazel
           key: bazel-${{ hashFiles('.bazelrc', '.bazelversion', 'WORKSPACE', 'MODULE.bazel') }}
           restore-keys: bazel-
-      - run: bazelisk test //...
+      - run: |
+          sudo apt-get update
+          sudo apt-get -y install graphviz
+          bazelisk test //...
 
