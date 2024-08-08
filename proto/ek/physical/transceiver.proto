@@ -30,7 +30,7 @@ option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
 // No references to Adaptive Coding and Modulation configurations exist in
 // this message since this transmitter is used in both transparent and
 // regenerative architectures. The Adaptive Coding and Modulation configuration
-// is defined by nmts.ek.physical.AdaptiveCodingAndModulation.
+// is defined by nmts.ek.physical.Modulator.
 message Transmitter {
   // A signal that can be transmitted by a wireless device.
   // This message also conceptually represents a carrier wave.
@@ -56,7 +56,7 @@ message Transmitter {
 // No references to Adaptive Coding and Modulation configurations exist in
 // this message since this receiver is used in both transparent and
 // regenerative architectures. The Adaptive Coding and Modulation configuration
-// is defined by nmts.ek.physical.AdaptiveCodingAndModulation.
+// is defined by nmts.ek.physical.Demodulator.
 message Receiver {
   // The carriers that this receiver supports.
   // Required.

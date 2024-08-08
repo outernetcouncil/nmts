@@ -81,8 +81,6 @@ message Entity {
     ek.service.Uni ek_uni = 26;
     ek.physical.Modulator ek_modulator = 34;
     ek.physical.Demodulator ek_demodulator = 35;
-    ek.physical.AdaptiveCodingAndModulation
-        ek_adaptive_coding_and_modulation = 36;
     ek.physical.SignalProcessingChain ek_signal_processing_chain = 37;
     ek.physical.Transmitter ek_transmitter = 38;
     ek.physical.Receiver ek_receiver = 39;
@@ -99,7 +97,6 @@ enum RK {
   RK_CONTAINS = 4;
   RK_AGGREGATES = 5;
   RK_CONTROLS = 6;
-  RK_CHARACTERIZES = 7;
   RK_SIGNAL_TRANSITS = 8;
 }
 

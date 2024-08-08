@@ -17,7 +17,7 @@ could be modeled is:
      |                                                  |
      | (RK_ORIGINATES)                                  | (RK_TERMINATES)             
      v                                                  V
- Modulator *                                       Demodulator *
+ Modulator                                         Demodulator
      |                                                  ^
      | (RK_SIGNAL_TRANSITS)                             | (RK_SIGNAL_TRANSITS)             
      v                                                  |
@@ -36,19 +36,9 @@ SignalProcessingChain                           SignalProcessingChain
                               |
                           Platform
 ```
-\* The `Modulator` and `Demodulator` would both have relationships to an `AdaptiveCodingAndModulation`, such as:
-
-```
-           ---------------(RK_CHARACTERIZES)--> Modulator
-          |
- AdaptiveCodingAndModulation
-          |
-           ---------------(RK_CHARACTERIZES)--> Deodulator
-```
 
 ## Developer Notes
 The expected configurations of entities and relationships is specified in the comments of the protocol buffers. A summary is below:
-* There must be an `RK_CHARACTERIZES` relationship from an `AdaptiveCodingAndModulation` (ACM) to each `Modulator` and `Demodulator` for which this ACM configuration applies: `AdaptiveCodingAndModulation` --`RK_CHARACTERIZES`--> `Modulator` or `AdaptiveCodingAndModulation` --`RK_CHARACTERIZES`--> `Demodulator`. 
 * There must be an `RK_CONTAINS` relationship from a `Platform` to each `Antenna` that is attached to the platform: `Platform` --`RK_CONTAINS`--> `Antenna`. The `Platform` can have multiple outgoing `RK_CONTAINS` relationships if it has multiple antennas, such as for a satellite with multiple antennas.
 * There must be an `RK_ORIGINATES` relationship from a `Port` to the first entity in the transmit chain, such as: `Port` --`RK_ORIGINATES`--> `Modulator`.  
 * There must be an `RK_TERMINATES` relationship from a `Port` to the final entity in the receive chain, such as: `Port` --`RK_TERMINATES`--> `Demodulator`.
