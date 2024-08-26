@@ -22,9 +22,15 @@
 
     const nodes = [
 
+      { id: "uuid8(sdn_agent/primary)", label: "uuid8(sdn_agent/primary)" },
+
       { id: "uuid8(sw1/intf/0)", label: "uuid8(sw1/intf/0)" },
 
       { id: "uuid8(sw1/intf/0->sw2/intf/0)", label: "uuid8(sw1/intf/0->sw2/intf/0)" },
+
+      { id: "uuid8(sw1/intf/0/mpls)", label: "uuid8(sw1/intf/0/mpls)" },
+
+      { id: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", label: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)" },
 
       { id: "uuid8(sw1/network_node)", label: "uuid8(sw1/network_node)" },
 
@@ -39,6 +45,10 @@
       { id: "uuid8(sw2/intf/0)", label: "uuid8(sw2/intf/0)" },
 
       { id: "uuid8(sw2/intf/0->sw1/intf/0)", label: "uuid8(sw2/intf/0->sw1/intf/0)" },
+
+      { id: "uuid8(sw2/intf/0/mpls)", label: "uuid8(sw2/intf/0/mpls)" },
+
+      { id: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", label: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)" },
 
       { id: "uuid8(sw2/network_node)", label: "uuid8(sw2/network_node)" },
 
@@ -55,17 +65,25 @@
 
       { id: "uuid8(sw1/intf/0)__RK_ORIGINATES__uuid8(sw1/intf/0->sw2/intf/0)", start: "uuid8(sw1/intf/0)", end: "uuid8(sw1/intf/0->sw2/intf/0)", label: "RK_ORIGINATES" },
 
+      { id: "uuid8(sw1/intf/0/mpls)__RK_ORIGINATES__uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", start: "uuid8(sw1/intf/0/mpls)", end: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", label: "RK_ORIGINATES" },
+
       { id: "uuid8(sw1/port/0)__RK_ORIGINATES__uuid8(sw1/port/0->sw2/port/0)", start: "uuid8(sw1/port/0)", end: "uuid8(sw1/port/0->sw2/port/0)", label: "RK_ORIGINATES" },
 
       { id: "uuid8(sw2/intf/0)__RK_ORIGINATES__uuid8(sw2/intf/0->sw1/intf/0)", start: "uuid8(sw2/intf/0)", end: "uuid8(sw2/intf/0->sw1/intf/0)", label: "RK_ORIGINATES" },
+
+      { id: "uuid8(sw2/intf/0/mpls)__RK_ORIGINATES__uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", start: "uuid8(sw2/intf/0/mpls)", end: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", label: "RK_ORIGINATES" },
 
       { id: "uuid8(sw2/port/0)__RK_ORIGINATES__uuid8(sw2/port/0->sw1/port/0)", start: "uuid8(sw2/port/0)", end: "uuid8(sw2/port/0->sw1/port/0)", label: "RK_ORIGINATES" },
 
       { id: "uuid8(sw1/intf/0)__RK_TERMINATES__uuid8(sw2/intf/0->sw1/intf/0)", start: "uuid8(sw1/intf/0)", end: "uuid8(sw2/intf/0->sw1/intf/0)", label: "RK_TERMINATES" },
 
+      { id: "uuid8(sw1/intf/0/mpls)__RK_TERMINATES__uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", start: "uuid8(sw1/intf/0/mpls)", end: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", label: "RK_TERMINATES" },
+
       { id: "uuid8(sw1/port/0)__RK_TERMINATES__uuid8(sw2/port/0->sw1/port/0)", start: "uuid8(sw1/port/0)", end: "uuid8(sw2/port/0->sw1/port/0)", label: "RK_TERMINATES" },
 
       { id: "uuid8(sw2/intf/0)__RK_TERMINATES__uuid8(sw1/intf/0->sw2/intf/0)", start: "uuid8(sw2/intf/0)", end: "uuid8(sw1/intf/0->sw2/intf/0)", label: "RK_TERMINATES" },
+
+      { id: "uuid8(sw2/intf/0/mpls)__RK_TERMINATES__uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", start: "uuid8(sw2/intf/0/mpls)", end: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", label: "RK_TERMINATES" },
 
       { id: "uuid8(sw2/port/0)__RK_TERMINATES__uuid8(sw1/port/0->sw2/port/0)", start: "uuid8(sw2/port/0)", end: "uuid8(sw1/port/0->sw2/port/0)", label: "RK_TERMINATES" },
 
@@ -73,11 +91,21 @@
 
       { id: "uuid8(sw1/intf/0->sw2/intf/0)__RK_TRAVERSES__uuid8(sw1/port/0->sw2/port/0)", start: "uuid8(sw1/intf/0->sw2/intf/0)", end: "uuid8(sw1/port/0->sw2/port/0)", label: "RK_TRAVERSES" },
 
+      { id: "uuid8(sw1/intf/0/mpls)__RK_TRAVERSES__uuid8(sw1/intf/0)", start: "uuid8(sw1/intf/0/mpls)", end: "uuid8(sw1/intf/0)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)__RK_TRAVERSES__uuid8(sw1/intf/0->sw2/intf/0)", start: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", end: "uuid8(sw1/intf/0->sw2/intf/0)", label: "RK_TRAVERSES" },
+
       { id: "uuid8(sw2/intf/0)__RK_TRAVERSES__uuid8(sw2/port/0)", start: "uuid8(sw2/intf/0)", end: "uuid8(sw2/port/0)", label: "RK_TRAVERSES" },
 
       { id: "uuid8(sw2/intf/0->sw1/intf/0)__RK_TRAVERSES__uuid8(sw2/port/0->sw1/port/0)", start: "uuid8(sw2/intf/0->sw1/intf/0)", end: "uuid8(sw2/port/0->sw1/port/0)", label: "RK_TRAVERSES" },
 
+      { id: "uuid8(sw2/intf/0/mpls)__RK_TRAVERSES__uuid8(sw2/intf/0)", start: "uuid8(sw2/intf/0/mpls)", end: "uuid8(sw2/intf/0)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)__RK_TRAVERSES__uuid8(sw2/intf/0->sw1/intf/0)", start: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", end: "uuid8(sw2/intf/0->sw1/intf/0)", label: "RK_TRAVERSES" },
+
       { id: "uuid8(sw1/network_node)__RK_CONTAINS__uuid8(sw1/intf/0)", start: "uuid8(sw1/network_node)", end: "uuid8(sw1/intf/0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw1/network_node)__RK_CONTAINS__uuid8(sw1/intf/0/mpls)", start: "uuid8(sw1/network_node)", end: "uuid8(sw1/intf/0/mpls)", label: "RK_CONTAINS" },
 
       { id: "uuid8(sw1/network_node)__RK_CONTAINS__uuid8(sw1/network_node/ipvrf0)", start: "uuid8(sw1/network_node)", end: "uuid8(sw1/network_node/ipvrf0)", label: "RK_CONTAINS" },
 
@@ -87,11 +115,17 @@
 
       { id: "uuid8(sw2/network_node)__RK_CONTAINS__uuid8(sw2/intf/0)", start: "uuid8(sw2/network_node)", end: "uuid8(sw2/intf/0)", label: "RK_CONTAINS" },
 
+      { id: "uuid8(sw2/network_node)__RK_CONTAINS__uuid8(sw2/intf/0/mpls)", start: "uuid8(sw2/network_node)", end: "uuid8(sw2/intf/0/mpls)", label: "RK_CONTAINS" },
+
       { id: "uuid8(sw2/network_node)__RK_CONTAINS__uuid8(sw2/network_node/ipvrf0)", start: "uuid8(sw2/network_node)", end: "uuid8(sw2/network_node/ipvrf0)", label: "RK_CONTAINS" },
 
       { id: "uuid8(sw2/platform)__RK_CONTAINS__uuid8(sw2/network_node)", start: "uuid8(sw2/platform)", end: "uuid8(sw2/network_node)", label: "RK_CONTAINS" },
 
       { id: "uuid8(sw2/platform)__RK_CONTAINS__uuid8(sw2/port/0)", start: "uuid8(sw2/platform)", end: "uuid8(sw2/port/0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sdn_agent/primary)__RK_CONTROLS__uuid8(sw1/network_node)", start: "uuid8(sdn_agent/primary)", end: "uuid8(sw1/network_node)", label: "RK_CONTROLS" },
+
+      { id: "uuid8(sdn_agent/primary)__RK_CONTROLS__uuid8(sw2/network_node)", start: "uuid8(sdn_agent/primary)", end: "uuid8(sw2/network_node)", label: "RK_CONTROLS" },
 
     ];
 

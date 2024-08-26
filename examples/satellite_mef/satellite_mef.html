@@ -22,8 +22,6 @@
 
     const nodes = [
 
-      { id: "uuid8(LEO_1_0_0/agent)", label: "uuid8(LEO_1_0_0/agent)" },
-
       { id: "uuid8(LEO_1_0_0/intf/feeder0)", label: "uuid8(LEO_1_0_0/intf/feeder0)" },
 
       { id: "uuid8(LEO_1_0_0/intf/feeder1)", label: "uuid8(LEO_1_0_0/intf/feeder1)" },
@@ -73,8 +71,6 @@
       { id: "uuid8(LEO_1_0_0/port/user_tx0)", label: "uuid8(LEO_1_0_0/port/user_tx0)" },
 
       { id: "uuid8(LEO_1_0_0/port/user_tx1)", label: "uuid8(LEO_1_0_0/port/user_tx1)" },
-
-      { id: "uuid8(LEO_1_9_4/agent)", label: "uuid8(LEO_1_9_4/agent)" },
 
       { id: "uuid8(LEO_1_9_4/intf/feeder0)", label: "uuid8(LEO_1_9_4/intf/feeder0)" },
 
@@ -279,8 +275,6 @@
 
       { id: "uuid8(tempe_arizona/intf/wan0)__RK_TRAVERSES__uuid8(tempe_arizona/port/wan0)", start: "uuid8(tempe_arizona/intf/wan0)", end: "uuid8(tempe_arizona/port/wan0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/agent)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/agent)", label: "RK_CONTAINS" },
-
       { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/feeder0)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/feeder0)", label: "RK_CONTAINS" },
 
       { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/feeder1)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/feeder1)", label: "RK_CONTAINS" },
@@ -328,8 +322,6 @@
       { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/user_tx0)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/user_tx0)", label: "RK_CONTAINS" },
 
       { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/user_tx1)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/user_tx1)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/agent)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/agent)", label: "RK_CONTAINS" },
 
       { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/feeder0)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/feeder0)", label: "RK_CONTAINS" },
 
@@ -449,21 +441,13 @@
 
       { id: "uuid8(tempe_arizona/platform)__RK_CONTAINS__uuid8(tempe_arizona/port/wan0)", start: "uuid8(tempe_arizona/platform)", end: "uuid8(tempe_arizona/port/wan0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/agent)__RK_CONTROLS__uuid8(LEO_1_0_0/network_node)", start: "uuid8(LEO_1_0_0/agent)", end: "uuid8(LEO_1_0_0/network_node)", label: "RK_CONTROLS" },
+      { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(LEO_1_0_0/network_node)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(LEO_1_0_0/network_node)", label: "RK_CONTROLS" },
 
-      { id: "uuid8(LEO_1_0_0/agent)__RK_CONTROLS__uuid8(LEO_1_0_0/platform)", start: "uuid8(LEO_1_0_0/agent)", end: "uuid8(LEO_1_0_0/platform)", label: "RK_CONTROLS" },
-
-      { id: "uuid8(LEO_1_9_4/agent)__RK_CONTROLS__uuid8(LEO_1_9_4/network_node)", start: "uuid8(LEO_1_9_4/agent)", end: "uuid8(LEO_1_9_4/network_node)", label: "RK_CONTROLS" },
-
-      { id: "uuid8(LEO_1_9_4/agent)__RK_CONTROLS__uuid8(LEO_1_9_4/platform)", start: "uuid8(LEO_1_9_4/agent)", end: "uuid8(LEO_1_9_4/platform)", label: "RK_CONTROLS" },
+      { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(LEO_1_9_4/network_node)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(LEO_1_9_4/network_node)", label: "RK_CONTROLS" },
 
       { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(US_CA-0_0/network_node)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(US_CA-0_0/network_node)", label: "RK_CONTROLS" },
 
-      { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(US_CA-0_0/platform)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(US_CA-0_0/platform)", label: "RK_CONTROLS" },
-
       { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(US_CA-1_0/network_node)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(US_CA-1_0/network_node)", label: "RK_CONTROLS" },
-
-      { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(US_CA-1_0/platform)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(US_CA-1_0/platform)", label: "RK_CONTROLS" },
 
     ];
 

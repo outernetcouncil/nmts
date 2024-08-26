@@ -29,8 +29,16 @@ option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
 // attached to the platform in the following direction:
 // Platform --RK_CONTAINS--> nmts.ek.physical.Antenna.
 message Platform {
+  reserved 4 to max;
+
+  string name = 1;
+
+  // A freeform string, used as a key in other contexts to lookup
+  // context-relevant attributes (UI visual configuration, etc).
+  string category_tag = 2;
+
   // The time-dynamic position and orientation. The type of motion determines
   // the orientation axes of the platform, which are considered when determining
   // the boresight direction for each antenna on the platform.
-  types.geophys.Motion motion = 1;
+  types.geophys.Motion motion = 3;
 }

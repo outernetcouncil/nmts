@@ -12,22 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-syntax = "proto3";
+package entity_relationship_test
 
-package nmts.ek.logical;
+import (
+	"testing"
 
-option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
+	"google.golang.org/protobuf/encoding/prototext"
+	"outernetcouncil.org/nmts/lib/entity_relationship"
+	npb "outernetcouncil.org/nmts/proto"
+)
 
-// Entity Kind: Network Node (`EK_NETWORK_NODE`)
-//
-// A logical entity comprising interfaces, routing functions,
-// switching functions, etc.
-message NetworkNode {
-  reserved 3 to max;
+func TestEntityKindStringExamples(t *testing.T) {
+	text := `ek_sdn_agent{}`
 
-  string name = 1;
-
-  // A freeform string, used as a key in other contexts to lookup
-  // context-relevant attributes (UI visual configuration, etc).
-  string category_tag = 2;
+	parsed := new(npb.Entity)
+	err := prototext.Unmarshal([]byte(text), parsed)
+	if err != nil {
+		t.Fatalf("failed to parse %s: %q", text, err)
+	}
+	wanted := "EK_SDN_AGENT"
+	got := entity_relationship.EntityKindStringFromProto(parsed)
+	if got != wanted {
+		t.Fatalf("wanted: %q, got: %q", wanted, got)
+	}
 }

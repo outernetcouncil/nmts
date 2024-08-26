@@ -124,14 +124,14 @@ message ModcodThreshold {
 // This approach can be tuned based on the actual modems and their measured
 // implementation loss and supported set of MODCODs, etc.
 message AdaptiveCodingAndModulation {
-  // The channel bandwidth. 
+  // The channel bandwidth.
   // Required.
   uint64 channel_bandwidth_hz = 1;
 
   // The symbol rate (baud rate), in symbols per second, of carriers that are
   // assigned to channels of this bandwidth.
   uint64 symbol_rate_symbols_per_second = 2;
-  
+
   message ModcodToDataRate {
     // The MODCOD available to the modem.
     // Required.
@@ -142,7 +142,7 @@ message AdaptiveCodingAndModulation {
     // Required.
     double data_rate_bps = 2;
   }
-  // Maps a threshold of received signal quality to the Layer 2 data rate 
+  // Maps a threshold of received signal quality to the Layer 2 data rate
   // achievable over this channel.
   // Required.
   repeated ModcodToDataRate modcod_to_data_rates = 3;
@@ -161,7 +161,7 @@ message AdaptiveCodingAndModulationToChannels {
   // Required.
   AdaptiveCodingAndModulation adaptive_coding_and_modulation = 1;
 
-  // The list of channels to which this adaptive coding and modulation 
+  // The list of channels to which this adaptive coding and modulation
   // configuration applies.
   // Required.
   repeated Signal signals = 2;
@@ -175,19 +175,19 @@ message Modulator {
 
   // The adaptive coding and modulation configurations supported by this modem
   // and the channels to which each configuration applies.
-  // Note that if a channel is not present in 
+  // Note that if a channel is not present in
   // adaptive_coding_and_modulation_to_channels, that channel is considered to
   // be unsupported by the modem.
-  // In order to form a wireless link, the adaptive coding and modulation 
-  // configuration for the channel, as specified by 
-  // AdaptiveCodingAndModulationToChannels.adaptive_coding_and_modulation, 
-  // must match exactly between the Modulator and Demodulator. 
+  // In order to form a wireless link, the adaptive coding and modulation
+  // configuration for the channel, as specified by
+  // AdaptiveCodingAndModulationToChannels.adaptive_coding_and_modulation,
+  // must match exactly between the Modulator and Demodulator.
   // Required.
-  repeated AdaptiveCodingAndModulationToChannels 
+  repeated AdaptiveCodingAndModulationToChannels
     adaptive_coding_and_modulation_to_channels = 2;
 
   // TODO: Add a field to indicate whether this modem is capable of
-  // forming multiple-access links. 
+  // forming multiple-access links.
 }
 
 // Models a demodulator.
@@ -198,17 +198,17 @@ message Demodulator {
 
   // The adaptive coding and modulation configurations supported by this modem
   // and the channels to which each configuration applies.
-  // Note that if a channel is not present in 
+  // Note that if a channel is not present in
   // adaptive_coding_and_modulation_to_channels, that channel is considered to
   // be unsupported by the modem.
-  // In order to form a wireless link, the adaptive coding and modulation 
-  // configuration for the channel, as specified by 
-  // AdaptiveCodingAndModulationToChannels.adaptive_coding_and_modulation, 
-  // must match exactly between the Modulator and Demodulator. 
+  // In order to form a wireless link, the adaptive coding and modulation
+  // configuration for the channel, as specified by
+  // AdaptiveCodingAndModulationToChannels.adaptive_coding_and_modulation,
+  // must match exactly between the Modulator and Demodulator.
   // Required.
-  repeated AdaptiveCodingAndModulationToChannels 
+  repeated AdaptiveCodingAndModulationToChannels
     adaptive_coding_and_modulation_to_channels = 2;
 
   // TODO: Add a field to indicate whether this modem is capable of
-  // forming multiple-access links. 
+  // forming multiple-access links.
 }

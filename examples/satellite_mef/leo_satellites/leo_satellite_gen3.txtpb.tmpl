@@ -371,25 +371,10 @@ relationship {
   z: "uuid8({{ .short_name }}/network_node/ipvrf0)"
 }
 ##
-# An SDN agent resident within the network node, controlling it.
+# The primary SDN controls the satellte's network node.
 ##
-entity {
-  id: "uuid8({{ .short_name }}/agent)"
-  ek_sdn_agent{
-  }
-}
-relationship {
-  kind: RK_CONTAINS
-  a: "uuid8({{ .short_name }}/network_node)"
-  z: "uuid8({{ .short_name }}/agent)"
-}
 relationship {
   kind: RK_CONTROLS
-  a: "uuid8({{ .short_name }}/agent)"
+  a: "uuid8(sdn_proxy_agent/primary)"
   z: "uuid8({{ .short_name }}/network_node)"
-}
-relationship {
-  kind: RK_CONTROLS
-  a: "uuid8({{ .short_name }}/agent)"
-  z: "uuid8({{ .short_name }}/platform)"
 }

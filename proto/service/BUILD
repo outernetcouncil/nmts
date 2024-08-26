@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
     name = "service_proto",
@@ -21,8 +21,8 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         "//proto/types/ietf:inet_proto",
-        "@com_google_googleapis//google/type:interval_proto",
-        "@com_google_protobuf//:duration_proto",
+        "@googleapis//google/type:interval_proto",
+        "@protobuf//:duration_proto",
     ],
 )
 

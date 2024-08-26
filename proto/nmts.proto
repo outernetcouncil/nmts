@@ -162,8 +162,8 @@ message PartialEntity {
 // state. When a model is assessed for logical consistency is a
 // separate concern.
 message Delta {
-  Fragment creates = 1;
+  repeated Fragment upserts = 1;
   repeated PartialEntity updates = 2;
-  repeated string deleted_ids = 3;
+  repeated string deleted_entity_ids = 3;
   repeated Relationship deleted_relationships = 4;
 }
