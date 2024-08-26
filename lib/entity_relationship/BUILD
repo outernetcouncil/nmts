@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -29,6 +29,16 @@ go_library(
     ],
     importpath = "outernetcouncil.org/nmts/lib/entity_relationship",
     deps = [
+        "//proto:nmts_go_proto",
+        "@org_golang_google_protobuf//encoding/prototext",
+    ],
+)
+
+go_test(
+    name = "entity_relationship_test",
+    srcs = ["entity_test.go"],
+    deps = [
+        ":entity_relationship",
         "//proto:nmts_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",
     ],

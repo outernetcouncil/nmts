@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_proto_library")
-load("@rules_proto_grpc//java:defs.bzl", "java_proto_library")
-load("@rules_proto_grpc//python:defs.bzl", "python_proto_library")
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_proto_library")
+load("@rules_proto_grpc_java//:defs.bzl", "java_proto_library")
+load("@rules_proto_grpc_python//:defs.bzl", "python_proto_library")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -36,7 +36,7 @@ proto_library(
 proto_library(
     name = "coordinates_proto",
     srcs = ["coordinates.proto"],
-    deps = ["@com_google_googleapis//google/type:quaternion_proto"],
+    deps = ["@googleapis//google/type:quaternion_proto"],
 )
 
 proto_library(
@@ -51,9 +51,9 @@ proto_library(
         ":coordinates_proto",
         ":geodesy_proto",
         ":orbital_proto",
-        "@com_google_googleapis//google/type:interval_proto",
-        "@com_google_googleapis//google/type:quaternion_proto",
-        "@com_google_protobuf//:timestamp_proto",
+        "@googleapis//google/type:interval_proto",
+        "@googleapis//google/type:quaternion_proto",
+        "@protobuf//:timestamp_proto",
     ],
 )
 
@@ -62,7 +62,7 @@ proto_library(
     srcs = ["orbital.proto"],
     deps = [
         ":coordinates_proto",
-        "@com_google_protobuf//:timestamp_proto",
+        "@protobuf//:timestamp_proto",
     ],
 )
 
@@ -76,8 +76,8 @@ cpp_proto_library(
         ":orbital_proto",
     ],
     deps = [
-        "@com_google_googleapis//google/type:interval_cc_proto",
-        "@com_google_googleapis//google/type:quaternion_cc_proto",
+        "@googleapis//google/type:interval_cc_proto",
+        "@googleapis//google/type:quaternion_cc_proto",
     ],
 )
 
@@ -107,7 +107,7 @@ java_proto_library(
         ":orbital_proto",
     ],
     deps = [
-        "@com_google_googleapis//google/type:type_java_proto",
+        "@googleapis//google/type:type_java_proto",
     ],
 )
 
@@ -121,7 +121,7 @@ python_proto_library(
         ":orbital_proto",
     ],
     deps = [
-        "@com_google_googleapis//google/type:interval_py_proto",
-        "@com_google_googleapis//google/type:quaternion_py_proto",
+        "@googleapis//google/type:interval_py_proto",
+        "@googleapis//google/type:quaternion_py_proto",
     ],
 )

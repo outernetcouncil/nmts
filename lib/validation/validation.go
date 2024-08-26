@@ -37,48 +37,63 @@ func (DefaultValidator) ValidateEntity(coll *er.Collection, entity *npb.Entity) 
 	}
 
 	// TODO: uuid.Validate(id)
-	if "" == id {
-		return fmt.Errorf("id must not be empty: '%s'", id)
+	if id == "" {
+		return fmt.Errorf("id must not be empty: %q", id)
 	}
 
-	if "" == er.EntityKindStringFromProto(entity) {
-		return fmt.Errorf("Entity '%s' lacks an entity kind field", id)
+	if er.EntityKindStringFromProto(entity) == "" {
+		return fmt.Errorf("Entity %q lacks an entity kind field", id)
 	}
 
 	return nil
 }
 
-func makeUnsupportedRelationshipError(rel er.Relationship) error {
-	return fmt.Errorf("unsupport relationship between entites: '%v'", rel.String())
+type allowedRelationship = struct {
+	a, z string
+	rk   npb.RK
+}
+
+var permittedRelationships = map[allowedRelationship]struct{}{
+	{a: "EK_INTERFACE", rk: npb.RK_RK_ORIGINATES, z: "EK_LOGICAL_PACKET_LINK"}: {},
+	{a: "EK_INTERFACE", rk: npb.RK_RK_TERMINATES, z: "EK_LOGICAL_PACKET_LINK"}: {},
+	{a: "EK_INTERFACE", rk: npb.RK_RK_TRAVERSES, z: "EK_PORT"}:                 {},
+	{a: "EK_INTERFACE", rk: npb.RK_RK_TRAVERSES, z: "EK_INTERFACE"}:            {},
+
+	{a: "EK_LOGICAL_PACKET_LINK", rk: npb.RK_RK_TRAVERSES, z: "EK_PHYSICAL_MEDIUM_LINK"}: {},
+	{a: "EK_LOGICAL_PACKET_LINK", rk: npb.RK_RK_TRAVERSES, z: "EK_LOGICAL_PACKET_LINK"}:  {},
+
+	{a: "EK_NETWORK_NODE", rk: npb.RK_RK_CONTAINS, z: "EK_INTERFACE"}: {},
+	{a: "EK_NETWORK_NODE", rk: npb.RK_RK_CONTAINS, z: "EK_ROUTE_FN"}:  {},
+	{a: "EK_NETWORK_NODE", rk: npb.RK_RK_CONTAINS, z: "EK_SWITCH_FN"}: {},
+	{a: "EK_NETWORK_NODE", rk: npb.RK_RK_CONTAINS, z: "EK_SDN_AGENT"}: {},
+
+	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_PLATFORM"}:     {},
+	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_PORT"}:         {},
+	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_NETWORK_NODE"}: {},
+
+	{a: "EK_PORT", rk: npb.RK_RK_ORIGINATES, z: "EK_PHYSICAL_MEDIUM_LINK"}: {},
+	{a: "EK_PORT", rk: npb.RK_RK_TERMINATES, z: "EK_PHYSICAL_MEDIUM_LINK"}: {},
+
+	{a: "EK_SDN_AGENT", rk: npb.RK_RK_CONTROLS, z: "EK_ANTENNA"}:      {},
+	{a: "EK_SDN_AGENT", rk: npb.RK_RK_CONTROLS, z: "EK_DEMODULATOR"}:  {},
+	{a: "EK_SDN_AGENT", rk: npb.RK_RK_CONTROLS, z: "EK_MODULATOR"}:    {},
+	{a: "EK_SDN_AGENT", rk: npb.RK_RK_CONTROLS, z: "EK_NETWORK_NODE"}: {},
 }
 
 // Validate each relationship as it's loaded within the collection
 // context assembled up to that point.
 func (DefaultValidator) ValidateRelationship(coll *er.Collection, rel er.Relationship) error {
-	switch rel.Kind {
-	case npb.RK_RK_CONTAINS:
-		return ValidateRkContains(coll, rel)
-	case npb.RK_RK_CONTROLS:
-		return ValidateRkControls(coll, rel)
-	case npb.RK_RK_ORIGINATES:
-		return ValidateRkOriginates(coll, rel)
-	case npb.RK_RK_TERMINATES:
-		return ValidateRkTerminates(coll, rel)
-	case npb.RK_RK_TRAVERSES:
-		return ValidateRkTraverses(coll, rel)
-	default:
-		// By default, Relationhip Kinds need to allowlist the entities
-		// that are accepted. This may be by simple Entity Kind checks,
-		// or by other contraints (e.g., in the graph structure).
-		//
-		// For example, an EK_PLATFORM may RK_CONTAINS an EK_NETWORK_NODE
-		// but never the reverse.
-		//
-		// A more complex example might be a check that an EK_INTERFACE
-		// RK_TRAVERSES only EK_PORTs that are RK_CONTAINS'd within the
-		// same EK_PLATFORM (no traversing ports on another device).
-		return makeUnsupportedRelationshipError(rel)
+	kindA := er.EntityKindStringFromProto(coll.Entities[rel.A])
+	kindZ := er.EntityKindStringFromProto(coll.Entities[rel.Z])
+
+	if _, ok := permittedRelationships[allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}]; ok {
+		return nil
 	}
+
+	// More detailed checks can be added here, after basic validity
+	// has been checked and before the "default deny" error.
+
+	return fmt.Errorf("unsupport relationship between entites: '%v'", rel.String())
 }
 
 // Validate the complete collection.
@@ -90,72 +105,4 @@ func (DefaultValidator) ValidateCollection(coll *er.Collection) error {
 		return fmt.Errorf("found no relationships")
 	}
 	return nil
-}
-
-type entityKindPair struct {
-	a string
-	z string
-}
-
-func validateSupportedRelationship(coll *er.Collection, rel er.Relationship, permitted []entityKindPair) error {
-	for _, entry := range permitted {
-		kindA := er.EntityKindStringFromProto(coll.Entities[rel.A])
-		kindZ := er.EntityKindStringFromProto(coll.Entities[rel.Z])
-		if entry.a == kindA && entry.z == kindZ {
-			return nil
-		}
-	}
-
-	return makeUnsupportedRelationshipError(rel)
-}
-
-func ValidateRkContains(coll *er.Collection, rel er.Relationship) error {
-	permittedByEntityType := []entityKindPair{
-		{"EK_PLATFORM", "EK_PLATFORM"},
-		{"EK_PLATFORM", "EK_PORT"},
-		{"EK_PLATFORM", "EK_NETWORK_NODE"},
-		{"EK_NETWORK_NODE", "EK_INTERFACE"},
-		{"EK_NETWORK_NODE", "EK_ROUTE_FN"},
-		{"EK_NETWORK_NODE", "EK_SWITCH_FN"},
-		{"EK_NETWORK_NODE", "EK_SDN_AGENT"},
-	}
-
-	return validateSupportedRelationship(coll, rel, permittedByEntityType)
-}
-
-func ValidateRkControls(coll *er.Collection, rel er.Relationship) error {
-	permittedByEntityType := []entityKindPair{
-		{"EK_SDN_AGENT", "EK_NETWORK_NODE"},
-		{"EK_SDN_AGENT", "EK_PLATFORM"},
-	}
-
-	return validateSupportedRelationship(coll, rel, permittedByEntityType)
-}
-
-func ValidateRkOriginates(coll *er.Collection, rel er.Relationship) error {
-	permittedByEntityType := []entityKindPair{
-		{"EK_PORT", "EK_PHYSICAL_MEDIUM_LINK"},
-		{"EK_INTERFACE", "EK_LOGICAL_PACKET_LINK"},
-	}
-
-	return validateSupportedRelationship(coll, rel, permittedByEntityType)
-}
-
-func ValidateRkTerminates(coll *er.Collection, rel er.Relationship) error {
-	permittedByEntityType := []entityKindPair{
-		{"EK_PORT", "EK_PHYSICAL_MEDIUM_LINK"},
-		{"EK_INTERFACE", "EK_LOGICAL_PACKET_LINK"},
-	}
-
-	return validateSupportedRelationship(coll, rel, permittedByEntityType)
-}
-
-func ValidateRkTraverses(coll *er.Collection, rel er.Relationship) error {
-	// TODO: validate same RK_CONTAINS EK_PLATFORM.
-	permittedByEntityType := []entityKindPair{
-		{"EK_INTERFACE", "EK_PORT"},
-		{"EK_LOGICAL_PACKET_LINK", "EK_PHYSICAL_MEDIUM_LINK"},
-	}
-
-	return validateSupportedRelationship(coll, rel, permittedByEntityType)
 }

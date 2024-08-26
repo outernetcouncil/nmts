@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@io_bazel_rules_go//go:def.bzl", "go_test")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_proto_library")
-load("@rules_proto_grpc//java:defs.bzl", "java_proto_library")
-load("@rules_proto_grpc//python:defs.bzl", "python_proto_library")
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
+load("@rules_go//go:def.bzl", "go_test")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_proto_library")
+load("@rules_proto_grpc_java//:defs.bzl", "java_proto_library")
+load("@rules_proto_grpc_python//:defs.bzl", "python_proto_library")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -28,7 +28,7 @@ proto_library(
     srcs = ["classifier.proto"],
     deps = [
         ":packet_proto",
-        "@com_google_protobuf//:field_mask_proto",
+        "@protobuf//:field_mask_proto",
     ],
 )
 

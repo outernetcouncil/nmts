@@ -48,6 +48,24 @@ relationship {
   z: "uuid8(sw1/port/0)"
 }
 entity {
+  id: "uuid8(sw1/intf/0/mpls)"
+  ek_interface {
+    mpls {
+      enabled: true
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw1/network_node)"
+  z: "uuid8(sw1/intf/0/mpls)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8(sw1/intf/0/mpls)"
+  z: "uuid8(sw1/intf/0)"
+}
+entity {
   id: "uuid8(sw1/network_node/ipvrf0)"
   ek_route_fn {
     router_id: {
