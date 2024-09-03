@@ -12,15 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//bazel:gen_txtpbs.bzl", "nmts_gen_txtpbs")
-
-package(
-    default_testonly = 1,
-    default_visibility = ["//visibility:public"],
+bazel_dep(name = "org_outernetcouncil_nmts")
+local_path_override(
+    module_name = "org_outernetcouncil_nmts",
+    path = "../",
 )
 
-nmts_gen_txtpbs(
-    name = "txtpbs",
-    srcs = glob(["*.json"]),
-    template = "leo_satellite_gen3.txtpb.tmpl",
+local_path_override(
+    module_name = "rules_protolint",
+    path = "../../bazel/protolint",
 )

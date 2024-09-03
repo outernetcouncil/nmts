@@ -30,11 +30,13 @@ package(
 proto_library(
     name = "antenna_pattern_proto",
     srcs = ["antenna_pattern.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "polarization_proto",
     srcs = ["polarization.proto"],
+    import_prefix = "nmts",
     deps = ["@protobuf//:empty_proto"],
 )
 

@@ -45,7 +45,11 @@ func main() {
 func run(args []string, stdin io.Reader, stdout io.Writer) error {
 	// Define a flag to hold the Fragment txtpb template filename.
 	fs := flag.NewFlagSet("template2txtpb", flag.ExitOnError)
-	tmplFilename := fs.String("tmpl_filename", "", "Fragment txtpb template filename")
+	tmplFilenames := []string{}
+	fs.Func("tmpl_filename", "Fragment txtpb template filename", func(v string) error {
+		tmplFilenames = append(tmplFilenames, v)
+		return nil
+	})
 	outFile := fs.String("output", "", "Output file (stdout if blank)")
 	inFile := fs.String("input", "", "Input file (stdin if blank)")
 
@@ -55,7 +59,12 @@ func run(args []string, stdin io.Reader, stdout io.Writer) error {
 	}
 
 	// Read in the template file.
-	t, err := template.New(filepath.Base(*tmplFilename)).Option("missingkey=error").ParseFiles(*tmplFilename)
+	t, err := template.New(filepath.Base(tmplFilenames[0])).
+		Option("missingkey=error").
+		Funcs(map[string]any{
+			"mk_slice": func(v ...any) []any { return v },
+		}).
+		ParseFiles(tmplFilenames...)
 	if err != nil {
 		return fmt.Errorf("parsing Fragment txtpb template file: %w", err)
 	}

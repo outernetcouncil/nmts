@@ -28,6 +28,7 @@ package(
 proto_library(
     name = "ipproto_proto",
     srcs = ["ipproto.proto"],
+    import_prefix = "nmts",
 )
 
 cpp_proto_library(

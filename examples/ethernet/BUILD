@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//bazel:rule.bzl", "nmts_graph")
-load("//bazel:validation.bzl", "nmts_validation_test")
+load("@org_outernetcouncil_nmts//bazel:rule.bzl", "nmts_graph")
+load("@org_outernetcouncil_nmts//bazel:validation.bzl", "nmts_validation_test")
 
 package(
     default_testonly = 1,

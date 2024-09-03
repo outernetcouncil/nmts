@@ -97,6 +97,24 @@ relationship {
   a: "uuid8({{ .short_name }}/intf/eth0)"
   z: "uuid8({{ .short_name }}/port/eth0)"
 }
+entity {
+  id: "uuid8({{ .short_name }}/intf/eth0/mpls)"
+  ek_interface {
+    mpls {
+      enabled: true
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/intf/eth0/mpls)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ .short_name }}/intf/eth0/mpls)"
+  z: "uuid8({{ .short_name }}/intf/eth0)"
+}
 relationship {
   kind: RK_CONTROLS
   a: "uuid8(sdn_proxy_agent/primary)"

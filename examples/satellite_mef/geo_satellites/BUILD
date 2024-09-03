@@ -12,8 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-exports_files([
-    "protobuf.patch",
-    "rules_proto_grpc_python.patch",
-    "toolchains_protoc.patch",
-])
+load("@org_outernetcouncil_nmts//bazel:gen_txtpbs.bzl", "nmts_gen_txtpbs")
+
+package(
+    default_testonly = 1,
+    default_visibility = ["//visibility:public"],
+)
+
+nmts_gen_txtpbs(
+    name = "txtpbs",
+    srcs = glob(["*.json"]),
+    template = "geo_satellite_gen3.txtpb.tmpl",
+    templates = glob(["block_*.txtpb.tmpl"]),
+)
