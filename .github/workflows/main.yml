@@ -33,7 +33,7 @@ jobs:
           key: bazel-${{ hashFiles('.bazelrc', '.bazelversion', 'WORKSPACE', 'MODULE.bazel') }}
           restore-keys: bazel-
       - run: |
-          sudo apt-get update
+          # sudo apt-get update
           sudo apt-get -y install graphviz
           bazelisk test //...
 
