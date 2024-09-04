@@ -16,11 +16,11 @@ syntax = "proto3";
 
 package nmts.core;
 
-import "proto/types/iana/ipproto.proto";
-import "proto/types/ieee/ethertype.proto";
-import "proto/types/ieee/ieee802.proto";
-import "proto/types/ietf/common.proto";
-import "proto/types/ietf/inet.proto";
+import "nmts/proto/types/iana/ipproto.proto";
+import "nmts/proto/types/ieee/ethertype.proto";
+import "nmts/proto/types/ieee/ieee802.proto";
+import "nmts/proto/types/ietf/common.proto";
+import "nmts/proto/types/ietf/inet.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.core";
 

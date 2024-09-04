@@ -22,139 +22,69 @@
 
     const nodes = [
 
-      { id: "uuid8(LEO_1_0_0/intf/feeder0)", label: "uuid8(LEO_1_0_0/intf/feeder0)" },
+      { id: "uuid8(GEO_1/intf/feeder0)", label: "uuid8(GEO_1/intf/feeder0)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/feeder1)", label: "uuid8(LEO_1_0_0/intf/feeder1)" },
+      { id: "uuid8(GEO_1/intf/feeder0/mpls)", label: "uuid8(GEO_1/intf/feeder0/mpls)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/feeder2)", label: "uuid8(LEO_1_0_0/intf/feeder2)" },
+      { id: "uuid8(GEO_1/intf/feeder1)", label: "uuid8(GEO_1/intf/feeder1)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/feeder3)", label: "uuid8(LEO_1_0_0/intf/feeder3)" },
+      { id: "uuid8(GEO_1/intf/feeder1/mpls)", label: "uuid8(GEO_1/intf/feeder1/mpls)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/interplane_east)", label: "uuid8(LEO_1_0_0/intf/interplane_east)" },
+      { id: "uuid8(GEO_1/intf/feeder2)", label: "uuid8(GEO_1/intf/feeder2)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/interplane_north)", label: "uuid8(LEO_1_0_0/intf/interplane_north)" },
+      { id: "uuid8(GEO_1/intf/feeder2/mpls)", label: "uuid8(GEO_1/intf/feeder2/mpls)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/interplane_south)", label: "uuid8(LEO_1_0_0/intf/interplane_south)" },
+      { id: "uuid8(GEO_1/intf/feeder3)", label: "uuid8(GEO_1/intf/feeder3)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/interplane_west)", label: "uuid8(LEO_1_0_0/intf/interplane_west)" },
+      { id: "uuid8(GEO_1/intf/feeder3/mpls)", label: "uuid8(GEO_1/intf/feeder3/mpls)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/user_rx0)", label: "uuid8(LEO_1_0_0/intf/user_rx0)" },
+      { id: "uuid8(GEO_1/intf/user_rx0)", label: "uuid8(GEO_1/intf/user_rx0)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/user_tx0)", label: "uuid8(LEO_1_0_0/intf/user_tx0)" },
+      { id: "uuid8(GEO_1/intf/user_rx0/mpls)", label: "uuid8(GEO_1/intf/user_rx0/mpls)" },
 
-      { id: "uuid8(LEO_1_0_0/intf/user_tx1)", label: "uuid8(LEO_1_0_0/intf/user_tx1)" },
+      { id: "uuid8(GEO_1/intf/user_tx0)", label: "uuid8(GEO_1/intf/user_tx0)" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)", label: "uuid8(LEO_1_0_0/network_node)" },
+      { id: "uuid8(GEO_1/intf/user_tx0/mpls)", label: "uuid8(GEO_1/intf/user_tx0/mpls)" },
 
-      { id: "uuid8(LEO_1_0_0/network_node/ipvrf0)", label: "uuid8(LEO_1_0_0/network_node/ipvrf0)" },
+      { id: "uuid8(GEO_1/intf/user_tx1)", label: "uuid8(GEO_1/intf/user_tx1)" },
 
-      { id: "uuid8(LEO_1_0_0/platform)", label: "uuid8(LEO_1_0_0/platform)" },
+      { id: "uuid8(GEO_1/intf/user_tx1/mpls)", label: "uuid8(GEO_1/intf/user_tx1/mpls)" },
 
-      { id: "uuid8(LEO_1_0_0/port/feeder0)", label: "uuid8(LEO_1_0_0/port/feeder0)" },
+      { id: "uuid8(GEO_1/network_node)", label: "uuid8(GEO_1/network_node)" },
 
-      { id: "uuid8(LEO_1_0_0/port/feeder1)", label: "uuid8(LEO_1_0_0/port/feeder1)" },
+      { id: "uuid8(GEO_1/network_node/ipvrf0)", label: "uuid8(GEO_1/network_node/ipvrf0)" },
 
-      { id: "uuid8(LEO_1_0_0/port/feeder2)", label: "uuid8(LEO_1_0_0/port/feeder2)" },
+      { id: "uuid8(GEO_1/platform)", label: "uuid8(GEO_1/platform)" },
 
-      { id: "uuid8(LEO_1_0_0/port/feeder3)", label: "uuid8(LEO_1_0_0/port/feeder3)" },
+      { id: "uuid8(GEO_1/port/feeder0)", label: "uuid8(GEO_1/port/feeder0)" },
 
-      { id: "uuid8(LEO_1_0_0/port/interplane_east)", label: "uuid8(LEO_1_0_0/port/interplane_east)" },
+      { id: "uuid8(GEO_1/port/feeder1)", label: "uuid8(GEO_1/port/feeder1)" },
 
-      { id: "uuid8(LEO_1_0_0/port/interplane_north)", label: "uuid8(LEO_1_0_0/port/interplane_north)" },
+      { id: "uuid8(GEO_1/port/feeder2)", label: "uuid8(GEO_1/port/feeder2)" },
 
-      { id: "uuid8(LEO_1_0_0/port/interplane_south)", label: "uuid8(LEO_1_0_0/port/interplane_south)" },
+      { id: "uuid8(GEO_1/port/feeder3)", label: "uuid8(GEO_1/port/feeder3)" },
 
-      { id: "uuid8(LEO_1_0_0/port/interplane_west)", label: "uuid8(LEO_1_0_0/port/interplane_west)" },
+      { id: "uuid8(GEO_1/port/user_rx0)", label: "uuid8(GEO_1/port/user_rx0)" },
 
-      { id: "uuid8(LEO_1_0_0/port/user_rx0)", label: "uuid8(LEO_1_0_0/port/user_rx0)" },
+      { id: "uuid8(GEO_1/port/user_tx0)", label: "uuid8(GEO_1/port/user_tx0)" },
 
-      { id: "uuid8(LEO_1_0_0/port/user_tx0)", label: "uuid8(LEO_1_0_0/port/user_tx0)" },
+      { id: "uuid8(GEO_1/port/user_tx1)", label: "uuid8(GEO_1/port/user_tx1)" },
 
-      { id: "uuid8(LEO_1_0_0/port/user_tx1)", label: "uuid8(LEO_1_0_0/port/user_tx1)" },
+      { id: "uuid8(POP_us_east1/intf/wan0)", label: "uuid8(POP_us_east1/intf/wan0)" },
 
-      { id: "uuid8(LEO_1_9_4/intf/feeder0)", label: "uuid8(LEO_1_9_4/intf/feeder0)" },
+      { id: "uuid8(POP_us_east1/network_node)", label: "uuid8(POP_us_east1/network_node)" },
 
-      { id: "uuid8(LEO_1_9_4/intf/feeder1)", label: "uuid8(LEO_1_9_4/intf/feeder1)" },
+      { id: "uuid8(POP_us_east1/network_node/ipvrf0)", label: "uuid8(POP_us_east1/network_node/ipvrf0)" },
 
-      { id: "uuid8(LEO_1_9_4/intf/feeder2)", label: "uuid8(LEO_1_9_4/intf/feeder2)" },
+      { id: "uuid8(POP_us_east1/platform)", label: "uuid8(POP_us_east1/platform)" },
 
-      { id: "uuid8(LEO_1_9_4/intf/feeder3)", label: "uuid8(LEO_1_9_4/intf/feeder3)" },
-
-      { id: "uuid8(LEO_1_9_4/intf/interplane_east)", label: "uuid8(LEO_1_9_4/intf/interplane_east)" },
-
-      { id: "uuid8(LEO_1_9_4/intf/interplane_north)", label: "uuid8(LEO_1_9_4/intf/interplane_north)" },
-
-      { id: "uuid8(LEO_1_9_4/intf/interplane_south)", label: "uuid8(LEO_1_9_4/intf/interplane_south)" },
-
-      { id: "uuid8(LEO_1_9_4/intf/interplane_west)", label: "uuid8(LEO_1_9_4/intf/interplane_west)" },
-
-      { id: "uuid8(LEO_1_9_4/intf/user_rx0)", label: "uuid8(LEO_1_9_4/intf/user_rx0)" },
-
-      { id: "uuid8(LEO_1_9_4/intf/user_tx0)", label: "uuid8(LEO_1_9_4/intf/user_tx0)" },
-
-      { id: "uuid8(LEO_1_9_4/intf/user_tx1)", label: "uuid8(LEO_1_9_4/intf/user_tx1)" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)", label: "uuid8(LEO_1_9_4/network_node)" },
-
-      { id: "uuid8(LEO_1_9_4/network_node/ipvrf0)", label: "uuid8(LEO_1_9_4/network_node/ipvrf0)" },
-
-      { id: "uuid8(LEO_1_9_4/platform)", label: "uuid8(LEO_1_9_4/platform)" },
-
-      { id: "uuid8(LEO_1_9_4/port/feeder0)", label: "uuid8(LEO_1_9_4/port/feeder0)" },
-
-      { id: "uuid8(LEO_1_9_4/port/feeder1)", label: "uuid8(LEO_1_9_4/port/feeder1)" },
-
-      { id: "uuid8(LEO_1_9_4/port/feeder2)", label: "uuid8(LEO_1_9_4/port/feeder2)" },
-
-      { id: "uuid8(LEO_1_9_4/port/feeder3)", label: "uuid8(LEO_1_9_4/port/feeder3)" },
-
-      { id: "uuid8(LEO_1_9_4/port/interplane_east)", label: "uuid8(LEO_1_9_4/port/interplane_east)" },
-
-      { id: "uuid8(LEO_1_9_4/port/interplane_north)", label: "uuid8(LEO_1_9_4/port/interplane_north)" },
-
-      { id: "uuid8(LEO_1_9_4/port/interplane_south)", label: "uuid8(LEO_1_9_4/port/interplane_south)" },
-
-      { id: "uuid8(LEO_1_9_4/port/interplane_west)", label: "uuid8(LEO_1_9_4/port/interplane_west)" },
-
-      { id: "uuid8(LEO_1_9_4/port/user_rx0)", label: "uuid8(LEO_1_9_4/port/user_rx0)" },
-
-      { id: "uuid8(LEO_1_9_4/port/user_tx0)", label: "uuid8(LEO_1_9_4/port/user_tx0)" },
-
-      { id: "uuid8(LEO_1_9_4/port/user_tx1)", label: "uuid8(LEO_1_9_4/port/user_tx1)" },
-
-      { id: "uuid8(POP_AWS/intf/wan0)", label: "uuid8(POP_AWS/intf/wan0)" },
-
-      { id: "uuid8(POP_AWS/network_node)", label: "uuid8(POP_AWS/network_node)" },
-
-      { id: "uuid8(POP_AWS/network_node/ipvrf0)", label: "uuid8(POP_AWS/network_node/ipvrf0)" },
-
-      { id: "uuid8(POP_AWS/platform)", label: "uuid8(POP_AWS/platform)" },
-
-      { id: "uuid8(POP_AWS/port/wan0)", label: "uuid8(POP_AWS/port/wan0)" },
-
-      { id: "uuid8(POP_AZURE/intf/wan0)", label: "uuid8(POP_AZURE/intf/wan0)" },
-
-      { id: "uuid8(POP_AZURE/network_node)", label: "uuid8(POP_AZURE/network_node)" },
-
-      { id: "uuid8(POP_AZURE/network_node/ipvrf0)", label: "uuid8(POP_AZURE/network_node/ipvrf0)" },
-
-      { id: "uuid8(POP_AZURE/platform)", label: "uuid8(POP_AZURE/platform)" },
-
-      { id: "uuid8(POP_AZURE/port/wan0)", label: "uuid8(POP_AZURE/port/wan0)" },
-
-      { id: "uuid8(POP_GCP/intf/wan0)", label: "uuid8(POP_GCP/intf/wan0)" },
-
-      { id: "uuid8(POP_GCP/network_node)", label: "uuid8(POP_GCP/network_node)" },
-
-      { id: "uuid8(POP_GCP/network_node/ipvrf0)", label: "uuid8(POP_GCP/network_node/ipvrf0)" },
-
-      { id: "uuid8(POP_GCP/platform)", label: "uuid8(POP_GCP/platform)" },
-
-      { id: "uuid8(POP_GCP/port/wan0)", label: "uuid8(POP_GCP/port/wan0)" },
+      { id: "uuid8(POP_us_east1/port/wan0)", label: "uuid8(POP_us_east1/port/wan0)" },
 
       { id: "uuid8(US_CA-0_0/intf/antenna0)", label: "uuid8(US_CA-0_0/intf/antenna0)" },
 
       { id: "uuid8(US_CA-0_0/intf/eth0)", label: "uuid8(US_CA-0_0/intf/eth0)" },
+
+      { id: "uuid8(US_CA-0_0/intf/eth0/mpls)", label: "uuid8(US_CA-0_0/intf/eth0/mpls)" },
 
       { id: "uuid8(US_CA-0_0/network_node)", label: "uuid8(US_CA-0_0/network_node)" },
 
@@ -164,21 +94,11 @@
 
       { id: "uuid8(US_CA-0_0/port/eth0)", label: "uuid8(US_CA-0_0/port/eth0)" },
 
-      { id: "uuid8(US_CA-1_0/intf/antenna0)", label: "uuid8(US_CA-1_0/intf/antenna0)" },
-
-      { id: "uuid8(US_CA-1_0/intf/eth0)", label: "uuid8(US_CA-1_0/intf/eth0)" },
-
-      { id: "uuid8(US_CA-1_0/network_node)", label: "uuid8(US_CA-1_0/network_node)" },
-
-      { id: "uuid8(US_CA-1_0/platform)", label: "uuid8(US_CA-1_0/platform)" },
-
-      { id: "uuid8(US_CA-1_0/port/antenna0)", label: "uuid8(US_CA-1_0/port/antenna0)" },
-
-      { id: "uuid8(US_CA-1_0/port/eth0)", label: "uuid8(US_CA-1_0/port/eth0)" },
-
       { id: "uuid8(arlington_virginia/intf/antenna0)", label: "uuid8(arlington_virginia/intf/antenna0)" },
 
       { id: "uuid8(arlington_virginia/intf/wan0)", label: "uuid8(arlington_virginia/intf/wan0)" },
+
+      { id: "uuid8(arlington_virginia/intf/wan0/mpls)", label: "uuid8(arlington_virginia/intf/wan0/mpls)" },
 
       { id: "uuid8(arlington_virginia/network_node)", label: "uuid8(arlington_virginia/network_node)" },
 
@@ -192,214 +112,112 @@
 
       { id: "uuid8(sdn_proxy_agent/primary)", label: "uuid8(sdn_proxy_agent/primary)" },
 
-      { id: "uuid8(tempe_arizona/intf/antenna0)", label: "uuid8(tempe_arizona/intf/antenna0)" },
-
-      { id: "uuid8(tempe_arizona/intf/wan0)", label: "uuid8(tempe_arizona/intf/wan0)" },
-
-      { id: "uuid8(tempe_arizona/network_node)", label: "uuid8(tempe_arizona/network_node)" },
-
-      { id: "uuid8(tempe_arizona/network_node/ipvrf0)", label: "uuid8(tempe_arizona/network_node/ipvrf0)" },
-
-      { id: "uuid8(tempe_arizona/platform)", label: "uuid8(tempe_arizona/platform)" },
-
-      { id: "uuid8(tempe_arizona/port/antenna0)", label: "uuid8(tempe_arizona/port/antenna0)" },
-
-      { id: "uuid8(tempe_arizona/port/wan0)", label: "uuid8(tempe_arizona/port/wan0)" },
-
     ];
     const edges = [
 
-      { id: "uuid8(LEO_1_0_0/intf/feeder0)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/feeder0)", start: "uuid8(LEO_1_0_0/intf/feeder0)", end: "uuid8(LEO_1_0_0/port/feeder0)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/feeder0)__RK_TRAVERSES__uuid8(GEO_1/port/feeder0)", start: "uuid8(GEO_1/intf/feeder0)", end: "uuid8(GEO_1/port/feeder0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/feeder1)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/feeder1)", start: "uuid8(LEO_1_0_0/intf/feeder1)", end: "uuid8(LEO_1_0_0/port/feeder1)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/feeder0/mpls)__RK_TRAVERSES__uuid8(GEO_1/intf/feeder0)", start: "uuid8(GEO_1/intf/feeder0/mpls)", end: "uuid8(GEO_1/intf/feeder0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/feeder2)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/feeder2)", start: "uuid8(LEO_1_0_0/intf/feeder2)", end: "uuid8(LEO_1_0_0/port/feeder2)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/feeder1)__RK_TRAVERSES__uuid8(GEO_1/port/feeder1)", start: "uuid8(GEO_1/intf/feeder1)", end: "uuid8(GEO_1/port/feeder1)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/feeder3)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/feeder3)", start: "uuid8(LEO_1_0_0/intf/feeder3)", end: "uuid8(LEO_1_0_0/port/feeder3)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/feeder1/mpls)__RK_TRAVERSES__uuid8(GEO_1/intf/feeder1)", start: "uuid8(GEO_1/intf/feeder1/mpls)", end: "uuid8(GEO_1/intf/feeder1)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/interplane_east)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/interplane_east)", start: "uuid8(LEO_1_0_0/intf/interplane_east)", end: "uuid8(LEO_1_0_0/port/interplane_east)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/feeder2)__RK_TRAVERSES__uuid8(GEO_1/port/feeder2)", start: "uuid8(GEO_1/intf/feeder2)", end: "uuid8(GEO_1/port/feeder2)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/interplane_north)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/interplane_north)", start: "uuid8(LEO_1_0_0/intf/interplane_north)", end: "uuid8(LEO_1_0_0/port/interplane_north)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/feeder2/mpls)__RK_TRAVERSES__uuid8(GEO_1/intf/feeder2)", start: "uuid8(GEO_1/intf/feeder2/mpls)", end: "uuid8(GEO_1/intf/feeder2)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/interplane_south)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/interplane_south)", start: "uuid8(LEO_1_0_0/intf/interplane_south)", end: "uuid8(LEO_1_0_0/port/interplane_south)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/feeder3)__RK_TRAVERSES__uuid8(GEO_1/port/feeder3)", start: "uuid8(GEO_1/intf/feeder3)", end: "uuid8(GEO_1/port/feeder3)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/interplane_west)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/interplane_west)", start: "uuid8(LEO_1_0_0/intf/interplane_west)", end: "uuid8(LEO_1_0_0/port/interplane_west)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/feeder3/mpls)__RK_TRAVERSES__uuid8(GEO_1/intf/feeder3)", start: "uuid8(GEO_1/intf/feeder3/mpls)", end: "uuid8(GEO_1/intf/feeder3)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/user_rx0)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/user_rx0)", start: "uuid8(LEO_1_0_0/intf/user_rx0)", end: "uuid8(LEO_1_0_0/port/user_rx0)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/user_rx0)__RK_TRAVERSES__uuid8(GEO_1/port/user_rx0)", start: "uuid8(GEO_1/intf/user_rx0)", end: "uuid8(GEO_1/port/user_rx0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/user_tx0)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/user_tx0)", start: "uuid8(LEO_1_0_0/intf/user_tx0)", end: "uuid8(LEO_1_0_0/port/user_tx0)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/user_rx0/mpls)__RK_TRAVERSES__uuid8(GEO_1/intf/user_rx0)", start: "uuid8(GEO_1/intf/user_rx0/mpls)", end: "uuid8(GEO_1/intf/user_rx0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_0_0/intf/user_tx1)__RK_TRAVERSES__uuid8(LEO_1_0_0/port/user_tx1)", start: "uuid8(LEO_1_0_0/intf/user_tx1)", end: "uuid8(LEO_1_0_0/port/user_tx1)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/user_tx0)__RK_TRAVERSES__uuid8(GEO_1/port/user_tx0)", start: "uuid8(GEO_1/intf/user_tx0)", end: "uuid8(GEO_1/port/user_tx0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_9_4/intf/feeder0)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/feeder0)", start: "uuid8(LEO_1_9_4/intf/feeder0)", end: "uuid8(LEO_1_9_4/port/feeder0)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/user_tx0/mpls)__RK_TRAVERSES__uuid8(GEO_1/intf/user_tx0)", start: "uuid8(GEO_1/intf/user_tx0/mpls)", end: "uuid8(GEO_1/intf/user_tx0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_9_4/intf/feeder1)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/feeder1)", start: "uuid8(LEO_1_9_4/intf/feeder1)", end: "uuid8(LEO_1_9_4/port/feeder1)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/user_tx1)__RK_TRAVERSES__uuid8(GEO_1/port/user_tx1)", start: "uuid8(GEO_1/intf/user_tx1)", end: "uuid8(GEO_1/port/user_tx1)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_9_4/intf/feeder2)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/feeder2)", start: "uuid8(LEO_1_9_4/intf/feeder2)", end: "uuid8(LEO_1_9_4/port/feeder2)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/intf/user_tx1/mpls)__RK_TRAVERSES__uuid8(GEO_1/intf/user_tx1)", start: "uuid8(GEO_1/intf/user_tx1/mpls)", end: "uuid8(GEO_1/intf/user_tx1)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(LEO_1_9_4/intf/feeder3)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/feeder3)", start: "uuid8(LEO_1_9_4/intf/feeder3)", end: "uuid8(LEO_1_9_4/port/feeder3)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(LEO_1_9_4/intf/interplane_east)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/interplane_east)", start: "uuid8(LEO_1_9_4/intf/interplane_east)", end: "uuid8(LEO_1_9_4/port/interplane_east)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(LEO_1_9_4/intf/interplane_north)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/interplane_north)", start: "uuid8(LEO_1_9_4/intf/interplane_north)", end: "uuid8(LEO_1_9_4/port/interplane_north)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(LEO_1_9_4/intf/interplane_south)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/interplane_south)", start: "uuid8(LEO_1_9_4/intf/interplane_south)", end: "uuid8(LEO_1_9_4/port/interplane_south)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(LEO_1_9_4/intf/interplane_west)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/interplane_west)", start: "uuid8(LEO_1_9_4/intf/interplane_west)", end: "uuid8(LEO_1_9_4/port/interplane_west)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(LEO_1_9_4/intf/user_rx0)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/user_rx0)", start: "uuid8(LEO_1_9_4/intf/user_rx0)", end: "uuid8(LEO_1_9_4/port/user_rx0)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(LEO_1_9_4/intf/user_tx0)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/user_tx0)", start: "uuid8(LEO_1_9_4/intf/user_tx0)", end: "uuid8(LEO_1_9_4/port/user_tx0)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(LEO_1_9_4/intf/user_tx1)__RK_TRAVERSES__uuid8(LEO_1_9_4/port/user_tx1)", start: "uuid8(LEO_1_9_4/intf/user_tx1)", end: "uuid8(LEO_1_9_4/port/user_tx1)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(POP_AWS/intf/wan0)__RK_TRAVERSES__uuid8(POP_AWS/port/wan0)", start: "uuid8(POP_AWS/intf/wan0)", end: "uuid8(POP_AWS/port/wan0)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(POP_AZURE/intf/wan0)__RK_TRAVERSES__uuid8(POP_AZURE/port/wan0)", start: "uuid8(POP_AZURE/intf/wan0)", end: "uuid8(POP_AZURE/port/wan0)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(POP_GCP/intf/wan0)__RK_TRAVERSES__uuid8(POP_GCP/port/wan0)", start: "uuid8(POP_GCP/intf/wan0)", end: "uuid8(POP_GCP/port/wan0)", label: "RK_TRAVERSES" },
+      { id: "uuid8(POP_us_east1/intf/wan0)__RK_TRAVERSES__uuid8(POP_us_east1/port/wan0)", start: "uuid8(POP_us_east1/intf/wan0)", end: "uuid8(POP_us_east1/port/wan0)", label: "RK_TRAVERSES" },
 
       { id: "uuid8(US_CA-0_0/intf/antenna0)__RK_TRAVERSES__uuid8(US_CA-0_0/port/antenna0)", start: "uuid8(US_CA-0_0/intf/antenna0)", end: "uuid8(US_CA-0_0/port/antenna0)", label: "RK_TRAVERSES" },
 
       { id: "uuid8(US_CA-0_0/intf/eth0)__RK_TRAVERSES__uuid8(US_CA-0_0/port/eth0)", start: "uuid8(US_CA-0_0/intf/eth0)", end: "uuid8(US_CA-0_0/port/eth0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(US_CA-1_0/intf/antenna0)__RK_TRAVERSES__uuid8(US_CA-1_0/port/antenna0)", start: "uuid8(US_CA-1_0/intf/antenna0)", end: "uuid8(US_CA-1_0/port/antenna0)", label: "RK_TRAVERSES" },
-
-      { id: "uuid8(US_CA-1_0/intf/eth0)__RK_TRAVERSES__uuid8(US_CA-1_0/port/eth0)", start: "uuid8(US_CA-1_0/intf/eth0)", end: "uuid8(US_CA-1_0/port/eth0)", label: "RK_TRAVERSES" },
+      { id: "uuid8(US_CA-0_0/intf/eth0/mpls)__RK_TRAVERSES__uuid8(US_CA-0_0/intf/eth0)", start: "uuid8(US_CA-0_0/intf/eth0/mpls)", end: "uuid8(US_CA-0_0/intf/eth0)", label: "RK_TRAVERSES" },
 
       { id: "uuid8(arlington_virginia/intf/antenna0)__RK_TRAVERSES__uuid8(arlington_virginia/port/antenna0)", start: "uuid8(arlington_virginia/intf/antenna0)", end: "uuid8(arlington_virginia/port/antenna0)", label: "RK_TRAVERSES" },
 
       { id: "uuid8(arlington_virginia/intf/wan0)__RK_TRAVERSES__uuid8(arlington_virginia/port/wan0)", start: "uuid8(arlington_virginia/intf/wan0)", end: "uuid8(arlington_virginia/port/wan0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(tempe_arizona/intf/antenna0)__RK_TRAVERSES__uuid8(tempe_arizona/port/antenna0)", start: "uuid8(tempe_arizona/intf/antenna0)", end: "uuid8(tempe_arizona/port/antenna0)", label: "RK_TRAVERSES" },
+      { id: "uuid8(arlington_virginia/intf/wan0/mpls)__RK_TRAVERSES__uuid8(arlington_virginia/intf/wan0)", start: "uuid8(arlington_virginia/intf/wan0/mpls)", end: "uuid8(arlington_virginia/intf/wan0)", label: "RK_TRAVERSES" },
 
-      { id: "uuid8(tempe_arizona/intf/wan0)__RK_TRAVERSES__uuid8(tempe_arizona/port/wan0)", start: "uuid8(tempe_arizona/intf/wan0)", end: "uuid8(tempe_arizona/port/wan0)", label: "RK_TRAVERSES" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/feeder0)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/feeder0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/feeder0)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/feeder0)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/feeder0/mpls)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/feeder0/mpls)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/feeder1)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/feeder1)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/feeder1)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/feeder1)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/feeder2)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/feeder2)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/feeder1/mpls)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/feeder1/mpls)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/feeder3)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/feeder3)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/feeder2)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/feeder2)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/interplane_east)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/interplane_east)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/feeder2/mpls)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/feeder2/mpls)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/interplane_north)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/interplane_north)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/feeder3)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/feeder3)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/interplane_south)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/interplane_south)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/feeder3/mpls)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/feeder3/mpls)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/interplane_west)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/interplane_west)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/user_rx0)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/user_rx0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/user_rx0)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/user_rx0)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/user_rx0/mpls)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/user_rx0/mpls)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/user_tx0)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/user_tx0)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/user_tx0)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/user_tx0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/intf/user_tx1)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/intf/user_tx1)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/user_tx0/mpls)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/user_tx0/mpls)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/network_node)__RK_CONTAINS__uuid8(LEO_1_0_0/network_node/ipvrf0)", start: "uuid8(LEO_1_0_0/network_node)", end: "uuid8(LEO_1_0_0/network_node/ipvrf0)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/user_tx1)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/user_tx1)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/network_node)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/network_node)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/intf/user_tx1/mpls)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/intf/user_tx1/mpls)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/feeder0)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/feeder0)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/network_node)__RK_CONTAINS__uuid8(GEO_1/network_node/ipvrf0)", start: "uuid8(GEO_1/network_node)", end: "uuid8(GEO_1/network_node/ipvrf0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/feeder1)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/feeder1)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/platform)__RK_CONTAINS__uuid8(GEO_1/network_node)", start: "uuid8(GEO_1/platform)", end: "uuid8(GEO_1/network_node)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/feeder2)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/feeder2)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/platform)__RK_CONTAINS__uuid8(GEO_1/port/feeder0)", start: "uuid8(GEO_1/platform)", end: "uuid8(GEO_1/port/feeder0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/feeder3)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/feeder3)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/platform)__RK_CONTAINS__uuid8(GEO_1/port/feeder1)", start: "uuid8(GEO_1/platform)", end: "uuid8(GEO_1/port/feeder1)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/interplane_east)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/interplane_east)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/platform)__RK_CONTAINS__uuid8(GEO_1/port/feeder2)", start: "uuid8(GEO_1/platform)", end: "uuid8(GEO_1/port/feeder2)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/interplane_north)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/interplane_north)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/platform)__RK_CONTAINS__uuid8(GEO_1/port/feeder3)", start: "uuid8(GEO_1/platform)", end: "uuid8(GEO_1/port/feeder3)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/interplane_south)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/interplane_south)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/platform)__RK_CONTAINS__uuid8(GEO_1/port/user_rx0)", start: "uuid8(GEO_1/platform)", end: "uuid8(GEO_1/port/user_rx0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/interplane_west)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/interplane_west)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/platform)__RK_CONTAINS__uuid8(GEO_1/port/user_tx0)", start: "uuid8(GEO_1/platform)", end: "uuid8(GEO_1/port/user_tx0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/user_rx0)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/user_rx0)", label: "RK_CONTAINS" },
+      { id: "uuid8(GEO_1/platform)__RK_CONTAINS__uuid8(GEO_1/port/user_tx1)", start: "uuid8(GEO_1/platform)", end: "uuid8(GEO_1/port/user_tx1)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/user_tx0)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/user_tx0)", label: "RK_CONTAINS" },
+      { id: "uuid8(POP_us_east1/network_node)__RK_CONTAINS__uuid8(POP_us_east1/intf/wan0)", start: "uuid8(POP_us_east1/network_node)", end: "uuid8(POP_us_east1/intf/wan0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_0_0/platform)__RK_CONTAINS__uuid8(LEO_1_0_0/port/user_tx1)", start: "uuid8(LEO_1_0_0/platform)", end: "uuid8(LEO_1_0_0/port/user_tx1)", label: "RK_CONTAINS" },
+      { id: "uuid8(POP_us_east1/network_node)__RK_CONTAINS__uuid8(POP_us_east1/network_node/ipvrf0)", start: "uuid8(POP_us_east1/network_node)", end: "uuid8(POP_us_east1/network_node/ipvrf0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/feeder0)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/feeder0)", label: "RK_CONTAINS" },
+      { id: "uuid8(POP_us_east1/network_node)__RK_CONTAINS__uuid8(sdn_proxy_agent/primary)", start: "uuid8(POP_us_east1/network_node)", end: "uuid8(sdn_proxy_agent/primary)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/feeder1)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/feeder1)", label: "RK_CONTAINS" },
+      { id: "uuid8(POP_us_east1/platform)__RK_CONTAINS__uuid8(POP_us_east1/network_node)", start: "uuid8(POP_us_east1/platform)", end: "uuid8(POP_us_east1/network_node)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/feeder2)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/feeder2)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/feeder3)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/feeder3)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/interplane_east)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/interplane_east)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/interplane_north)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/interplane_north)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/interplane_south)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/interplane_south)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/interplane_west)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/interplane_west)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/user_rx0)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/user_rx0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/user_tx0)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/user_tx0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/intf/user_tx1)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/intf/user_tx1)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/network_node)__RK_CONTAINS__uuid8(LEO_1_9_4/network_node/ipvrf0)", start: "uuid8(LEO_1_9_4/network_node)", end: "uuid8(LEO_1_9_4/network_node/ipvrf0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/network_node)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/network_node)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/feeder0)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/feeder0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/feeder1)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/feeder1)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/feeder2)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/feeder2)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/feeder3)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/feeder3)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/interplane_east)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/interplane_east)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/interplane_north)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/interplane_north)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/interplane_south)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/interplane_south)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/interplane_west)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/interplane_west)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/user_rx0)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/user_rx0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/user_tx0)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/user_tx0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(LEO_1_9_4/platform)__RK_CONTAINS__uuid8(LEO_1_9_4/port/user_tx1)", start: "uuid8(LEO_1_9_4/platform)", end: "uuid8(LEO_1_9_4/port/user_tx1)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_AWS/network_node)__RK_CONTAINS__uuid8(POP_AWS/intf/wan0)", start: "uuid8(POP_AWS/network_node)", end: "uuid8(POP_AWS/intf/wan0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_AWS/network_node)__RK_CONTAINS__uuid8(POP_AWS/network_node/ipvrf0)", start: "uuid8(POP_AWS/network_node)", end: "uuid8(POP_AWS/network_node/ipvrf0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_AWS/platform)__RK_CONTAINS__uuid8(POP_AWS/network_node)", start: "uuid8(POP_AWS/platform)", end: "uuid8(POP_AWS/network_node)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_AWS/platform)__RK_CONTAINS__uuid8(POP_AWS/port/wan0)", start: "uuid8(POP_AWS/platform)", end: "uuid8(POP_AWS/port/wan0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_AZURE/network_node)__RK_CONTAINS__uuid8(POP_AZURE/intf/wan0)", start: "uuid8(POP_AZURE/network_node)", end: "uuid8(POP_AZURE/intf/wan0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_AZURE/network_node)__RK_CONTAINS__uuid8(POP_AZURE/network_node/ipvrf0)", start: "uuid8(POP_AZURE/network_node)", end: "uuid8(POP_AZURE/network_node/ipvrf0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_AZURE/network_node)__RK_CONTAINS__uuid8(sdn_proxy_agent/primary)", start: "uuid8(POP_AZURE/network_node)", end: "uuid8(sdn_proxy_agent/primary)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_AZURE/platform)__RK_CONTAINS__uuid8(POP_AZURE/network_node)", start: "uuid8(POP_AZURE/platform)", end: "uuid8(POP_AZURE/network_node)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_AZURE/platform)__RK_CONTAINS__uuid8(POP_AZURE/port/wan0)", start: "uuid8(POP_AZURE/platform)", end: "uuid8(POP_AZURE/port/wan0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_GCP/network_node)__RK_CONTAINS__uuid8(POP_GCP/intf/wan0)", start: "uuid8(POP_GCP/network_node)", end: "uuid8(POP_GCP/intf/wan0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_GCP/network_node)__RK_CONTAINS__uuid8(POP_GCP/network_node/ipvrf0)", start: "uuid8(POP_GCP/network_node)", end: "uuid8(POP_GCP/network_node/ipvrf0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_GCP/platform)__RK_CONTAINS__uuid8(POP_GCP/network_node)", start: "uuid8(POP_GCP/platform)", end: "uuid8(POP_GCP/network_node)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(POP_GCP/platform)__RK_CONTAINS__uuid8(POP_GCP/port/wan0)", start: "uuid8(POP_GCP/platform)", end: "uuid8(POP_GCP/port/wan0)", label: "RK_CONTAINS" },
+      { id: "uuid8(POP_us_east1/platform)__RK_CONTAINS__uuid8(POP_us_east1/port/wan0)", start: "uuid8(POP_us_east1/platform)", end: "uuid8(POP_us_east1/port/wan0)", label: "RK_CONTAINS" },
 
       { id: "uuid8(US_CA-0_0/network_node)__RK_CONTAINS__uuid8(US_CA-0_0/intf/antenna0)", start: "uuid8(US_CA-0_0/network_node)", end: "uuid8(US_CA-0_0/intf/antenna0)", label: "RK_CONTAINS" },
 
       { id: "uuid8(US_CA-0_0/network_node)__RK_CONTAINS__uuid8(US_CA-0_0/intf/eth0)", start: "uuid8(US_CA-0_0/network_node)", end: "uuid8(US_CA-0_0/intf/eth0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(US_CA-0_0/network_node)__RK_CONTAINS__uuid8(US_CA-0_0/intf/eth0/mpls)", start: "uuid8(US_CA-0_0/network_node)", end: "uuid8(US_CA-0_0/intf/eth0/mpls)", label: "RK_CONTAINS" },
 
       { id: "uuid8(US_CA-0_0/platform)__RK_CONTAINS__uuid8(US_CA-0_0/network_node)", start: "uuid8(US_CA-0_0/platform)", end: "uuid8(US_CA-0_0/network_node)", label: "RK_CONTAINS" },
 
@@ -407,19 +225,11 @@
 
       { id: "uuid8(US_CA-0_0/platform)__RK_CONTAINS__uuid8(US_CA-0_0/port/eth0)", start: "uuid8(US_CA-0_0/platform)", end: "uuid8(US_CA-0_0/port/eth0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(US_CA-1_0/network_node)__RK_CONTAINS__uuid8(US_CA-1_0/intf/antenna0)", start: "uuid8(US_CA-1_0/network_node)", end: "uuid8(US_CA-1_0/intf/antenna0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(US_CA-1_0/network_node)__RK_CONTAINS__uuid8(US_CA-1_0/intf/eth0)", start: "uuid8(US_CA-1_0/network_node)", end: "uuid8(US_CA-1_0/intf/eth0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(US_CA-1_0/platform)__RK_CONTAINS__uuid8(US_CA-1_0/network_node)", start: "uuid8(US_CA-1_0/platform)", end: "uuid8(US_CA-1_0/network_node)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(US_CA-1_0/platform)__RK_CONTAINS__uuid8(US_CA-1_0/port/antenna0)", start: "uuid8(US_CA-1_0/platform)", end: "uuid8(US_CA-1_0/port/antenna0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(US_CA-1_0/platform)__RK_CONTAINS__uuid8(US_CA-1_0/port/eth0)", start: "uuid8(US_CA-1_0/platform)", end: "uuid8(US_CA-1_0/port/eth0)", label: "RK_CONTAINS" },
-
       { id: "uuid8(arlington_virginia/network_node)__RK_CONTAINS__uuid8(arlington_virginia/intf/antenna0)", start: "uuid8(arlington_virginia/network_node)", end: "uuid8(arlington_virginia/intf/antenna0)", label: "RK_CONTAINS" },
 
       { id: "uuid8(arlington_virginia/network_node)__RK_CONTAINS__uuid8(arlington_virginia/intf/wan0)", start: "uuid8(arlington_virginia/network_node)", end: "uuid8(arlington_virginia/intf/wan0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(arlington_virginia/network_node)__RK_CONTAINS__uuid8(arlington_virginia/intf/wan0/mpls)", start: "uuid8(arlington_virginia/network_node)", end: "uuid8(arlington_virginia/intf/wan0/mpls)", label: "RK_CONTAINS" },
 
       { id: "uuid8(arlington_virginia/network_node)__RK_CONTAINS__uuid8(arlington_virginia/network_node/ipvrf0)", start: "uuid8(arlington_virginia/network_node)", end: "uuid8(arlington_virginia/network_node/ipvrf0)", label: "RK_CONTAINS" },
 
@@ -429,25 +239,9 @@
 
       { id: "uuid8(arlington_virginia/platform)__RK_CONTAINS__uuid8(arlington_virginia/port/wan0)", start: "uuid8(arlington_virginia/platform)", end: "uuid8(arlington_virginia/port/wan0)", label: "RK_CONTAINS" },
 
-      { id: "uuid8(tempe_arizona/network_node)__RK_CONTAINS__uuid8(tempe_arizona/intf/antenna0)", start: "uuid8(tempe_arizona/network_node)", end: "uuid8(tempe_arizona/intf/antenna0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(tempe_arizona/network_node)__RK_CONTAINS__uuid8(tempe_arizona/intf/wan0)", start: "uuid8(tempe_arizona/network_node)", end: "uuid8(tempe_arizona/intf/wan0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(tempe_arizona/network_node)__RK_CONTAINS__uuid8(tempe_arizona/network_node/ipvrf0)", start: "uuid8(tempe_arizona/network_node)", end: "uuid8(tempe_arizona/network_node/ipvrf0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(tempe_arizona/platform)__RK_CONTAINS__uuid8(tempe_arizona/network_node)", start: "uuid8(tempe_arizona/platform)", end: "uuid8(tempe_arizona/network_node)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(tempe_arizona/platform)__RK_CONTAINS__uuid8(tempe_arizona/port/antenna0)", start: "uuid8(tempe_arizona/platform)", end: "uuid8(tempe_arizona/port/antenna0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(tempe_arizona/platform)__RK_CONTAINS__uuid8(tempe_arizona/port/wan0)", start: "uuid8(tempe_arizona/platform)", end: "uuid8(tempe_arizona/port/wan0)", label: "RK_CONTAINS" },
-
-      { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(LEO_1_0_0/network_node)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(LEO_1_0_0/network_node)", label: "RK_CONTROLS" },
-
-      { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(LEO_1_9_4/network_node)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(LEO_1_9_4/network_node)", label: "RK_CONTROLS" },
+      { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(GEO_1/network_node)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(GEO_1/network_node)", label: "RK_CONTROLS" },
 
       { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(US_CA-0_0/network_node)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(US_CA-0_0/network_node)", label: "RK_CONTROLS" },
-
-      { id: "uuid8(sdn_proxy_agent/primary)__RK_CONTROLS__uuid8(US_CA-1_0/network_node)", start: "uuid8(sdn_proxy_agent/primary)", end: "uuid8(US_CA-1_0/network_node)", label: "RK_CONTROLS" },
 
     ];
 

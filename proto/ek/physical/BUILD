@@ -26,6 +26,7 @@ package(default_visibility = ["//visibility:public"])
 proto_library(
     name = "antenna_proto",
     srcs = ["antenna.proto"],
+    import_prefix = "nmts",
     deps = [
         "//proto/types/geophys:azimuth_elevation_mask_proto",
         "//proto/types/geophys:coordinates_proto",
@@ -36,12 +37,14 @@ proto_library(
 proto_library(
     name = "common_proto",
     srcs = ["common.proto"],
+    import_prefix = "nmts",
     deps = ["//proto/types/physical:polarization_proto"],
 )
 
 proto_library(
     name = "modulation_proto",
     srcs = ["modulation.proto"],
+    import_prefix = "nmts",
     deps = [
         ":common_proto",
     ],
@@ -50,11 +53,13 @@ proto_library(
 proto_library(
     name = "physical_medium_link_proto",
     srcs = ["physical_medium_link.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "platform_proto",
     srcs = ["platform.proto"],
+    import_prefix = "nmts",
     deps = [
         "//proto/types/geophys:motion_proto",
     ],
@@ -63,16 +68,19 @@ proto_library(
 proto_library(
     name = "port_proto",
     srcs = ["port.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "signal_processing_chain_proto",
     srcs = ["signal_processing_chain.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "transceiver_proto",
     srcs = ["transceiver.proto"],
+    import_prefix = "nmts",
     deps = [
         ":common_proto",
     ],

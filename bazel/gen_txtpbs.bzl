@@ -22,10 +22,23 @@ def _nmts_gen_txtpbs_impl(ctx):
         outfile = ctx.actions.declare_file(infile.path.replace(".json", ".txtpb"))
         outputs.extend([outfile])
 
+        inputs = [infile, ctx.file.template]
+        arguments = [
+            "--output",
+            outfile.path,
+            "--input",
+            infile.path,
+            "--tmpl_filename",
+            ctx.file.template.short_path,
+        ]
+        for template in ctx.files.templates:
+            inputs += [template]
+            arguments += ["--tmpl_filename", template.short_path]
+
         ctx.actions.run(
             outputs = [outfile],
-            inputs = [infile, ctx.file.template],
-            arguments = ["--tmpl_filename", ctx.file.template.short_path, "--output", outfile.path, "--input", infile.path],
+            inputs = inputs,
+            arguments = arguments,
             executable = ctx.executable._template2txtpb,
         )
 
@@ -38,8 +51,13 @@ _nmts_gen_txtpbs = rule(
     attrs = {
         "template": attr.label(
             allow_single_file = [".tmpl"],
-            doc = "A template file for the txtpb to be used for each src -> dst transformation",
+            doc = "The primary entry point template for the txtpb to be used for each src -> dst transformation",
             mandatory = True,
+        ),
+        "templates": attr.label_list(
+            allow_files = [".tmpl"],
+            doc = "A list of supplemental templates for the txtpb to be used for each src -> dst transformation",
+            mandatory = False,
         ),
         "srcs": attr.label_list(
             allow_files = [".json"],

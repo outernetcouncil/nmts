@@ -28,22 +28,26 @@ package(
 proto_library(
     name = "common_proto",
     srcs = ["common.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "sdwan_proto",
     srcs = ["sdwan.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "subscriber_proto",
     srcs = ["subscriber.proto"],
+    import_prefix = "nmts",
     deps = [":common_proto"],
 )
 
 proto_library(
     name = "uni_proto",
     srcs = ["uni.proto"],
+    import_prefix = "nmts",
     deps = [
         ":common_proto",
         "//proto/types/ieee:ieee802_proto",

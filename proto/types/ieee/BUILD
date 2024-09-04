@@ -28,11 +28,13 @@ package(
 proto_library(
     name = "ethertype_proto",
     srcs = ["ethertype.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "ieee802_proto",
     srcs = ["ieee802.proto"],
+    import_prefix = "nmts",
 )
 
 cpp_proto_library(

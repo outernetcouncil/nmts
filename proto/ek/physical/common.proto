@@ -19,7 +19,7 @@ syntax = "proto3";
 
 package nmts.ek.physical;
 
-import "proto/types/physical/polarization.proto";
+import "nmts/proto/types/physical/polarization.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
 

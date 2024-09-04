@@ -26,6 +26,7 @@ package(
 proto_library(
     name = "classifier_proto",
     srcs = ["classifier.proto"],
+    import_prefix = "nmts",
     deps = [
         ":packet_proto",
         "@protobuf//:field_mask_proto",
@@ -35,6 +36,7 @@ proto_library(
 proto_library(
     name = "packet_proto",
     srcs = ["packet.proto"],
+    import_prefix = "nmts",
     deps = [
         "//proto/types/iana:ipproto_proto",
         "//proto/types/ieee:ethertype_proto",

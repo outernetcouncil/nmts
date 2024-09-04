@@ -23,7 +23,7 @@ syntax = "proto3";
 
 package nmts.types.mef;
 
-import "proto/types/mef/common.proto";
+import "nmts/proto/types/mef/common.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.types.mef";
 

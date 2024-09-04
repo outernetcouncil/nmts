@@ -18,6 +18,7 @@ load("@rules_go//proto:def.bzl", "go_proto_library")
 proto_library(
     name = "service_proto",
     srcs = ["service.proto"],
+    import_prefix = "nmts",
     visibility = ["//visibility:public"],
     deps = [
         "//proto/types/ietf:inet_proto",

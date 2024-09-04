@@ -1,9 +1,0 @@
-{
-  "short_name": "POP_AWS",
-  "display_name": "POP_AWS",
-  "motion": [
-    "geodetic_wgs84 { longitude_deg: -121.96 latitude_deg: 37.35 }"
-  ],
-  "node_sid": "mpls: 100001",
-  "router_id": "100.0.0.1"
-}
