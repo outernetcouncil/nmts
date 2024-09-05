@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//bazel:gen_txtpbs.bzl", "nmts_gen_txtpbs")
+load("@org_outernetcouncil_nmts//bazel:gen_txtpbs.bzl", "nmts_gen_txtpbs")
 
 package(
     default_testonly = 1,

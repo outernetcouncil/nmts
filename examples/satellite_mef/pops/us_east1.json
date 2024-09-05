@@ -1,6 +1,6 @@
 {
-  "short_name": "POP_GCP",
-  "display_name": "POP_GCP",
+  "short_name": "POP_us_east1",
+  "display_name": "POP_us_east1",
   "motion": [
     "geodetic_wgs84 { longitude_deg: -77.4933 latitude_deg: 39.0446 }"
   ],

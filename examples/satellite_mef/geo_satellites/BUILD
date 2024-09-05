@@ -12,28 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@org_outernetcouncil_nmts//bazel:rule.bzl", "nmts_graph")
-load("@org_outernetcouncil_nmts//bazel:validation.bzl", "nmts_validation_test")
+load("@org_outernetcouncil_nmts//bazel:gen_txtpbs.bzl", "nmts_gen_txtpbs")
 
 package(
     default_testonly = 1,
     default_visibility = ["//visibility:public"],
 )
 
-filegroup(
+nmts_gen_txtpbs(
     name = "txtpbs",
-    srcs = glob(["*.txtpb"]),
-)
-
-nmts_validation_test(
-    name = "txtpbs_test",
-    srcs = [":txtpbs"],
-)
-
-nmts_graph(
-    name = "ethernet",
-    srcs = [":txtpbs"],
-    html = ":ethernet.html",
-    rankdir = "TB",
-    svg = ":ethernet.svg",
+    srcs = glob(["*.json"]),
+    template = "geo_satellite_gen3.txtpb.tmpl",
+    templates = glob(["block_*.txtpb.tmpl"]),
 )

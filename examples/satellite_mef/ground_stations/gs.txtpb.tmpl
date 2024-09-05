@@ -9,7 +9,8 @@
 #     - 1 WAN interface
 #     - EK_PORTs
 #     - an EK_NETWORK_NODE node w/
-#       - EK_INTERFACEs, each of which RK_TRAVERSES one of the EK_PORTs
+#       - Ethernet EK_INTERFACEs, each of which RK_TRAVERSES one of the EK_PORTs
+#       - MPLS EK_INTERFACEs, each of which RK_TRAVERSES one of the Ethernet EK_INTERFACEs
 ##
 entity {
   id: "uuid8({{ .short_name }}/platform)"
@@ -93,6 +94,24 @@ relationship {
   kind: RK_TRAVERSES
   a: "uuid8({{ .short_name }}/intf/wan0)"
   z: "uuid8({{ .short_name }}/port/wan0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/intf/wan0/mpls)"
+  ek_interface {
+    mpls {
+      enabled: true
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/intf/wan0/mpls)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ .short_name }}/intf/wan0/mpls)"
+  z: "uuid8({{ .short_name }}/intf/wan0)"
 }
 entity {
   id: "uuid8({{ .short_name }}/network_node/ipvrf0)"

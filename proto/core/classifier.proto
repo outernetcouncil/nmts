@@ -17,7 +17,7 @@ syntax = "proto3";
 package nmts.core;
 
 import "google/protobuf/field_mask.proto";
-import "proto/core/packet.proto";
+import "nmts/proto/core/packet.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.core";
 

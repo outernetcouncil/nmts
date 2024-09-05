@@ -28,6 +28,7 @@ package(
 proto_library(
     name = "azimuth_elevation_mask_proto",
     srcs = ["azimuth_elevation_mask.proto"],
+    import_prefix = "nmts",
     deps = [
         ":coordinates_proto",
     ],
@@ -36,17 +37,20 @@ proto_library(
 proto_library(
     name = "coordinates_proto",
     srcs = ["coordinates.proto"],
+    import_prefix = "nmts",
     deps = ["@googleapis//google/type:quaternion_proto"],
 )
 
 proto_library(
     name = "geodesy_proto",
     srcs = ["geodesy.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "motion_proto",
     srcs = ["motion.proto"],
+    import_prefix = "nmts",
     deps = [
         ":coordinates_proto",
         ":geodesy_proto",
@@ -60,6 +64,7 @@ proto_library(
 proto_library(
     name = "orbital_proto",
     srcs = ["orbital.proto"],
+    import_prefix = "nmts",
     deps = [
         ":coordinates_proto",
         "@protobuf//:timestamp_proto",

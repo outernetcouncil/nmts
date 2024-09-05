@@ -21,20 +21,20 @@ syntax = "proto3";
 package nmts;
 
 import "google/protobuf/field_mask.proto";
-import "proto/ek/logical/interface.proto";
-import "proto/ek/logical/logical_packet_link.proto";
-import "proto/ek/logical/network_node.proto";
-import "proto/ek/logical/route_fn.proto";
-import "proto/ek/logical/sdn_agent.proto";
-import "proto/ek/logical/switch_fn.proto";
-import "proto/ek/physical/antenna.proto";
-import "proto/ek/physical/modulation.proto";
-import "proto/ek/physical/physical_medium_link.proto";
-import "proto/ek/physical/platform.proto";
-import "proto/ek/physical/port.proto";
-import "proto/ek/physical/signal_processing_chain.proto";
-import "proto/ek/physical/transceiver.proto";
-import "proto/ek/service/uni.proto";
+import "nmts/proto/ek/logical/interface.proto";
+import "nmts/proto/ek/logical/logical_packet_link.proto";
+import "nmts/proto/ek/logical/network_node.proto";
+import "nmts/proto/ek/logical/route_fn.proto";
+import "nmts/proto/ek/logical/sdn_agent.proto";
+import "nmts/proto/ek/logical/switch_fn.proto";
+import "nmts/proto/ek/physical/antenna.proto";
+import "nmts/proto/ek/physical/modulation.proto";
+import "nmts/proto/ek/physical/physical_medium_link.proto";
+import "nmts/proto/ek/physical/platform.proto";
+import "nmts/proto/ek/physical/port.proto";
+import "nmts/proto/ek/physical/signal_processing_chain.proto";
+import "nmts/proto/ek/physical/transceiver.proto";
+import "nmts/proto/ek/service/uni.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto";
 

@@ -28,6 +28,7 @@ package(
 proto_library(
     name = "uni_proto",
     srcs = ["uni.proto"],
+    import_prefix = "nmts",
     deps = ["//proto/types/mef:uni_proto"],
 )
 
