@@ -18,9 +18,9 @@ syntax = "proto3";
 
 package nmts.ek.physical;
 
-import "proto/types/geophys/azimuth_elevation_mask.proto";
-import "proto/types/geophys/coordinates.proto";
-import "proto/types/physical/antenna_pattern.proto";
+import "nmts/proto/types/geophys/azimuth_elevation_mask.proto";
+import "nmts/proto/types/geophys/coordinates.proto";
+import "nmts/proto/types/physical/antenna_pattern.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
 

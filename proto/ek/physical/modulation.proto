@@ -19,7 +19,7 @@ syntax = "proto3";
 
 package nmts.ek.physical;
 
-import "proto/ek/physical/common.proto";
+import "nmts/proto/ek/physical/common.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
 

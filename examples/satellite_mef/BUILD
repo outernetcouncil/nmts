@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//bazel:rule.bzl", "nmts_graph")
-load("//bazel:validation.bzl", "nmts_validation_test")
+load("@org_outernetcouncil_nmts//bazel:rule.bzl", "nmts_graph")
+load("@org_outernetcouncil_nmts//bazel:validation.bzl", "nmts_validation_test")
 
 package(
     default_testonly = 1,
@@ -23,11 +23,11 @@ package(
 filegroup(
     name = "txtpbs",
     srcs = [
-        "//examples/satellite_mef/ground_stations:txtpbs",
-        "//examples/satellite_mef/leo_satellites:txtpbs",
-        "//examples/satellite_mef/pops:txtpbs",
-        "//examples/satellite_mef/sdn:txtpbs",
-        "//examples/satellite_mef/user_terminals:txtpbs",
+        "//satellite_mef/geo_satellites:txtpbs",
+        "//satellite_mef/ground_stations:txtpbs",
+        "//satellite_mef/pops:txtpbs",
+        "//satellite_mef/sdn:txtpbs",
+        "//satellite_mef/user_terminals:txtpbs",
     ],
 )
 

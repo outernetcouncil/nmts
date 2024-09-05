@@ -16,7 +16,7 @@ syntax = "proto3";
 
 package nmts.ek.logical;
 
-import "proto/types/ietf/routing.proto";
+import "nmts/proto/types/ietf/routing.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
 

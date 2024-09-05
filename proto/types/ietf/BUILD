@@ -28,16 +28,19 @@ package(
 proto_library(
     name = "common_proto",
     srcs = ["common.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "inet_proto",
     srcs = ["inet.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "routing_proto",
     srcs = ["routing.proto"],
+    import_prefix = "nmts",
     deps = [
         ":common_proto",
         ":inet_proto",

@@ -28,6 +28,7 @@ package(
 proto_library(
     name = "interface_proto",
     srcs = ["interface.proto"],
+    import_prefix = "nmts",
     deps = [
         "//proto/types/ieee:ieee802_proto",
         "//proto/types/ietf:inet_proto",
@@ -38,6 +39,7 @@ proto_library(
 proto_library(
     name = "logical_packet_link_proto",
     srcs = ["logical_packet_link.proto"],
+    import_prefix = "nmts",
     deps = [
         "//proto/types/ietf:routing_proto",
     ],
@@ -46,11 +48,13 @@ proto_library(
 proto_library(
     name = "network_node_proto",
     srcs = ["network_node.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "route_fn_proto",
     srcs = ["route_fn.proto"],
+    import_prefix = "nmts",
     deps = [
         "//proto/types/ietf:routing_proto",
     ],
@@ -59,11 +63,13 @@ proto_library(
 proto_library(
     name = "sdn_agent_proto",
     srcs = ["sdn_agent.proto"],
+    import_prefix = "nmts",
 )
 
 proto_library(
     name = "switch_fn_proto",
     srcs = ["switch_fn.proto"],
+    import_prefix = "nmts",
 )
 
 cpp_proto_library(

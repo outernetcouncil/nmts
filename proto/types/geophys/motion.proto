@@ -23,9 +23,9 @@ package nmts.types.geophys;
 import "google/protobuf/timestamp.proto";
 import "google/type/interval.proto";
 import "google/type/quaternion.proto";
-import "proto/types/geophys/coordinates.proto";
-import "proto/types/geophys/geodesy.proto";
-import "proto/types/geophys/orbital.proto";
+import "nmts/proto/types/geophys/coordinates.proto";
+import "nmts/proto/types/geophys/geodesy.proto";
+import "nmts/proto/types/geophys/orbital.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.types.geophys";
 
