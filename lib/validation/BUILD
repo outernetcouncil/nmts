@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -25,5 +25,16 @@ go_library(
     deps = [
         "//lib/entity_relationship",
         "//proto:nmts_go_proto",
+    ],
+)
+
+go_test(
+    name = "validation_test",
+    srcs = ["validation_test.go"],
+    deps = [
+        ":validation",
+        "//lib/entity_relationship",
+        "//proto:nmts_go_proto",
+        "@org_golang_google_protobuf//encoding/prototext",
     ],
 )
