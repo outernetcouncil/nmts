@@ -80,3 +80,8 @@ relationship {
   a: "uuid8(sw2/network_node)"
   z: "uuid8(sw2/network_node/ipvrf0)"
 }
+relationship {
+  kind: RK_CONTROLS
+  a: "uuid8(sw2/network_node/ipvrf0)"
+  z: "uuid8(sw2/network_node)"
+}

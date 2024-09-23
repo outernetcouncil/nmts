@@ -421,17 +421,17 @@ g.cluster.solid-outline polygon {
 <!-- uuid8(arlington_virginia/network_node) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node5" class="node teal">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(arlington_virginia/network_node)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="660.5,-596.5 660.5,-642.5 1019.5,-642.5 1019.5,-596.5 660.5,-596.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="840" y="-627.3" font-family="Times,serif" font-size="14.00">name = uuid8(arlington_virginia/network_node)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="660.5,-619.5 1019.5,-619.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="840" y="-604.3" font-family="Times,serif" font-size="14.00">kind = EK_NETWORK_NODE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="610.5,-596.5 610.5,-642.5 969.5,-642.5 969.5,-596.5 610.5,-596.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="790" y="-627.3" font-family="Times,serif" font-size="14.00">name = uuid8(arlington_virginia/network_node)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="610.5,-619.5 969.5,-619.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="790" y="-604.3" font-family="Times,serif" font-size="14.00">kind = EK_NETWORK_NODE</text>
 </g>
 <!-- uuid8(arlington_virginia/platform)&#45;&gt;uuid8(arlington_virginia/network_node) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge8" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge9" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(arlington_virginia/platform)-&gt;uuid8(arlington_virginia/network_node)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M1042.19,-694.43C999.54,-678.83 949.64,-660.59 910.09,-646.13"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="911.12,-642.78 900.52,-642.63 908.71,-649.35 911.12,-642.78"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1028" y="-664.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M1026.57,-694.43C976.05,-678.64 916.84,-660.14 870.29,-645.59"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="871.14,-642.19 860.55,-642.55 869.06,-648.87 871.14,-642.19"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1003" y="-664.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(arlington_virginia/port/antenna0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node7" class="node deeppurple">
@@ -442,7 +442,7 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1153" y="-352.8" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(arlington_virginia/platform)&#45;&gt;uuid8(arlington_virginia/port/antenna0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge9" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge10" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(arlington_virginia/platform)-&gt;uuid8(arlington_virginia/port/antenna0)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M1151.24,-694.32C1172.59,-656.18 1212.65,-595.17 1265,-563 1280.08,-553.74 1292.82,-568.71 1304,-555 1332.37,-520.22 1326.66,-492.75 1304,-454 1288.45,-427.4 1261.17,-408.48 1234.04,-395.35"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1235.41,-392.13 1224.86,-391.12 1232.48,-398.48 1235.41,-392.13"></polygon>
@@ -457,7 +457,7 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1146" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(arlington_virginia/platform)&#45;&gt;uuid8(arlington_virginia/port/wan0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge10" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge11" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(arlington_virginia/platform)-&gt;uuid8(arlington_virginia/port/wan0)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M1299.23,-694.48C1329.63,-678.57 1352,-655.1 1352,-620.5 1352,-620.5 1352,-620.5 1352,-367 1352,-326.2 1319.85,-300.86 1280.94,-285.13"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1282.06,-281.81 1271.47,-281.53 1279.57,-288.35 1282.06,-281.81"></polygon>
@@ -513,23 +513,23 @@ g.cluster.solid-outline polygon {
 <!-- uuid8(arlington_virginia/network_node)&#45;&gt;uuid8(arlington_virginia/intf/antenna0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="edge4" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(arlington_virginia/network_node)-&gt;uuid8(arlington_virginia/intf/antenna0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M887.79,-596.41C935.87,-574.19 1010.02,-539.91 1061.11,-516.3"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1062.76,-519.39 1070.37,-512.02 1059.82,-513.04 1062.76,-519.39"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="996" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M846.39,-596.41C903.59,-574 992.06,-539.34 1052.37,-515.71"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1053.77,-518.92 1061.8,-512.02 1051.22,-512.41 1053.77,-518.92"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="966" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(arlington_virginia/network_node)&#45;&gt;uuid8(arlington_virginia/intf/wan0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="edge5" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(arlington_virginia/network_node)-&gt;uuid8(arlington_virginia/intf/wan0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M838.56,-596.29C837.75,-586.11 836.59,-573.91 835,-563 827.39,-510.71 813.49,-451.55 803.56,-412.45"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="806.94,-411.53 801.06,-402.71 800.15,-413.27 806.94,-411.53"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="875" y="-485.3" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M806.64,-596.41C810.08,-590.7 813.2,-584.36 815,-578 816.82,-571.59 815.06,-569.67 815,-563 814.56,-514.55 819.29,-502.04 813,-454 811.21,-440.31 808.04,-425.63 804.7,-412.39"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="808.06,-411.37 802.14,-402.59 801.28,-413.15 808.06,-411.37"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="858" y="-485.3" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(arlington_virginia/network_node)&#45;&gt;uuid8(arlington_virginia/intf/wan0/mpls) -->
 <g xmlns="http://www.w3.org/2000/svg" id="edge6" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(arlington_virginia/network_node)-&gt;uuid8(arlington_virginia/intf/wan0/mpls)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M660.49,-601.08C577.23,-591 477.36,-576.06 389,-555 346.31,-544.83 299.65,-529.04 263.13,-515.57"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="264.19,-512.23 253.6,-512.02 261.75,-518.79 264.19,-512.23"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="541" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M610.02,-596.74C540.43,-586.58 460.49,-572.74 389,-555 346.71,-544.51 300.43,-528.87 264.01,-515.56"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="265.09,-512.22 254.5,-512.05 262.67,-518.79 265.09,-512.22"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="528" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(arlington_virginia/network_node/ipvrf0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node6" class="node teal">
@@ -542,502 +542,516 @@ g.cluster.solid-outline polygon {
 <!-- uuid8(arlington_virginia/network_node)&#45;&gt;uuid8(arlington_virginia/network_node/ipvrf0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="edge7" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(arlington_virginia/network_node)-&gt;uuid8(arlington_virginia/network_node/ipvrf0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M790.4,-596.34C778.07,-590.58 764.97,-584.23 753,-578 716.36,-558.91 675.93,-535.38 645.98,-517.46"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="647.41,-514.23 637.04,-512.08 643.81,-520.23 647.41,-514.23"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="794" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M757.51,-596.41C725.5,-574.65 676.49,-541.33 641.86,-517.78"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="643.62,-514.74 633.38,-512.02 639.68,-520.53 643.62,-514.74"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="770" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+</g>
+<!-- uuid8(arlington_virginia/network_node/ipvrf0)&#45;&gt;uuid8(arlington_virginia/network_node) -->
+<g xmlns="http://www.w3.org/2000/svg" id="edge8" class="edge">
+<title xmlns="http://www.w3.org/2000/svg">uuid8(arlington_virginia/network_node/ipvrf0)-&gt;uuid8(arlington_virginia/network_node)</title>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M602.18,-512.34C604.45,-532.31 610.9,-560.98 629,-578 634.34,-583.02 640.21,-587.45 646.45,-591.34"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="644.76,-594.4 655.17,-596.33 648.23,-588.33 644.76,-594.4"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="669" y="-566.8" font-family="Times,serif" font-size="14.00">rk_controls</text>
 </g>
 <!-- uuid8(GEO_1/platform) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node9" class="node googleblue">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/platform)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1458.5,-454.5 1458.5,-523.5 2797.5,-523.5 2797.5,-454.5 1458.5,-454.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2128" y="-508.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/platform)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1458.5,-500.5 2797.5,-500.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2128" y="-485.3" font-family="Times,serif" font-size="14.00">kind = EK_PLATFORM</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1458.5,-477.5 2797.5,-477.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2128" y="-462.3" font-family="Times,serif" font-size="14.00">motion = entry:{tle:{line1:&#34;1 37843U 11059A 22275.79558366 -.00000031 00000-0 00000-0 0 9993&#34; line2:&#34;2 37843 0.0179 221.3183 0002083 321.0668 0.4195 1.00271789 33755&#34;}}</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2205.5,-454.5 2205.5,-523.5 3544.5,-523.5 3544.5,-454.5 2205.5,-454.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2875" y="-508.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/platform)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2205.5,-500.5 3544.5,-500.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2875" y="-485.3" font-family="Times,serif" font-size="14.00">kind = EK_PLATFORM</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2205.5,-477.5 3544.5,-477.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2875" y="-462.3" font-family="Times,serif" font-size="14.00">motion = entry:{tle:{line1:&#34;1 37843U 11059A 22275.79558366 -.00000031 00000-0 00000-0 0 9993&#34; line2:&#34;2 37843 0.0179 221.3183 0002083 321.0668 0.4195 1.00271789 33755&#34;}}</text>
 </g>
 <!-- uuid8(GEO_1/network_node) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node24" class="node teal">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3583.5,-345 3583.5,-391 3864.5,-391 3864.5,-345 3583.5,-345"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3724" y="-375.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/network_node)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3583.5,-368 3864.5,-368 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3724" y="-352.8" font-family="Times,serif" font-size="14.00">kind = EK_NETWORK_NODE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3422.5,-345 3422.5,-391 3703.5,-391 3703.5,-345 3422.5,-345"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3563" y="-375.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/network_node)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3422.5,-368 3703.5,-368 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3563" y="-352.8" font-family="Times,serif" font-size="14.00">kind = EK_NETWORK_NODE</text>
 </g>
 <!-- uuid8(GEO_1/platform)&#45;&gt;uuid8(GEO_1/network_node) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge40" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge42" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/platform)-&gt;uuid8(GEO_1/network_node)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2577.35,-454.5C2911.49,-429.58 3347.14,-397.1 3573.15,-380.25"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3573.71,-383.72 3583.43,-379.48 3573.19,-376.73 3573.71,-383.72"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3063" y="-424.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3068.94,-454.46C3182.58,-434.8 3323.41,-410.44 3425.6,-392.76"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3426.42,-396.17 3435.68,-391.02 3425.23,-389.28 3426.42,-396.17"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3302" y="-424.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/port/feeder0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node26" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/port/feeder0)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1754,-16.5 1754,-62.5 2024,-62.5 2024,-16.5 1754,-16.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1889" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/feeder0)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1754,-39.5 2024,-39.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1889" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1458,-16.5 1458,-62.5 1728,-62.5 1728,-16.5 1458,-16.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1593" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/feeder0)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1458,-39.5 1728,-39.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1593" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(GEO_1/platform)&#45;&gt;uuid8(GEO_1/port/feeder0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge41" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge43" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/platform)-&gt;uuid8(GEO_1/port/feeder0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M1735,-454.45C1654.61,-436.83 1594,-409.96 1594,-369 1594,-369 1594,-369 1594,-148 1594,-110.95 1677.18,-82.94 1755.2,-64.81"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1756.2,-68.17 1765.18,-62.54 1754.65,-61.35 1756.2,-68.17"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1635" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2205.13,-472.62C1934.19,-464.09 1670.48,-451.95 1609,-436 1544.93,-419.38 1476,-435.19 1476,-369 1476,-369 1476,-369 1476,-148 1476,-112.6 1505.4,-85.68 1534.73,-67.63"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1536.53,-70.63 1543.38,-62.54 1532.99,-64.59 1536.53,-70.63"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1517" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/port/feeder1) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node27" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/port/feeder1)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3432,-16.5 3432,-62.5 3702,-62.5 3702,-16.5 3432,-16.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3567" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/feeder1)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3432,-39.5 3702,-39.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3567" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2327,-16.5 2327,-62.5 2597,-62.5 2597,-16.5 2327,-16.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2462" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/feeder1)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2327,-39.5 2597,-39.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2462" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(GEO_1/platform)&#45;&gt;uuid8(GEO_1/port/feeder1) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge42" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge44" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/platform)-&gt;uuid8(GEO_1/port/feeder1)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2086.88,-454.41C2045.01,-417.29 1982.72,-353.26 1957,-282 1927.34,-199.84 1980.03,-151.34 2059,-114 2168.41,-62.27 3026.13,-69.07 3147,-63 3238.27,-58.42 3340.68,-52.94 3421.52,-48.53"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3421.98,-52.01 3431.77,-47.97 3421.59,-45.02 3421.98,-52.01"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1998" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2205.34,-465.59C2084.2,-458.21 1977.04,-448.55 1916,-436 1809.53,-414.11 1762.8,-384.28 1726,-282 1697.04,-201.49 1745.19,-155.53 1820,-114 1902.56,-68.17 2154.18,-50.83 2316.79,-44.33"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2317.03,-47.82 2326.89,-43.94 2316.76,-40.83 2317.03,-47.82"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1767" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/port/feeder2) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node28" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/port/feeder2)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2042,-16.5 2042,-62.5 2312,-62.5 2312,-16.5 2042,-16.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2177" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/feeder2)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2042,-39.5 2312,-39.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2177" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4560,-16.5 4560,-62.5 4830,-62.5 4830,-16.5 4560,-16.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4695" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/feeder2)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4560,-39.5 4830,-39.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4695" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(GEO_1/platform)&#45;&gt;uuid8(GEO_1/port/feeder2) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge43" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge45" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/platform)-&gt;uuid8(GEO_1/port/feeder2)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M1867.49,-454.45C1783.66,-436.19 1712,-408.91 1712,-369 1712,-369 1712,-369 1712,-148 1712,-118.14 1695.7,-101.93 1717,-81 1740.57,-57.84 1967.88,-65.59 2031.58,-62.72"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2032.03,-66.2 2041.76,-62.03 2031.55,-59.22 2032.03,-66.2"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1753" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3544.8,-479.74C4242.78,-463.85 5251.59,-417.43 5370,-282 5395.7,-252.6 5375.16,-136.87 5351,-114 5332.65,-96.63 5028.18,-68.31 4840.57,-52.37"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4840.6,-48.86 4830.34,-51.5 4840,-55.83 4840.6,-48.86"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5423" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/port/feeder3) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node29" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/port/feeder3)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4736,-16.5 4736,-62.5 5006,-62.5 5006,-16.5 4736,-16.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4871" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/feeder3)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4736,-39.5 5006,-39.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4871" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5150,-16.5 5150,-62.5 5420,-62.5 5420,-16.5 5150,-16.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5285" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/feeder3)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5150,-39.5 5420,-39.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5285" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(GEO_1/platform)&#45;&gt;uuid8(GEO_1/port/feeder3) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge44" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge46" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/platform)-&gt;uuid8(GEO_1/port/feeder3)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2797.61,-480.91C3785.02,-468.2 5516,-436.31 5516,-369 5516,-369 5516,-369 5516,-148 5516,-118.14 5532.23,-102 5511,-81 5502.28,-72.38 5202.6,-56.45 5016.46,-47.35"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5016.46,-43.85 5006.3,-46.85 5016.12,-50.84 5016.46,-43.85"></polygon>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3544.85,-473.83C4327.27,-454.99 5516,-418.27 5516,-369 5516,-369 5516,-369 5516,-148 5516,-118.14 5531,-103.17 5511,-81 5509.25,-79.07 5471.22,-71.95 5426.84,-64.22"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5427.43,-60.77 5416.98,-62.5 5426.23,-67.66 5427.43,-60.77"></polygon>
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5557" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/port/user_rx0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node30" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/port/user_rx0)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1458,-16.5 1458,-62.5 1736,-62.5 1736,-16.5 1458,-16.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1597" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/user_rx0)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1458,-39.5 1736,-39.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1597" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2906,-16.5 2906,-62.5 3184,-62.5 3184,-16.5 2906,-16.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3045" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/user_rx0)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2906,-39.5 3184,-39.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3045" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(GEO_1/platform)&#45;&gt;uuid8(GEO_1/port/user_rx0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge45" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge47" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/platform)-&gt;uuid8(GEO_1/port/user_rx0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M1721.25,-454.45C1692.23,-449.17 1663.56,-443.06 1636,-436 1561.32,-416.86 1476,-446.09 1476,-369 1476,-369 1476,-369 1476,-148 1476,-112.32 1505.76,-85.59 1535.77,-67.71"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1537.67,-70.66 1544.63,-62.67 1534.21,-64.57 1537.67,-70.66"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1517" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2205.42,-462.02C2001.43,-444.84 1830,-416.33 1830,-369 1830,-369 1830,-369 1830,-208.5 1830,-166.27 1809.48,-143.19 1840,-114 1849.44,-104.98 2574.77,-65.44 2895.41,-48.38"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2895.91,-51.86 2905.71,-47.83 2895.54,-44.87 2895.91,-51.86"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1871" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/port/user_tx0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node31" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/port/user_tx0)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2861.5,-16.5 2861.5,-62.5 3138.5,-62.5 3138.5,-16.5 2861.5,-16.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3000" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/user_tx0)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2861.5,-39.5 3138.5,-39.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3000" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1746.5,-16.5 1746.5,-62.5 2023.5,-62.5 2023.5,-16.5 1746.5,-16.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1885" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/user_tx0)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1746.5,-39.5 2023.5,-39.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1885" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(GEO_1/platform)&#45;&gt;uuid8(GEO_1/port/user_tx0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge46" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge48" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/platform)-&gt;uuid8(GEO_1/port/user_tx0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M1973.88,-454.4C1962.96,-449.13 1952.52,-443.04 1943,-436 1860.36,-374.89 1794.96,-317.33 1844,-227 1888,-145.96 1938.23,-160.26 2018,-114 2033.13,-105.23 2039.95,-107.65 2053,-96 2058.98,-90.66 2056.02,-84.93 2063,-81 2079.9,-71.48 2590.93,-53.69 2851.01,-45.22"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2851.42,-48.71 2861.3,-44.88 2851.19,-41.71 2851.42,-48.71"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1885" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2205.48,-463.96C2059.74,-456.38 1927.53,-447.04 1855,-436 1736.6,-417.97 1594,-488.76 1594,-369 1594,-369 1594,-369 1594,-148 1594,-117.95 1581.75,-102.25 1603,-81 1622.54,-61.46 1694.36,-66.24 1736.18,-62.77"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1736.8,-66.22 1746.36,-61.65 1736.04,-59.26 1736.8,-66.22"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1635" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/port/user_tx1) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node32" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/port/user_tx1)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5360.5,-16.5 5360.5,-62.5 5637.5,-62.5 5637.5,-16.5 5360.5,-16.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5499" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/user_tx1)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5360.5,-39.5 5637.5,-39.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5499" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5438.5,-16.5 5438.5,-62.5 5715.5,-62.5 5715.5,-16.5 5438.5,-16.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5577" y="-47.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/port/user_tx1)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5438.5,-39.5 5715.5,-39.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5577" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(GEO_1/platform)&#45;&gt;uuid8(GEO_1/port/user_tx1) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge47" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge49" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/platform)-&gt;uuid8(GEO_1/port/user_tx1)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2797.56,-485.75C3377.36,-481.43 4238.39,-469.33 4988,-436 5132.18,-429.59 5634,-513.33 5634,-369 5634,-369 5634,-369 5634,-148 5634,-110.89 5602.4,-84.53 5569.78,-67.2"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5571.08,-63.93 5560.57,-62.55 5567.92,-70.18 5571.08,-63.93"></polygon>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3544.51,-477.4C3942.75,-469.49 4457.88,-456.44 4915,-436 5075.31,-428.83 5634,-529.47 5634,-369 5634,-369 5634,-369 5634,-148 5634,-119.41 5618.07,-91 5603.05,-70.57"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5605.8,-68.41 5596.94,-62.6 5600.24,-72.67 5605.8,-68.41"></polygon>
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5675" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node10" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder0)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2381.5,-126 2381.5,-172 2646.5,-172 2646.5,-126 2381.5,-126"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2514" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder0)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2381.5,-149 2646.5,-149 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2514" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1849.5,-126 1849.5,-172 2114.5,-172 2114.5,-126 1849.5,-126"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1982" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder0)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1849.5,-149 2114.5,-149 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1982" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder0)&#45;&gt;uuid8(GEO_1/port/feeder0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge11" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge12" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder0)-&gt;uuid8(GEO_1/port/feeder0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2420.64,-125.93C2397.37,-121.21 2372.38,-116.81 2349,-114 2321.46,-110.69 1869.26,-115.97 1850,-96 1842.48,-88.2 1845.4,-78.83 1852.24,-70.04"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1854.95,-72.26 1859.09,-62.51 1849.77,-67.55 1854.95,-72.26"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1895" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M1849.42,-142.09C1761.15,-135.73 1655,-122.67 1619,-96 1611.09,-90.14 1605.5,-81.27 1601.59,-72.32"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1604.77,-70.85 1597.97,-62.73 1598.22,-73.32 1604.77,-70.85"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1664" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder0/mpls) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node11" class="node orange">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder0/mpls)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2614,-235.5 2614,-281.5 2918,-281.5 2918,-235.5 2614,-235.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2766" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder0/mpls)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2614,-258.5 2918,-258.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2766" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2048,-235.5 2048,-281.5 2352,-281.5 2352,-235.5 2048,-235.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2200" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder0/mpls)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2048,-258.5 2352,-258.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2200" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder0/mpls)&#45;&gt;uuid8(GEO_1/intf/feeder0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge12" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge13" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder0/mpls)-&gt;uuid8(GEO_1/intf/feeder0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2714.4,-235.49C2674.1,-218.3 2617.99,-194.36 2575.39,-176.19"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2576.54,-172.87 2565.97,-172.17 2573.79,-179.31 2576.54,-172.87"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2715" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2155.36,-235.49C2120.79,-218.44 2072.77,-194.76 2036.04,-176.65"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2037.47,-173.45 2026.96,-172.17 2034.38,-179.73 2037.47,-173.45"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2162" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder1) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node12" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder1)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3709.5,-126 3709.5,-172 3974.5,-172 3974.5,-126 3709.5,-126"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3842" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder1)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3709.5,-149 3974.5,-149 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3842" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3183.5,-126 3183.5,-172 3448.5,-172 3448.5,-126 3183.5,-126"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3316" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder1)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3183.5,-149 3448.5,-149 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3316" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder1)&#45;&gt;uuid8(GEO_1/port/feeder1) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge13" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge14" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder1)-&gt;uuid8(GEO_1/port/feeder1)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3785.69,-125.99C3741.44,-108.69 3679.71,-84.56 3633.11,-66.34"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3634.3,-63.05 3623.71,-62.67 3631.75,-69.57 3634.3,-63.05"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3750" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3183.5,-131.32C3027.36,-111.67 2768.79,-79.12 2607.3,-58.79"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2607.64,-55.31 2597.28,-57.53 2606.77,-62.25 2607.64,-55.31"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2934" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder1/mpls) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node13" class="node orange">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder1/mpls)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3942,-235.5 3942,-281.5 4246,-281.5 4246,-235.5 3942,-235.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4094" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder1/mpls)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3942,-258.5 4246,-258.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4094" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3164,-235.5 3164,-281.5 3468,-281.5 3468,-235.5 3164,-235.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3316" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder1/mpls)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3164,-258.5 3468,-258.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3316" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder1/mpls)&#45;&gt;uuid8(GEO_1/intf/feeder1) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge14" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge15" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder1/mpls)-&gt;uuid8(GEO_1/intf/feeder1)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M4042.4,-235.49C4002.1,-218.3 3945.99,-194.36 3903.39,-176.19"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3904.54,-172.87 3893.97,-172.17 3901.79,-179.31 3904.54,-172.87"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4043" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3316,-235.49C3316,-220.23 3316,-199.65 3316,-182.5"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3319.5,-182.35 3316,-172.35 3312.5,-182.35 3319.5,-182.35"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3361" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder2) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node14" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder2)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2821.5,-126 2821.5,-172 3086.5,-172 3086.5,-126 2821.5,-126"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2954" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder2)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2821.5,-149 3086.5,-149 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2954" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4259.5,-126 4259.5,-172 4524.5,-172 4524.5,-126 4259.5,-126"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4392" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder2)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4259.5,-149 4524.5,-149 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4392" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder2)&#45;&gt;uuid8(GEO_1/port/feeder2) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge15" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge16" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder2)-&gt;uuid8(GEO_1/port/feeder2)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2821.31,-129.64C2682.58,-110.45 2465.51,-80.42 2322.26,-60.6"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2322.46,-57.09 2312.07,-59.19 2321.5,-64.03 2322.46,-57.09"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2611" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M4454.05,-125.99C4503.09,-108.59 4571.61,-84.28 4623.05,-66.03"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4624.52,-69.22 4632.78,-62.58 4622.18,-62.62 4624.52,-69.22"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4625" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder2/mpls) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node15" class="node orange">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder2/mpls)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3054,-235.5 3054,-281.5 3358,-281.5 3358,-235.5 3054,-235.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3206" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder2/mpls)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3054,-258.5 3358,-258.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3206" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4052,-235.5 4052,-281.5 4356,-281.5 4356,-235.5 4052,-235.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4204" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder2/mpls)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4052,-258.5 4356,-258.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4204" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder2/mpls)&#45;&gt;uuid8(GEO_1/intf/feeder2) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge16" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge17" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder2/mpls)-&gt;uuid8(GEO_1/intf/feeder2)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3154.4,-235.49C3114.1,-218.3 3057.99,-194.36 3015.39,-176.19"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3016.54,-172.87 3005.97,-172.17 3013.79,-179.31 3016.54,-172.87"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3155" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M4240.48,-235.31C4257.56,-225.02 4278.23,-212.73 4297,-202 4311.46,-193.73 4327.3,-184.95 4341.82,-177.02"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4343.56,-180.05 4350.66,-172.19 4340.21,-173.91 4343.56,-180.05"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4342" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder3) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node16" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder3)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4401.5,-126 4401.5,-172 4666.5,-172 4666.5,-126 4401.5,-126"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4534" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder3)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4401.5,-149 4666.5,-149 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4534" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4699.5,-126 4699.5,-172 4964.5,-172 4964.5,-126 4699.5,-126"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4832" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder3)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4699.5,-149 4964.5,-149 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4832" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder3)&#45;&gt;uuid8(GEO_1/port/feeder3) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge17" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge18" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder3)-&gt;uuid8(GEO_1/port/feeder3)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M4603.01,-125.99C4657.89,-108.48 4734.72,-83.97 4792.05,-65.69"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4793.33,-68.95 4801.79,-62.58 4791.2,-62.28 4793.33,-68.95"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4788" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M4924.76,-125.99C4999.61,-108.23 5104.8,-83.26 5182.2,-64.9"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5183.05,-68.29 5191.97,-62.58 5181.43,-61.48 5183.05,-68.29"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5158" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder3/mpls) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node17" class="node orange">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder3/mpls)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4382,-235.5 4382,-281.5 4686,-281.5 4686,-235.5 4382,-235.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4534" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder3/mpls)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4382,-258.5 4686,-258.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4534" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4492,-235.5 4492,-281.5 4796,-281.5 4796,-235.5 4492,-235.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4644" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/feeder3/mpls)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4492,-258.5 4796,-258.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4644" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/feeder3/mpls)&#45;&gt;uuid8(GEO_1/intf/feeder3) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge18" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge19" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/feeder3/mpls)-&gt;uuid8(GEO_1/intf/feeder3)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M4534,-235.49C4534,-220.23 4534,-199.65 4534,-182.5"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4537.5,-182.35 4534,-172.35 4530.5,-182.35 4537.5,-182.35"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4579" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M4680.48,-235.31C4697.56,-225.02 4718.23,-212.73 4737,-202 4751.46,-193.73 4767.3,-184.95 4781.82,-177.02"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4783.56,-180.05 4790.66,-172.19 4780.21,-173.91 4783.56,-180.05"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4782" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_rx0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node18" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_rx0)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2068,-126 2068,-172 2340,-172 2340,-126 2068,-126"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2204" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_rx0)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2068,-149 2340,-149 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2204" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3486,-126 3486,-172 3758,-172 3758,-126 3486,-126"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3622" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_rx0)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3486,-149 3758,-149 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3622" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_rx0)&#45;&gt;uuid8(GEO_1/port/user_rx0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge19" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge20" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_rx0)-&gt;uuid8(GEO_1/port/user_rx0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2067.95,-142.42C1973.87,-136.25 1846.44,-123.26 1737,-96 1708.54,-88.91 1678.14,-77.38 1652.97,-66.66"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1654.16,-63.36 1643.59,-62.6 1651.38,-69.78 1654.16,-63.36"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1782" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3517.34,-126C3497.33,-121.91 3476.53,-117.75 3457,-114 3366.17,-96.54 3263.79,-78.27 3183.81,-64.31"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3184.13,-60.82 3173.67,-62.55 3182.92,-67.71 3184.13,-60.82"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3401" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_rx0/mpls) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node19" class="node orange">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_rx0/mpls)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2048.5,-235.5 2048.5,-281.5 2359.5,-281.5 2359.5,-235.5 2048.5,-235.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2204" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_rx0/mpls)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2048.5,-258.5 2359.5,-258.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2204" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3722.5,-235.5 3722.5,-281.5 4033.5,-281.5 4033.5,-235.5 3722.5,-235.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3878" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_rx0/mpls)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3722.5,-258.5 4033.5,-258.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3878" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_rx0/mpls)&#45;&gt;uuid8(GEO_1/intf/user_rx0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge20" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge21" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_rx0/mpls)-&gt;uuid8(GEO_1/intf/user_rx0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2204,-235.49C2204,-220.23 2204,-199.65 2204,-182.5"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2207.5,-182.35 2204,-172.35 2200.5,-182.35 2207.5,-182.35"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2249" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3825.58,-235.49C3784.56,-218.26 3727.4,-194.26 3684.09,-176.07"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3685.37,-172.81 3674.79,-172.17 3682.66,-179.27 3685.37,-172.81"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3826" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_tx0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node20" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_tx0)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3396,-126 3396,-172 3668,-172 3668,-126 3396,-126"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3532" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_tx0)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3396,-149 3668,-149 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3532" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2252,-126 2252,-172 2524,-172 2524,-126 2252,-126"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2388" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_tx0)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2252,-149 2524,-149 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2388" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_tx0)&#45;&gt;uuid8(GEO_1/port/user_tx0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge21" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge22" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_tx0)-&gt;uuid8(GEO_1/port/user_tx0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3423.06,-125.99C3334.63,-108.12 3210.11,-82.96 3119.07,-64.56"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3119.75,-61.13 3109.25,-62.58 3118.36,-67.99 3119.75,-61.13"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3311" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2285,-125.99C2201.56,-108.15 2084.14,-83.06 1998.1,-64.67"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1998.81,-61.24 1988.3,-62.58 1997.34,-68.09 1998.81,-61.24"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2182" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_tx0/mpls) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node21" class="node orange">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_tx0/mpls)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3376.5,-235.5 3376.5,-281.5 3687.5,-281.5 3687.5,-235.5 3376.5,-235.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3532" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_tx0/mpls)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="3376.5,-258.5 3687.5,-258.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3532" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2488.5,-235.5 2488.5,-281.5 2799.5,-281.5 2799.5,-235.5 2488.5,-235.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2644" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_tx0/mpls)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2488.5,-258.5 2799.5,-258.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2644" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_tx0/mpls)&#45;&gt;uuid8(GEO_1/intf/user_tx0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge22" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge23" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_tx0/mpls)-&gt;uuid8(GEO_1/intf/user_tx0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3532,-235.49C3532,-220.23 3532,-199.65 3532,-182.5"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3535.5,-182.35 3532,-172.35 3528.5,-182.35 3535.5,-182.35"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3577" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M2591.58,-235.49C2550.56,-218.26 2493.4,-194.26 2450.09,-176.07"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2451.37,-172.81 2440.79,-172.17 2448.66,-179.27 2451.37,-172.81"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2592" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_tx1) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node22" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_tx1)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5225,-126 5225,-172 5497,-172 5497,-126 5225,-126"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5361" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_tx1)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5225,-149 5497,-149 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5361" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5070,-126 5070,-172 5342,-172 5342,-126 5070,-126"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5206" y="-156.8" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_tx1)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5070,-149 5342,-149 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5206" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_tx1)&#45;&gt;uuid8(GEO_1/port/user_tx1) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge23" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge24" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_tx1)-&gt;uuid8(GEO_1/port/user_tx1)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M5389.26,-125.99C5410.33,-109.57 5439.29,-87.01 5462.18,-69.19"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5464.57,-71.76 5470.3,-62.85 5460.26,-66.24 5464.57,-71.76"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5492" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M5290.3,-125.88C5323.89,-116.88 5362.85,-106.21 5398,-96 5430.85,-86.46 5466.9,-75.4 5497.99,-65.67"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5499.4,-68.9 5507.9,-62.56 5497.31,-62.22 5499.4,-68.9"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5493" y="-84.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_tx1/mpls) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node23" class="node orange">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_tx1/mpls)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4704.5,-235.5 4704.5,-281.5 5015.5,-281.5 5015.5,-235.5 4704.5,-235.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4860" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_tx1/mpls)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="4704.5,-258.5 5015.5,-258.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4860" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5050.5,-235.5 5050.5,-281.5 5361.5,-281.5 5361.5,-235.5 5050.5,-235.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5206" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/intf/user_tx1/mpls)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5050.5,-258.5 5361.5,-258.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5206" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(GEO_1/intf/user_tx1/mpls)&#45;&gt;uuid8(GEO_1/intf/user_tx1) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge24" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge25" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/intf/user_tx1/mpls)-&gt;uuid8(GEO_1/intf/user_tx1)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M4962.59,-235.49C5045.62,-217.67 5162.42,-192.61 5248.09,-174.23"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5249.07,-177.6 5258.11,-172.08 5247.6,-170.75 5249.07,-177.6"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5156" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M5206,-235.49C5206,-220.23 5206,-199.65 5206,-182.5"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5209.5,-182.35 5206,-172.35 5202.5,-182.35 5209.5,-182.35"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5251" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/feeder0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge25" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge26" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/feeder0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3583.46,-367.39C3282.1,-366.77 2595.13,-357.05 2523,-282 2497.94,-255.93 2500.3,-212 2505.83,-182.04"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2509.29,-182.58 2507.88,-172.08 2502.44,-181.17 2509.29,-182.58"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2564" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3422.32,-364.89C3039.73,-358.47 2005.59,-336.14 1957,-282 1932.4,-254.59 1947.66,-210.77 1962.97,-181.22"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="1966.19,-182.62 1967.89,-172.16 1960.04,-179.27 1966.19,-182.62"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1998" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/feeder0/mpls) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge26" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge27" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/feeder0/mpls)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3583.24,-365.92C3375.49,-363.07 2997.3,-352.69 2867,-315 2845.89,-308.89 2824.3,-297.81 2806.52,-287.14"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2807.95,-283.91 2797.6,-281.63 2804.27,-289.86 2807.95,-283.91"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2908" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3422.27,-364.83C3115.69,-359.58 2406.48,-344.4 2301,-315 2279.66,-309.05 2257.89,-297.87 2240.06,-287.09"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2241.45,-283.84 2231.11,-281.52 2237.75,-289.78 2241.45,-283.84"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2342" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/feeder1) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge27" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge28" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/feeder1)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3753.71,-344.86C3772.56,-329.29 3795.95,-306.85 3810,-282 3827.6,-250.87 3835.57,-210.31 3839.15,-182.41"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3842.64,-182.72 3840.32,-172.38 3835.69,-181.91 3842.64,-182.72"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3872" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3546.27,-344.88C3533.9,-328.07 3517.02,-304.14 3504,-282 3490.2,-258.53 3496.35,-246.16 3477,-227 3454.54,-204.77 3424.43,-188.04 3396.33,-175.94"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3397.47,-172.63 3386.89,-172.02 3394.78,-179.09 3397.47,-172.63"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3545" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/feeder1/mpls) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge28" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge29" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/feeder1/mpls)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3799.77,-344.99C3860.27,-327.41 3945.07,-302.77 4008.09,-284.46"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4009.39,-287.73 4018.02,-281.58 4007.44,-281.01 4009.39,-287.73"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3995" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3493.77,-344.89C3469.19,-336.38 3441.54,-326.03 3417,-315 3398.52,-306.7 3378.86,-296.28 3361.84,-286.72"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3363.11,-283.41 3352.69,-281.52 3359.65,-289.5 3363.11,-283.41"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3458" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/feeder2) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge29" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge30" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/feeder2)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3583.49,-360.9C3375.36,-350.45 3005.04,-325.89 2963,-282 2937.99,-255.88 2940.34,-211.97 2945.85,-182.02"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2949.31,-182.56 2947.9,-172.06 2942.46,-181.15 2949.31,-182.56"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3004" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3703.94,-360.26C3920.27,-348.69 4314.58,-322.36 4365,-282 4394.08,-258.73 4397.43,-213.34 4395.81,-182.35"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4399.27,-181.77 4395.06,-172.05 4392.29,-182.28 4399.27,-181.77"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4435" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/feeder2/mpls) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge30" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge31" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/feeder2/mpls)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3617.92,-344.99C3531.91,-327.14 3410.83,-302.01 3322.2,-283.62"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3322.88,-280.18 3312.38,-281.58 3321.46,-287.04 3322.88,-280.18"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3506" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3694.26,-344.99C3801.44,-327.01 3952.61,-301.66 4062.47,-283.24"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4063.35,-286.64 4072.64,-281.53 4062.2,-279.73 4063.35,-286.64"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4001" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/feeder3) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge31" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge32" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/feeder3)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3864.62,-357.32C3999.67,-345.77 4192.17,-322.71 4255,-282 4279.52,-266.11 4267.73,-244.66 4291,-227 4322.55,-203.06 4361.75,-186.45 4399.38,-174.96"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4400.82,-178.19 4409.43,-172.01 4398.84,-171.47 4400.82,-178.19"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4332" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3703.64,-363.5C3897.91,-357.79 4259.18,-344.08 4566,-315 4672.75,-304.88 4722.36,-350.32 4805,-282 4833.62,-258.34 4837.13,-213.25 4835.66,-182.41"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4839.13,-181.9 4834.97,-172.16 4832.15,-182.37 4839.13,-181.9"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4874" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/feeder3/mpls) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge32" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge33" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/feeder3/mpls)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3864.6,-359.06C3978.87,-351.4 4143.99,-337.58 4287,-315 4337.46,-307.04 4393.01,-294.86 4438.63,-283.95"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4439.6,-287.31 4448.51,-281.57 4437.96,-280.51 4439.6,-287.31"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4404" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3703.51,-365.03C3869.83,-361.14 4154.82,-349.54 4397,-315 4448.58,-307.64 4505.36,-295.2 4551.46,-283.96"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4552.55,-287.29 4561.43,-281.5 4550.88,-280.49 4552.55,-287.29"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4521" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/user_rx0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge33" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge34" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/user_rx0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3583.26,-363.96C3317.88,-357.68 2752.81,-341.61 2559,-315 2494.81,-306.18 2472.72,-315.07 2417,-282 2388.85,-265.29 2394.24,-246.58 2368,-227 2339.9,-206.03 2305.18,-188.73 2274.93,-175.87"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2276.27,-172.64 2265.69,-172.02 2273.58,-179.1 2276.27,-172.64"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2458" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3570.53,-344.76C3576.2,-327.68 3583.99,-303.47 3590,-282 3599.48,-248.12 3608.78,-208.9 3614.89,-182.06"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3618.35,-182.6 3617.14,-172.08 3611.52,-181.06 3618.35,-182.6"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3646" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/user_rx0/mpls) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge34" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge35" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/user_rx0/mpls)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3583.28,-365.39C3249.66,-361.07 2429.59,-347.27 2309,-315 2286.75,-309.04 2263.92,-297.72 2245.26,-286.84"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2246.83,-283.7 2236.45,-281.56 2243.23,-289.71 2246.83,-283.7"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2350" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3627.51,-344.99C3678.59,-327.55 3750.02,-303.18 3803.54,-284.91"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3804.98,-288.12 3813.31,-281.58 3802.72,-281.49 3804.98,-288.12"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3799" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/user_tx0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge35" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge36" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/user_tx0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3725.59,-344.92C3726.55,-314.86 3723.82,-260.93 3696,-227 3677.27,-204.15 3650.2,-187.71 3623.44,-176.04"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3624.58,-172.72 3614.01,-172.11 3621.89,-179.18 3624.58,-172.72"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3762" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3422.32,-366.86C3127.87,-365.14 2467.94,-353.28 2397,-282 2371.49,-256.37 2373.95,-212.34 2379.63,-182.24"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2383.1,-182.73 2381.73,-172.22 2376.25,-181.29 2383.1,-182.73"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2438" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/user_tx0/mpls) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge36" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge37" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/user_tx0/mpls)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3684.68,-344.99C3654.5,-328.09 3612.66,-304.66 3580.42,-286.61"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3582.03,-283.5 3571.59,-281.67 3578.61,-289.61 3582.03,-283.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3669" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3422.45,-358.78C3298.35,-350.63 3112.68,-336.27 2952,-315 2889.12,-306.68 2819.54,-294.4 2762.44,-283.51"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="2762.78,-280.01 2752.3,-281.57 2761.46,-286.89 2762.78,-280.01"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2993" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/user_tx1) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge37" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge38" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/user_tx1)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3864.65,-364.99C4253.87,-358.75 5319.97,-336.72 5371,-282 5395.72,-255.5 5386.19,-211.57 5375.23,-181.73"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5378.4,-180.24 5371.51,-172.2 5371.89,-182.79 5378.4,-180.24"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5428" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3703.69,-365.43C4029.66,-360.76 4816.65,-343.22 4919,-282 4944.94,-266.48 4934.44,-244.61 4959,-227 4992.4,-203.05 5033.47,-186.38 5072.47,-174.86"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5073.69,-178.15 5082.34,-172.03 5071.76,-171.42 5073.69,-178.15"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5000" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/intf/user_tx1/mpls) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge38" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge39" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/intf/user_tx1/mpls)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3864.56,-359.5C4010.79,-351.09 4246.27,-335.85 4449,-315 4555.52,-304.05 4584.03,-297.2 4693.93,-282.15"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="4694.67,-285.58 4704.11,-280.77 4693.73,-278.65 4694.67,-285.58"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4610" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3703.51,-364.97C4007.14,-360.05 4716.25,-345.6 4955,-315 5008.31,-308.17 5067.01,-295.48 5114.24,-283.96"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5115.26,-287.31 5124.13,-281.52 5113.59,-280.51 5115.26,-287.31"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5080" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(GEO_1/network_node/ipvrf0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node25" class="node teal">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node/ipvrf0)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5034,-235.5 5034,-281.5 5362,-281.5 5362,-235.5 5034,-235.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5198" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/network_node/ipvrf0)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="5034,-258.5 5362,-258.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5198" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_ROUTE_FN</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2818,-235.5 2818,-281.5 3146,-281.5 3146,-235.5 2818,-235.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2982" y="-266.3" font-family="Times,serif" font-size="14.00">name = uuid8(GEO_1/network_node/ipvrf0)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="2818,-258.5 3146,-258.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="2982" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_ROUTE_FN</text>
 </g>
 <!-- uuid8(GEO_1/network_node)&#45;&gt;uuid8(GEO_1/network_node/ipvrf0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge39" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge40" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node)-&gt;uuid8(GEO_1/network_node/ipvrf0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3864.78,-361.82C4101.83,-352.21 4595.76,-328.34 5023.53,-282.03"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5024.06,-285.49 5033.63,-280.93 5023.31,-278.53 5024.06,-285.49"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="4853" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3422.44,-359.52C3299.57,-351.65 3131.21,-337.28 3068,-315 3050.07,-308.68 3032.1,-297.95 3017.26,-287.59"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3019.07,-284.58 3008.91,-281.58 3014.98,-290.26 3019.07,-284.58"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3109" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+</g>
+<!-- uuid8(GEO_1/network_node/ipvrf0)&#45;&gt;uuid8(GEO_1/network_node) -->
+<g xmlns="http://www.w3.org/2000/svg" id="edge41" class="edge">
+<title xmlns="http://www.w3.org/2000/svg">uuid8(GEO_1/network_node/ipvrf0)-&gt;uuid8(GEO_1/network_node)</title>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M3101.32,-281.58C3198.18,-299.5 3334.52,-324.72 3433.92,-343.12"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3433.55,-346.61 3444.02,-344.99 3434.83,-339.73 3433.55,-346.61"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="3313" y="-303.8" font-family="Times,serif" font-size="14.00">rk_controls</text>
 </g>
 <!-- uuid8(POP_us_east1/platform) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node33" class="node googleblue">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/platform)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6094,-694.5 6094,-763.5 6702,-763.5 6702,-694.5 6094,-694.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6398" y="-748.3" font-family="Times,serif" font-size="14.00">name = uuid8(POP_us_east1/platform)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6094,-740.5 6702,-740.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6398" y="-725.3" font-family="Times,serif" font-size="14.00">kind = EK_PLATFORM</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6094,-717.5 6702,-717.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6398" y="-702.3" font-family="Times,serif" font-size="14.00">motion = entry:{geodetic_wgs84:{longitude_deg:-77.4933 latitude_deg:39.0446}}</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6143,-694.5 6143,-763.5 6751,-763.5 6751,-694.5 6143,-694.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6447" y="-748.3" font-family="Times,serif" font-size="14.00">name = uuid8(POP_us_east1/platform)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6143,-740.5 6751,-740.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6447" y="-725.3" font-family="Times,serif" font-size="14.00">kind = EK_PLATFORM</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6143,-717.5 6751,-717.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6447" y="-702.3" font-family="Times,serif" font-size="14.00">motion = entry:{geodetic_wgs84:{longitude_deg:-77.4933 latitude_deg:39.0446}}</text>
 </g>
 <!-- uuid8(POP_us_east1/network_node) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node35" class="node teal">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/network_node)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6172,-596.5 6172,-642.5 6504,-642.5 6504,-596.5 6172,-596.5"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6338" y="-627.3" font-family="Times,serif" font-size="14.00">name = uuid8(POP_us_east1/network_node)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6172,-619.5 6504,-619.5 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6338" y="-604.3" font-family="Times,serif" font-size="14.00">kind = EK_NETWORK_NODE</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6186,-596.5 6186,-642.5 6518,-642.5 6518,-596.5 6186,-596.5"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6352" y="-627.3" font-family="Times,serif" font-size="14.00">name = uuid8(POP_us_east1/network_node)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6186,-619.5 6518,-619.5 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6352" y="-604.3" font-family="Times,serif" font-size="14.00">kind = EK_NETWORK_NODE</text>
 </g>
 <!-- uuid8(POP_us_east1/platform)&#45;&gt;uuid8(POP_us_east1/network_node) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge52" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge55" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/platform)-&gt;uuid8(POP_us_east1/network_node)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6379.18,-694.28C6371.53,-680.57 6362.75,-664.84 6355.26,-651.43"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6358.25,-649.6 6350.32,-642.57 6352.14,-653.01 6358.25,-649.6"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6409" y="-664.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6417.2,-694.28C6404.74,-680.18 6390.38,-663.93 6378.31,-650.27"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6380.75,-647.75 6371.5,-642.57 6375.5,-652.38 6380.75,-647.75"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6440" y="-664.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(POP_us_east1/port/wan0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node37" class="node deeppurple">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/port/wan0)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6109.5,-345 6109.5,-391 6414.5,-391 6414.5,-345 6109.5,-345"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6262" y="-375.8" font-family="Times,serif" font-size="14.00">name = uuid8(POP_us_east1/port/wan0)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6109.5,-368 6414.5,-368 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6262" y="-352.8" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6108.5,-345 6108.5,-391 6413.5,-391 6413.5,-345 6108.5,-345"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6261" y="-375.8" font-family="Times,serif" font-size="14.00">name = uuid8(POP_us_east1/port/wan0)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6108.5,-368 6413.5,-368 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6261" y="-352.8" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(POP_us_east1/platform)&#45;&gt;uuid8(POP_us_east1/port/wan0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge53" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge56" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/platform)-&gt;uuid8(POP_us_east1/port/wan0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6564.76,-694.45C6642.04,-669.66 6726.82,-627.17 6773,-555 6797.2,-517.19 6802.02,-488.25 6773,-454 6728.84,-401.88 6557.14,-381.69 6424.82,-373.88"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6424.75,-370.37 6414.56,-373.3 6424.35,-377.36 6424.75,-370.37"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6806" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6544.89,-694.44C6669.12,-646.72 6857.68,-553.89 6773,-454 6728.71,-401.75 6556.43,-381.58 6423.82,-373.82"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6423.72,-370.31 6413.54,-373.24 6423.32,-377.29 6423.72,-370.31"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6808" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(POP_us_east1/intf/wan0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node34" class="node orange">
@@ -1050,55 +1064,62 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5890" y="-462.3" font-family="Times,serif" font-size="14.00">mac_addr =</text>
 </g>
 <!-- uuid8(POP_us_east1/intf/wan0)&#45;&gt;uuid8(POP_us_east1/port/wan0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge48" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge50" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/intf/wan0)-&gt;uuid8(POP_us_east1/port/wan0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M5995.11,-454.38C6054.9,-435.25 6128.54,-411.69 6183.31,-394.17"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6184.51,-397.46 6192.97,-391.08 6182.38,-390.8 6184.51,-397.46"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6143" y="-424.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M5994.83,-454.38C6054.46,-435.25 6127.9,-411.69 6182.53,-394.17"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6183.7,-397.47 6192.15,-391.08 6181.56,-390.8 6183.7,-397.47"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6142" y="-424.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(POP_us_east1/network_node)&#45;&gt;uuid8(POP_us_east1/intf/wan0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge49" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge51" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/network_node)-&gt;uuid8(POP_us_east1/intf/wan0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6215.51,-596.43C6163.61,-585.84 6102.82,-571.78 6049,-555 6024.24,-547.28 5997.96,-537.31 5974.04,-527.5"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5975.23,-524.2 5964.65,-523.61 5972.55,-530.67 5975.23,-524.2"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6168" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6220.12,-596.47C6166.45,-586.06 6104.18,-572.12 6049,-555 6024.23,-547.31 5997.95,-537.35 5974.03,-527.54"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="5975.22,-524.25 5964.64,-523.65 5972.54,-530.71 5975.22,-524.25"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6171" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(POP_us_east1/network_node/ipvrf0) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node36" class="node teal">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/network_node/ipvrf0)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6384.5,-466 6384.5,-512 6763.5,-512 6763.5,-466 6384.5,-466"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6574" y="-496.8" font-family="Times,serif" font-size="14.00">name = uuid8(POP_us_east1/network_node/ipvrf0)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6384.5,-489 6763.5,-489 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6574" y="-473.8" font-family="Times,serif" font-size="14.00">kind = EK_ROUTE_FN</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6057.5,-466 6057.5,-512 6436.5,-512 6436.5,-466 6057.5,-466"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6247" y="-496.8" font-family="Times,serif" font-size="14.00">name = uuid8(POP_us_east1/network_node/ipvrf0)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6057.5,-489 6436.5,-489 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6247" y="-473.8" font-family="Times,serif" font-size="14.00">kind = EK_ROUTE_FN</text>
 </g>
 <!-- uuid8(POP_us_east1/network_node)&#45;&gt;uuid8(POP_us_east1/network_node/ipvrf0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge50" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge52" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/network_node)-&gt;uuid8(POP_us_east1/network_node/ipvrf0)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6378.57,-596.41C6419.05,-574.37 6481.29,-540.48 6524.62,-516.89"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6526.46,-519.87 6533.57,-512.02 6523.11,-513.72 6526.46,-519.87"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6475" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6267.11,-596.25C6259.68,-591.33 6253.07,-585.33 6248,-578 6236.95,-562.04 6236.62,-540.24 6239.1,-522.33"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6242.58,-522.76 6240.82,-512.32 6235.68,-521.58 6242.58,-522.76"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6289" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(sdn_proxy_agent/primary) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node38" class="node teal">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(sdn_proxy_agent/primary)</title>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6057.5,-466 6057.5,-512 6366.5,-512 6366.5,-466 6057.5,-466"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6212" y="-496.8" font-family="Times,serif" font-size="14.00">name = uuid8(sdn_proxy_agent/primary)</text>
-<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6057.5,-489 6366.5,-489 "></polyline>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6212" y="-473.8" font-family="Times,serif" font-size="14.00">kind = EK_SDN_AGENT</text>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6454.5,-466 6454.5,-512 6763.5,-512 6763.5,-466 6454.5,-466"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6609" y="-496.8" font-family="Times,serif" font-size="14.00">name = uuid8(sdn_proxy_agent/primary)</text>
+<polyline xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="6454.5,-489 6763.5,-489 "></polyline>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6609" y="-473.8" font-family="Times,serif" font-size="14.00">kind = EK_SDN_AGENT</text>
 </g>
 <!-- uuid8(POP_us_east1/network_node)&#45;&gt;uuid8(sdn_proxy_agent/primary) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge51" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge53" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/network_node)-&gt;uuid8(sdn_proxy_agent/primary)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6316.34,-596.41C6295.51,-575.17 6263.9,-542.93 6240.93,-519.5"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6243.3,-516.92 6233.8,-512.23 6238.3,-521.82 6243.3,-516.92"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6338" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6396.18,-596.41C6440.45,-574.28 6508.61,-540.19 6555.82,-516.59"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6557.59,-519.62 6564.97,-512.02 6554.46,-513.36 6557.59,-519.62"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6498" y="-566.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
+</g>
+<!-- uuid8(POP_us_east1/network_node/ipvrf0)&#45;&gt;uuid8(POP_us_east1/network_node) -->
+<g xmlns="http://www.w3.org/2000/svg" id="edge54" class="edge">
+<title xmlns="http://www.w3.org/2000/svg">uuid8(POP_us_east1/network_node/ipvrf0)-&gt;uuid8(POP_us_east1/network_node)</title>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6278.7,-512.06C6295.76,-525.24 6316.08,-543.23 6330,-563 6335.1,-570.25 6339.25,-578.85 6342.51,-587.09"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6339.23,-588.3 6345.94,-596.49 6345.81,-585.9 6339.23,-588.3"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6378" y="-566.8" font-family="Times,serif" font-size="14.00">rk_controls</text>
 </g>
 <!-- uuid8(sdn_proxy_agent/primary)&#45;&gt;uuid8(GEO_1/network_node) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge54" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge57" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(sdn_proxy_agent/primary)-&gt;uuid8(GEO_1/network_node)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6119.79,-465.93C6096.79,-461.22 6072.1,-456.81 6049,-454 5625.83,-402.51 4319.87,-378.14 3874.56,-371.18"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3874.58,-367.68 3864.52,-371.02 3874.47,-374.68 3874.58,-367.68"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5854" y="-424.8" font-family="Times,serif" font-size="14.00">rk_controls</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6517.66,-466C6494.42,-461.21 6469.4,-456.76 6446,-454 6377.62,-445.92 4297.3,-388.95 3713.82,-373.09"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="3713.75,-369.58 3703.66,-372.81 3713.56,-376.58 3713.75,-369.58"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="5968" y="-424.8" font-family="Times,serif" font-size="14.00">rk_controls</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/network_node) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node43" class="node teal">
@@ -1109,11 +1130,11 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="7155" y="-352.8" font-family="Times,serif" font-size="14.00">kind = EK_NETWORK_NODE</text>
 </g>
 <!-- uuid8(sdn_proxy_agent/primary)&#45;&gt;uuid8(US_CA&#45;0_0/network_node) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge55" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge58" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(sdn_proxy_agent/primary)-&gt;uuid8(US_CA-0_0/network_node)</title>
-<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6310.58,-465.97C6332.08,-461.61 6354.75,-457.35 6376,-454 6490.36,-435.95 6797,-404.33 6989.69,-385.16"></path>
-<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="6990.32,-388.61 6999.93,-384.14 6989.63,-381.65 6990.32,-388.61"></polygon>
-<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6680" y="-424.8" font-family="Times,serif" font-size="14.00">rk_controls</text>
+<path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6710.1,-465.97C6804.87,-445.31 6946.25,-414.5 7044.08,-393.17"></path>
+<polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7044.98,-396.56 7054,-391.01 7043.49,-389.72 7044.98,-396.56"></polygon>
+<text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6954" y="-424.8" font-family="Times,serif" font-size="14.00">rk_controls</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/platform) -->
 <g xmlns="http://www.w3.org/2000/svg" id="node39" class="node googleblue">
@@ -1126,7 +1147,7 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="7390" y="-462.3" font-family="Times,serif" font-size="14.00">motion = entry:{geodetic_wgs84:{longitude_deg:-122.0839 latitude_deg:37.3861}}</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/platform)&#45;&gt;uuid8(US_CA&#45;0_0/network_node) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge62" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge65" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(US_CA-0_0/platform)-&gt;uuid8(US_CA-0_0/network_node)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M7323.6,-454.38C7287,-435.84 7242.19,-413.15 7207.97,-395.82"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7209.11,-392.48 7198.61,-391.08 7205.95,-398.72 7209.11,-392.48"></polygon>
@@ -1141,7 +1162,7 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="7442" y="-133.8" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/platform)&#45;&gt;uuid8(US_CA&#45;0_0/port/antenna0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge63" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge66" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(US_CA-0_0/platform)-&gt;uuid8(US_CA-0_0/port/antenna0)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M7407.91,-454.36C7431.25,-413.23 7475.59,-343.71 7530,-300 7545.2,-287.79 7559.41,-298.37 7570,-282 7583.27,-261.47 7582.03,-248.28 7570,-227 7557.55,-204.98 7536,-188.56 7514.09,-176.67"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7515.53,-173.47 7505.04,-172.01 7512.33,-179.7 7515.53,-173.47"></polygon>
@@ -1156,7 +1177,7 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="7346" y="-24.3" font-family="Times,serif" font-size="14.00">kind = EK_PORT</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/platform)&#45;&gt;uuid8(US_CA&#45;0_0/port/eth0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge64" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge67" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(US_CA-0_0/platform)-&gt;uuid8(US_CA-0_0/port/eth0)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M7550.12,-454.46C7587.68,-436.82 7617,-409.94 7617,-369 7617,-369 7617,-369 7617,-148 7617,-132.25 7618.2,-125.07 7607,-114 7576.78,-84.13 7535.42,-66.18 7494.54,-55.47"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7495.27,-52.04 7484.72,-53.03 7493.58,-58.84 7495.27,-52.04"></polygon>
@@ -1171,7 +1192,7 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="7408" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/intf/antenna0)&#45;&gt;uuid8(US_CA&#45;0_0/port/antenna0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge56" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge59" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(US_CA-0_0/intf/antenna0)-&gt;uuid8(US_CA-0_0/port/antenna0)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M7414.96,-235.49C7419.83,-220.08 7426.42,-199.26 7431.87,-182.02"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7435.25,-182.94 7434.93,-172.35 7428.58,-180.83 7435.25,-182.94"></polygon>
@@ -1188,7 +1209,7 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="7132" y="-122.3" font-family="Times,serif" font-size="14.00">mac_addr = 02:00:03:04:05:06</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/intf/eth0)&#45;&gt;uuid8(US_CA&#45;0_0/port/eth0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge57" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge60" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(US_CA-0_0/intf/eth0)-&gt;uuid8(US_CA-0_0/port/eth0)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M7198.83,-114.43C7229.15,-99.2 7264.51,-81.44 7292.96,-67.14"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7294.58,-70.25 7301.95,-62.63 7291.44,-63.99 7294.58,-70.25"></polygon>
@@ -1203,28 +1224,28 @@ g.cluster.solid-outline polygon {
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="6963" y="-243.3" font-family="Times,serif" font-size="14.00">kind = EK_INTERFACE</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/intf/eth0/mpls)&#45;&gt;uuid8(US_CA&#45;0_0/intf/eth0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge58" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge61" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(US_CA-0_0/intf/eth0/mpls)-&gt;uuid8(US_CA-0_0/intf/eth0)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M6997.61,-235.49C7018.6,-222.13 7045.99,-204.71 7070.56,-189.08"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7072.56,-191.96 7079.12,-183.64 7068.81,-186.05 7072.56,-191.96"></polygon>
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="7092" y="-205.8" font-family="Times,serif" font-size="14.00">rk_traverses</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/network_node)&#45;&gt;uuid8(US_CA&#45;0_0/intf/antenna0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge59" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge62" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(US_CA-0_0/network_node)-&gt;uuid8(US_CA-0_0/intf/antenna0)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M7206.81,-344.99C7247.26,-327.8 7303.6,-303.86 7346.37,-285.69"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7347.99,-288.8 7355.83,-281.67 7345.25,-282.36 7347.99,-288.8"></polygon>
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="7352" y="-303.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/network_node)&#45;&gt;uuid8(US_CA&#45;0_0/intf/eth0) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge60" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge63" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(US_CA-0_0/network_node)-&gt;uuid8(US_CA-0_0/intf/eth0)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M7153.73,-344.78C7151.77,-313.04 7147.55,-252.9 7141,-202 7140.64,-199.19 7140.23,-196.3 7139.8,-193.39"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7143.25,-192.83 7138.24,-183.5 7136.34,-193.93 7143.25,-192.83"></polygon>
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="7190" y="-254.8" font-family="Times,serif" font-size="14.00">rk_contains</text>
 </g>
 <!-- uuid8(US_CA&#45;0_0/network_node)&#45;&gt;uuid8(US_CA&#45;0_0/intf/eth0/mpls) -->
-<g xmlns="http://www.w3.org/2000/svg" id="edge61" class="edge">
+<g xmlns="http://www.w3.org/2000/svg" id="edge64" class="edge">
 <title xmlns="http://www.w3.org/2000/svg">uuid8(US_CA-0_0/network_node)-&gt;uuid8(US_CA-0_0/intf/eth0/mpls)</title>
 <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" d="M7115.68,-344.99C7085.5,-328.09 7043.66,-304.66 7011.42,-286.61"></path>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="black" stroke="black" points="7013.03,-283.5 7002.59,-281.67 7009.61,-289.61 7013.03,-283.5"></polygon>
