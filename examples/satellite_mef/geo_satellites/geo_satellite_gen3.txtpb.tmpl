@@ -145,6 +145,11 @@ relationship {
   a: "uuid8({{ .short_name }}/network_node)"
   z: "uuid8({{ .short_name }}/network_node/ipvrf0)"
 }
+relationship {
+  kind: RK_CONTROLS
+  a: "uuid8({{ .short_name }}/network_node/ipvrf0)"
+  z: "uuid8({{ .short_name }}/network_node)"
+}
 ##
 # The primary SDN controls the satellte's network node.
 ##
