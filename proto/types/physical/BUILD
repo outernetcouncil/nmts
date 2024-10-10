@@ -19,9 +19,7 @@ load("@rules_proto_grpc_java//:defs.bzl", "java_proto_library")
 load("@rules_proto_grpc_python//:defs.bzl", "python_proto_library")
 
 package(
-    default_visibility = [
-        "//proto/ek/physical:__pkg__",
-    ],
+    default_visibility = ["//visibility:public"],
 )
 
 ##

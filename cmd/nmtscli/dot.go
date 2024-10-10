@@ -29,7 +29,7 @@ import (
 	"github.com/ichiban/prolog"
 	"github.com/urfave/cli/v2"
 	"google.golang.org/protobuf/encoding/prototext"
-	er "outernetcouncil.org/nmts/lib/entity_relationship"
+	er "outernetcouncil.org/nmts/lib/entityrelationship"
 	npb "outernetcouncil.org/nmts/proto"
 	eklpb "outernetcouncil.org/nmts/proto/ek/logical"
 )

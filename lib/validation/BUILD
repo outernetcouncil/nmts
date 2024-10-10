@@ -23,7 +23,7 @@ go_library(
     srcs = ["validation.go"],
     importpath = "outernetcouncil.org/nmts/lib/validation",
     deps = [
-        "//lib/entity_relationship",
+        "//lib/entityrelationship",
         "//proto:nmts_go_proto",
     ],
 )
@@ -33,7 +33,7 @@ go_test(
     srcs = ["validation_test.go"],
     deps = [
         ":validation",
-        "//lib/entity_relationship",
+        "//lib/entityrelationship",
         "//proto:nmts_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",
     ],

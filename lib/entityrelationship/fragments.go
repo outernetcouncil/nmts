@@ -12,31 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package entity_relationship
+package entityrelationship
 
 import (
-	"reflect"
-	"strings"
+	"fmt"
+	"os"
 
+	"google.golang.org/protobuf/encoding/prototext"
 	npb "outernetcouncil.org/nmts/proto"
 )
 
-func EntityKindStringFromProto(e *npb.Entity) string {
-	if e == nil {
-		return ""
-	}
+func ReadFragmentFiles(fragmentFilenames []string) (*npb.Fragment, error) {
+	g := &npb.Fragment{}
 
-	kind := e.GetKind()
-	if kind == nil {
-		return ""
-	}
+	for _, f := range fragmentFilenames {
+		data, err := os.ReadFile(f)
+		if err != nil {
+			return nil, fmt.Errorf("reading %q: %w", f, err)
+		}
+		subg := &npb.Fragment{}
+		if err := prototext.Unmarshal(data, subg); err != nil {
+			return nil, fmt.Errorf("parsing %q: %w", f, err)
+		}
 
-	tag := reflect.TypeOf(kind).Elem().Field(0).Tag.Get("protobuf")
-	for _, element := range strings.Split(tag, ",") {
-		if strings.HasPrefix(element, "name=") {
-			return strings.ToUpper(strings.TrimPrefix(element, "name="))
+		for _, e := range subg.GetEntity() {
+			g.Entity = append(g.Entity, e)
+		}
+		for _, r := range subg.GetRelationship() {
+			g.Relationship = append(g.Relationship, r)
 		}
 	}
 
-	return ""
+	return g, nil
 }

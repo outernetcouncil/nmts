@@ -1,4 +1,4 @@
-module aalyria.com/spacetime
+module outernetcouncil.org/nmts
 
 go 1.23.0
 

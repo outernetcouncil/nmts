@@ -18,7 +18,7 @@ import (
 	"testing"
 
 	"google.golang.org/protobuf/encoding/prototext"
-	er "outernetcouncil.org/nmts/lib/entity_relationship"
+	er "outernetcouncil.org/nmts/lib/entityrelationship"
 	"outernetcouncil.org/nmts/lib/validation"
 	npb "outernetcouncil.org/nmts/proto"
 )
@@ -110,11 +110,13 @@ var relationshipTestCases = []testCase{
 		rk:      npb.RK_RK_CONTAINS,
 		entityZ: `id: "modulatorZ" ek_modulator{}`,
 	},
-	{
-		entityA: `id: "platformA" ek_platform{}`,
-		rk:      npb.RK_RK_CONTAINS,
-		entityZ: `id: "platformZ" ek_platform{}`,
-	},
+	// Prohibited for now; may be revisited in the future.
+	//
+	// {
+	// entityA: `id: "platformA" ek_platform{}`,
+	// rk:      npb.RK_RK_CONTAINS,
+	// entityZ: `id: "platformZ" ek_platform{}`,
+	// },
 	{
 		entityA: `id: "platformA" ek_platform{}`,
 		rk:      npb.RK_RK_CONTAINS,

@@ -27,7 +27,7 @@ go_library(
     ],
     importpath = "aalyria.com/spacetime/nmts/cmd/nmtscli",
     deps = [
-        "//lib/entity_relationship",
+        "//lib/entityrelationship",
         "//lib/validation",
         "//proto:nmts_go_proto",
         "//proto/ek/logical:logical_go_proto",

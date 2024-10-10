@@ -19,7 +19,7 @@ package(
 )
 
 go_library(
-    name = "entity_relationship",
+    name = "entityrelationship",
     srcs = [
         "collection.go",
         "collection_builder.go",
@@ -27,7 +27,7 @@ go_library(
         "fragments.go",
         "relationship.go",
     ],
-    importpath = "outernetcouncil.org/nmts/lib/entity_relationship",
+    importpath = "outernetcouncil.org/nmts/lib/entityrelationship",
     deps = [
         "//proto:nmts_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",
@@ -35,10 +35,10 @@ go_library(
 )
 
 go_test(
-    name = "entity_relationship_test",
+    name = "entityrelationship_test",
     srcs = ["entity_test.go"],
     deps = [
-        ":entity_relationship",
+        ":entityrelationship",
         "//proto:nmts_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",
     ],
