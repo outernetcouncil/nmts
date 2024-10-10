@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package entity_relationship_test
+package entityrelationship_test
 
 import (
 	"testing"
 
 	"google.golang.org/protobuf/encoding/prototext"
-	"outernetcouncil.org/nmts/lib/entity_relationship"
+	"outernetcouncil.org/nmts/lib/entityrelationship"
 	npb "outernetcouncil.org/nmts/proto"
 )
 
@@ -31,7 +31,7 @@ func TestEntityKindStringExamples(t *testing.T) {
 		t.Fatalf("failed to parse %s: %q", text, err)
 	}
 	wanted := "EK_SDN_AGENT"
-	got := entity_relationship.EntityKindStringFromProto(parsed)
+	got := entityrelationship.EntityKindStringFromProto(parsed)
 	if got != wanted {
 		t.Fatalf("wanted: %q, got: %q", wanted, got)
 	}

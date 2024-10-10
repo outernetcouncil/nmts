@@ -22,7 +22,7 @@ import (
 	"strings"
 
 	"github.com/urfave/cli/v2"
-	er "outernetcouncil.org/nmts/lib/entity_relationship"
+	er "outernetcouncil.org/nmts/lib/entityrelationship"
 	// npb "outernetcouncil.org/nmts/proto"
 )
 

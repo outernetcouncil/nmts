@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"strings"
 
-	er "outernetcouncil.org/nmts/lib/entity_relationship"
+	er "outernetcouncil.org/nmts/lib/entityrelationship"
 	npb "outernetcouncil.org/nmts/proto"
 )
 
@@ -71,10 +71,17 @@ var permittedRelationships = map[allowedRelationship]struct{}{
 	{a: "EK_NETWORK_NODE", rk: npb.RK_RK_CONTAINS, z: "EK_SWITCH_FN"}: {},
 	{a: "EK_NETWORK_NODE", rk: npb.RK_RK_CONTAINS, z: "EK_SDN_AGENT"}: {},
 
-	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_ANTENNA"}:                 {},
-	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_DEMODULATOR"}:             {},
-	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_MODULATOR"}:               {},
-	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_PLATFORM"}:                {},
+	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_ANTENNA"}:     {},
+	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_DEMODULATOR"}: {},
+	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_MODULATOR"}:   {},
+	// It's theoretically possible to model a system as a platform of
+	// platforms. This can, however, have complicating implications
+	// for some code that might try to examine and enforce certain
+	// relationships or constraints.
+	//
+	// Leave this commented out, as it will likely be revisited.
+	//
+	// {a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_PLATFORM"}:                {},
 	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_PORT"}:                    {},
 	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_NETWORK_NODE"}:            {},
 	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_RECEIVER"}:                {},
