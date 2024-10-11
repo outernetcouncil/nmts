@@ -190,6 +190,16 @@ var relationshipTestCases = []testCase{
 		rk:      npb.RK_RK_CONTROLS,
 		entityZ: `id: "network_nodeZ" ek_network_node{}`,
 	},
+	{
+		entityA: `id: "sdn_agentA" ek_sdn_agent{}`,
+		rk:      npb.RK_RK_CONTROLS,
+		entityZ: `id: "platformZ" ek_platform{}`,
+	},
+	{
+		entityA: `id: "sdn_agentA" ek_sdn_agent{}`,
+		rk:      npb.RK_RK_CONTROLS,
+		entityZ: `id: "route_fnZ" ek_route_fn{}`,
+	},
 
 	{
 		entityA: `id: "signal_processing_chainA" ek_signal_processing_chain{}`,

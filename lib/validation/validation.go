@@ -101,6 +101,8 @@ var permittedRelationships = map[allowedRelationship]struct{}{
 	{a: "EK_SDN_AGENT", rk: npb.RK_RK_CONTROLS, z: "EK_DEMODULATOR"}:  {},
 	{a: "EK_SDN_AGENT", rk: npb.RK_RK_CONTROLS, z: "EK_MODULATOR"}:    {},
 	{a: "EK_SDN_AGENT", rk: npb.RK_RK_CONTROLS, z: "EK_NETWORK_NODE"}: {},
+	{a: "EK_SDN_AGENT", rk: npb.RK_RK_CONTROLS, z: "EK_PLATFORM"}:     {},
+	{a: "EK_SDN_AGENT", rk: npb.RK_RK_CONTROLS, z: "EK_ROUTE_FN"}:     {},
 
 	{a: "EK_SIGNAL_PROCESSING_CHAIN", rk: npb.RK_RK_SIGNAL_TRANSITS, z: "EK_DEMODULATOR"}:             {},
 	{a: "EK_SIGNAL_PROCESSING_CHAIN", rk: npb.RK_RK_SIGNAL_TRANSITS, z: "EK_SIGNAL_PROCESSING_CHAIN"}: {},
