@@ -62,7 +62,15 @@ message Interface {
   // Attributes specific to an interface "layer" or logical capabilities.
   ///
 
-  // Attributes for IEEE 802 and other "Ethernet-like Layer 2s".
+  // Attributes for loopback interfaces, a.k.a. "softwareLoopback" in
+  // the parlance of RFC 2863 Interfaces Group MIB ifType or RFC 7224
+  // iana-if-type YANG module.
+  message LoopbackAttributes {
+    // presently empty
+  }
+
+  // Attributes for IEEE 802 and other "Ethernet-like Layer 2s";
+  // see also "ethernetCsmacd" in the IANA ifType MIB.
   message EthernetAttributes {
     // The primary MAC address, for Ethernet-like ports.
     types.ieee.MacAddress mac_addr = 1;
@@ -72,6 +80,7 @@ message Interface {
 
   // Interface attributes for DVB-S2(X) GSE Layer 2s.
   message GseAttributes {
+    // presently empty
   }
 
   // C-VLAN attributes (IEEE 802.1Q-2022 Section 9.6)
@@ -128,6 +137,7 @@ message Interface {
     CtagVlanAttributes cvlan = 15;
     MplsAttributes mpls = 20;
     IpAttributes ip = 21;
+    LoopbackAttributes loopback = 24;
   }
   reserved 12 to 14, 16 to 19;
 }
