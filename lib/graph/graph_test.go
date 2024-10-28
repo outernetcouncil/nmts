@@ -74,6 +74,23 @@ func mustAddRelationships(t *testing.T, g *Graph, relationships []string) {
 	}
 }
 
+func mustRemoveEntities(t *testing.T, g *Graph, ids []string) {
+	for _, id := range ids {
+		if err := g.RemoveEntity(id); err != nil {
+			t.Fatalf("unable to remove entity with ID: %s: %v", id, err)
+		}
+	}
+}
+
+func mustRemoveRelationships(t *testing.T, g *Graph, relationships []string) {
+	for _, relationshipTxtPb := range relationships {
+		relationship := mustUnmarshalRelationship(t, relationshipTxtPb)
+		if err := g.RemoveRelationship(relationship); err != nil {
+			t.Fatalf("unable to remove relationship %v: %v", relationship, err)
+		}
+	}
+}
+
 func idsSet(nodes []*Node) set.Set[string] {
 	return set.NewSet(lo.Map(nodes, func(n *Node, _ int) string {
 		return n.ID()
@@ -81,15 +98,17 @@ func idsSet(nodes []*Node) set.Set[string] {
 }
 
 type nodesOfKindTestCase struct {
-	desc     string
-	entities []string
-	kindIDs  map[string]set.Set[string]
+	desc           string
+	entities       []string
+	entityRemovals []string
+	kindIDs        map[string]set.Set[string]
 }
 
 func (tc *nodesOfKindTestCase) Run(t *testing.T) {
 	g := New()
 
 	mustUpsertEntities(t, g, tc.entities)
+	mustRemoveEntities(t, g, tc.entityRemovals)
 
 	for kind, wantIDs := range tc.kindIDs {
 		gotIDs := idsSet(g.NodesOfKind(kind))
@@ -101,7 +120,7 @@ func (tc *nodesOfKindTestCase) Run(t *testing.T) {
 
 var nodesOfKindTestCases = []nodesOfKindTestCase{
 	{
-		desc: "happy path",
+		desc: "returns nodes of given kind",
 		entities: []string{
 			`id: "node_a" ek_network_node{}`,
 			`id: "node_b" ek_network_node{}`,
@@ -116,6 +135,25 @@ var nodesOfKindTestCases = []nodesOfKindTestCase{
 			"EK_NETWORK_NODE": set.NewSet("node_a", "node_b", "node_c"),
 			"EK_TRANSMITTER":  set.NewSet("transmitter_a", "transmitter_b", "transmitter_c"),
 			"EK_DEMODULATOR":  set.NewSet("demodulator_a", "demodulator_b"),
+		},
+	},
+	{
+		desc: "respects entity removals",
+		entities: []string{
+			`id: "node_a" ek_network_node{}`,
+			`id: "node_b" ek_network_node{}`,
+			`id: "node_c" ek_network_node{}`,
+			`id: "transmitter_a" ek_transmitter{}`,
+			`id: "transmitter_b" ek_transmitter{}`,
+			`id: "transmitter_c" ek_transmitter{}`,
+			`id: "demodulator_a" ek_demodulator{}`,
+			`id: "demodulator_b" ek_demodulator{}`,
+		},
+		entityRemovals: []string{"node_b", "transmitter_c", "demodulator_a", "demodulator_b"},
+		kindIDs: map[string]set.Set[string]{
+			"EK_NETWORK_NODE": set.NewSet("node_a", "node_c"),
+			"EK_TRANSMITTER":  set.NewSet("transmitter_a", "transmitter_b"),
+			"EK_DEMODULATOR":  set.NewSet[string](),
 		},
 	},
 }
@@ -185,6 +223,59 @@ var upsertEntityTestCases = []upsertEntityTestCase{
 
 func TestUpsertEntity(t *testing.T) {
 	for _, tc := range upsertEntityTestCases {
+		t.Run(tc.desc, tc.Run)
+	}
+}
+
+type removeEntityTestCase struct {
+	desc          string
+	entities      []string
+	relationships []string
+	remove        string
+	wantErr       bool
+}
+
+func (tc *removeEntityTestCase) Run(t *testing.T) {
+	g := New()
+
+	mustUpsertEntities(t, g, tc.entities)
+	mustAddRelationships(t, g, tc.relationships)
+
+	err := g.RemoveEntity(tc.remove)
+	if gotErr := err != nil; tc.wantErr != gotErr {
+		t.Errorf("RemoveEntity; wanted error: %t; got error: %v", tc.wantErr, err)
+	}
+}
+
+var removeEntityTestCases = []removeEntityTestCase{
+	{
+		desc: "removing existing entity succeeds",
+		entities: []string{
+			`id: "node" ek_network_node{}`,
+		},
+		remove: "node",
+	},
+	{
+		desc:    "removing non-existent entity fails",
+		remove:  "doesnt_exist",
+		wantErr: true,
+	},
+	{
+		desc: "removing entity that has edges fails",
+		entities: []string{
+			`id: "node" ek_network_node{}`,
+			`id: "interface" ek_interface{}`,
+		},
+		relationships: []string{
+			`a: "node" kind: RK_CONTAINS z: "interface"`,
+		},
+		remove:  "a",
+		wantErr: true,
+	},
+}
+
+func TestRemoveEntity(t *testing.T) {
+	for _, tc := range removeEntityTestCases {
 		t.Run(tc.desc, tc.Run)
 	}
 }
@@ -287,6 +378,72 @@ func TestAddRelationship(t *testing.T) {
 	}
 }
 
+type removeRelationshipTestCase struct {
+	desc          string
+	entities      []string
+	relationships []string
+	remove        string
+	wantErr       bool
+}
+
+func (tc *removeRelationshipTestCase) Run(t *testing.T) {
+	g := New()
+
+	mustUpsertEntities(t, g, tc.entities)
+	mustAddRelationships(t, g, tc.relationships)
+
+	toRemove := mustUnmarshalRelationship(t, tc.remove)
+	err := g.RemoveRelationship(toRemove)
+	if gotErr := err != nil; tc.wantErr != gotErr {
+		t.Errorf("RemoveRelationship; wanted error: %t; got error: %v", tc.wantErr, err)
+	}
+}
+
+var removeRelationshipTestCases = []removeRelationshipTestCase{
+	{
+		desc: "removing existing relationship succeeds",
+		entities: []string{
+			`id: "node" ek_network_node{}`,
+			`id: "platform" ek_platform{}`,
+		},
+		relationships: []string{
+			`a: "node" kind: RK_CONTAINS z: "platform"`,
+		},
+		remove: `a: "node" kind: RK_CONTAINS z: "platform"`,
+	},
+	{
+		desc: "removing non-existent relationship fails",
+		entities: []string{
+			`id: "node" ek_network_node{}`,
+			`id: "platform" ek_platform{}`,
+		},
+		remove:  `a: "node" kind: RK_CONTAINS z: "platform"`,
+		wantErr: true,
+	},
+	{
+		desc: "removing relationship where a doesn't correspond to any node fails",
+		entities: []string{
+			`id: "platform" ek_platform{}`,
+		},
+		remove:  `a: "node" kind: RK_CONTAINS z: "platform"`,
+		wantErr: true,
+	},
+	{
+		desc: "removing relationship where z doesn't correspond to any node fails",
+		entities: []string{
+			`id: "node" ek_network_node{}`,
+		},
+		remove:  `a: "node" kind: RK_CONTAINS z: "platform"`,
+		wantErr: true,
+	},
+}
+
+func TestRemoveRelationship(t *testing.T) {
+	for _, tc := range removeRelationshipTestCases {
+		t.Run(tc.desc, tc.Run)
+	}
+}
+
 type graphEntities struct {
 	entities      []string
 	relationships []string
@@ -315,7 +472,8 @@ var testGraph = graphEntities{
 type neighborsTestCase struct {
 	desc string
 	graphEntities
-	neighbors map[string]set.Set[string]
+	relationshipRemovals []string
+	neighbors            map[string]set.Set[string]
 }
 
 func (tc *neighborsTestCase) Run(t *testing.T) {
@@ -323,6 +481,7 @@ func (tc *neighborsTestCase) Run(t *testing.T) {
 
 	mustUpsertEntities(t, g, tc.entities)
 	mustAddRelationships(t, g, tc.relationships)
+	mustRemoveRelationships(t, g, tc.relationshipRemovals)
 
 	for nodeID, wantNeighbors := range tc.neighbors {
 		gotNeighbors := idsSet(g.Neighbors(nodeID))
@@ -352,6 +511,22 @@ var neighborsTestCases = []*neighborsTestCase{
 			"doesnt_exist": set.NewSet[string](),
 		},
 	},
+	{
+		desc:          "respects relationship removals",
+		graphEntities: testGraph,
+		relationshipRemovals: []string{
+			`a: "interface" kind: RK_TRAVERSES z: "port"`,
+			`a: "port" kind: RK_TERMINATES z: "demodulator"`,
+		},
+		neighbors: map[string]set.Set[string]{
+			"agent":       set.NewSet("node"),
+			"node":        set.NewSet("agent", "interface"),
+			"interface":   set.NewSet("node"),
+			"port":        set.NewSet("modulator"),
+			"modulator":   set.NewSet("port"),
+			"demodulator": set.NewSet[string](),
+		},
+	},
 }
 
 func TestNeighbors(t *testing.T) {
@@ -379,7 +554,8 @@ func (e *edge) equals(graphEdge *Edge) bool {
 type edgesTestCase struct {
 	desc string
 	graphEntities
-	edges map[idPair][]*edge
+	relationshipRemovals []string
+	edges                map[idPair][]*edge
 }
 
 var edgesTestCases = []edgesTestCase{
@@ -431,6 +607,44 @@ var edgesTestCases = []edgesTestCase{
 			{x: "node", y: "doesnt_exist"}: {},
 		},
 	},
+	{
+		desc:          "respects relationship removals",
+		graphEntities: testGraph,
+		relationshipRemovals: []string{
+			`a: "interface" kind: RK_TRAVERSES z: "port"`,
+			`a: "port" kind: RK_TERMINATES z: "demodulator"`,
+		},
+		edges: map[idPair][]*edge{
+			{x: "node", y: "agent"}: {
+				{
+					a:    "agent",
+					kind: npb.RK_RK_CONTROLS,
+					z:    "node",
+				},
+				{
+					a:    "node",
+					kind: npb.RK_RK_CONTAINS,
+					z:    "agent",
+				},
+			},
+			{x: "node", y: "interface"}: {
+				{
+					a:    "node",
+					kind: npb.RK_RK_CONTAINS,
+					z:    "interface",
+				},
+			},
+			{x: "interface", y: "port"}: {},
+			{x: "port", y: "modulator"}: {
+				{
+					a:    "port",
+					kind: npb.RK_RK_ORIGINATES,
+					z:    "modulator",
+				},
+			},
+			{x: "port", y: "demodulator"}: {},
+		},
+	},
 }
 
 func (tc *edgesTestCase) Run(t *testing.T) {
@@ -438,6 +652,7 @@ func (tc *edgesTestCase) Run(t *testing.T) {
 
 	mustUpsertEntities(t, g, tc.entities)
 	mustAddRelationships(t, g, tc.relationships)
+	mustRemoveRelationships(t, g, tc.relationshipRemovals)
 
 	for ids, wantEdges := range tc.edges {
 		validateEdges := func(first, second string) {
@@ -450,7 +665,11 @@ func (tc *edgesTestCase) Run(t *testing.T) {
 				)
 			})
 
-			for i, wantEdge := range wantEdges {
+			if len(wantEdges) != len(gotEdges) {
+				t.Errorf("unexpected number of edges; want: %d; got: %d", len(wantEdges), len(gotEdges))
+			}
+			for i := 0; i < min(len(wantEdges), len(gotEdges)); i++ {
+				wantEdge := wantEdges[i]
 				gotEdge := gotEdges[i]
 				if !wantEdge.equals(gotEdge) {
 					t.Errorf(
