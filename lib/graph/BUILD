@@ -22,18 +22,23 @@ go_library(
     name = "graph",
     srcs = [
         "graph.go",
+        "traverse.go",
     ],
     importpath = "outernetcouncil.org/nmts/lib/graph",
     deps = [
         "//lib/entityrelationship",
         "//proto:nmts_go_proto",
+        "@com_github_deckarep_golang_set_v2//:golang-set",
         "@com_github_samber_lo//:lo",
     ],
 )
 
 go_test(
     name = "graph_test",
-    srcs = ["graph_test.go"],
+    srcs = [
+        "graph_test.go",
+        "traverse_test.go",
+    ],
     embed = [":graph"],
     deps = [
         "//proto:nmts_go_proto",
