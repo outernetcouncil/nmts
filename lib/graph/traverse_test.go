@@ -32,7 +32,7 @@ type walkTestCase struct {
 
 func (tc *walkTestCase) Run(t *testing.T) {
 	g := New()
-	nodes := mustAddEntities(t, g, tc.entities)
+	nodes := mustUpsertEntities(t, g, tc.entities)
 	mustAddRelationships(t, g, tc.relationships)
 
 	for from, wantVisits := range tc.wantVisits {

@@ -53,7 +53,7 @@ func mustUpsertEntity(t *testing.T, g *Graph, e *npb.Entity) *Node {
 	return node
 }
 
-func mustAddEntities(t *testing.T, g *Graph, entities []string) map[string]*Node {
+func mustUpsertEntities(t *testing.T, g *Graph, entities []string) map[string]*Node {
 	nodes := map[string]*Node{}
 	for _, e := range entities {
 		entity := mustUnmarshalEntity(t, e)
@@ -78,6 +78,52 @@ func idsSet(nodes []*Node) set.Set[string] {
 	return set.NewSet(lo.Map(nodes, func(n *Node, _ int) string {
 		return n.ID()
 	})...)
+}
+
+type nodesOfKindTestCase struct {
+	desc     string
+	entities []string
+	kindIDs  map[string]set.Set[string]
+}
+
+func (tc *nodesOfKindTestCase) Run(t *testing.T) {
+	g := New()
+
+	mustUpsertEntities(t, g, tc.entities)
+
+	for kind, wantIDs := range tc.kindIDs {
+		gotIDs := idsSet(g.NodesOfKind(kind))
+		if !wantIDs.Equal(gotIDs) {
+			t.Errorf("unexpected %s IDs; want: %v; got: %v", kind, wantIDs, gotIDs)
+		}
+	}
+}
+
+var nodesOfKindTestCases = []nodesOfKindTestCase{
+	{
+		desc: "happy path",
+		entities: []string{
+			`id: "node_a" ek_network_node{}`,
+			`id: "node_b" ek_network_node{}`,
+			`id: "node_c" ek_network_node{}`,
+			`id: "transmitter_a" ek_transmitter{}`,
+			`id: "transmitter_b" ek_transmitter{}`,
+			`id: "transmitter_c" ek_transmitter{}`,
+			`id: "demodulator_a" ek_demodulator{}`,
+			`id: "demodulator_b" ek_demodulator{}`,
+		},
+		kindIDs: map[string]set.Set[string]{
+			"EK_NETWORK_NODE": set.NewSet("node_a", "node_b", "node_c"),
+			"EK_TRANSMITTER":  set.NewSet("transmitter_a", "transmitter_b", "transmitter_c"),
+			"EK_DEMODULATOR":  set.NewSet("demodulator_a", "demodulator_b"),
+		},
+	},
+}
+
+func TestNodesOfKind(t *testing.T) {
+	for _, tc := range nodesOfKindTestCases {
+		t.Run(tc.desc, tc.Run)
+	}
 }
 
 type upsertEntityTestCase struct {
@@ -143,52 +189,6 @@ func TestUpsertEntity(t *testing.T) {
 	}
 }
 
-type nodesOfKindTestCase struct {
-	desc     string
-	entities []string
-	kindIDs  map[string]set.Set[string]
-}
-
-func (tc *nodesOfKindTestCase) Run(t *testing.T) {
-	g := New()
-
-	mustAddEntities(t, g, tc.entities)
-
-	for kind, wantIDs := range tc.kindIDs {
-		gotIDs := idsSet(g.NodesOfKind(kind))
-		if !wantIDs.Equal(gotIDs) {
-			t.Errorf("unexpected %s IDs; want: %v; got: %v", kind, wantIDs, gotIDs)
-		}
-	}
-}
-
-var nodesOfKindTestCases = []nodesOfKindTestCase{
-	{
-		desc: "happy path",
-		entities: []string{
-			`id: "node_a" ek_network_node{}`,
-			`id: "node_b" ek_network_node{}`,
-			`id: "node_c" ek_network_node{}`,
-			`id: "transmitter_a" ek_transmitter{}`,
-			`id: "transmitter_b" ek_transmitter{}`,
-			`id: "transmitter_c" ek_transmitter{}`,
-			`id: "demodulator_a" ek_demodulator{}`,
-			`id: "demodulator_b" ek_demodulator{}`,
-		},
-		kindIDs: map[string]set.Set[string]{
-			"EK_NETWORK_NODE": set.NewSet("node_a", "node_b", "node_c"),
-			"EK_TRANSMITTER":  set.NewSet("transmitter_a", "transmitter_b", "transmitter_c"),
-			"EK_DEMODULATOR":  set.NewSet("demodulator_a", "demodulator_b"),
-		},
-	},
-}
-
-func TestNodesOfKind(t *testing.T) {
-	for _, tc := range nodesOfKindTestCases {
-		t.Run(tc.desc, tc.Run)
-	}
-}
-
 type addRelationshipTestCase struct {
 	desc          string
 	entities      []string
@@ -199,7 +199,7 @@ type addRelationshipTestCase struct {
 func (tc *addRelationshipTestCase) Run(t *testing.T) {
 	g := New()
 
-	nodes := mustAddEntities(t, g, tc.entities)
+	nodes := mustUpsertEntities(t, g, tc.entities)
 
 	var err error = nil
 	for _, r := range tc.relationships {
@@ -321,7 +321,7 @@ type neighborsTestCase struct {
 func (tc *neighborsTestCase) Run(t *testing.T) {
 	g := New()
 
-	mustAddEntities(t, g, tc.entities)
+	mustUpsertEntities(t, g, tc.entities)
 	mustAddRelationships(t, g, tc.relationships)
 
 	for nodeID, wantNeighbors := range tc.neighbors {
@@ -436,7 +436,7 @@ var edgesTestCases = []edgesTestCase{
 func (tc *edgesTestCase) Run(t *testing.T) {
 	g := New()
 
-	mustAddEntities(t, g, tc.entities)
+	mustUpsertEntities(t, g, tc.entities)
 	mustAddRelationships(t, g, tc.relationships)
 
 	for ids, wantEdges := range tc.edges {
