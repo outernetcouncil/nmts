@@ -72,6 +72,13 @@ proto_library(
     import_prefix = "nmts",
 )
 
+proto_library(
+    name = "uni_proto",
+    srcs = ["uni.proto"],
+    import_prefix = "nmts",
+    deps = ["//proto/types/mef:uni_proto"],
+)
+
 cpp_proto_library(
     name = "logical_cpp_proto",
     protos = [
@@ -81,10 +88,12 @@ cpp_proto_library(
         ":route_fn_proto",
         ":sdn_agent_proto",
         ":switch_fn_proto",
+        ":uni_proto",
     ],
     deps = [
         "//proto/types/ieee:ieee_cpp_proto",
         "//proto/types/ietf:ietf_cpp_proto",
+        "//proto/types/mef:mef_cpp_proto",
     ],
 )
 
@@ -98,10 +107,12 @@ go_proto_library(
         ":route_fn_proto",
         ":sdn_agent_proto",
         ":switch_fn_proto",
+        ":uni_proto",
     ],
     deps = [
         "//proto/types/ieee:ieee_go_proto",
         "//proto/types/ietf:ietf_go_proto",
+        "//proto/types/mef:mef_go_proto",
     ],
 )
 
@@ -114,10 +125,12 @@ java_proto_library(
         ":route_fn_proto",
         ":sdn_agent_proto",
         ":switch_fn_proto",
+        ":uni_proto",
     ],
     deps = [
         "//proto/types/ieee:ieee_java_proto",
         "//proto/types/ietf:ietf_java_proto",
+        "//proto/types/mef:mef_java_proto",
     ],
 )
 
@@ -130,9 +143,11 @@ python_proto_library(
         ":route_fn_proto",
         ":sdn_agent_proto",
         ":switch_fn_proto",
+        ":uni_proto",
     ],
     deps = [
         "//proto/types/ieee:ieee_python_proto",
         "//proto/types/ietf:ietf_python_proto",
+        "//proto/types/mef:mef_python_proto",
     ],
 )

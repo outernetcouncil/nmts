@@ -35,6 +35,7 @@ proto_library(
         "//proto/ek/logical:route_fn_proto",
         "//proto/ek/logical:sdn_agent_proto",
         "//proto/ek/logical:switch_fn_proto",
+        "//proto/ek/logical:uni_proto",
         "//proto/ek/physical:antenna_proto",
         "//proto/ek/physical:modulation_proto",
         "//proto/ek/physical:physical_medium_link_proto",
@@ -42,7 +43,6 @@ proto_library(
         "//proto/ek/physical:port_proto",
         "//proto/ek/physical:signal_processing_chain_proto",
         "//proto/ek/physical:transceiver_proto",
-        "//proto/ek/service:uni_proto",
         "@protobuf//:field_mask_proto",
     ],
 )
@@ -53,7 +53,6 @@ cpp_proto_library(
     deps = [
         "//proto/ek/logical:logical_cpp_proto",
         "//proto/ek/physical:physical_cpp_proto",
-        "//proto/ek/service:service_cpp_proto",
     ],
 )
 
@@ -65,7 +64,6 @@ go_proto_library(
     deps = [
         "//proto/ek/logical:logical_go_proto",
         "//proto/ek/physical:physical_go_proto",
-        "//proto/ek/service:service_go_proto",
     ],
 )
 
@@ -75,7 +73,6 @@ java_proto_library(
     deps = [
         "//proto/ek/logical:logical_java_proto",
         "//proto/ek/physical:physical_java_proto",
-        "//proto/ek/service:service_java_proto",
     ],
 )
 
@@ -85,6 +82,5 @@ python_proto_library(
     deps = [
         "//proto/ek/logical:logical_python_proto",
         "//proto/ek/physical:physical_python_proto",
-        "//proto/ek/service:service_python_proto",
     ],
 )

@@ -27,6 +27,7 @@ import "nmts/proto/ek/logical/network_node.proto";
 import "nmts/proto/ek/logical/route_fn.proto";
 import "nmts/proto/ek/logical/sdn_agent.proto";
 import "nmts/proto/ek/logical/switch_fn.proto";
+import "nmts/proto/ek/logical/uni.proto";
 import "nmts/proto/ek/physical/antenna.proto";
 import "nmts/proto/ek/physical/modulation.proto";
 import "nmts/proto/ek/physical/physical_medium_link.proto";
@@ -34,7 +35,6 @@ import "nmts/proto/ek/physical/platform.proto";
 import "nmts/proto/ek/physical/port.proto";
 import "nmts/proto/ek/physical/signal_processing_chain.proto";
 import "nmts/proto/ek/physical/transceiver.proto";
-import "nmts/proto/ek/service/uni.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto";
 
@@ -78,7 +78,7 @@ message Entity {
     ek.logical.Interface ek_interface = 31;
     ek.logical.RouteFn ek_route_fn = 32;
     ek.logical.SwitchFn ek_switch_fn = 33;
-    ek.service.Uni ek_uni = 26;
+    ek.logical.Uni ek_uni = 26;
     ek.physical.Modulator ek_modulator = 34;
     ek.physical.Demodulator ek_demodulator = 35;
     ek.physical.SignalProcessingChain ek_signal_processing_chain = 37;
