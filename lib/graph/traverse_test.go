@@ -25,7 +25,7 @@ import (
 type walkTestCase struct {
 	desc string
 	graphEntities
-	traverseOpts []TraverseOpt
+	traverseFuncs []TraverseFunc
 	// Maps starting node ID to the expected visited nodes.
 	wantVisits map[string]set.Set[string]
 }
@@ -39,7 +39,7 @@ func (tc *walkTestCase) Run(t *testing.T) {
 		gotVisits := set.NewSet[string]()
 		dfs := DepthFirst{
 			Visit:    func(_ *Graph, n string) { gotVisits.Add(n) },
-			Traverse: Traverse(tc.traverseOpts...),
+			Traverse: TraverseAll(tc.traverseFuncs...),
 		}
 		dfs.Walk(g, from, nil)
 
@@ -53,7 +53,7 @@ var walkTestCases = []walkTestCase{
 	{
 		desc:          "traverse single edge type in either direction",
 		graphEntities: testGraph,
-		traverseOpts: []TraverseOpt{
+		traverseFuncs: []TraverseFunc{
 			Edges("EK_NETWORK_NODE", npb.RK_RK_CONTAINS, "EK_SDN_AGENT"),
 		},
 		wantVisits: map[string]set.Set[string]{
@@ -64,7 +64,7 @@ var walkTestCases = []walkTestCase{
 	{
 		desc:          "traverse single edge type in same direction as relationship",
 		graphEntities: testGraph,
-		traverseOpts: []TraverseOpt{
+		traverseFuncs: []TraverseFunc{
 			EdgesFrom("EK_NETWORK_NODE", "EK_NETWORK_NODE", npb.RK_RK_CONTAINS, "EK_SDN_AGENT"),
 		},
 		wantVisits: map[string]set.Set[string]{
@@ -75,7 +75,7 @@ var walkTestCases = []walkTestCase{
 	{
 		desc:          "traverse single edge type in opposite direction as relationship",
 		graphEntities: testGraph,
-		traverseOpts: []TraverseOpt{
+		traverseFuncs: []TraverseFunc{
 			EdgesFrom("EK_SDN_AGENT", "EK_NETWORK_NODE", npb.RK_RK_CONTAINS, "EK_SDN_AGENT"),
 		},
 		wantVisits: map[string]set.Set[string]{
@@ -86,7 +86,7 @@ var walkTestCases = []walkTestCase{
 	{
 		desc:          "traverse many edge types",
 		graphEntities: testGraph,
-		traverseOpts: []TraverseOpt{
+		traverseFuncs: []TraverseFunc{
 			EdgesFrom("EK_SDN_AGENT", "EK_NETWORK_NODE", npb.RK_RK_CONTAINS, "EK_SDN_AGENT"),
 			Edges("EK_NETWORK_NODE", npb.RK_RK_CONTAINS, "EK_INTERFACE"),
 			Edges("EK_INTERFACE", npb.RK_RK_TRAVERSES, "EK_PORT"),

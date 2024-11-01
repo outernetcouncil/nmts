@@ -30,12 +30,14 @@ func (s *stack[T]) Pop() T {
 	return n
 }
 
+type TraverseFunc func(g *Graph, fromNodeID string, candidateEdge *Edge) bool
+
 type DepthFirst struct {
 	// Visit is called once for each Node that is visited.
 	Visit func(*Graph, string)
 
 	// Traverse is called to determine whether the given Edge should be traversed from the given Node.
-	Traverse func(*Graph, string, *Edge) bool
+	Traverse TraverseFunc
 
 	visited set.Set[string]
 }
@@ -77,14 +79,11 @@ func (df *DepthFirst) Walk(g *Graph, from string, until func(string) bool) {
 	}
 }
 
-type TraverseOpt func(*Graph, string, *Edge) bool
-
-// Traverse is a helper for creating Traverse functions that can be provided to a traversal object
-// above.
-func Traverse(opts ...TraverseOpt) func(*Graph, string, *Edge) bool {
+// TraverseAll returns true if any of the given TraverseFuncs return true.
+func TraverseAll(tfs ...TraverseFunc) TraverseFunc {
 	return func(g *Graph, from string, edge *Edge) bool {
-		for _, opt := range opts {
-			if opt(g, from, edge) {
+		for _, tf := range tfs {
+			if tf(g, from, edge) {
 				return true
 			}
 		}
@@ -98,7 +97,7 @@ func Traverse(opts ...TraverseOpt) func(*Graph, string, *Edge) bool {
 //
 // NOTE: If an edge corresponds to a node that isn't loaded into the graph, it will not be
 // traversed.
-func Edges(aKind string, relationshipKind npb.RK, zKind string) TraverseOpt {
+func Edges(aKind string, relationshipKind npb.RK, zKind string) TraverseFunc {
 	return func(g *Graph, _ string, edge *Edge) bool {
 		a, z := g.Node(edge.A()), g.Node(edge.Z())
 		if a == nil || z == nil {
@@ -114,7 +113,7 @@ func Edges(aKind string, relationshipKind npb.RK, zKind string) TraverseOpt {
 //
 // NOTE: If an edge corresponds to a node that isn't loaded into the graph, it will not be
 // traversed.
-func EdgesFrom(fromKind, aKind string, relationshipKind npb.RK, zKind string) TraverseOpt {
+func EdgesFrom(fromKind, aKind string, relationshipKind npb.RK, zKind string) TraverseFunc {
 	return func(g *Graph, fromID string, edge *Edge) bool {
 		from, a, z := g.Node(fromID), g.Node(edge.A()), g.Node(edge.Z())
 		if from == nil || a == nil || z == nil {
