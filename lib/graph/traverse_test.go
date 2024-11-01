@@ -32,16 +32,16 @@ type walkTestCase struct {
 
 func (tc *walkTestCase) Run(t *testing.T) {
 	g := New()
-	nodes := mustUpsertEntities(t, g, tc.entities)
+	mustUpsertEntities(t, g, tc.entities)
 	mustAddRelationships(t, g, tc.relationships)
 
 	for from, wantVisits := range tc.wantVisits {
 		gotVisits := set.NewSet[string]()
 		dfs := DepthFirst{
-			Visit:    func(n *Node) { gotVisits.Add(n.ID()) },
+			Visit:    func(_ *Graph, n string) { gotVisits.Add(n) },
 			Traverse: Traverse(tc.traverseOpts...),
 		}
-		dfs.Walk(g, nodes[from], nil)
+		dfs.Walk(g, from, nil)
 
 		if !wantVisits.Equal(gotVisits) {
 			t.Errorf("unexpected visits from %s; want: %v; got: %v", from, wantVisits, gotVisits)

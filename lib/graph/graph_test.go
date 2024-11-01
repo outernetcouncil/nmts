@@ -53,13 +53,10 @@ func mustUpsertEntity(t *testing.T, g *Graph, e *npb.Entity) *Node {
 	return node
 }
 
-func mustUpsertEntities(t *testing.T, g *Graph, entities []string) map[string]*Node {
-	nodes := map[string]*Node{}
+func mustUpsertEntities(t *testing.T, g *Graph, entities []string) {
 	for _, e := range entities {
-		entity := mustUnmarshalEntity(t, e)
-		nodes[entity.GetId()] = mustUpsertEntity(t, g, entity)
+		mustUpsertEntity(t, g, mustUnmarshalEntity(t, e))
 	}
-	return nodes
 }
 
 func mustAddRelationship(t *testing.T, g *Graph, r *npb.Relationship) {
@@ -290,7 +287,7 @@ type addRelationshipTestCase struct {
 func (tc *addRelationshipTestCase) Run(t *testing.T) {
 	g := New()
 
-	nodes := mustUpsertEntities(t, g, tc.entities)
+	mustUpsertEntities(t, g, tc.entities)
 
 	var err error = nil
 	for _, r := range tc.relationships {
@@ -303,8 +300,6 @@ func (tc *addRelationshipTestCase) Run(t *testing.T) {
 
 		wantEdge := &Edge{
 			Relationship: relationship,
-			A:            nodes[relationship.GetA()],
-			Z:            nodes[relationship.GetZ()],
 		}
 		if *wantEdge != *gotEdge {
 			t.Errorf("unexpected edge; want: %v; got: %v", wantEdge, gotEdge)
@@ -328,24 +323,22 @@ var addRelationshipTestCases = []addRelationshipTestCase{
 		},
 	},
 	{
-		desc: "adding relationship when a doesn't exist fails",
+		desc: "adding relationship when a doesn't exist succeeds",
 		entities: []string{
 			`id: "interface" ek_interface{}`,
 		},
 		relationships: []string{
 			`a: "node" kind: RK_CONTAINS z: "interface"`,
 		},
-		wantErr: true,
 	},
 	{
-		desc: "adding relationship when z doesn't exist fails",
+		desc: "adding relationship when z doesn't exist succeeds",
 		entities: []string{
 			`id: "node" ek_network_node{}`,
 		},
 		relationships: []string{
 			`a: "node" kind: RK_CONTAINS z: "interface"`,
 		},
-		wantErr: true,
 	},
 	{
 		desc: "same relationship kind in opposite directions are allowed",
@@ -484,7 +477,7 @@ func (tc *neighborsTestCase) Run(t *testing.T) {
 	mustRemoveRelationships(t, g, tc.relationshipRemovals)
 
 	for nodeID, wantNeighbors := range tc.neighbors {
-		gotNeighbors := idsSet(g.Neighbors(nodeID))
+		gotNeighbors := set.NewSet(g.Neighbors(nodeID)...)
 		if !wantNeighbors.Equal(gotNeighbors) {
 			t.Errorf(
 				"Neighbors(%s) returned unexpected neighbors; want: %v; got: %v",
@@ -547,7 +540,7 @@ type edge struct {
 }
 
 func (e *edge) equals(graphEdge *Edge) bool {
-	return e.a == graphEdge.A.ID() && e.z == graphEdge.Z.ID() &&
+	return e.a == graphEdge.A() && e.z == graphEdge.Z() &&
 		e.kind == graphEdge.Relationship.GetKind()
 }
 
@@ -659,8 +652,8 @@ func (tc *edgesTestCase) Run(t *testing.T) {
 			gotEdges := g.Edges(first, second)
 			slices.SortFunc(gotEdges, func(a, b *Edge) int {
 				return cmp.Or(
-					cmp.Compare(a.A.ID(), b.A.ID()),
-					cmp.Compare(a.Z.ID(), b.Z.ID()),
+					cmp.Compare(a.A(), b.A()),
+					cmp.Compare(a.Z(), b.Z()),
 					cmp.Compare(a.Relationship.GetKind(), b.Relationship.GetKind()),
 				)
 			})
