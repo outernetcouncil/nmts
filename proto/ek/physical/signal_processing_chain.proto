@@ -67,7 +67,7 @@ message MiscGainOrLoss {
 message RectangularFilter {
   // Set this only if the filter's frequency is static.
   // If the field is not set, it will be configured dynamically according to the
-  // center of frequency of the channel in use.
+  // center frequency of the channel in use.
   double frequency_hz = 1;
 
   // The offset to the lower bandwidth limit, in Hz.
@@ -91,6 +91,25 @@ message LinearFilter {
   // filter's configured / design frequency. This should be a positive value.
   // Required.
   double rejection_db_per_hz = 1;
+
+  // Set this only if the filter's frequency is static.
+  // If the field is not set, it will be configured dynamically according to the
+  // center frequency of the channel in use.
+  double frequency_hz = 2;
+
+  // The offset to the lower bandwidth limit, in Hz.
+  // If the field is not set, it will be configured dynamically according to the
+  // bandwidth of the channel in use.
+  double lower_bandwidth_limit_hz = 3;
+
+  // The offset to the upper bandwidth limit, in Hz.
+  // If the field is not set, it will be configured dynamically according to the
+  // bandwidth of the channel in use.
+  double upper_bandwidth_limit_hz = 4;
+
+  // The thermal noise temperature of the filter, in Kelvin.
+  // Required.
+  double noise_temperature_k = 5;
 }
 
 /*
