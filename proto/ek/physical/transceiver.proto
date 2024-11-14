@@ -44,6 +44,9 @@ message Transmitter {
     double max_power_w = 2;
   }
   // The carriers that this transmitter supports.
+  // If multiple elements have the same TransmitSignal.signal field but each has
+  // a different TransmitSignal.max_power_w field, the max_power_w for the
+  // signal will be determined from the first such element.
   // Required.
   repeated TransmitSignal signals = 1;
 }
