@@ -45,18 +45,39 @@ message Interface {
   // from a subinterface (i.e. an Interface or a Port that this
   // Interface RK_TRAVERSES).
   //
-  // If this Interface RK_TRAVERSES another Interface, there is
+  // If this EK_INTERFACE RK_TRAVERSES another EK_INTERFACE, there is
   // no recommendation that non-zero index values be the same. If this
   // Interface RK_TRAVERSES a Port then it is RECOMMENDED that non-zero
   // values be identical.
   uint32 if_index = 2;
 
-  // Default value (zero) implies the MTU is unset. A lower Interface
-  // or Port which this Interface `RK_TRAVERSES` should be checked
+  // Default value (zero) implies the MTU is unset. A lower EK_INTERFACE
+  // or EK_PORT which this EK_INTERFACE RK_TRAVERSES should be checked
   // prior to assuming some default MTU.
   uint32 mtu = 3;
 
-  reserved 4 to 9;
+  // The peak information rate of this interface, in bits per second.
+  //
+  // See also RFC 8343 "speed" / RFC 2863 "ifSpeed" and "ifHighSpeed":
+  //
+  // "For interfaces that do not vary in bandwidth or for those where
+  //  no accurate estimation can be made, this node should contain the
+  //  nominal bandwidth. For interfaces that have no concept of
+  //  bandwidth, this ... is not present."
+  //
+  // The actual speed of an interface at a given layer is constrained
+  // by speed values given in lower layer interfaces (i.e. speed values
+  // in any sequence of interfaces that this interface traverses). It
+  // may be further constrained by speed values given in any
+  // EK_LOGICAL_PACKET_LINKs to which it is connected.
+  //
+  // Default value (zero) implies the speed is unset. A lower layer
+  // EK_INTERFACE or EK_PORT which this EK_INTERFACE RK_TRAVERSES
+  // should be checked prior to assuming some default speed
+  // (or zero value).
+  uint64 max_data_rate_bps = 4;
+
+  reserved 5 to 9;
 
   ///
   // Attributes specific to an interface "layer" or logical capabilities.

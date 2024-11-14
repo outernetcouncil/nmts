@@ -22,4 +22,9 @@ option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
 // channels. Can represent P2P media, like a fibre or copper Ethernet cable
 // or P2MP media like RF and some free space optical links.
 message PhysicalMediumLink {
+  // Peak information rate (PIR) of this link in bits per second.
+  //
+  // Link speed MAY also be inferred from EK_PORTs to which this link
+  // is connected.
+  uint64 max_data_rate_bps = 1;
 }

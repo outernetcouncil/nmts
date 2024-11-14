@@ -27,15 +27,14 @@ option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
 // carry in general, and additional constraints (flow specifications,
 // FIB policies, etc) may be applied at the `EK_INTERFACE` ends.
 message LogicalPacketLink {
-  // Common properties shared by logical packet links. If none are
-  // specified and this link `RK_TRAVERSES` another link then relevant
-  // properties might be found there.
-  message Properties {
-    // Maximum data rate (CIR) of this link in bits per second.
-    // The default value of 0.0 means "unspecified", not zero bps.
-    double max_data_rate_bps = 1;
-  }
-  Properties properties = 1;
+  // Peak information rate (PIR) of this link in bits per second.
+  //
+  // The default value of 0 means "unspecified", not zero bps, unless
+  // this link is the lowest layer in a stack (i.e. there is no other
+  // EK_LOGICAL_PACKET_LINK or EK_PHYSICAL_MEDIUM_LINK that this link
+  // RK_TRAVERSES). Link speed MAY be inferred from EK_INTERFACEs that
+  // RK_ORIGINATES/RK_TERMINATES this link, depending on context.
+  uint64 max_data_rate_bps = 1;
 
   // TODO: move this info out into an EK_NEXT_HOP entity which
   // has a clear relationship with an EK_ROUTE_FN, so that the
