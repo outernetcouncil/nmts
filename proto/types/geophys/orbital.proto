@@ -98,6 +98,10 @@ message KeplerianElements {
   // orbit of a satellite. This specifies the time at which the snapshot
   // was taken.
   google.protobuf.Timestamp epoch = 7;
+
+  // The celestial body the platform orbits. Consumers may assume a default
+  // central body (Earth) if unspecified.
+  CentralBody central_body = 8;
 }
 
 message PropagationParameters {
