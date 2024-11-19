@@ -29,7 +29,7 @@ import "nmts/proto/ek/logical/sdn_agent.proto";
 import "nmts/proto/ek/logical/switch_fn.proto";
 import "nmts/proto/ek/logical/uni.proto";
 import "nmts/proto/ek/physical/antenna.proto";
-import "nmts/proto/ek/physical/modulation.proto";
+import "nmts/proto/ek/physical/modem.proto";
 import "nmts/proto/ek/physical/physical_medium_link.proto";
 import "nmts/proto/ek/physical/platform.proto";
 import "nmts/proto/ek/physical/port.proto";

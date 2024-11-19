@@ -19,28 +19,7 @@ syntax = "proto3";
 
 package nmts.ek.physical;
 
-import "nmts/proto/ek/physical/common.proto";
-
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
-
-// A measurement of received signal quality that describes the threshold for
-// using a particular modulation and coding (MODCOD) scheme.
-message ModcodThreshold {
-  // A human readable name (e.g. "QPSK-LDPC-2-3") describing the MODCOD.
-  // This name is not used in any logic. This is purely for human operators to
-  // associate a threshold with a MODCOD.
-  string modcod_name = 1;
-
-  // Required.
-  oneof threshold {
-    // The ratio of the power of the carrier (or signal) at the demod input to
-    // the noise power of the signal plus the power of the interfering
-    // signals, in dB.
-    double min_carrier_to_noise_plus_interference_db = 2;
-    // The power of the intended signal at the receiver output, in dBW.
-    double min_received_signal_power_dbw = 3;
-  }
-}
 
 // Models the Adaptive Coding and Modulation (ACM) configuration used by a
 // modem.
@@ -66,7 +45,7 @@ message ModcodThreshold {
 // For reference, see ETSI TR 102 376-2 V1.2.1 (2021-01)
 // (http://www.etsi.org/standards-search).
 //
-// 1) To populate a modcod_threshold:
+// 1) To populate a CarrierToNoisePlusInterferenceThresholdToDataRate:
 //    Compute the corresponding C/N values:
 //      C/N = (Es / N0) + (symbol_rate / bandwidth)     [using dB math]
 //    Suppose (symbol_rate / bandwidth) = 1 / 1.1 = 0.9091 = -0.4139 dB.
@@ -78,7 +57,8 @@ message ModcodThreshold {
 //    For QPSK 9/20, min_carrier_to_noise_plus_interference_db is -0.1939 dB.
 //    For QPSK 11/20, min_carrier_to_noise_plus_interference_db is 1.0361 dB.
 //
-// 2) To populate modcod_to_data_rates:
+// 2) To populate adaptive_coding_and_modulation in 
+//    AdaptiveCodingAndModulationForChannelBandwidth:
 //    Note that:
 //      Data rate = (spectral_efficiency) * (symbol_rate)
 //    Suppose a channel in the network has:
@@ -89,63 +69,84 @@ message ModcodThreshold {
 //      Data rate = (0.43484 bits/symbol) * (100_000_000 symbols/second)
 //                = 43_484_000 bits/second
 //    This process can be repeated for each MODCOD in the table above to 
-//    populate an AdaptiveCodingAndModulation message:
-//    channel_bandwidth_hz: 110_000_000
-//    symbol_rate_symbols_per_second: 100_000_000
-//    modcod_to_data_rates {
-//      modcod_threshold {
+//    populate a CarrierToNoisePlusInterferenceThresholdToDataRateList:
+//    carrier_to_noise_plus_interference_threshold_to_data_rate_list {
+//      carrier_to_noise_plus_interference_threshold_to_data_rates {
 //        modcod_name: "QPSK 2/9"
 //        min_carrier_to_noise_plus_interference_db: -3.2639
+//        data_rate_bps: 43_484_000
 //      }
-//      data_rate_bps: 43_484_000
-//    }
-//    modcod_to_data_rates {
-//      modcod_threshold {
+//      carrier_to_noise_plus_interference_threshold_to_data_rates {
 //        modcod_name: "QPSK 13/45"
 //        min_carrier_to_noise_plus_interference_db: -2.4439
+//        data_rate_bps: 56_780_500
 //      }
-//      data_rate_bps: 56_780_500
-//    }
-//    modcod_to_data_rates {
-//      modcod_threshold {
+//      carrier_to_noise_plus_interference_threshold_to_data_rates {
 //        modcod_name: "QPSK 9/20"
 //        min_carrier_to_noise_plus_interference_db: -0.1939
+//        data_rate_bps: 88_913_500
 //      }
-//      data_rate_bps: 88_913_500
-//    }
-//    modcod_to_data_rates {
-//      modcod_threshold {
+//      carrier_to_noise_plus_interference_threshold_to_data_rates {
 //        modcod_name: "QPSK 11/20"
 //        min_carrier_to_noise_plus_interference_db: 1.0361
+//        data_rate_bps: 108_858_100
 //      }
-//      data_rate_bps: 108_858_100
-//    }
+//    } 
 //
 // This approach can be tuned based on the actual modems and their measured
 // implementation loss and supported set of MODCODs, etc.
-message AdaptiveCodingAndModulation {
-  // The channel bandwidth.
+
+// A threshold of carrier to noise-plus-interference that is required to use a 
+// particular modulation and coding (MODCOD) scheme.
+message CarrierToNoisePlusInterferenceThresholdToDataRate {
+  // A human readable name (e.g. "QPSK-LDPC-2-3") describing the MODCOD.
+  // This name is not used in any logic. This is purely for human operators to
+  // associate a threshold with a MODCOD.
+  string modcod_name = 1;
+
+  // The ratio of the power of the carrier (or signal) at the demod input to
+  // the noise power of the signal plus the power of the interfering signals, in
+  // dB.
   // Required.
-  uint64 channel_bandwidth_hz = 1;
+  double min_carrier_to_noise_plus_interference_db = 2;
 
-  // The symbol rate (baud rate), in symbols per second, of carriers that are
-  // assigned to channels of this bandwidth.
-  uint64 symbol_rate_symbols_per_second = 2;
+  // The expected Layer 2 data rate of the channel, provided that the receiver
+  // receives at least the threshold specified by 
+  // min_carrier_to_noise_plus_interference_db.
+  // Required.
+  double data_rate_bps = 3;
+}
 
-  message ModcodToDataRate {
-    // The MODCOD available to the modem.
-    // Required.
-    ModcodThreshold modcod_threshold = 1;
-
-    // The expected Layer 2 data rate, provided that the receiver receives at
-    // least the threshold specified by modcod_threshold.
-    // Required.
-    double data_rate_bps = 2;
+// Models the adaptive coding and modulation behavior for one channel bandwidth.
+message AdaptiveCodingAndModulationForChannelBandwidth {
+  // A list of CarrierToNoisePlusInterferenceThresholdToDataRate messages for
+  // use in the adaptive_coding_and_modulation field.
+  message CarrierToNoisePlusInterferenceThresholdToDataRateList {
+    repeated CarrierToNoisePlusInterferenceThresholdToDataRate 
+        carrier_to_noise_plus_interference_threshold_to_data_rates = 1;
   }
-  // Maps a threshold of received signal quality to the Layer 2 data rate
-  // achievable over this channel.
+
+  // Maps thresholds of received signal quality to the Layer 2 data rate 
+  // achievable over the channel. 
   // Required.
-  repeated ModcodToDataRate modcod_to_data_rates = 3;
+  oneof adaptive_coding_and_modulation {
+    CarrierToNoisePlusInterferenceThresholdToDataRateList 
+        carrier_to_noise_plus_interference_threshold_to_data_rate_list = 1;
+    // Other thresholds of received signal quality may be supported in the
+    // future, such as energy per symbol to noise power spectral density 
+    // (Es/N0).
+  }
+
+  // The channel bandwidth to which the adaptive coding and modulation
+  // configuration applies. The data rates in adaptive_coding_and_modulation 
+  // should be calculated based on this channel bandwidth.
+  // Required.
+  uint64 channel_bandwidth_hz = 2;
+
+  // The channel center frequencies to which the adaptive coding and modulation
+  // configuration applies.
+  // Required.
+  repeated uint64 center_frequencies_hz = 3;
 }
 
 // Arbitrary compatibility labels that can constrain the formation of wireless
@@ -156,35 +157,27 @@ message CompatibilityLabels {
   // TODO: Consider how compatibility should be modeled.
 }
 
-message AdaptiveCodingAndModulationToChannels {
-  // The adaptive coding and modulation configuration.
-  // Required.
-  AdaptiveCodingAndModulation adaptive_coding_and_modulation = 1;
-
-  // The list of channels to which this adaptive coding and modulation
-  // configuration applies.
-  // Required.
-  repeated Signal signals = 2;
-}
-
 // Models a modulator.
 message Modulator {
   // Arbitrary compatibility labels can be used to constrain the formation of
   // wireless links.
   CompatibilityLabels compatibility_labels = 1;
 
-  // The adaptive coding and modulation configurations supported by this modem
-  // and the channels to which each configuration applies.
+  // The adaptive coding and modulation configurations supported by this modem.
+  // Each element describes the behavior for one channel bandwidth.
   // Note that if a channel is not present in
-  // adaptive_coding_and_modulation_to_channels, that channel is considered to
-  // be unsupported by the modem.
+  // adaptive_coding_and_modulation_for_channel_bandwidths, that channel is 
+  // considered to be unsupported by the modem.
   // In order to form a wireless link, the adaptive coding and modulation
   // configuration for the channel, as specified by
-  // AdaptiveCodingAndModulationToChannels.adaptive_coding_and_modulation,
-  // must match exactly between the Modulator and Demodulator.
+  // AdaptiveCodingAndModulationForChannelBandwidth
+  // .adaptive_coding_and_modulation, must match exactly between the Modulator 
+  // and Demodulator. If a channel is present in multiple elements of this list,
+  // the adaptive coding and modulation will be determined from the first such 
+  // element.
   // Required.
-  repeated AdaptiveCodingAndModulationToChannels
-    adaptive_coding_and_modulation_to_channels = 2;
+  repeated AdaptiveCodingAndModulationForChannelBandwidth
+    adaptive_coding_and_modulation_for_channel_bandwidths = 2;
 
   // TODO: Add a field to indicate whether this modem is capable of
   // forming multiple-access links.
@@ -196,18 +189,21 @@ message Demodulator {
   // wireless links.
   CompatibilityLabels compatibility_labels = 1;
 
-  // The adaptive coding and modulation configurations supported by this modem
-  // and the channels to which each configuration applies.
+  // The adaptive coding and modulation configurations supported by this modem.
+  // Each element describes the behavior for one channel bandwidth.
   // Note that if a channel is not present in
-  // adaptive_coding_and_modulation_to_channels, that channel is considered to
-  // be unsupported by the modem.
+  // adaptive_coding_and_modulation_for_channel_bandwidths, that channel is 
+  // considered to be unsupported by the modem.
   // In order to form a wireless link, the adaptive coding and modulation
   // configuration for the channel, as specified by
-  // AdaptiveCodingAndModulationToChannels.adaptive_coding_and_modulation,
-  // must match exactly between the Modulator and Demodulator.
+  // AdaptiveCodingAndModulationForChannelBandwidth
+  // .adaptive_coding_and_modulation, must match exactly between the Modulator 
+  // and Demodulator. If a channel is present in multiple elements of this list,
+  // the adaptive coding and modulation will be determined from the first such 
+  // element.
   // Required.
-  repeated AdaptiveCodingAndModulationToChannels
-    adaptive_coding_and_modulation_to_channels = 2;
+  repeated AdaptiveCodingAndModulationForChannelBandwidth
+    adaptive_coding_and_modulation_for_channel_bandwidths = 2;
 
   // TODO: Add a field to indicate whether this modem is capable of
   // forming multiple-access links.

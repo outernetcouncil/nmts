@@ -37,7 +37,7 @@ proto_library(
         "//proto/ek/logical:switch_fn_proto",
         "//proto/ek/logical:uni_proto",
         "//proto/ek/physical:antenna_proto",
-        "//proto/ek/physical:modulation_proto",
+        "//proto/ek/physical:modem_proto",
         "//proto/ek/physical:physical_medium_link_proto",
         "//proto/ek/physical:platform_proto",
         "//proto/ek/physical:port_proto",
