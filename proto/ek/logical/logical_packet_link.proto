@@ -48,6 +48,14 @@ message LogicalPacketLink {
     // link by the router than `RK_CONTAINS` the `EK_INTERFACE` that
     // `RK_ORIGINATES` this link.
     types.ietf.SegmentId adjacency_sid = 2;
+
+    // Maximum SID Depth, specifically the RFC 8491 Link MSD-Type value.
+    //
+    // The proto3-default value of zero means no max SID depth is given.
+    // Spacetime MAY apply a default max SID depth, configured elsewhere.
+    //
+    // See also RFCs 8476, 8491, 8664, and 8814.
+    uint32 max_sid_depth = 3;
   }
   SegmentRouting sr = 2;
 
