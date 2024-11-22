@@ -26,6 +26,12 @@ package(
 # Per-proto file library rules.
 ##
 proto_library(
+    name = "bpagent_fn_proto",
+    srcs = ["bpagent_fn.proto"],
+    import_prefix = "nmts",
+)
+
+proto_library(
     name = "interface_proto",
     srcs = ["interface.proto"],
     import_prefix = "nmts",
@@ -82,6 +88,7 @@ proto_library(
 cpp_proto_library(
     name = "logical_cpp_proto",
     protos = [
+        ":bpagent_fn_proto",
         ":interface_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
@@ -101,6 +108,7 @@ go_proto_library(
     name = "logical_go_proto",
     importpath = "outernetcouncil.org/nmts/proto/ek/logical",
     protos = [
+        ":bpagent_fn_proto",
         ":interface_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
@@ -119,6 +127,7 @@ go_proto_library(
 java_proto_library(
     name = "logical_java_proto",
     protos = [
+        ":bpagent_fn_proto",
         ":interface_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
@@ -137,6 +146,7 @@ java_proto_library(
 python_proto_library(
     name = "logical_python_proto",
     protos = [
+        ":bpagent_fn_proto",
         ":interface_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",

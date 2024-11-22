@@ -29,6 +29,7 @@ proto_library(
     srcs = ["nmts.proto"],
     import_prefix = "nmts",
     deps = [
+        "//proto/ek/logical:bpagent_fn_proto",
         "//proto/ek/logical:interface_proto",
         "//proto/ek/logical:logical_packet_link_proto",
         "//proto/ek/logical:network_node_proto",

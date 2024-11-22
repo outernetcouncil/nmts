@@ -21,6 +21,7 @@ syntax = "proto3";
 package nmts;
 
 import "google/protobuf/field_mask.proto";
+import "nmts/proto/ek/logical/bpagent_fn.proto";
 import "nmts/proto/ek/logical/interface.proto";
 import "nmts/proto/ek/logical/logical_packet_link.proto";
 import "nmts/proto/ek/logical/network_node.proto";
@@ -69,13 +70,16 @@ message Entity {
   // the EK_PLATFORM's display_name.
   map<string, string> labels = 2;
 
+  reserved 3 to 10;  // future global attributes
+
   oneof kind {
     ek.physical.Platform ek_platform = 11;
     ek.physical.PhysicalMediumLink ek_physical_medium_link = 12;
     ek.physical.Port ek_port = 13;
+    ek.logical.BpAgentFn ek_bpagent_fn = 21;
+    ek.logical.Interface ek_interface = 31;
     ek.logical.LogicalPacketLink ek_logical_packet_link = 20;
     ek.logical.NetworkNode ek_network_node = 30;
-    ek.logical.Interface ek_interface = 31;
     ek.logical.RouteFn ek_route_fn = 32;
     ek.logical.SwitchFn ek_switch_fn = 33;
     ek.logical.Uni ek_uni = 26;
