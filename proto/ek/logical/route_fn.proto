@@ -42,7 +42,7 @@ message RouteFn {
     // Maximum SID Depth, specifically the RFC 8491 Node MSD-Type value.
     //
     // The proto3-default value of zero means no max SID depth is given.
-    // Spacetime MAY apply a default max SID depth, configured elsewhere.
+    // A modeling implementation MAY apply a default max SID depth.
     //
     // See also RFCs 8476, 8491, 8664, and 8814.
     uint32 max_sid_depth = 3;

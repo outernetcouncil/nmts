@@ -172,7 +172,8 @@ message StateVector {
 //
 // Notes:
 // - Though the OEM Metadata INTERPOLATION and INTERPOLATION_DEGREE
-//   fields are Optional in the specification, they are required by Spacetime
+//   fields are Optional in the specification, they may be required by a
+//   modeling implementation
 // - File format can be either Key-value notation (KVN) or extensible markup
 //   language (XML)
 // - Presently supports single-segment CCSDS OEM Files (multi-segment will
