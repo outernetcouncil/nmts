@@ -19,6 +19,7 @@ package nmts.types.physical;
 import "google/protobuf/empty.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.types.physical";
+option go_package = "outernetcouncil.org/nmts/proto/types/physical";
 
 // TODO: Add other polarization types.
 message Polarization {

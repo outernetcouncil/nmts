@@ -38,6 +38,7 @@ import "nmts/proto/ek/physical/signal_processing_chain.proto";
 import "nmts/proto/ek/physical/transceiver.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto";
+option go_package = "outernetcouncil.org/nmts/proto";
 
 // An Entity MUST be considered invalid whenever any of the
 // following conditios are found to be true:

@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.types.ietf;
 
 option java_package = "org.outernetcouncil.nmts.proto.types.ietf";
+option go_package = "outernetcouncil.org/nmts/proto/types/ietf";
 
 // Some types derived from "ietf-inet-types" YANG module;
 // see [RFC 6991](https://rfc-editor.org/rfc/rfc6991).

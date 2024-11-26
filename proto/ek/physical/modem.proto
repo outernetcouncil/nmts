@@ -20,6 +20,7 @@ syntax = "proto3";
 package nmts.ek.physical;
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/proto/ek/physical";
 
 // Models the Adaptive Coding and Modulation (ACM) configuration used by a
 // modem.

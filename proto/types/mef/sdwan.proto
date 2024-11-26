@@ -24,6 +24,7 @@ syntax = "proto3";
 package nmts.types.mef;
 
 option java_package = "org.outernetcouncil.nmts.proto.types.mef";
+option go_package = "outernetcouncil.org/nmts/proto/types/mef";
 
 ///
 // MEF 70.2

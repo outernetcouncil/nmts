@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.ek.physical;
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/proto/ek/physical";
 
 // Represents the physical medium underlying higher layer communications
 // channels. Can represent P2P media, like a fibre or copper Ethernet cable

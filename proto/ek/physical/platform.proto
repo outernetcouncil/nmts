@@ -21,6 +21,7 @@ package nmts.ek.physical;
 import "nmts/proto/types/geophys/motion.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/proto/ek/physical";
 
 // Models a physical platform, such as a ground station, satellite,
 // fixed or mobile user terminal, aircraft, ship, terrestrial vehicle, etc.

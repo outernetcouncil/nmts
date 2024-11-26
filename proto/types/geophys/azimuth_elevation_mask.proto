@@ -21,6 +21,7 @@ package nmts.types.geophys;
 import "nmts/proto/types/geophys/coordinates.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.types.geophys";
+option go_package = "outernetcouncil.org/nmts/proto/types/geophys";
 
 // Each element of an Azimuth-Elevation Mask specifies the maximum obscured
 // elevation angle in a sampled direction from the antenna.

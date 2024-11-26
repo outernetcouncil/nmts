@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.types.ieee;
 
 option java_package = "org.outernetcouncil.nmts.proto.types.ieee";
+option go_package = "outernetcouncil.org/nmts/proto/types/ieee";
 
 // TODO: cite some useful references (last resort: RFC 2579?).
 //

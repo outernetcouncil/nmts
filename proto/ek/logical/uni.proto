@@ -19,6 +19,7 @@ package nmts.ek.logical;
 import "nmts/proto/types/mef/uni.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
+option go_package = "outernetcouncil.org/nmts/proto/ek/logical";
 
 // EK_UNI
 //

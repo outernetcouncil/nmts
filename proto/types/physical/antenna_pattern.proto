@@ -19,6 +19,7 @@ syntax = "proto3";
 package nmts.types.physical;
 
 option java_package = "org.outernetcouncil.nmts.proto.types.physical";
+option go_package = "outernetcouncil.org/nmts/proto/types/physical";
 
 // A custom antenna pattern defined through spherical coordinates
 // (IEEE 149-1979).
