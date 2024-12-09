@@ -19,15 +19,14 @@ import (
 	"strings"
 
 	er "outernetcouncil.org/nmts/lib/entityrelationship"
+	"outernetcouncil.org/nmts/lib/graph"
 	npb "outernetcouncil.org/nmts/proto"
 )
 
-type DefaultValidator struct {
-}
-
-// Validate each entity as it's loaded within the collection context
-// assembled up to that point.
-func (DefaultValidator) ValidateEntity(coll *er.Collection, entity *npb.Entity) error {
+func IsEntityMinimallyWellFormed(entity *npb.Entity) error {
+	if entity == nil {
+		return fmt.Errorf("entity MUST NOT be nil")
+	}
 	id := entity.Id
 
 	// Do not permit extraneous whitespace; this likely indicates
@@ -46,6 +45,15 @@ func (DefaultValidator) ValidateEntity(coll *er.Collection, entity *npb.Entity) 
 	}
 
 	return nil
+}
+
+type DefaultValidator struct {
+}
+
+// Validate each entity as it's loaded within the collection context
+// assembled up to that point.
+func (DefaultValidator) ValidateEntity(coll *er.Collection, entity *npb.Entity) error {
+	return IsEntityMinimallyWellFormed(entity)
 }
 
 type allowedRelationship = struct {
@@ -125,7 +133,7 @@ func (DefaultValidator) ValidateRelationship(coll *er.Collection, rel er.Relatio
 	// More detailed checks can be added here, after basic validity
 	// has been checked and before the "default deny" error.
 
-	return fmt.Errorf("unsupport relationship between entites: '%v'", rel.String())
+	return fmt.Errorf("unsupported relationship between entites: '%v'", rel.String())
 }
 
 // Validate the complete collection.
@@ -137,4 +145,21 @@ func (DefaultValidator) ValidateCollection(coll *er.Collection) error {
 		return fmt.Errorf("found no relationships")
 	}
 	return nil
+}
+
+type DefaultGraphValidator struct {
+}
+
+func (DefaultGraphValidator) ValidateRelationship(g *graph.Graph, rel er.Relationship) error {
+	kindA := g.Node(rel.A).Kind()
+	kindZ := g.Node(rel.Z).Kind()
+
+	if _, ok := permittedRelationships[allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}]; ok {
+		return nil
+	}
+
+	// More detailed checks can be added here, after basic validity
+	// has been checked and before the "default deny" error.
+
+	return fmt.Errorf("unsupported relationship between entites: '%v'", rel.String())
 }

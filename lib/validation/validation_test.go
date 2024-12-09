@@ -19,6 +19,7 @@ import (
 
 	"google.golang.org/protobuf/encoding/prototext"
 	er "outernetcouncil.org/nmts/lib/entityrelationship"
+	"outernetcouncil.org/nmts/lib/graph"
 	"outernetcouncil.org/nmts/lib/validation"
 	npb "outernetcouncil.org/nmts/proto"
 )
@@ -229,7 +230,7 @@ var relationshipTestCases = []testCase{
 	},
 }
 
-func TestEntityKindStringExamples(t *testing.T) {
+func TestSimpleCollectionEntityRelationshipValidation(t *testing.T) {
 	for _, tc := range relationshipTestCases {
 		collection := er.NewCollection()
 		validator := validation.DefaultValidator{}
@@ -262,5 +263,41 @@ func TestEntityKindStringExamples(t *testing.T) {
 			Z:    entityZ.Id,
 		}
 		validator.ValidateRelationship(collection, relationship)
+	}
+}
+
+func TestSimpleGraphEntityRelationshipValidation(t *testing.T) {
+	for _, tc := range relationshipTestCases {
+		g := graph.New()
+		validator := validation.DefaultGraphValidator{}
+
+		entityA := new(npb.Entity)
+		if err := prototext.Unmarshal([]byte(tc.entityA), entityA); err != nil {
+			t.Fatalf("failed to parse %q: %q", tc.entityA, err)
+		}
+		if _, err := g.UpsertEntity(entityA); err != nil {
+			t.Fatalf("Failed to add entity %q to graph: %q", tc.entityA, err)
+		}
+		if err := validation.IsEntityMinimallyWellFormed(entityA); err != nil {
+			t.Fatalf("Entity validation error for %q: %q", tc.entityA, err)
+		}
+
+		entityZ := new(npb.Entity)
+		if err := prototext.Unmarshal([]byte(tc.entityZ), entityZ); err != nil {
+			t.Fatalf("failed to parse %q: %q", tc.entityZ, err)
+		}
+		if _, err := g.UpsertEntity(entityZ); err != nil {
+			t.Fatalf("Failed to add entity %q to graph: %q", tc.entityZ, err)
+		}
+		if err := validation.IsEntityMinimallyWellFormed(entityZ); err != nil {
+			t.Fatalf("Entity validation error for %q: %q", tc.entityZ, err)
+		}
+
+		relationship := er.Relationship{
+			A:    entityA.Id,
+			Kind: tc.rk,
+			Z:    entityZ.Id,
+		}
+		validator.ValidateRelationship(g, relationship)
 	}
 }

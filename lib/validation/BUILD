@@ -24,6 +24,7 @@ go_library(
     importpath = "outernetcouncil.org/nmts/lib/validation",
     deps = [
         "//lib/entityrelationship",
+        "//lib/graph",
         "//proto:nmts_go_proto",
     ],
 )
@@ -34,6 +35,7 @@ go_test(
     deps = [
         ":validation",
         "//lib/entityrelationship",
+        "//lib/graph",
         "//proto:nmts_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",
     ],
