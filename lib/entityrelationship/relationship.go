@@ -34,6 +34,14 @@ func RelationshipFromProto(r *npb.Relationship) Relationship {
 	}
 }
 
+func (r *Relationship) ToProto() *npb.Relationship {
+	return &npb.Relationship{
+		A:    r.A,
+		Z:    r.Z,
+		Kind: r.Kind,
+	}
+}
+
 func (r *Relationship) String() string {
 	return fmt.Sprintf("%v->%s->%v", r.A, r.Kind.String(), r.Z)
 }
