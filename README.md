@@ -1,12 +1,12 @@
 # Network Model for Temporospatial Systems (NMTS)
 
-<div style="text-align: right">
+<p align="right">
 <br/>
 "All models are wrong, but some are useful"<br/>
 <a href="https://en.wikipedia.org/wiki/All_models_are_wrong">wikipedia</a><br/>
 &mdash; <a href="https://en.wikipedia.org/wiki/George_E._P._Box">George E. P. Box</a><br/>
 <br/>
-</div>
+</p>
 
 Inspired by Google's Multi-Abstraction-Layer Topology (MALT; see
 [NSDI 2020 site](https://www.usenix.org/conference/nsdi20/presentation/mogul)
