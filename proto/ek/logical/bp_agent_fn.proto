@@ -19,7 +19,7 @@ package nmts.ek.logical;
 option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
 option go_package = "outernetcouncil.org/nmts/proto/ek/logical";
 
-// Entity Kind: Bundle Protocol Agent Function (`EK_BPAGENT_FN`)
+// Entity Kind: Bundle Protocol Agent Function (`EK_BP_AGENT_FN`)
 //
 // A Bundle Protocol Agent Function, presummably BPv7 (RFC 9171,
 // et al.).
