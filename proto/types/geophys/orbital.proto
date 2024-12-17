@@ -180,6 +180,6 @@ message StateVector {
 // - Presently supports single-segment CCSDS OEM Files (multi-segment will
 //   throw error)
 message CcsdsOrbitEphemerisMessage {
-  // CCSDS OEM File as a String
-  optional string file = 1;
+  // CCSDS OEM file contents as a String
+  optional string file_contents = 1;
 }

@@ -184,6 +184,11 @@ var relationshipTestCases = []testCase{
 	{
 		entityA: `id: "sdn_agentA" ek_sdn_agent{}`,
 		rk:      npb.RK_RK_CONTROLS,
+		entityZ: `id: "bp_agent_fnZ" ek_bp_agent_fn{}`,
+	},
+	{
+		entityA: `id: "sdn_agentA" ek_sdn_agent{}`,
+		rk:      npb.RK_RK_CONTROLS,
 		entityZ: `id: "demodulatorZ" ek_demodulator{}`,
 	},
 	{
