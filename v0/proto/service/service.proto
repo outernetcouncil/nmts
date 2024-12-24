@@ -1,0 +1,160 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.service;
+
+import "google/protobuf/duration.proto";
+import "google/type/interval.proto";
+import "nmts/v0/proto/types/ietf/inet.proto";
+
+option java_package = "org.outernetcouncil.nmts.serivce.proto";
+
+// Doc comments are casual and meant for internal development; they should not
+// be published as-is.
+
+// A pair of endpoints. TODO: should consider all types in
+// https://wiki.mef.net/display/CESG/E-Line
+message SrcDstPair {
+  oneof src {
+    string src_uni_id = 1;
+  }
+  oneof dst {
+    string dst_uni_id = 2;
+    types.ietf.IPNetwork ip_network = 3;
+  }
+}
+
+// Describes a request to provision a network flow.
+message ServiceRequest {
+  repeated SrcDstPair pairs = 1;
+
+  // A request will be treated as having a higher priority if the value of this
+  // field is greater than that of another service request.
+  // TODO: consider reserving ranges of importance for certain applications
+  optional double priority = 2;
+
+  FlowRequirements requirements = 3;
+  TransportConfiguration configuration = 4;
+}
+
+message FlowRequirements {
+  // The time interval over which these requirements are applicable.
+  optional google.type.Interval interval = 1;
+
+  // The minimum bandwidth to provision for the flow (optional), in layer 2
+  // bits per second.  If the minimum bandwidth cannot be achieved, the flow
+  // will not be provisioned at all. If the minimum bandwidth is not
+  // specified or is too low, the routing service will assume 100 bps.
+  optional double bandwidth_bps_minimum = 2;
+
+  // Requested bandwidth to provision for the flow, in layer 2 bits/sec.
+  optional double bandwidth_bps_requested = 3;
+
+  // The maximum allowed end-to-end latency for the flow (optional).
+  optional google.protobuf.Duration latency_maximum = 5;
+
+  // Set to true if the network flow being requested may be stored and
+  // forwarded later — either at the source node or in transit along the
+  // transmission path using store-and-forward protocols.
+  //
+  // The flow is considered provisioned so long as data accumulating at
+  // ‘bandwidth_bps_minimum’ rate across the entirety of the requested time
+  // interval or planning horizon may be satisfied by on-path NetworkNodes'
+  // Storage.available_bytes.
+  optional bool is_disruption_tolerant = 6;
+}
+
+message TransportConfiguration {
+  // The type of traffic to be exchanged over the edge link
+  // (or Attachment Circuit).
+
+  // TODO: find a suitable registry for this. BGP AFI/SAFI?
+  enum TrafficType {
+    TRAFFIC_TYPE_UNSPECIFIED = 0;
+    TRAFFIC_TYPE_ETHERNET = 1;
+    TRAFFIC_TYPE_MPLS = 2;
+    TRAFFIC_TYPE_IPV4 = 3;
+    TRAFFIC_TYPE_IPV6 = 4;
+    TRAFFIC_TYPE_IPV4V6 = 5;
+  }
+
+  // // MISSING: source IP description
+
+  //   boolean ip_provisioning_from_nsp_required?
+  //   if so:
+  //     supported configuration mechanisms
+  //   IpConfiguration
+  // }
+  TransportConfiguration xport = 10;
+
+  enum BearerType {
+    BEARER_TYPE_UNSPECIFIED = 0;
+    BEARER_TYPE_MPLS_TUNNEL = 1;
+    BEARER_TYPE_IP_SEC = 2;
+    BEARER_TYPE_WIREGUARD = 3;
+    BEARER_TYPE_GRE = 4;
+    BEARER_TYPE_UDP_GRE = 5;
+    BEARER_TYPE_IP_ETHERNET = 6;  // TODO: proto 143 vs MPLS+UDP+IP...
+    BEARER_TYPE_GTP_UV1 = 7;   // RFC 9433 SRv6 too?
+    BEARER_TYPE_IP = 8;
+    BEARER_TYPE_VXLAN = 9;
+    BEARER_TYPE_GENEVE = 10;
+  }
+
+  // cross-product of {PUBLIC, NAT}?
+  enum ForwardingConfiguration {
+    FORWARDING_CONFIGURATION_UNSPECIFIED = 0;
+    FORWARDING_CONFIGURATION_IPV4 = 1;
+    FORWARDING_CONFIGURATION_IPV6 = 2;
+    FORWARDING_CONFIGURATION_IPV4V6 = 3;
+    FORWARDING_CONFIGURATION_ENCAPSULATED_TYPE1 = 4;
+    FORWARDING_CONFIGURATION_ENCAPSULATED_TYPE2 = 5;
+    FORWARDING_CONFIGURATION_ENCAPSULATED_TYPE3 = 6;
+  }
+
+  message GseParameters {
+  }
+  message EthParameters {
+  }
+  message IpParameters {
+  }
+
+  message LinkConfiguration {
+    oneof config {
+      GseParameters gse = 1;  // dst MAC only
+      EthParameters eth = 2;  // peer MACs
+      IpParameters ip = 3;    // onlink and peer addresses
+    }
+  }
+}
+
+message Service {
+  string id = 1;
+
+  // The service request that spawned this service.
+  string request_id = 2;
+
+  // True while there are routes installed that satisfy the bounds of the
+  // service request requirements. Apps may watch this field to know when the
+  // provision request is satisfied.
+  bool is_provisioned_now = 3;
+
+  // Chronological intervals during which the service request is considered to
+  // be provisioned. When the interval's start timestamp is in the future, the
+  // service request is considered to be scheduled such that the route
+  // provision will be satisfied beginning at that timestamp.
+  repeated google.type.Interval provisioned_intervals = 4;
+}

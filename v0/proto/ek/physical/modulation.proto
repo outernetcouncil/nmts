@@ -1,0 +1,214 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// This file contains messages used to model the physical layer components of
+// modems.
+
+syntax = "proto3";
+
+package nmts.ek.physical;
+
+import "nmts/v0/proto/ek/physical/common.proto";
+
+option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+
+// A measurement of received signal quality that describes the threshold for
+// using a particular modulation and coding (MODCOD) scheme.
+message ModcodThreshold {
+  // A human readable name (e.g. "QPSK-LDPC-2-3") describing the MODCOD.
+  // This name is not used in any logic. This is purely for human operators to
+  // associate a threshold with a MODCOD.
+  string modcod_name = 1;
+
+  // Required.
+  oneof threshold {
+    // The ratio of the power of the carrier (or signal) at the demod input to
+    // the noise power of the signal plus the power of the interfering
+    // signals, in dB.
+    double min_carrier_to_noise_plus_interference_db = 2;
+    // The power of the intended signal at the receiver output, in dBW.
+    double min_received_signal_power_dbw = 3;
+  }
+}
+
+// Models the Adaptive Coding and Modulation (ACM) configuration used by a
+// modem.
+//
+// This message is used to predict the Modulation and Coding (MODCOD) scheme
+// that would be selected by the adaptive or fixed coding and modulation.
+// This abstraction allows the model observer to determine whether a received
+// signal meets the minimum strength or noise threshold to close a link, and if
+// so, to estimate the capacity of the link based on the predicted MODCOD.
+//
+// As an example of how this message could be populated, consider the DVB-S2X
+// standard. Table 1 of the standard relates MODCODs to their ideal Es/N0:
+//
+//   Canonical MODCOD  |    Spectral efficiency  |  Ideal Es/N0 [dB] for (AWGN
+//         name        |       [bit/symbol]      |  Linear Channel)
+//                     |                         |         (Normative)
+//   -----------------------------------------------------------------------
+//        QPSK 2/9     |        0.43484          |          -2.85
+//        QPSK 13/45   |        0.567805         |          -2.03
+//        QPSK 9/20    |        0.889135         |           0.22
+//        QPSK 11/20   |        1.088581         |           1.45
+// ...
+// For reference, see ETSI TR 102 376-2 V1.2.1 (2021-01)
+// (http://www.etsi.org/standards-search).
+//
+// 1) To populate a modcod_threshold:
+//    Compute the corresponding C/N values:
+//      C/N = (Es / N0) + (symbol_rate / bandwidth)     [using dB math]
+//    Suppose (symbol_rate / bandwidth) = 1 / 1.1 = 0.9091 = -0.4139 dB.
+//
+//    Therefore, for QPSK 2/9:
+//      C/N = (-2.85 dB) + (-0.4139 dB) = -3.2639 dB
+//    This process can be repeated for each MODCOD in the table above:
+//    For QPSK 13/45, min_carrier_to_noise_plus_interference_db is -2.4439 dB.
+//    For QPSK 9/20, min_carrier_to_noise_plus_interference_db is -0.1939 dB.
+//    For QPSK 11/20, min_carrier_to_noise_plus_interference_db is 1.0361 dB.
+//
+// 2) To populate modcod_to_data_rates:
+//    Note that:
+//      Data rate = (spectral_efficiency) * (symbol_rate)
+//    Suppose a channel in the network has:
+//      channel_bandwidth_hz = 110MHz = 110_000_000Hz
+//      symbol_rate = 100Msps = 100_000_000 symbols/second
+//
+//    Therefore, for the 100Msps channel, for QPSK 2/9:
+//      Data rate = (0.43484 bits/symbol) * (100_000_000 symbols/second)
+//                = 43_484_000 bits/second
+//    This process can be repeated for each MODCOD in the table above to 
+//    populate an AdaptiveCodingAndModulation message:
+//    channel_bandwidth_hz: 110_000_000
+//    symbol_rate_symbols_per_second: 100_000_000
+//    modcod_to_data_rates {
+//      modcod_threshold {
+//        modcod_name: "QPSK 2/9"
+//        min_carrier_to_noise_plus_interference_db: -3.2639
+//      }
+//      data_rate_bps: 43_484_000
+//    }
+//    modcod_to_data_rates {
+//      modcod_threshold {
+//        modcod_name: "QPSK 13/45"
+//        min_carrier_to_noise_plus_interference_db: -2.4439
+//      }
+//      data_rate_bps: 56_780_500
+//    }
+//    modcod_to_data_rates {
+//      modcod_threshold {
+//        modcod_name: "QPSK 9/20"
+//        min_carrier_to_noise_plus_interference_db: -0.1939
+//      }
+//      data_rate_bps: 88_913_500
+//    }
+//    modcod_to_data_rates {
+//      modcod_threshold {
+//        modcod_name: "QPSK 11/20"
+//        min_carrier_to_noise_plus_interference_db: 1.0361
+//      }
+//      data_rate_bps: 108_858_100
+//    }
+//
+// This approach can be tuned based on the actual modems and their measured
+// implementation loss and supported set of MODCODs, etc.
+message AdaptiveCodingAndModulation {
+  // The channel bandwidth.
+  // Required.
+  uint64 channel_bandwidth_hz = 1;
+
+  // The symbol rate (baud rate), in symbols per second, of carriers that are
+  // assigned to channels of this bandwidth.
+  uint64 symbol_rate_symbols_per_second = 2;
+
+  message ModcodToDataRate {
+    // The MODCOD available to the modem.
+    // Required.
+    ModcodThreshold modcod_threshold = 1;
+
+    // The expected Layer 2 data rate, provided that the receiver receives at
+    // least the threshold specified by modcod_threshold.
+    // Required.
+    double data_rate_bps = 2;
+  }
+  // Maps a threshold of received signal quality to the Layer 2 data rate
+  // achievable over this channel.
+  // Required.
+  repeated ModcodToDataRate modcod_to_data_rates = 3;
+}
+
+// Arbitrary compatibility labels that can constrain the formation of wireless
+// links. For example, these labels can be used to indicate that links should
+// not be formed between modems which do not support the same waveforms or
+// between modems from two vendors which are not interoperable.
+message CompatibilityLabels {
+  // TODO: Consider how compatibility should be modeled.
+}
+
+message AdaptiveCodingAndModulationToChannels {
+  // The adaptive coding and modulation configuration.
+  // Required.
+  AdaptiveCodingAndModulation adaptive_coding_and_modulation = 1;
+
+  // The list of channels to which this adaptive coding and modulation
+  // configuration applies.
+  // Required.
+  repeated Signal signals = 2;
+}
+
+// Models a modulator.
+message Modulator {
+  // Arbitrary compatibility labels can be used to constrain the formation of
+  // wireless links.
+  CompatibilityLabels compatibility_labels = 1;
+
+  // The adaptive coding and modulation configurations supported by this modem
+  // and the channels to which each configuration applies.
+  // Note that if a channel is not present in
+  // adaptive_coding_and_modulation_to_channels, that channel is considered to
+  // be unsupported by the modem.
+  // In order to form a wireless link, the adaptive coding and modulation
+  // configuration for the channel, as specified by
+  // AdaptiveCodingAndModulationToChannels.adaptive_coding_and_modulation,
+  // must match exactly between the Modulator and Demodulator.
+  // Required.
+  repeated AdaptiveCodingAndModulationToChannels
+    adaptive_coding_and_modulation_to_channels = 2;
+
+  // TODO: Add a field to indicate whether this modem is capable of
+  // forming multiple-access links.
+}
+
+// Models a demodulator.
+message Demodulator {
+  // Arbitrary compatibility labels can be used to constrain the formation of
+  // wireless links.
+  CompatibilityLabels compatibility_labels = 1;
+
+  // The adaptive coding and modulation configurations supported by this modem
+  // and the channels to which each configuration applies.
+  // Note that if a channel is not present in
+  // adaptive_coding_and_modulation_to_channels, that channel is considered to
+  // be unsupported by the modem.
+  // In order to form a wireless link, the adaptive coding and modulation
+  // configuration for the channel, as specified by
+  // AdaptiveCodingAndModulationToChannels.adaptive_coding_and_modulation,
+  // must match exactly between the Modulator and Demodulator.
+  // Required.
+  repeated AdaptiveCodingAndModulationToChannels
+    adaptive_coding_and_modulation_to_channels = 2;
+
+  // TODO: Add a field to indicate whether this modem is capable of
+  // forming multiple-access links.
+}

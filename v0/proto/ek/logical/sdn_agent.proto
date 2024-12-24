@@ -1,0 +1,39 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.ek.logical;
+
+option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
+
+// Entity Kind: SDN Agent (EK_SDN_AGENT)
+//
+// An abstract software agent that RK_CONTROLS one or more entities
+// in a model instance. It exists to indicate to a consumer of a model
+// which elements can receive instructions from an SDN controller, and
+// allows for extremly fine-grained indication of controllable elements
+// (at the level of entity instances).
+//
+// One EK_SDN_AGENT may RK_CONTROLS one or more of a variety of model
+// entities. One list of allowed entities is maintained in this
+// repository's validation go library.
+//
+// An EK_NETWORK_NODE may RK_CONTAINS an EK_SDN_AGENT, though this
+// is not required. If such a construct is present in a model instance,
+// it may be possible to characterize control plane communications that
+// traverse other entities in the model (e.g. control plane channels
+// that are routed over/like data plane channels).
+message SdnAgent {
+}

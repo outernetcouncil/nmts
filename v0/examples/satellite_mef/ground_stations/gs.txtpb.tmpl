@@ -1,0 +1,139 @@
+##
+# Entity and Relationship definitions for a Ground Station:
+#   id: "{{ .short_name }}"
+#
+# Defines:
+#   - an EK_PLATFORM w/
+#     - motion placeholder
+#     - 1 antenna (TBD)
+#     - 1 WAN interface
+#     - EK_PORTs
+#     - an EK_NETWORK_NODE node w/
+#       - Ethernet EK_INTERFACEs, each of which RK_TRAVERSES one of the EK_PORTs
+#       - MPLS EK_INTERFACEs, each of which RK_TRAVERSES one of the Ethernet EK_INTERFACEs
+##
+entity {
+  id: "uuid8({{ .short_name }}/platform)"
+
+  labels { key: "display_name" value: "{{ .display_name }}" }
+  labels { key: "display_type" value: "Gateway" }
+
+  ek_platform {
+    motion {
+{{ range .motion }}
+      entry { {{ . }} }
+{{ end }}
+    }
+  }
+}
+entity {
+  id: "uuid8({{ .short_name }}/port/antenna0)"
+  ek_port {
+    name: "antenna0"
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/platform)"
+  z: "uuid8({{ .short_name }}/port/antenna0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/port/wan0)"
+  ek_port {
+    name: "wan0"
+#      max_data_rate_bps: 1.0E11
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/platform)"
+  z: "uuid8({{ .short_name }}/port/wan0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/network_node)"
+  ek_network_node {
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/platform)"
+  z: "uuid8({{ .short_name }}/network_node)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/intf/antenna0)"
+  ek_interface {
+    name: "antenna0"
+    gse {
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/intf/antenna0)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ .short_name }}/intf/antenna0)"
+  z: "uuid8({{ .short_name }}/port/antenna0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/intf/wan0)"
+  ek_interface {
+    name: "wan0"
+    eth {
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/intf/wan0)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ .short_name }}/intf/wan0)"
+  z: "uuid8({{ .short_name }}/port/wan0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/intf/wan0/mpls)"
+  ek_interface {
+    mpls {
+      enabled: true
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/intf/wan0/mpls)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ .short_name }}/intf/wan0/mpls)"
+  z: "uuid8({{ .short_name }}/intf/wan0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/network_node/ipvrf0)"
+  ek_route_fn {
+    router_id: {
+      dotted_quad: {
+        str: "{{ .router_id }}"
+      }
+    }
+    sr: {
+      enabled: true
+      node_sid: { {{ .node_sid }} }
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/network_node/ipvrf0)"
+}
+relationship {
+  kind: RK_CONTROLS
+  a: "uuid8({{ .short_name }}/network_node/ipvrf0)"
+  z: "uuid8({{ .short_name }}/network_node)"
+}

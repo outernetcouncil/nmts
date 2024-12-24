@@ -1,0 +1,15 @@
+##
+# A Satellite Network Management System; really a proxy agent for all
+# user terminals, satellites, PoPs/PE routers, etc., randomly assigned
+# to be resident within the one PoP.
+##
+entity {
+  id: "uuid8(sdn_proxy_agent/primary)"
+  ek_sdn_agent {
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(POP_us_east1/network_node)"
+  z: "uuid8(sdn_proxy_agent/primary)"
+}
