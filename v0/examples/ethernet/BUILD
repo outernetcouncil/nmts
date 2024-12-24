@@ -12,27 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Bazel
+load("@org_outernetcouncil_nmts//v0/bazel:rule.bzl", "nmts_graph")
+load("@org_outernetcouncil_nmts//v0/bazel:validation.bzl", "nmts_validation_test")
 
-on:
-  pull_request: {}
-  push: {}
-  release:
-    types: [published]
+package(
+    default_testonly = 1,
+    default_visibility = ["//visibility:public"],
+)
 
-jobs:
-  build-and-test:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/bazelisk
-            ~/.cache/bazel
-          key: bazel-${{ hashFiles('.bazelrc', '.bazelversion', 'MODULE.bazel') }}
-          restore-keys: bazel-
-      - run: |
-          sudo apt-get -y install graphviz
-          bazelisk test //...:all
-          cd v0/examples; bazelisk test //...:all
+filegroup(
+    name = "txtpbs",
+    srcs = glob(["*.txtpb"]),
+)
+
+nmts_validation_test(
+    name = "txtpbs_test",
+    srcs = [":txtpbs"],
+)
+
+nmts_graph(
+    name = "ethernet",
+    srcs = [":txtpbs"],
+    html = ":ethernet.html",
+    rankdir = "TB",
+    svg = ":ethernet.svg",
+)

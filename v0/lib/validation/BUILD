@@ -12,27 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Bazel
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
-on:
-  pull_request: {}
-  push: {}
-  release:
-    types: [published]
+package(
+    default_visibility = ["//visibility:public"],
+)
 
-jobs:
-  build-and-test:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/bazelisk
-            ~/.cache/bazel
-          key: bazel-${{ hashFiles('.bazelrc', '.bazelversion', 'MODULE.bazel') }}
-          restore-keys: bazel-
-      - run: |
-          sudo apt-get -y install graphviz
-          bazelisk test //...:all
-          cd v0/examples; bazelisk test //...:all
+go_library(
+    name = "validation",
+    srcs = ["validation.go"],
+    importpath = "outernetcouncil.org/nmts/v0/lib/validation",
+    deps = [
+        "//v0/lib/entityrelationship",
+        "//v0/proto:nmts_go_proto",
+    ],
+)
+
+go_test(
+    name = "validation_test",
+    srcs = ["validation_test.go"],
+    deps = [
+        ":validation",
+        "//v0/lib/entityrelationship",
+        "//v0/proto:nmts_go_proto",
+        "@org_golang_google_protobuf//encoding/prototext",
+    ],
+)

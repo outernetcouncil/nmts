@@ -12,27 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Bazel
+bazel_dep(name = "org_outernetcouncil_nmts")
 
-on:
-  pull_request: {}
-  push: {}
-  release:
-    types: [published]
-
-jobs:
-  build-and-test:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/bazelisk
-            ~/.cache/bazel
-          key: bazel-${{ hashFiles('.bazelrc', '.bazelversion', 'MODULE.bazel') }}
-          restore-keys: bazel-
-      - run: |
-          sudo apt-get -y install graphviz
-          bazelisk test //...:all
-          cd v0/examples; bazelisk test //...:all
+local_path_override(
+    module_name = "org_outernetcouncil_nmts",
+    path = "../../",
+)

@@ -12,27 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Bazel
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
-on:
-  pull_request: {}
-  push: {}
-  release:
-    types: [published]
+go_library(
+    name = "embedstyles_lib",
+    srcs = ["main.go"],
+    importpath = "aalyria.com/spacetime/nmts/v0/cmd/embedstyles",
+    deps = ["//v0/lib/svgstyle:svgstyle_lib"],
+)
 
-jobs:
-  build-and-test:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/bazelisk
-            ~/.cache/bazel
-          key: bazel-${{ hashFiles('.bazelrc', '.bazelversion', 'MODULE.bazel') }}
-          restore-keys: bazel-
-      - run: |
-          sudo apt-get -y install graphviz
-          bazelisk test //...:all
-          cd v0/examples; bazelisk test //...:all
+go_binary(
+    name = "embedstyles",
+    embed = [":embedstyles_lib"],
+    visibility = ["//visibility:public"],
+)
