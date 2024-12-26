@@ -24,6 +24,7 @@ import "google/protobuf/timestamp.proto";
 import "nmts/v1alpha/proto/types/geophys/coordinates.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.types.geophys";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/types/geophys";
 
 // A two-line element set (TLE).
 //
@@ -98,6 +99,10 @@ message KeplerianElements {
   // orbit of a satellite. This specifies the time at which the snapshot
   // was taken.
   google.protobuf.Timestamp epoch = 7;
+
+  // The celestial body the platform orbits. Consumers may assume a default
+  // central body (Earth) if unspecified.
+  CentralBody central_body = 8;
 }
 
 message PropagationParameters {
@@ -168,12 +173,13 @@ message StateVector {
 //
 // Notes:
 // - Though the OEM Metadata INTERPOLATION and INTERPOLATION_DEGREE
-//   fields are Optional in the specification, they are required by Spacetime
+//   fields are Optional in the specification, they may be required by a
+//   modeling implementation
 // - File format can be either Key-value notation (KVN) or extensible markup
 //   language (XML)
 // - Presently supports single-segment CCSDS OEM Files (multi-segment will
 //   throw error)
 message CcsdsOrbitEphemerisMessage {
-  // CCSDS OEM File as a String
-  optional string file = 1;
+  // CCSDS OEM file contents as a String
+  optional string file_contents = 1;
 }

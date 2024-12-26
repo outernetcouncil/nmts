@@ -20,6 +20,7 @@ import "google/protobuf/field_mask.proto";
 import "nmts/v1alpha/proto/core/packet.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.core";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/core";
 
 // A pairing of a `PacketDescription` with a [google.protobuf.FieldMask](
 // https://protobuf.dev/reference/protobuf/google.protobuf/#field-mask).

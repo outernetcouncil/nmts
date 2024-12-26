@@ -22,6 +22,7 @@ package nmts.v1alpha.ek.physical;
 import "nmts/v1alpha/proto/types/physical/polarization.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/ek/physical";
 
 // Models a signal and its properties, such as its center frequency, bandwidth,
 // and polarization.

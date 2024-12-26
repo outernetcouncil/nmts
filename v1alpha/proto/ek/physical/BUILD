@@ -42,12 +42,9 @@ proto_library(
 )
 
 proto_library(
-    name = "modulation_proto",
-    srcs = ["modulation.proto"],
+    name = "modem_proto",
+    srcs = ["modem.proto"],
     import_prefix = "nmts",
-    deps = [
-        ":common_proto",
-    ],
 )
 
 proto_library(
@@ -91,7 +88,7 @@ cpp_proto_library(
     protos = [
         ":antenna_proto",
         ":common_proto",
-        ":modulation_proto",
+        ":modem_proto",
         ":physical_medium_link_proto",
         ":platform_proto",
         ":port_proto",
@@ -110,7 +107,7 @@ go_proto_library(
     protos = [
         ":antenna_proto",
         ":common_proto",
-        ":modulation_proto",
+        ":modem_proto",
         ":physical_medium_link_proto",
         ":platform_proto",
         ":port_proto",
@@ -128,7 +125,7 @@ java_proto_library(
     protos = [
         ":antenna_proto",
         ":common_proto",
-        ":modulation_proto",
+        ":modem_proto",
         ":physical_medium_link_proto",
         ":platform_proto",
         ":port_proto",
@@ -146,7 +143,7 @@ python_proto_library(
     protos = [
         ":antenna_proto",
         ":common_proto",
-        ":modulation_proto",
+        ":modem_proto",
         ":physical_medium_link_proto",
         ":platform_proto",
         ":port_proto",

@@ -23,6 +23,7 @@ import "nmts/v1alpha/proto/types/ietf/common.proto";
 import "nmts/v1alpha/proto/types/ietf/inet.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.core";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/core";
 
 // Some types inspired by the "ietf-packet-fields" and the
 // "ietf-access-control-list" YANG modules; see

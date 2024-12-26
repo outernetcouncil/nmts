@@ -19,6 +19,7 @@ package nmts.v1alpha.ek.logical;
 import "nmts/v1alpha/proto/types/ietf/routing.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.logical";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/ek/logical";
 
 // Entity Kind: Route Function (`EK_ROUTE_FN`)
 //
@@ -33,10 +34,19 @@ message RouteFn {
 
   message SegmentRouting {
     bool enabled = 1;
+
     // The (primary) Segment Routing Node SID identifying this node
     // (i.e., this `EK_ROUTE_FN` associated with a corresponding
     // `EK_NETWORK_NODE`).
     types.ietf.SegmentId node_sid = 2;
+
+    // Maximum SID Depth, specifically the RFC 8491 Node MSD-Type value.
+    //
+    // The proto3-default value of zero means no max SID depth is given.
+    // A modeling implementation MAY apply a default max SID depth.
+    //
+    // See also RFCs 8476, 8491, 8664, and 8814.
+    uint32 max_sid_depth = 3;
   }
   SegmentRouting sr = 2;
 }

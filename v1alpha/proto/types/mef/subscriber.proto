@@ -26,6 +26,7 @@ package nmts.v1alpha.types.mef;
 import "nmts/v1alpha/proto/types/mef/common.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.types.mef";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/types/mef";
 
 message EVC {
   // MEF 10.4 Section 8.1 "EVC ID Service Attribute"

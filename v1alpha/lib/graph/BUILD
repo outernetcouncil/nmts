@@ -19,24 +19,32 @@ package(
 )
 
 go_library(
-    name = "validation",
-    srcs = ["validation.go"],
-    importpath = "outernetcouncil.org/nmts/v1alpha/lib/validation",
+    name = "graph",
+    srcs = [
+        "graph.go",
+        "traverse.go",
+    ],
+    importpath = "outernetcouncil.org/nmts/v1alpha/lib/graph",
     deps = [
         "//v1alpha/lib/entityrelationship",
-        "//v1alpha/lib/graph",
         "//v1alpha/proto:nmts_go_proto",
+        "@com_github_deckarep_golang_set_v2//:golang-set",
+        "@com_github_samber_lo//:lo",
     ],
 )
 
 go_test(
-    name = "validation_test",
-    srcs = ["validation_test.go"],
+    name = "graph_test",
+    srcs = [
+        "graph_test.go",
+        "traverse_test.go",
+    ],
+    embed = [":graph"],
     deps = [
-        ":validation",
-        "//v1alpha/lib/entityrelationship",
-        "//v1alpha/lib/graph",
         "//v1alpha/proto:nmts_go_proto",
+        "@com_github_deckarep_golang_set_v2//:golang-set",
+        "@com_github_samber_lo//:lo",
         "@org_golang_google_protobuf//encoding/prototext",
+        "@org_golang_google_protobuf//proto",
     ],
 )

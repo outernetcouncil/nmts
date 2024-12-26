@@ -29,20 +29,21 @@ proto_library(
     srcs = ["nmts.proto"],
     import_prefix = "nmts",
     deps = [
+        "//v1alpha/proto/ek/logical:bp_agent_fn_proto",
         "//v1alpha/proto/ek/logical:interface_proto",
         "//v1alpha/proto/ek/logical:logical_packet_link_proto",
         "//v1alpha/proto/ek/logical:network_node_proto",
         "//v1alpha/proto/ek/logical:route_fn_proto",
         "//v1alpha/proto/ek/logical:sdn_agent_proto",
         "//v1alpha/proto/ek/logical:switch_fn_proto",
+        "//v1alpha/proto/ek/logical:uni_proto",
         "//v1alpha/proto/ek/physical:antenna_proto",
-        "//v1alpha/proto/ek/physical:modulation_proto",
+        "//v1alpha/proto/ek/physical:modem_proto",
         "//v1alpha/proto/ek/physical:physical_medium_link_proto",
         "//v1alpha/proto/ek/physical:platform_proto",
         "//v1alpha/proto/ek/physical:port_proto",
         "//v1alpha/proto/ek/physical:signal_processing_chain_proto",
         "//v1alpha/proto/ek/physical:transceiver_proto",
-        "//v1alpha/proto/ek/service:uni_proto",
         "@protobuf//:field_mask_proto",
     ],
 )
@@ -53,11 +54,10 @@ cpp_proto_library(
     deps = [
         "//v1alpha/proto/ek/logical:logical_cpp_proto",
         "//v1alpha/proto/ek/physical:physical_cpp_proto",
-        "//v1alpha/proto/ek/service:service_cpp_proto",
     ],
 )
 
-# gazelle:prefix outernetcouncil.org/nmts/v1alpha/proto
+# gazelle:prefix outernetcouncil.org/nmts/v1alpha/proto/
 go_proto_library(
     name = "nmts_go_proto",
     importpath = "outernetcouncil.org/nmts/v1alpha/proto",
@@ -65,7 +65,6 @@ go_proto_library(
     deps = [
         "//v1alpha/proto/ek/logical:logical_go_proto",
         "//v1alpha/proto/ek/physical:physical_go_proto",
-        "//v1alpha/proto/ek/service:service_go_proto",
     ],
 )
 
@@ -75,7 +74,6 @@ java_proto_library(
     deps = [
         "//v1alpha/proto/ek/logical:logical_java_proto",
         "//v1alpha/proto/ek/physical:physical_java_proto",
-        "//v1alpha/proto/ek/service:service_java_proto",
     ],
 )
 
@@ -85,6 +83,5 @@ python_proto_library(
     deps = [
         "//v1alpha/proto/ek/logical:logical_python_proto",
         "//v1alpha/proto/ek/physical:physical_python_proto",
-        "//v1alpha/proto/ek/service:service_python_proto",
     ],
 )

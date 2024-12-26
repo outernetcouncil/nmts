@@ -20,6 +20,7 @@ import "nmts/v1alpha/proto/types/ietf/common.proto";
 import "nmts/v1alpha/proto/types/ietf/inet.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.types.ietf";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/types/ietf";
 
 // Some types derived from "ietf-routing-types" YANG module;
 // see [RFC 6991](https://rfc-editor.org/rfc/rfc8294).

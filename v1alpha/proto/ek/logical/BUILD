@@ -26,6 +26,12 @@ package(
 # Per-proto file library rules.
 ##
 proto_library(
+    name = "bp_agent_fn_proto",
+    srcs = ["bp_agent_fn.proto"],
+    import_prefix = "nmts",
+)
+
+proto_library(
     name = "interface_proto",
     srcs = ["interface.proto"],
     import_prefix = "nmts",
@@ -72,19 +78,29 @@ proto_library(
     import_prefix = "nmts",
 )
 
+proto_library(
+    name = "uni_proto",
+    srcs = ["uni.proto"],
+    import_prefix = "nmts",
+    deps = ["//v1alpha/proto/types/mef:uni_proto"],
+)
+
 cpp_proto_library(
     name = "logical_cpp_proto",
     protos = [
+        ":bp_agent_fn_proto",
         ":interface_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
         ":route_fn_proto",
         ":sdn_agent_proto",
         ":switch_fn_proto",
+        ":uni_proto",
     ],
     deps = [
         "//v1alpha/proto/types/ieee:ieee_cpp_proto",
         "//v1alpha/proto/types/ietf:ietf_cpp_proto",
+        "//v1alpha/proto/types/mef:mef_cpp_proto",
     ],
 )
 
@@ -92,47 +108,56 @@ go_proto_library(
     name = "logical_go_proto",
     importpath = "outernetcouncil.org/nmts/v1alpha/proto/ek/logical",
     protos = [
+        ":bp_agent_fn_proto",
         ":interface_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
         ":route_fn_proto",
         ":sdn_agent_proto",
         ":switch_fn_proto",
+        ":uni_proto",
     ],
     deps = [
         "//v1alpha/proto/types/ieee:ieee_go_proto",
         "//v1alpha/proto/types/ietf:ietf_go_proto",
+        "//v1alpha/proto/types/mef:mef_go_proto",
     ],
 )
 
 java_proto_library(
     name = "logical_java_proto",
     protos = [
+        ":bp_agent_fn_proto",
         ":interface_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
         ":route_fn_proto",
         ":sdn_agent_proto",
         ":switch_fn_proto",
+        ":uni_proto",
     ],
     deps = [
         "//v1alpha/proto/types/ieee:ieee_java_proto",
         "//v1alpha/proto/types/ietf:ietf_java_proto",
+        "//v1alpha/proto/types/mef:mef_java_proto",
     ],
 )
 
 python_proto_library(
     name = "logical_python_proto",
     protos = [
+        ":bp_agent_fn_proto",
         ":interface_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
         ":route_fn_proto",
         ":sdn_agent_proto",
         ":switch_fn_proto",
+        ":uni_proto",
     ],
     deps = [
         "//v1alpha/proto/types/ieee:ieee_python_proto",
         "//v1alpha/proto/types/ietf:ietf_python_proto",
+        "//v1alpha/proto/types/mef:mef_python_proto",
     ],
 )

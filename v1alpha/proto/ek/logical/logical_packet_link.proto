@@ -19,6 +19,7 @@ package nmts.v1alpha.ek.logical;
 import "nmts/v1alpha/proto/types/ietf/routing.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.logical";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/ek/logical";
 
 // Entity Kind: Logical Packet Link (`EK_LOGICAL_PACKET_LINK`)
 //
@@ -27,15 +28,14 @@ option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.logical";
 // carry in general, and additional constraints (flow specifications,
 // FIB policies, etc) may be applied at the `EK_INTERFACE` ends.
 message LogicalPacketLink {
-  // Common properties shared by logical packet links. If none are
-  // specified and this link `RK_TRAVERSES` another link then relevant
-  // properties might be found there.
-  message Properties {
-    // Maximum data rate (CIR) of this link in bits per second.
-    // The default value of 0.0 means "unspecified", not zero bps.
-    double max_data_rate_bps = 1;
-  }
-  Properties properties = 1;
+  // Peak information rate (PIR) of this link in bits per second.
+  //
+  // The default value of 0 means "unspecified", not zero bps, unless
+  // this link is the lowest layer in a stack (i.e. there is no other
+  // EK_LOGICAL_PACKET_LINK or EK_PHYSICAL_MEDIUM_LINK that this link
+  // RK_TRAVERSES). Link speed MAY be inferred from EK_INTERFACEs that
+  // RK_ORIGINATES/RK_TERMINATES this link, depending on context.
+  uint64 max_data_rate_bps = 1;
 
   // TODO: move this info out into an EK_NEXT_HOP entity which
   // has a clear relationship with an EK_ROUTE_FN, so that the
@@ -49,6 +49,14 @@ message LogicalPacketLink {
     // link by the router than `RK_CONTAINS` the `EK_INTERFACE` that
     // `RK_ORIGINATES` this link.
     types.ietf.SegmentId adjacency_sid = 2;
+
+    // Maximum SID Depth, specifically the RFC 8491 Link MSD-Type value.
+    //
+    // The proto3-default value of zero means no max SID depth is given.
+    // A modeling implementation MAY apply a default max SID depth.
+    //
+    // See also RFCs 8476, 8491, 8664, and 8814.
+    uint32 max_sid_depth = 3;
   }
   SegmentRouting sr = 2;
 

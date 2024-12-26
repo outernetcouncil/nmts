@@ -28,6 +28,7 @@ import "nmts/v1alpha/proto/types/geophys/geodesy.proto";
 import "nmts/v1alpha/proto/types/geophys/orbital.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.types.geophys";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/types/geophys";
 
 // A timestamped GeodeticWgs84 coordinate.
 message GeodeticWgs84Temporal {

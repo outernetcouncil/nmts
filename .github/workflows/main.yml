@@ -36,3 +36,4 @@ jobs:
       - run: bazelisk test //...:all
       - run: cd v0/examples; bazelisk test //...:all
       - run: cd v1alpha/examples; bazelisk test //...:all
+

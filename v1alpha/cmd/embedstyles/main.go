@@ -19,7 +19,7 @@ import (
 	"io"
 	"os"
 
-	"outernetcouncil.org/nmts/v1alpha/lib/svgstyle"
+	"outernetcouncil.org/nmts/lib/svgstyle"
 )
 
 func main() {

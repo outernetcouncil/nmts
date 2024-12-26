@@ -23,7 +23,7 @@ import (
 
 	"github.com/urfave/cli/v2"
 	er "outernetcouncil.org/nmts/v1alpha/lib/entityrelationship"
-	// npb "outernetcouncil.org/v1alpha/nmts/proto"
+	// npb "outernetcouncil.org/nmts/v1alpha/proto"
 )
 
 // TODO: choose sensible values for this

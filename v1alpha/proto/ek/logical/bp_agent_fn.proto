@@ -19,13 +19,19 @@ package nmts.v1alpha.ek.logical;
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.logical";
 option go_package = "outernetcouncil.org/nmts/v1alpha/proto/ek/logical";
 
-// Entity Kind: Switch Function
+// Entity Kind: Bundle Protocol Agent Function (`EK_BP_AGENT_FN`)
 //
-// A Layer 2 Switching Network Function; represents a MAC VRF domain.
-//
-// May serve as the UNI-N point for a MEF-style Ethernet (Virtual)
-// Private Line/LAN/Tree service.
-//
-// May have an additional ACL/filter/firewall ruleset.
-message SwitchFn {
+// A Bundle Protocol Agent Function, presummably BPv7 (RFC 9171,
+// et al.).
+message BpAgentFn {
+  // A hard limit on the storage capacity of this Bundle Protocol
+  // Agent, in bytes.
+  //
+  // In other words, if the number of bytes required to be stored
+  // at a particular time by this BP Agent exceeds this limit, the
+  // BP Agent would need to determine which bytes to drop (incoming,
+  // previously stored, or some mix of the two), per local policy.
+  uint64 max_capacity_bytes = 1;
+
+  // TODO: add CLA capabilities attributes.
 }

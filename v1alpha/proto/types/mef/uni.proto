@@ -27,6 +27,7 @@ import "nmts/v1alpha/proto/types/ieee/ieee802.proto";
 import "nmts/v1alpha/proto/types/mef/common.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.types.mef";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/types/mef";
 
 message Uni {
   // MEF 10.4 Section 9.1

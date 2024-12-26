@@ -20,6 +20,7 @@ syntax = "proto3";
 package nmts.v1alpha.ek.physical;
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/ek/physical";
 
 // Models a physical port, such as an Ethernet jack or a physical port on a
 // processor or sensor, from which signals originate or terminate.
@@ -43,10 +44,27 @@ message Port {
   // An "interface index", vis. RFC 8343 Section 5.
   uint32 if_index = 2;
 
-  // The MTU of this Port.
+  // The MTU of this EK_PORT.
   //
   // The default value (zero) implies the MTU is unset here. Some
   // default value should be assumed (likely 1500), subject to
   // any additional available context.
   uint32 mtu = 3;
+
+  // The peak information rate of this EK_PORT, in bits per second.
+  //
+  // See also RFC 8343 "speed" / RFC 2863 "ifSpeed" and "ifHighSpeed":
+  //
+  // "For interfaces that do not vary in bandwidth or for those where
+  //  no accurate estimation can be made, this node should contain the
+  //  nominal bandwidth. For interfaces that have no concept of
+  //  bandwidth, this ... is not present."
+  //
+  // The actual speed of an EK_PORT may be further constrained by speed
+  // values given in any EK_PHYSICAL_MEDIUM_LINKs to which it is
+  // connected.
+  //
+  // Default value (zero) implies the speed is unset. A default speed or
+  // explicit zero value MAY be assumed, depending on context.
+  uint64 max_data_rate_bps = 4;
 }

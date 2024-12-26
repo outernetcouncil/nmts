@@ -17,9 +17,15 @@ syntax = "proto3";
 package nmts.v1alpha.ek.physical;
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/ek/physical";
 
 // Represents the physical medium underlying higher layer communications
 // channels. Can represent P2P media, like a fibre or copper Ethernet cable
 // or P2MP media like RF and some free space optical links.
 message PhysicalMediumLink {
+  // Peak information rate (PIR) of this link in bits per second.
+  //
+  // Link speed MAY also be inferred from EK_PORTs to which this link
+  // is connected.
+  uint64 max_data_rate_bps = 1;
 }

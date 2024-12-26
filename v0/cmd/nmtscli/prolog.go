@@ -155,7 +155,6 @@ func displayName(p *prolog.Interpreter, id string) (string, error) {
 		return "", err
 	}
 	return name.A, nil
-
 }
 
 func toNodeClass(p *prolog.Interpreter, id string) (string, error) {

@@ -14,11 +14,12 @@
 
 syntax = "proto3";
 
-package nmts.v1alpha.ek.service;
+package nmts.v1alpha.ek.logical;
 
 import "nmts/v1alpha/proto/types/mef/uni.proto";
 
-option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.service";
+option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.logical";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/ek/logical";
 
 // EK_UNI
 //

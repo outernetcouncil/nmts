@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.v1alpha.types.ieee;
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.types.ieee";
+option go_package = "outernetcouncil.org/nmts/v1alpha/proto/types/ieee";
 
 // Identifies an "EtherType" value.
 //
