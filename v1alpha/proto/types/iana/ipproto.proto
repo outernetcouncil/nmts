@@ -1,0 +1,46 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.v1alpha.types.iana;
+
+option java_package = "org.outernetcouncil.nmts.v1alpha.proto.types.iana";
+
+// Identifies an "Internet Protocol Numbers" value ("ipproto").
+//
+// See the IANA registry:
+//   https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
+message IpProto {
+  // A collection of well-known EtherTypes.
+  enum Ipp {
+    IPP_UNSPECIFIED = 0;  // Actually IPv6 Hop-by-Hop Options, but...
+    IPP_ICMP4 = 1;  // RFC 792
+    IPP_TCP = 6;  // RFC 9293
+    IPP_UDP = 17;  // RFC 768
+    IPP_DCCP = 33;  // RFC 4340
+    IPP_RH6 = 43;  // IPv6 Routing Header, RFC 8200
+    IPP_GRE = 47;  // RFC 2784
+    IPP_ESP = 50;  // RFC 4303
+    IPP_ICMP6 = 58;  // RFC 8200/4443
+    IPP_SCTP = 132;
+    IPP_MPLS = 137;  // RFC 4023
+    IPP_ETHERNET = 143;  // RFC 8986
+  }
+
+  oneof type {
+    Ipp ipp = 1;
+    uint32 u8 = 2;
+  }
+}

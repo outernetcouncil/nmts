@@ -1,0 +1,143 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.v1alpha.ek.logical;
+
+import "google/protobuf/empty.proto";
+import "nmts/v1alpha/proto/types/ieee/ieee802.proto";
+import "nmts/v1alpha/proto/types/ietf/inet.proto";
+
+option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.logical";
+
+// Entity Kind: Interface (`EK_INTERFACE`)
+//
+// A logical network interface, which may traverse other logical interfaces,
+// a physical Port, or may stand on its own.
+message Interface {
+  ///
+  // Common interface parameters.
+  ///
+
+  // The name of the interface as known to the network functions on the
+  // containing EK_NETWORK_NODE that might need to refer to this interface
+  // (by this name).
+  //
+  // Examples include: "lo0", "eth0", "eth0.100", "mmwave2", "gr-0/0/0",
+  // "GigabitEthernet1/0/1", etc.
+  string name = 1;
+
+  // An "interface index", vis. RFC 8343 Section 5.
+  //
+  // Zero values means the index is unset and a value may be sought
+  // from a subinterface (i.e. an Interface or a Port that this
+  // Interface RK_TRAVERSES).
+  //
+  // If this Interface RK_TRAVERSES another Interface, there is
+  // no recommendation that non-zero index values be the same. If this
+  // Interface RK_TRAVERSES a Port then it is RECOMMENDED that non-zero
+  // values be identical.
+  uint32 if_index = 2;
+
+  // Default value (zero) implies the MTU is unset. A lower Interface
+  // or Port which this Interface `RK_TRAVERSES` should be checked
+  // prior to assuming some default MTU.
+  uint32 mtu = 3;
+
+  reserved 4 to 9;
+
+  ///
+  // Attributes specific to an interface "layer" or logical capabilities.
+  ///
+
+  // Attributes for loopback interfaces, a.k.a. "softwareLoopback" in
+  // the parlance of RFC 2863 Interfaces Group MIB ifType or RFC 7224
+  // iana-if-type YANG module.
+  message LoopbackAttributes {
+    // presently empty
+  }
+
+  // Attributes for IEEE 802 and other "Ethernet-like Layer 2s";
+  // see also "ethernetCsmacd" in the IANA ifType MIB.
+  message EthernetAttributes {
+    // The primary MAC address, for Ethernet-like ports.
+    types.ieee.MacAddress mac_addr = 1;
+
+    // TODO: consider supporting additional, secondary MAC/Physical addresses.
+  }
+
+  // Interface attributes for DVB-S2(X) GSE Layer 2s.
+  message GseAttributes {
+    // presently empty
+  }
+
+  // C-VLAN attributes (IEEE 802.1Q-2022 Section 9.6)
+  message CtagVlanAttributes {
+    types.ieee.VlanId vid = 1;
+  }
+
+  // TODO: separate S-Tag VLAN attributes?
+  // TODO: separate I-Tag service info attributes?
+
+  message MplsAttributes {
+    // Whether MPLS is accepted on this interface.
+    // See also Linux's /proc/sys/mpls/<ifname>/input setting.
+    bool enabled = 1;
+  }
+
+  // Generic Routing Encapsulation (GRE)
+  //
+  // See also:
+  //    https://rfc-editor.org/rfc/rfc2784
+  //    https://rfc-editor.org/rfc/rfc2890
+  message GreAttributes {
+    bool has_checksum = 1;
+
+    // The disposition of the optional Key field. Some platforms
+    // support different key values for transmit and receive
+    // directions. Platforms that support only symmetric key use
+    // should set both |ikey| and |okey| equivalently.
+    message KeyConfig {
+      oneof type {
+        google.protobuf.Empty none = 1;
+        uint32 value = 2;
+      }
+    }
+    KeyConfig ikey = 2;
+    KeyConfig okey = 3;
+
+    bool has_seqno = 4;
+  }
+
+  // TODO: NVGRE (RFC 7637)?
+  // TODO: UDP GRE (RFC 8086)?
+
+  message IpAttributes {
+    // The IP addresses, with onlink CIDR masks as appropriate,
+    // assigned to this interface.
+    //
+    repeated types.ietf.IPPrefix ip = 1;
+  }
+
+  oneof layer {
+    EthernetAttributes eth = 10;
+    GseAttributes gse = 11;
+    CtagVlanAttributes cvlan = 15;
+    MplsAttributes mpls = 20;
+    IpAttributes ip = 21;
+    LoopbackAttributes loopback = 24;
+  }
+  reserved 12 to 14, 16 to 19;
+}

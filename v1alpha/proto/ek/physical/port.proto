@@ -1,0 +1,52 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// This file contains messages used to model physical ports, from which signals
+// originate or terminate.
+
+syntax = "proto3";
+
+package nmts.v1alpha.ek.physical;
+
+option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.physical";
+
+// Models a physical port, such as an Ethernet jack or a physical port on a
+// processor or sensor, from which signals originate or terminate.
+//
+// This Entity should only participate in RK_ORIGINATES, RK_TERMINATES, and
+// RK_TRAVERSES relationships.
+// To indicate the direction in which a signal is transmitted, there should be
+// an RK_ORIGINATES relationship in the following direction:
+// Port --RK_ORIGINATES--> {a physical Entity}.
+// To indicate the direction in which a signal is received, there should be an
+// RK_TERMINATES relationship in the following direction:
+// Port --RK_TERMINATES--> {a physical Entity}.
+message Port {
+  // The name of the port as known to the operating system on the
+  // containing Platform that might need to refer to this port
+  // (by this name).
+  //
+  // Examples include: "eth0", "mmwave2", "GigabitEthernet1/0/1", etc.
+  string name = 1;
+
+  // An "interface index", vis. RFC 8343 Section 5.
+  uint32 if_index = 2;
+
+  // The MTU of this Port.
+  //
+  // The default value (zero) implies the MTU is unset here. Some
+  // default value should be assumed (likely 1500), subject to
+  // any additional available context.
+  uint32 mtu = 3;
+}

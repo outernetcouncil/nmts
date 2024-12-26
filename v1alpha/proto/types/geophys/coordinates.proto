@@ -1,0 +1,129 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+///
+// Coordinate, reference frame, and motion-related definitions.
+///
+
+syntax = "proto3";
+
+package nmts.v1alpha.types.geophys;
+
+import "google/type/quaternion.proto";
+
+option java_package = "org.outernetcouncil.nmts.v1alpha.proto.types.geophys";
+
+enum CentralBody {
+  CENTRAL_BODY_UNSPECIFIED = 0;
+  CENTRAL_BODY_EARTH = 1;
+  CENTRAL_BODY_MOON = 2;
+  CENTRAL_BODY_SUN = 3;
+  CENTRAL_BODY_MARS = 4;
+}
+
+enum CoordinateFrame {
+  COORDINATE_FRAME_UNSPECIFIED = 0;
+
+  // Earth-centered, Earth-fixed.
+  // Implies CENTRAL_BODY_EARTH, where applicable.
+  COORDINATE_FRAME_ECEF = 1;
+
+  // This indicates the frame used for most E-M Lagrange point orbit studies.
+  // It is a natural and convenient way to input E-M L1/L2 orbits.
+  COORDINATE_FRAME_EARTH_MOON_BARYCENTER_SYNODIC = 2;
+}
+
+// A set of rectilinear 3D coordinates described as (x, y, z) in meters.
+// This type is often used to represent a 3D position vector.
+message Cartesian {
+  optional double x_m = 1;
+  optional double y_m = 2;
+  optional double z_m = 3;
+}
+
+// A set of 3D velocity components, in meters per second.
+message CartesianDot {
+  optional double x_mps = 1;
+  optional double y_mps = 2;
+  optional double z_mps = 3;
+}
+
+// A rotational coordinate that represents a sequence of rotations about a
+// reference set of axes. For an aircraft, yaw corresponds to the heading angle,
+// pitch corresponds to the elevation angle, and roll corresponds to the bank
+// angle.
+message YawPitchRoll {
+  optional double yaw_deg = 1;
+  optional double pitch_deg = 2;
+  optional double roll_deg = 3;
+}
+
+// A point in user-defined axes.
+message PointAxes {
+  Cartesian point = 1;
+
+  // These axes are interpreted as an offset from the Earth-centered,
+  // Earth-fixed reference frame. If this field is unset, the platform's axes
+  // will be the Earth-centered, Earth-fixed reference frame.
+  //
+  // The quaternion q satisfies w = q*v*q' where v is a point in the axes'
+  // coordinate frame, and w is that same point in the parent reference frame
+  // (i.e. the same frame in which "point" is specified).
+  google.type.Quaternion axes = 2;
+}
+
+// An azimuth/elevation direction vector.
+message PointingVector {
+  optional double azimuth_deg = 1;
+  optional double elevation_deg = 2;
+}
+
+message Projection {
+  // Defines a conical projection.
+  message Conic {
+    // Angle between the positive Z-axis and the external boundary of the
+    // volume. If omitted, the volume is a sphere less any interior exclusion.
+    double outer_half_angle_deg = 1;
+
+    // Angle between the positive Z-axis and an optional, interior conical
+    // volume of exclusion. Used to optionally restrict the volume.
+    double inner_half_angle_deg = 2;
+  }
+
+  // Defines a rectangular projection
+  message Rectangular {
+    // Measured from the principal direction and in the direction of the X-axis.
+    double x_half_angle_deg = 1;
+
+    // Measured from the principal direction and in the direction of the Y-axis.
+    double y_half_angle_deg = 2;
+  }
+
+  // Defines a custom projection.
+  message Custom {
+    // A list of directions defining the outer perimeter of the projection.
+    // Azimuth is the angle in the XY plane measured from the positive X-axis
+    // towards the positive Y-axes. Elevation is measured from the XY-plane
+    // and toward the negative z-axis.
+    // The SDN Controller will interpolate between each Projection vector and
+    // between the last and first vectors to form a closed shape.
+    repeated PointingVector directions = 1;
+  }
+
+  oneof shape_type {
+    Conic conic = 1;
+    Rectangular rectangular = 2;
+    Custom custom = 3;
+  }
+}

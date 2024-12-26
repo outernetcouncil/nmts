@@ -1,0 +1,90 @@
+##
+# Entity and Relationship definitions for a Point-of-Presence (PoP):
+#   id: "{{ .short_name }}"
+#
+# Defines:
+#   - an EK_PLATFORM w/
+#     - motion placeholder
+#     - 1 WAN interface
+#     - EK_PORTs
+#     - an EK_NETWORK_NODE node w/
+#       - EK_INTERFACEs, each of which RK_TRAVERSES one of the EK_PORTs
+##
+entity {
+  id: "uuid8({{ .short_name }}/platform)"
+
+  labels { key: "display_name" value: "{{ .display_name }}" }
+  labels { key: "display_type" value: "POP" }
+
+  ek_platform {
+    motion {
+{{ range .motion }}
+      entry { {{ . }} }
+{{ end }}
+    }
+  }
+}
+entity {
+  id: "uuid8({{ .short_name }}/port/wan0)"
+  ek_port {
+    name: "wan0"
+#      max_data_rate_bps: 1.0E12
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/platform)"
+  z: "uuid8({{ .short_name }}/port/wan0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/network_node)"
+  ek_network_node {
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/platform)"
+  z: "uuid8({{ .short_name }}/network_node)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/intf/wan0)"
+  ek_interface {
+    name: "eth0"
+    eth {
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/intf/wan0)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ .short_name }}/intf/wan0)"
+  z: "uuid8({{ .short_name }}/port/wan0)"
+}
+entity {
+  id: "uuid8({{ .short_name }}/network_node/ipvrf0)"
+  ek_route_fn {
+    router_id: {
+      dotted_quad: {
+        str: "{{ .router_id }}"
+      }
+    }
+    sr: {
+      enabled: true
+      node_sid: { {{ .node_sid }} }
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ .short_name }}/network_node)"
+  z: "uuid8({{ .short_name }}/network_node/ipvrf0)"
+}
+relationship {
+  kind: RK_CONTROLS
+  a: "uuid8({{ .short_name }}/network_node/ipvrf0)"
+  z: "uuid8({{ .short_name }}/network_node)"
+}

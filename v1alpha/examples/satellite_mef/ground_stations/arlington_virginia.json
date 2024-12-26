@@ -1,0 +1,9 @@
+{
+  "short_name": "arlington_virginia",
+  "display_name": "Arlington, VA",
+  "motion": [
+    "geodetic_wgs84 { longitude_deg: -77.091 latitude_deg: 38.8816 }"
+  ],
+  "node_sid": "mpls: 1001",
+  "router_id": "1.0.0.1"
+}

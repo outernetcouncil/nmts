@@ -1,0 +1,179 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+///
+// Orbit-related definitions.
+///
+
+syntax = "proto3";
+
+package nmts.v1alpha.types.geophys;
+
+import "google/protobuf/timestamp.proto";
+import "nmts/v1alpha/proto/types/geophys/coordinates.proto";
+
+option java_package = "org.outernetcouncil.nmts.v1alpha.proto.types.geophys";
+
+// A two-line element set (TLE).
+//
+// TLEs for some unclassified objects are publicly available at
+// https://celestrak.org. For further reference, see:
+//
+//   https://en.wikipedia.org/wiki/Two-line_element_set
+//
+// When a platform's motion is described using this message, the platform's
+// axes are oriented in the central body's inertial frame, such that:
+//
+//  - the x-axis is aligned with the platform's velocity vector,
+//  - the y-axis is aligned with the negative angular momentum vector, and
+//  - the z-axis is aligned with the negative position vector, which points
+//    towards the central body's center of mass.
+//
+// For reference, see The Consultative Committee for Space Data Systems
+// CCSDS 500.0-G-4 Section 4.3.7.2.
+//
+// The orbit is propagated using the NORAD SGP4/SDP4 model as defined by the
+// Center for Space Standards and Innovation (CSSI).
+message TwoLineElementSet {
+  string line1 = 1;
+  string line2 = 2;
+}
+
+// Keplerian elements.
+//
+// For reference, see:
+//
+//   https://en.wikipedia.org/wiki/Orbital_elements#Keplerian_elements
+//
+// or the Consultative Committee for Space Data Systems (CCSDS) 500.0-G-4
+// section 5.2.2.4.
+//
+// When a platform's motion is described using this message, the platform's
+// axes are oriented in the central body's inertial frame, such that:
+//
+//  - the x-axis is aligned with the platform's velocity vector,
+//  - the y-axis is aligned with the negative angular momentum vector, and
+//  - the z-axis is aligned with the negative position vector, which points
+//    towards the central body's center of mass.
+//
+// For reference, see The Consultative Committee for Space Data Systems
+// CCSDS 500.0-G-4 Section 4.3.7.2.
+//
+// By default, the orbit is propagated using a first order J2 perturbation
+// algorithm which models only the secular effects on the orbital elements.
+// The Earth Gravitational Model of 1996 (EGM96) according to NASA
+// Technical Publication 1998-206861 is used.
+message KeplerianElements {
+  // Semimajor axis (distance), in meters.
+  double semimajor_axis_m = 1;
+
+  // Eccentricity (the shape of the orbital ellipse).
+  // This value must be between 0.0 (a circular orbit) and 1.0.
+  double eccentricity = 2;
+
+  // Inclination, in degrees.
+  double inclination_deg = 3;
+
+  // Argument of periapsis, in degrees.
+  double argument_of_periapsis_deg = 4;
+
+  // Right ascension of ascending node, in degrees.
+  double raan_deg = 5;
+
+  // True anomaly, in degrees.
+  double true_anomaly_deg = 6;
+
+  // A set of orbital elements is a snapshot, at a particular time, of the
+  // orbit of a satellite. This specifies the time at which the snapshot
+  // was taken.
+  google.protobuf.Timestamp epoch = 7;
+}
+
+message PropagationParameters {
+  // Generally, a particular class of algorithm should be specified.
+  // However, not all propagation algorithms are applicable for any
+  // given orbital motion definition.
+  enum Algorithm {
+    ALGORITHM_UNSPECIFIED= 0;
+
+    // State vector for a vehicle in cislunar space, that should be
+    // propagated using a three-body algorithm considering the Earth and
+    // Moon's gravity contributions.
+    ALGORITHM_EARTH_MOON_THREE_BODY_NUMERICAL = 1;
+  }
+  Algorithm algorithm = 1;
+
+  // Parameters relevant to modeling forces on the body in motion.
+  message ForceRelevantParameters {
+    // The approximate mass of the body, in kilograms.
+    double mass_kg = 1;
+
+    // The approximate coefficient of reflectivity and applicable area in
+    // square meters as pertains to solar radiation pressure.
+    //
+    // For the coefficient of reflectivity, only values from 0.0 (perfect
+    // absorption) to 1.0 (perfect reflectivity) are meaningful.
+    double reflectivity = 2;
+    double reflective_area_sqm = 3;
+  }
+  ForceRelevantParameters force_params = 2;
+}
+
+// Generic state vector for any satellite positions. State vectors are
+// used in the CCSDS Orbit Parameter Message standard (502.0-B-2), and
+// are typical for lunar and other interplanetary mission data, as well
+// as any other generic trajectories where TLEs or Keplerian elements are
+// not well suited, e.g. for powered flight, maneuvers, etc.
+//
+// When a platform's motion is described using this message, the
+// platform's axes are oriented in the central body's inertial frame,
+// such that:
+//
+//  - the x-axis is aligned with the platform's velocity vector,
+//  - the y-axis is aligned with the negative angular momentum vector, and
+//  - the z-axis is aligned with the negative position vector, which points
+//    towards the central body's center of mass.
+//
+// For reference, see The Consultative Committee for Space Data Systems
+// CCSDS 500.0-G-4 Section 4.3.7.2.
+//
+// WARNING: This message is under development and not fully supported.
+message StateVector {
+  // Time that the state vector was measured.
+  google.protobuf.Timestamp epoch = 1;
+
+  // Indication of the reference frame for the state vector.
+  CoordinateFrame coordinate_frame = 2;
+
+  // Three dimensional position and velocity relative to the reference frame.
+  Cartesian position = 3;
+  CartesianDot velocity = 4;
+
+  PropagationParameters propagation_params = 5;
+}
+
+// A CCSDS Orbit Ephemeris Message (OEM), per the
+// specification CCSDS 502.0-B-3 published April 2023.
+//
+// Notes:
+// - Though the OEM Metadata INTERPOLATION and INTERPOLATION_DEGREE
+//   fields are Optional in the specification, they are required by Spacetime
+// - File format can be either Key-value notation (KVN) or extensible markup
+//   language (XML)
+// - Presently supports single-segment CCSDS OEM Files (multi-segment will
+//   throw error)
+message CcsdsOrbitEphemerisMessage {
+  // CCSDS OEM File as a String
+  optional string file = 1;
+}
