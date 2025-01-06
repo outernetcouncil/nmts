@@ -78,7 +78,15 @@ message Interface {
   // (or zero value).
   uint64 max_data_rate_bps = 4;
 
-  reserved 5 to 9;
+  // Interface/port administrative and operational states; cf. RFC 8343.
+  //
+  // It is RECOMMENDED that administrative status be kept up-to-date in
+  // conjuction with administrative actions, either as a consequence of
+  // or a trigger for such action (in cases where changes to the model
+  // results in enactments within the modeled network).
+  types.ietf.IfAdminStatus admin_status = 5;
+
+  reserved 6 to 9;
 
   ///
   // Attributes specific to an interface "layer" or logical capabilities.
@@ -114,9 +122,6 @@ message Interface {
   // TODO: separate I-Tag service info attributes?
 
   message MplsAttributes {
-    // Whether MPLS is accepted on this interface.
-    // See also Linux's /proc/sys/mpls/<ifname>/input setting.
-    bool enabled = 1;
   }
 
   // Generic Routing Encapsulation (GRE)

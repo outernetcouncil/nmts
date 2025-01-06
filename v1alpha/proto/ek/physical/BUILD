@@ -66,6 +66,9 @@ proto_library(
     name = "port_proto",
     srcs = ["port.proto"],
     import_prefix = "nmts",
+    deps = [
+        "//v1alpha/proto/types/ietf:inet_proto",
+    ],
 )
 
 proto_library(
@@ -97,6 +100,7 @@ cpp_proto_library(
     ],
     deps = [
         "//v1alpha/proto/types/geophys:geophys_cpp_proto",
+        "//v1alpha/proto/types/ietf:ietf_cpp_proto",
         "//v1alpha/proto/types/physical:physical_cpp_proto",
     ],
 )
@@ -116,6 +120,7 @@ go_proto_library(
     ],
     deps = [
         "//v1alpha/proto/types/geophys:geophys_go_proto",
+        "//v1alpha/proto/types/ietf:ietf_go_proto",
         "//v1alpha/proto/types/physical:physical_go_proto",
     ],
 )
@@ -134,6 +139,7 @@ java_proto_library(
     ],
     deps = [
         "//v1alpha/proto/types/geophys:geophys_java_proto",
+        "//v1alpha/proto/types/ietf:ietf_java_proto",
         "//v1alpha/proto/types/physical:physical_java_proto",
     ],
 )
@@ -152,6 +158,7 @@ python_proto_library(
     ],
     deps = [
         "//v1alpha/proto/types/geophys:geophys_python_proto",
+        "//v1alpha/proto/types/ietf:ietf_python_proto",
         "//v1alpha/proto/types/physical:physical_python_proto",
     ],
 )

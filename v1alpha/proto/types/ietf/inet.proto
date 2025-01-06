@@ -117,3 +117,14 @@ message IetfVpnId {
     string str = 3;  // TODO: find string convention reference.
   }
 }
+
+// IANA/SMI Interface/Port admin/operational status. See also
+// RFCs 8343 and 2863.
+enum IfAdminStatus {
+  IF_ADMIN_STATUS_UNSPECIFIED = 0;
+  IF_ADMIN_STATUS_UP = 1;
+  IF_ADMIN_STATUS_DOWN = 2;
+  IF_ADMIN_STATUS_TESTING = 3;
+
+  reserved 4 to max;
+}

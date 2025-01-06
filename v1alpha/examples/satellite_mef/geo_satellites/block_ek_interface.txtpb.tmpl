@@ -19,8 +19,8 @@ relationship {
 entity {
   id: "uuid8({{ index . 0 }}/intf/{{index . 1}}/mpls)"
   ek_interface {
+    admin_status: IF_ADMIN_STATUS_UP
     mpls {
-      enabled: true
     }
   }
 }

@@ -19,6 +19,8 @@ syntax = "proto3";
 
 package nmts.v1alpha.ek.physical;
 
+import "nmts/v1alpha/proto/types/ietf/inet.proto";
+
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v1alpha/proto/ek/physical";
 
@@ -67,4 +69,14 @@ message Port {
   // Default value (zero) implies the speed is unset. A default speed or
   // explicit zero value MAY be assumed, depending on context.
   uint64 max_data_rate_bps = 4;
+
+  // Interface/port administrative and operational states; cf. RFC 8343.
+  //
+  // It is RECOMMENDED that administrative status be kept up-to-date in
+  // conjuction with administrative actions, either as a consequence of
+  // or a trigger for such action (in cases where changes to the model
+  // results in enactments within the modeled network).
+  types.ietf.IfAdminStatus admin_status = 5;
+
+  reserved 6 to max;
 }

@@ -50,8 +50,8 @@ relationship {
 entity {
   id: "uuid8(sw2/intf/0/mpls)"
   ek_interface {
+    admin_status: IF_ADMIN_STATUS_UP
     mpls {
-      enabled: true
     }
   }
 }
