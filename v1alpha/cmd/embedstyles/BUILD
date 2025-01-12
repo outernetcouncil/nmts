@@ -17,7 +17,7 @@ load("@rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "embedstyles_lib",
     srcs = ["main.go"],
-    importpath = "aalyria.com/spacetime/nmts/v1alpha/cmd/embedstyles",
+    importpath = "outernetcouncil.org/nmts/v1alpha/cmd/embedstyles",
     deps = ["//v1alpha/lib/svgstyle:svgstyle_lib"],
 )
 
