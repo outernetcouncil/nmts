@@ -1,6 +1,6 @@
 module outernetcouncil.org/nmts
 
-go 1.23.0
+go 1.23.4
 
 require (
 	github.com/urfave/cli/v2 v2.25.7
