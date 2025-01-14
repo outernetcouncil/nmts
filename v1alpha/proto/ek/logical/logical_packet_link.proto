@@ -16,6 +16,7 @@ syntax = "proto3";
 
 package nmts.v1alpha.ek.logical;
 
+import "google/protobuf/duration.proto";
 import "nmts/v1alpha/proto/types/ietf/routing.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1alpha.proto.ek.logical";
@@ -36,6 +37,9 @@ message LogicalPacketLink {
   // RK_TRAVERSES). Link speed MAY be inferred from EK_INTERFACEs that
   // RK_ORIGINATES/RK_TERMINATES this link, depending on context.
   uint64 max_data_rate_bps = 1;
+
+  // Latency (one-way frame delay).
+  google.protobuf.Duration latency = 3;
 
   // TODO: move this info out into an EK_NEXT_HOP entity which
   // has a clear relationship with an EK_ROUTE_FN, so that the
@@ -60,7 +64,7 @@ message LogicalPacketLink {
   }
   SegmentRouting sr = 2;
 
-  reserved 3 to 9;
+  reserved 4 to 9;
 
   // LogicalPacketLink payload type.
   //

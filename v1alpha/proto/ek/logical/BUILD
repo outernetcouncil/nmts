@@ -48,6 +48,7 @@ proto_library(
     import_prefix = "nmts",
     deps = [
         "//v1alpha/proto/types/ietf:routing_proto",
+        "@protobuf//:duration_proto",
     ],
 )
 
