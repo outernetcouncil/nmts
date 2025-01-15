@@ -35,6 +35,9 @@ proto_library(
     name = "inet_proto",
     srcs = ["inet.proto"],
     import_prefix = "nmts",
+    deps = [
+        "@protovalidate//proto/protovalidate/buf/validate:validate_proto",
+    ]
 )
 
 proto_library(
@@ -64,6 +67,9 @@ go_proto_library(
         ":inet_proto",
         ":routing_proto",
     ],
+    deps = [
+        "@build_buf_gen_go_bufbuild_protovalidate_protocolbuffers_go//buf/validate",
+    ]
 )
 
 java_proto_library(

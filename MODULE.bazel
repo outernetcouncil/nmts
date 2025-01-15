@@ -59,6 +59,23 @@ bazel_dep(
     version = "0.3.7",
 )
 
+bazel_dep(
+    name = "rules_buf",
+    version = "0.3.0"
+)
+
+bazel_dep(
+    name = "protovalidate",
+    version = "v0.10.0",
+)
+
+# Can be removed or changed once https://github.com/bufbuild/protovalidate/issues/291 is resolved
+git_override(
+    module_name = "protovalidate",
+    commit = "fc19ffa72b179b29a52d3a36bab443eb153d436a",
+    remote = "https://github.com/bufbuild/protovalidate.git",
+)
+
 # Configure the protoc toolchain used by rules_proto_grpc to use protoc v28.0.
 # This ensures that the version agrees with the protobuf dependency version,
 # which is necessary because Protobuf C++ requires an exact match between its
@@ -83,6 +100,8 @@ go_deps.from_file(go_mod = "//:go.mod")
 
 use_repo(
     go_deps,
+    "build_buf_gen_go_bufbuild_protovalidate_protocolbuffers_go",
+    "com_github_bufbuild_protovalidate_go",
     "com_github_deckarep_golang_set_v2",
     "com_github_google_go_cmp",
     "com_github_ichiban_prolog",

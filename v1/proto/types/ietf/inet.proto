@@ -16,6 +16,8 @@ syntax = "proto3";
 
 package nmts.v1.types.ietf;
 
+import "buf/validate/validate.proto";
+
 option java_package = "org.outernetcouncil.nmts.v1.proto.types.ietf";
 option go_package = "outernetcouncil.org/nmts/v1/proto/types/ietf";
 
@@ -27,7 +29,11 @@ option go_package = "outernetcouncil.org/nmts/v1/proto/types/ietf";
 //
 // This is the logical equivalent of "inet:ipv4-address-no-zone".
 message IPv4Address {
-  string str = 1;
+  string str = 1 [(buf.validate.field).cel = {
+    id: "ipv4address.str",
+    message: "IP Address must be a valid IPv4 address",
+    expression: "this.isIp()"
+  }];
 }
 
 // An IPv6 address string representation, without a CIDR suffix
