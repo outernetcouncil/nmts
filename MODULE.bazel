@@ -76,6 +76,21 @@ git_override(
     remote = "https://github.com/bufbuild/protovalidate.git",
 )
 
+bazel_dep(
+    name = "rules_jvm_external",
+    version = "6.6"
+)
+
+maven_deps = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+maven_deps.artifact(
+    group = "build.buf",
+    artifact = "protovalidate",
+    version = "0.5.0",
+)
+
+use_repo(maven_deps, "maven")
+
 # Configure the protoc toolchain used by rules_proto_grpc to use protoc v28.0.
 # This ensures that the version agrees with the protobuf dependency version,
 # which is necessary because Protobuf C++ requires an exact match between its
