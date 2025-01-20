@@ -79,6 +79,9 @@ java_proto_library(
         ":inet_proto",
         ":routing_proto",
     ],
+    deps = [
+        "@maven//:build_buf_protovalidate"
+    ]
 )
 
 python_proto_library(
