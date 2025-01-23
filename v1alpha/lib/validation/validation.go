@@ -150,8 +150,8 @@ func (DefaultValidator) ValidateCollection(coll *er.Collection) error {
 type DefaultGraphValidator struct{}
 
 func (DefaultGraphValidator) ValidateRelationship(g *graph.Graph, rel er.Relationship) error {
-	kindA := g.Node(rel.A).Kind()
-	kindZ := g.Node(rel.Z).Kind()
+	kindA := g.Node(rel.A).GetKind()
+	kindZ := g.Node(rel.Z).GetKind()
 
 	if _, ok := permittedRelationships[allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}]; ok {
 		return nil

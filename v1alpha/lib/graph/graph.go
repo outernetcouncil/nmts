@@ -25,40 +25,54 @@ import (
 )
 
 type Node struct {
-	Entity *npb.Entity
+	entity *npb.Entity
 }
 
-func (n *Node) ID() string {
-	return n.Entity.GetId()
+func (n *Node) GetEntity() *npb.Entity {
+	if n == nil {
+		return nil
+	}
+	return n.entity
 }
 
-// Kind returns the EK string returned by calling entityrelationship.EntityKindStringFromProto on
+func (n *Node) GetID() string {
+	return n.GetEntity().GetId()
+}
+
+// GetKind returns the EK string returned by calling entityrelationship.EntityKindStringFromProto on
 // the underlying NMTS entity.
-func (n *Node) Kind() string {
-	return er.EntityKindStringFromProto(n.Entity)
+func (n *Node) GetKind() string {
+	return er.EntityKindStringFromProto(n.GetEntity())
 }
 
 type Edge struct {
-	Relationship *npb.Relationship
+	relationship *npb.Relationship
 }
 
-func (e *Edge) Kind() npb.RK {
-	return e.Relationship.GetKind()
+func (e *Edge) GetRelationship() *npb.Relationship {
+	if e == nil {
+		return nil
+	}
+	return e.relationship
 }
 
-func (e *Edge) A() string {
-	return e.Relationship.GetA()
+func (e *Edge) GetKind() npb.RK {
+	return e.GetRelationship().GetKind()
 }
 
-func (e *Edge) Z() string {
-	return e.Relationship.GetZ()
+func (e *Edge) GetA() string {
+	return e.GetRelationship().GetA()
+}
+
+func (e *Edge) GetZ() string {
+	return e.GetRelationship().GetZ()
 }
 
 // Same returns whether this edge represents the same relationship as the other edge.
 // NOTE: It does not do a full equality check, it simply returns whether the endpoints and kind are
 // the same.
 func (e *Edge) Same(other *Edge) bool {
-	return e.A() == other.A() && e.Kind() == other.Kind() && e.Z() == other.Z()
+	return e.GetA() == other.GetA() && e.GetKind() == other.GetKind() && e.GetZ() == other.GetZ()
 }
 
 // Graph represents a graph of NMTS entites and relationships.
@@ -93,21 +107,21 @@ func (g *Graph) NodesOfKind(ek string) []*Node {
 func (g *Graph) UpsertEntity(entity *npb.Entity) (*Node, error) {
 	node := g.nodes[entity.GetId()]
 	if node != nil {
-		if newEK := er.EntityKindStringFromProto(entity); node.Kind() != newEK {
-			return nil, fmt.Errorf("node for ID %s already existed and had a different EK; old EK: %s, new EK: %s", node.ID(), node.Kind(), newEK)
+		if newEK := er.EntityKindStringFromProto(entity); node.GetKind() != newEK {
+			return nil, fmt.Errorf("node for ID %s already existed and had a different EK; old EK: %s, new EK: %s", node.GetID(), node.GetKind(), newEK)
 		}
 	} else {
 		node = &Node{}
 	}
-	node.Entity = entity
-	g.nodes[node.ID()] = node
+	node.entity = entity
+	g.nodes[node.GetID()] = node
 
-	kind := node.Kind()
+	kind := node.GetKind()
 	nodesOfKind := g.nodesByKind[kind]
 	if nodesOfKind == nil {
 		nodesOfKind = map[string]*Node{}
 	}
-	nodesOfKind[node.ID()] = node
+	nodesOfKind[node.GetID()] = node
 	g.nodesByKind[kind] = nodesOfKind
 
 	return node, nil
@@ -121,26 +135,26 @@ func (g *Graph) RemoveEntity(id string) error {
 
 	delete(g.nodes, id)
 
-	nodesOfKind := g.nodesByKind[node.Kind()]
-	delete(nodesOfKind, node.ID())
+	nodesOfKind := g.nodesByKind[node.GetKind()]
+	delete(nodesOfKind, node.GetID())
 	if len(nodesOfKind) == 0 {
-		delete(g.nodesByKind, node.Kind())
+		delete(g.nodesByKind, node.GetKind())
 	}
 	return nil
 }
 
 func (g *Graph) AddRelationship(relationship *npb.Relationship) (*Edge, error) {
 	edge := &Edge{
-		Relationship: relationship,
+		relationship: relationship,
 	}
 
-	edges := g.Edges(edge.A(), edge.Z())
+	edges := g.Edges(edge.GetA(), edge.GetZ())
 	if slices.ContainsFunc(edges, edge.Same) {
 		return nil, fmt.Errorf(
 			"already contains an edge of kind %s between %s and %s",
-			edge.Kind(),
-			edge.A(),
-			edge.Z(),
+			edge.GetKind(),
+			edge.GetA(),
+			edge.GetZ(),
 		)
 	}
 
@@ -157,15 +171,15 @@ func (g *Graph) AddRelationship(relationship *npb.Relationship) (*Edge, error) {
 		edgesByNeighbor[y] = edgesToY
 		g.edges[x] = edgesByNeighbor
 	}
-	addMappingToEdge(edge.A(), edge.Z())
-	addMappingToEdge(edge.Z(), edge.A())
+	addMappingToEdge(edge.GetA(), edge.GetZ())
+	addMappingToEdge(edge.GetZ(), edge.GetA())
 
 	return edge, nil
 }
 
 func (g *Graph) RemoveRelationship(relationship *npb.Relationship) error {
 	edgeToRemove := &Edge{
-		Relationship: relationship,
+		relationship: relationship,
 	}
 
 	removedAnEdge := false
@@ -191,8 +205,8 @@ func (g *Graph) RemoveRelationship(relationship *npb.Relationship) error {
 			edgesByNeighbor[y] = filteredEdgesToY
 		}
 	}
-	removeMappingToEdge(edgeToRemove.A(), edgeToRemove.Z())
-	removeMappingToEdge(edgeToRemove.Z(), edgeToRemove.A())
+	removeMappingToEdge(edgeToRemove.GetA(), edgeToRemove.GetZ())
+	removeMappingToEdge(edgeToRemove.GetZ(), edgeToRemove.GetA())
 
 	if !removedAnEdge {
 		return fmt.Errorf("no corresponding edge found")

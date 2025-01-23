@@ -20,11 +20,14 @@ import (
 	"testing"
 
 	set "github.com/deckarep/golang-set/v2"
+	gcmp "github.com/google/go-cmp/cmp"
 	"github.com/samber/lo"
 	"google.golang.org/protobuf/encoding/prototext"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/testing/protocmp"
 
 	npb "outernetcouncil.org/nmts/v1alpha/proto"
+	logicalpb "outernetcouncil.org/nmts/v1alpha/proto/ek/logical"
 )
 
 func mustUnmarshal(t *testing.T, txtPb string, m proto.Message) {
@@ -90,8 +93,124 @@ func mustRemoveRelationships(t *testing.T, g *Graph, relationships []string) {
 
 func idsSet(nodes []*Node) set.Set[string] {
 	return set.NewSet(lo.Map(nodes, func(n *Node, _ int) string {
-		return n.ID()
+		return n.GetID()
 	})...)
+}
+
+type nodeTestCase struct {
+	desc       string
+	node       *Node
+	wantEntity *npb.Entity
+	wantID     string
+	wantKind   string
+}
+
+func (tc *nodeTestCase) run(t *testing.T) {
+	gotEntity := tc.node.GetEntity()
+	if diff := gcmp.Diff(tc.wantEntity, gotEntity, protocmp.Transform()); diff != "" {
+		t.Errorf("unexpected entity (-want +got): %s", diff)
+	}
+	if gotID := tc.node.GetID(); tc.wantID != gotID {
+		t.Errorf("unexpected ID; want: %v; got: %v", tc.wantID, gotID)
+	}
+	if gotKind := tc.node.GetKind(); tc.wantKind != gotKind {
+		t.Errorf("unexpected kind; want: %v; got: %v", tc.wantKind, gotKind)
+	}
+}
+
+var nodeTestCases = []nodeTestCase{
+	{
+		desc: "non-nil node",
+		node: &Node{
+			entity: &npb.Entity{
+				Id: "node_id",
+				Kind: &npb.Entity_EkNetworkNode{
+					EkNetworkNode: &logicalpb.NetworkNode{},
+				},
+			},
+		},
+		wantID:   "node_id",
+		wantKind: "EK_NETWORK_NODE",
+		wantEntity: &npb.Entity{
+			Id: "node_id",
+			Kind: &npb.Entity_EkNetworkNode{
+				EkNetworkNode: &logicalpb.NetworkNode{},
+			},
+		},
+	},
+	{
+		desc:       "nil node",
+		node:       nil,
+		wantID:     "",
+		wantKind:   "",
+		wantEntity: nil,
+	},
+}
+
+func TestNode(t *testing.T) {
+	for _, tc := range nodeTestCases {
+		t.Run(tc.desc, tc.run)
+	}
+}
+
+type edgeTestCase struct {
+	desc             string
+	edge             *Edge
+	wantRelationship *npb.Relationship
+	wantKind         npb.RK
+	wantA            string
+	wantZ            string
+}
+
+func (tc *edgeTestCase) run(t *testing.T) {
+	gotRelationship := tc.edge.GetRelationship()
+	if diff := gcmp.Diff(tc.wantRelationship, gotRelationship, protocmp.Transform()); diff != "" {
+		t.Errorf("unexpected relationship (-want +got): %s", diff)
+	}
+	if gotKind := tc.edge.GetKind(); tc.wantKind != gotKind {
+		t.Errorf("unexpected kind; want: %v; got: %v", tc.wantKind, gotKind)
+	}
+	if gotA := tc.edge.GetA(); tc.wantA != gotA {
+		t.Errorf("unexpected A; want: %v; got: %v", tc.wantA, gotA)
+	}
+	if gotZ := tc.edge.GetZ(); tc.wantZ != gotZ {
+		t.Errorf("unexpected Z; want: %v; got: %v", tc.wantZ, gotZ)
+	}
+}
+
+var edgeTestCases = []edgeTestCase{
+	{
+		desc: "non-nil edge",
+		edge: &Edge{
+			relationship: &npb.Relationship{
+				Kind: npb.RK_RK_AGGREGATES,
+				A:    "node_a",
+				Z:    "node_z",
+			},
+		},
+		wantRelationship: &npb.Relationship{
+			Kind: npb.RK_RK_AGGREGATES,
+			A:    "node_a",
+			Z:    "node_z",
+		},
+		wantKind: npb.RK_RK_AGGREGATES,
+		wantA:    "node_a",
+		wantZ:    "node_z",
+	},
+	{
+		desc:             "nil edge",
+		edge:             nil,
+		wantRelationship: nil,
+		wantKind:         npb.RK_RK_UNSPECIFIED,
+		wantA:            "",
+		wantZ:            "",
+	},
+}
+
+func TestEdge(t *testing.T) {
+	for _, tc := range edgeTestCases {
+		t.Run(tc.desc, tc.run)
+	}
 }
 
 type nodesOfKindTestCase struct {
@@ -180,7 +299,7 @@ func (tc *upsertEntityTestCase) Run(t *testing.T) {
 		}
 
 		wantNode := &Node{
-			Entity: entity,
+			entity: entity,
 		}
 		if *wantNode != *gotNode {
 			t.Errorf("unexpected node; want: %v; got: %v", wantNode, gotNode)
@@ -299,7 +418,7 @@ func (tc *addRelationshipTestCase) Run(t *testing.T) {
 		}
 
 		wantEdge := &Edge{
-			Relationship: relationship,
+			relationship: relationship,
 		}
 		if *wantEdge != *gotEdge {
 			t.Errorf("unexpected edge; want: %v; got: %v", wantEdge, gotEdge)
@@ -540,8 +659,8 @@ type edge struct {
 }
 
 func (e *edge) equals(graphEdge *Edge) bool {
-	return e.a == graphEdge.A() && e.z == graphEdge.Z() &&
-		e.kind == graphEdge.Relationship.GetKind()
+	return e.a == graphEdge.GetA() && e.z == graphEdge.GetZ() &&
+		e.kind == graphEdge.relationship.GetKind()
 }
 
 type edgesTestCase struct {
@@ -652,9 +771,9 @@ func (tc *edgesTestCase) Run(t *testing.T) {
 			gotEdges := g.Edges(first, second)
 			slices.SortFunc(gotEdges, func(a, b *Edge) int {
 				return cmp.Or(
-					cmp.Compare(a.A(), b.A()),
-					cmp.Compare(a.Z(), b.Z()),
-					cmp.Compare(a.Relationship.GetKind(), b.Relationship.GetKind()),
+					cmp.Compare(a.GetA(), b.GetA()),
+					cmp.Compare(a.GetZ(), b.GetZ()),
+					cmp.Compare(a.relationship.GetKind(), b.relationship.GetKind()),
 				)
 			})
 

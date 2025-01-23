@@ -42,9 +42,12 @@ go_test(
     embed = [":graph"],
     deps = [
         "//v1alpha/proto:nmts_go_proto",
+        "//v1alpha/proto/ek/logical:logical_go_proto",
         "@com_github_deckarep_golang_set_v2//:golang-set",
+        "@com_github_google_go_cmp//cmp",
         "@com_github_samber_lo//:lo",
         "@org_golang_google_protobuf//encoding/prototext",
         "@org_golang_google_protobuf//proto",
+        "@org_golang_google_protobuf//testing/protocmp",
     ],
 )

@@ -99,12 +99,12 @@ func TraverseAll(tfs ...TraverseFunc) TraverseFunc {
 // traversed.
 func Edges(aKind string, relationshipKind npb.RK, zKind string) TraverseFunc {
 	return func(g *Graph, _ string, edge *Edge) bool {
-		a, z := g.Node(edge.A()), g.Node(edge.Z())
+		a, z := g.Node(edge.GetA()), g.Node(edge.GetZ())
 		if a == nil || z == nil {
 			return false
 		}
 
-		return a.Kind() == aKind && edge.Kind() == relationshipKind && z.Kind() == zKind
+		return a.GetKind() == aKind && edge.GetKind() == relationshipKind && z.GetKind() == zKind
 	}
 }
 
@@ -115,11 +115,11 @@ func Edges(aKind string, relationshipKind npb.RK, zKind string) TraverseFunc {
 // traversed.
 func EdgesFrom(fromKind, aKind string, relationshipKind npb.RK, zKind string) TraverseFunc {
 	return func(g *Graph, fromID string, edge *Edge) bool {
-		from, a, z := g.Node(fromID), g.Node(edge.A()), g.Node(edge.Z())
+		from, a, z := g.Node(fromID), g.Node(edge.GetA()), g.Node(edge.GetZ())
 		if from == nil || a == nil || z == nil {
 			return false
 		}
 
-		return from.Kind() == fromKind && a.Kind() == aKind && edge.Kind() == relationshipKind && z.Kind() == zKind
+		return from.GetKind() == fromKind && a.GetKind() == aKind && edge.GetKind() == relationshipKind && z.GetKind() == zKind
 	}
 }
