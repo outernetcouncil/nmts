@@ -44,14 +44,14 @@ message Port {
   string name = 1;
 
   // An "interface index", vis. RFC 8343 Section 5.
-  uint32 if_index = 2;
+  int64 if_index = 2;
 
   // The MTU of this EK_PORT.
   //
   // The default value (zero) implies the MTU is unset here. Some
   // default value should be assumed (likely 1500), subject to
   // any additional available context.
-  uint32 mtu = 3;
+  int32 mtu = 3;
 
   // The peak information rate of this EK_PORT, in bits per second.
   //
@@ -68,7 +68,7 @@ message Port {
   //
   // Default value (zero) implies the speed is unset. A default speed or
   // explicit zero value MAY be assumed, depending on context.
-  uint64 max_data_rate_bps = 4;
+  int64 max_data_rate_bps = 4;
 
   // Interface/port administrative and operational states; cf. RFC 8343.
   //

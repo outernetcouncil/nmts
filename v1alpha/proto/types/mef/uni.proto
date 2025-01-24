@@ -49,7 +49,7 @@ message Uni {
   //
   // If non-zero, MUST be >= 1522 and MUST NOT be larger than the MUST
   // of any Interface or Port entities that this UNI RK_TRAVERSES.
-  uint32 max_frame_size = 2;
+  int32 max_frame_size = 2;
 
   // MEF 10.4 Section 9.9
   // "Subscriber UNI Maximum Number of EVC EPs Service Attribute"
@@ -59,7 +59,7 @@ message Uni {
   //
   // Constrains the cardinality of Relationships to Endpoints for this
   // UNI, whether it's a Subscriber or an Operator UNI.
-  uint32 max_num_endpoints = 3;
+  int64 max_endpoint_count = 3;
 
   // MEF 26.2 Section 14.9
   // "Operator UNI Default CE-VLAN ID Service Attribute"

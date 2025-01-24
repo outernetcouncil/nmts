@@ -46,7 +46,7 @@ message RouteFn {
     // A modeling implementation MAY apply a default max SID depth.
     //
     // See also RFCs 8476, 8491, 8664, and 8814.
-    uint32 max_sid_depth = 3;
+    int32 max_sid_depth = 3;
   }
   SegmentRouting sr = 2;
 }

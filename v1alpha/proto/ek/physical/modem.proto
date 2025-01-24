@@ -142,12 +142,12 @@ message AdaptiveCodingAndModulationForChannelBandwidth {
   // configuration applies. The data rates in adaptive_coding_and_modulation 
   // should be calculated based on this channel bandwidth.
   // Required.
-  uint64 channel_bandwidth_hz = 2;
+  int64 channel_bandwidth_hz = 2;
 
   // The channel center frequencies to which the adaptive coding and modulation
   // configuration applies.
   // Required.
-  repeated uint64 center_frequencies_hz = 3;
+  repeated int64 center_frequencies_hz = 3;
 }
 
 // Arbitrary compatibility labels that can constrain the formation of wireless

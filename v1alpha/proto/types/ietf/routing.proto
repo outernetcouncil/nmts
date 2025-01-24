@@ -45,7 +45,7 @@ option go_package = "outernetcouncil.org/nmts/v1alpha/proto/types/ietf";
 message RouterId {
   oneof type {
     DottedQuad dotted_quad = 1;
-    uint32 u32 = 2;
+    int64 u32 = 2;
   }
 }
 
@@ -75,7 +75,7 @@ message RouterId {
 //   https://datatracker.ietf.org/doc/draft-ietf-6man-sids/
 //   https://iana.org/assignments/iana-ipv6-special-registry
 message SegmentId {
-  uint32 mpls = 1;
+  int32 mpls = 1;  // u20 MPLS label value
   IPv6Address ipv6 = 2;
 }
 

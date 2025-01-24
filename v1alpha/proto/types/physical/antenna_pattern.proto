@@ -426,9 +426,9 @@ message AntennaPattern {
   message FrequencyRangeToGainPattern {
     // The range of frequencies within which this gain pattern applies.
     // Required.
-    uint64 min_frequency = 1;
+    int64 min_frequency = 1;
     // Required.
-    uint64 max_frequency = 2;
+    int64 max_frequency = 2;
 
     // Required.
     oneof pattern {

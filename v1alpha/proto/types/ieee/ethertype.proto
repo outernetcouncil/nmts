@@ -44,6 +44,6 @@ message EtherType {
 
   oneof type {
     Eth eth = 1;
-    uint32 u16 = 2;
+    int32 u16 = 2;
   }
 }

@@ -45,11 +45,11 @@ field: { mpls { label: 3 } }
 field: { ipv6: { src: { str: "2001:db8:1:1::1" }
                  dst: { str: "2001:db8:2:2::2/128" }
                  flow_label: { u20: 17 }
-                 ip_proto: { ipp: IPP_RH6 }
+                 ip_proto: { well_known: IPP_RH6 }
                } }
 field: { srh: { sid: { str: "5f00:1:1:1::" }
                 sid: { str: "5f00:2:2:2::" }
-                ip_proto: { ipp: IPP_UDP }
+                ip_proto: { well_known: IPP_UDP }
               } }
 # See RFC 7510, MPLS-in-UDP
 field: { udp: { dst_port: { u16: 6635 } } }
@@ -57,7 +57,7 @@ field: { mpls { label: 100 } }
 field: { mpls { label: 200 s:true } }
 field: { ipv4: { src: { str: "192.0.2.1/32" }
                  dst: { str: "192.0.2.2" }
-                 ip_proto: { ipp: IPP_GRE }
+                 ip_proto: { well_known: IPP_GRE }
                } }
 field: { gre: { proto: { eth: ETH_ARP }}}
 `,

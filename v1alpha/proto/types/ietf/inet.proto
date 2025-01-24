@@ -107,8 +107,8 @@ message IPNetwork {
 // RFC 4265 Section 3.2.
 message IetfVpnId {
   message Explicit {
-    uint32 oui = 1;
-    uint32 idx = 2;
+    int32 oui = 1;
+    int64 idx = 2;
   }
 
   oneof value {

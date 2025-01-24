@@ -31,7 +31,7 @@ message BpAgentFn {
   // at a particular time by this BP Agent exceeds this limit, the
   // BP Agent would need to determine which bytes to drop (incoming,
   // previously stored, or some mix of the two), per local policy.
-  uint64 max_capacity_bytes = 1;
+  int64 max_capacity_bytes = 1;  // ~8 exabytes
 
   // TODO: add CLA capabilities attributes.
 }

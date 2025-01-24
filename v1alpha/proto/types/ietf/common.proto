@@ -39,7 +39,7 @@ message DottedQuad {
 //
 // See also: RFCs 6436, 6437, and 6438.
 message IPv6FlowLabel {
-  uint32 u20 = 1;  // Restricted to 20-bit unsigned integer values
+  int32 u20 = 1;  // Restricted to 20-bit unsigned integer values
 }
 
 // From RFC 6991 [Section 3](https://rfc-editor.org/rfc/rfc6991#section-3):
@@ -54,11 +54,11 @@ message IPv6FlowLabel {
 // TODO: extend to `oneof` with an alternate "wellknown" port number
 // type having values derived from IANA.
 message PortNum {
-  uint32 u16 = 1;
+  int32 u16 = 1;
 }
 
 // Represents an inclusive range of `PortNum`s, i.e. [lower, upper].
 message PortNumRange {
-  uint32 lower = 1;
-  uint32 upper = 2;
+  int32 lower = 1;
+  int32 upper = 2;
 }

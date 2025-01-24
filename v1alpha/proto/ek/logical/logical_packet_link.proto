@@ -36,7 +36,7 @@ message LogicalPacketLink {
   // EK_LOGICAL_PACKET_LINK or EK_PHYSICAL_MEDIUM_LINK that this link
   // RK_TRAVERSES). Link speed MAY be inferred from EK_INTERFACEs that
   // RK_ORIGINATES/RK_TERMINATES this link, depending on context.
-  uint64 max_data_rate_bps = 1;
+  int64 max_data_rate_bps = 1;
 
   // Latency (one-way frame delay).
   google.protobuf.Duration latency = 3;
@@ -60,7 +60,7 @@ message LogicalPacketLink {
     // A modeling implementation MAY apply a default max SID depth.
     //
     // See also RFCs 8476, 8491, 8664, and 8814.
-    uint32 max_sid_depth = 3;
+    int32 max_sid_depth = 3;
   }
   SegmentRouting sr = 2;
 

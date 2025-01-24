@@ -91,7 +91,7 @@ message PacketDescription {
 
   // IEEE 802.1Q-2022 Section 9.7
   message ItagFields {
-    uint32 i_sid = 1;  // 24-bit Service Instance Identifier
+    int32 i_sid = 1;  // 24-bit Service Instance Identifier
 
     // TODO: Consider PCP.
     // TODO: Consider DEI.
@@ -105,7 +105,7 @@ message PacketDescription {
 
   // [RFC 3032](https://rfc-editor.org/rfc/rfc3032)
   message MplsLabelStackEntry {
-    uint32 label = 1;  // restricted to unsigned 20-bit values
+    int32 label = 1;  // restricted to unsigned 20-bit values
     // TODO: Consider https://rfc-editor.org/rfc/rfc5462 field.
     // traffic_class = 2;
     bool s = 3;
@@ -187,7 +187,7 @@ message PacketDescription {
     // field description messages having settings at other layers.
     types.ieee.EtherType proto = 5;
 
-    uint32 key = 2;
+    int64 key = 2;  // u32 value range
   }
 
   // IPv6 Segment Routing Header (SRH)
@@ -212,7 +212,7 @@ message PacketDescription {
   // [RFC 4302](https://rfc-editor.org/rfc/rfc4302)
   message AhFields {
     // Security Parameters Index (SPI)
-    uint32 spi = 1;
+    int64 spi = 1;  // u32 value range; RFC 4302 S2.4
   }
 
   // IP Encapsulating Security Payload (ESP) header
@@ -220,7 +220,7 @@ message PacketDescription {
   // [RFC 4303](https://rfc-editor.org/rfc/rfc4303)
   message EspFields {
     // Security Parameters Index (SPI)
-    uint32 spi = 1;
+    int64 spi = 1;  // u32 value range; RFC 4303 S2.1
   }
 
   // Transmission Control Protocol (TCP)

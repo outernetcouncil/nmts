@@ -50,7 +50,7 @@ message Antenna {
   // allow non-zero default values. If the antenna is able to form wireless
   // links, this field must be set to a value that is greater than 0.
   // Required.
-  uint32 max_num_beams = 2;
+  int32 max_num_beams = 2;
 
   // The aggregate maximum transmit power across all beams formed by this
   // antenna, in watts.

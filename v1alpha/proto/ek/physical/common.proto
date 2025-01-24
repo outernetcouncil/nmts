@@ -28,10 +28,10 @@ option go_package = "outernetcouncil.org/nmts/v1alpha/proto/ek/physical";
 // and polarization.
 message Signal {
   // Required.
-  uint64 center_frequency_hz = 1;
+  int64 center_frequency_hz = 1;
   // Required.
-  uint64 bandwidth_hz = 2;
+  int64 bandwidth_hz = 2;
   nmts.v1alpha.types.physical.Polarization polarization = 3;
   // The symbol rate (baud rate), in symbols per second.
-  uint64 symbol_rate_symbols_per_second = 4;
+  int64 symbol_rate_symbols_per_second = 4;
 }

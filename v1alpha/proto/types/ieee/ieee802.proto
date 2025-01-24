@@ -38,7 +38,7 @@ message PhysicalAddress {
 // 1..4094
 // (0 and 4095 are reserved; see "IEEE8021VlanIndex" in IEEE 802.1Q-2022)
 message VlanId {
-  uint32 u12 = 1;
+  int32 u12 = 1;
 }
 
 // 12-bit IEEE 802.1Q VLAN ID (VID)
@@ -47,6 +47,6 @@ message VlanId {
 //
 // Represents an inclusive range, i.e. [lower, upper].
 message VlanIdRange {
-  uint32 lower = 1;
-  uint32 upper = 2;
+  int32 lower = 1;
+  int32 upper = 2;
 }

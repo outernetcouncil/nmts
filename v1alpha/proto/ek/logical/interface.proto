@@ -50,12 +50,12 @@ message Interface {
   // no recommendation that non-zero index values be the same. If this
   // Interface RK_TRAVERSES a Port then it is RECOMMENDED that non-zero
   // values be identical.
-  uint32 if_index = 2;
+  int64 if_index = 2;
 
   // Default value (zero) implies the MTU is unset. A lower EK_INTERFACE
   // or EK_PORT which this EK_INTERFACE RK_TRAVERSES should be checked
   // prior to assuming some default MTU.
-  uint32 mtu = 3;
+  int32 mtu = 3;
 
   // The peak information rate of this interface, in bits per second.
   //
@@ -76,7 +76,7 @@ message Interface {
   // EK_INTERFACE or EK_PORT which this EK_INTERFACE RK_TRAVERSES
   // should be checked prior to assuming some default speed
   // (or zero value).
-  uint64 max_data_rate_bps = 4;
+  int64 max_data_rate_bps = 4;
 
   // Interface/port administrative and operational states; cf. RFC 8343.
   //
@@ -139,7 +139,7 @@ message Interface {
     message KeyConfig {
       oneof type {
         google.protobuf.Empty none = 1;
-        uint32 value = 2;
+        int64 value = 2;
       }
     }
     KeyConfig ikey = 2;

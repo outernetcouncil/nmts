@@ -41,7 +41,7 @@ message IpProto {
   }
 
   oneof type {
-    Ipp ipp = 1;
-    uint32 u8 = 2;
+    Ipp well_known = 1;
+    int32 u8 = 2;
   }
 }
