@@ -13,7 +13,7 @@
 // limitations under the License.
 
 ///
-// Planetary geodesy types.
+// Central body geodesy/geospatial types.
 ///
 
 syntax = "proto3";
