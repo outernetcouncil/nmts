@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"strings"
 
+	"golang.org/x/text/unicode/norm"
 	er "outernetcouncil.org/nmts/v1alpha/lib/entityrelationship"
 	"outernetcouncil.org/nmts/v1alpha/lib/graph"
 	npb "outernetcouncil.org/nmts/v1alpha/proto"
@@ -28,6 +29,12 @@ func IsEntityMinimallyWellFormed(entity *npb.Entity) error {
 		return fmt.Errorf("entity MUST NOT be nil")
 	}
 	id := entity.Id
+
+	// In keeping with https://google.aip.dev/210#normalization
+	// ensure Entity IDs are in Unicode Normal Form C.
+	if norm.NFC.String(id) != id {
+		return fmt.Errorf("entity ID MUST be in Unicode Normalization Form C")
+	}
 
 	// Do not permit extraneous whitespace; this likely indicates
 	// some configuration or tooling error.

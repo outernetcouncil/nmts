@@ -85,6 +85,7 @@ use_repo(
     "com_github_urfave_cli_v2",
     "org_golang_google_genproto",
     "org_golang_google_protobuf",
+    "org_golang_x_text",
 )
 
 switched_rules = use_extension("@googleapis//:extensions.bzl", "switched_rules")

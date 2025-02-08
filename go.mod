@@ -7,6 +7,7 @@ require (
 	github.com/google/go-cmp v0.6.0
 	github.com/samber/lo v1.47.0
 	github.com/urfave/cli/v2 v2.25.7
+	golang.org/x/text v0.16.0
 	google.golang.org/genproto v0.0.0-20240401170217-c3f982113cda
 	google.golang.org/protobuf v1.34.2
 )

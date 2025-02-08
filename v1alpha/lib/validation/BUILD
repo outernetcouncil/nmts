@@ -26,6 +26,7 @@ go_library(
         "//v1alpha/lib/entityrelationship",
         "//v1alpha/lib/graph",
         "//v1alpha/proto:nmts_go_proto",
+        "@org_golang_x_text//unicode/norm",
     ],
 )
 

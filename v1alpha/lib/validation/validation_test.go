@@ -306,3 +306,38 @@ func TestSimpleGraphEntityRelationshipValidation(t *testing.T) {
 		validator.ValidateRelationship(g, relationship)
 	}
 }
+
+func TestIsEntityMinimallyWellFormedFailsNil(t *testing.T) {
+	if err := validation.IsEntityMinimallyWellFormed(nil); err == nil {
+		t.Fatalf("failed to minimally invalidate nil")
+	}
+}
+
+func TestIsEntityMinimallyWellFormedChecksUnicodeNormalizationForm(t *testing.T) {
+	// Code points example taken from:
+	// https://www.tomdalling.com/blog/coding-tips/when-a-cafe-is-not-a-cafe-a-short-lesson-in-unicode-featuring-nsstring/
+	workingAscii := `id: "cafe" ek_network_node{}`
+	entity := new(npb.Entity)
+	if err := prototext.Unmarshal([]byte(workingAscii), entity); err != nil {
+		t.Fatalf("failed to parse %q: %q", workingAscii, err)
+	}
+	if err := validation.IsEntityMinimallyWellFormed(entity); err != nil {
+		t.Fatalf("failed to minimally validate %q: %q", workingAscii, err)
+	}
+
+	workingUnicodeAcuteE := `id: "café" ek_network_node{}`
+	if err := prototext.Unmarshal([]byte(workingUnicodeAcuteE), entity); err != nil {
+		t.Fatalf("failed to parse %q: %q", workingUnicodeAcuteE, err)
+	}
+	if err := validation.IsEntityMinimallyWellFormed(entity); err != nil {
+		t.Fatalf("failed to minimally validate %q: %q", workingUnicodeAcuteE, err)
+	}
+
+	brokenUnicodeCombiningAcute := `id: "cafe\u0301" ek_network_node{}`
+	if err := prototext.Unmarshal([]byte(brokenUnicodeCombiningAcute), entity); err != nil {
+		t.Fatalf("failed to parse %q: %q", brokenUnicodeCombiningAcute, err)
+	}
+	if err := validation.IsEntityMinimallyWellFormed(entity); err == nil {
+		t.Fatalf("failed to minimally validate %q: %q", brokenUnicodeCombiningAcute, err)
+	}
+}
