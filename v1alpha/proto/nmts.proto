@@ -55,6 +55,10 @@ option go_package = "outernetcouncil.org/nmts/v1alpha/proto";
 message Entity {
   // An identifier, unique within a modeling instance.  UUIDs
   // are recommended (see RFC 9562).
+  //
+  // In keeping with https://google.aip.dev/210#normalization all
+  // Entity IDs (and really all strings throughout NMTS) should be
+  // UTF-8 strings in Unicode Normalization Form C.
   string id = 1;
 
   // A custom label map that characterizes this entity.
