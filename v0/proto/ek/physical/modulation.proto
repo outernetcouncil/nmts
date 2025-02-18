@@ -22,6 +22,7 @@ package nmts.ek.physical;
 import "nmts/v0/proto/ek/physical/common.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+option deprecated = true;
 
 // A measurement of received signal quality that describes the threshold for
 // using a particular modulation and coding (MODCOD) scheme.

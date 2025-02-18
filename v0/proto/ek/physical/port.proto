@@ -20,6 +20,7 @@ syntax = "proto3";
 package nmts.ek.physical;
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+option deprecated = true;
 
 // Models a physical port, such as an Ethernet jack or a physical port on a
 // processor or sensor, from which signals originate or terminate.

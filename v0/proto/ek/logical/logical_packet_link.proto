@@ -20,6 +20,7 @@ import "google/protobuf/duration.proto";
 import "nmts/v0/proto/types/ietf/routing.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
+option deprecated = true;
 
 // Entity Kind: Logical Packet Link (`EK_LOGICAL_PACKET_LINK`)
 //

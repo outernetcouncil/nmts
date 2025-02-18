@@ -37,6 +37,7 @@ import "nmts/v0/proto/ek/physical/transceiver.proto";
 import "nmts/v0/proto/ek/service/uni.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto";
+option deprecated = true;
 
 // An Entity MUST be considered invalid whenever any of the
 // following conditios are found to be true:

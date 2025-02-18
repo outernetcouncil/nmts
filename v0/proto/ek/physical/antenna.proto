@@ -23,6 +23,7 @@ import "nmts/v0/proto/types/geophys/coordinates.proto";
 import "nmts/v0/proto/types/physical/antenna_pattern.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+option deprecated = true;
 
 // Models an RF antenna or optical aperture.
 //

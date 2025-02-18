@@ -21,6 +21,7 @@ import "nmts/v0/proto/types/ieee/ieee802.proto";
 import "nmts/v0/proto/types/ietf/inet.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
+option deprecated = true;
 
 // Entity Kind: Interface (`EK_INTERFACE`)
 //

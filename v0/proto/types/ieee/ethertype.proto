@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.types.ieee;
 
 option java_package = "org.outernetcouncil.nmts.proto.types.ieee";
+option deprecated = true;
 
 // Identifies an "EtherType" value.
 //

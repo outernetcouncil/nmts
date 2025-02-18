@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.ek.logical;
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
+option deprecated = true;
 
 // Entity Kind: SDN Agent (EK_SDN_AGENT)
 //

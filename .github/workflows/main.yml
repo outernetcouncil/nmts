@@ -35,5 +35,5 @@ jobs:
       - run: sudo apt-get -y install graphviz
       - run: bazelisk test //...:all
       - run: cd v0/examples; bazelisk test //...:all
-      - run: cd v1alpha/examples; bazelisk test //...:all
+      - run: cd v1/examples; bazelisk test //...:all
 

@@ -24,6 +24,7 @@ import "google/protobuf/timestamp.proto";
 import "nmts/v0/proto/types/geophys/coordinates.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.types.geophys";
+option deprecated = true;
 
 // A two-line element set (TLE).
 //

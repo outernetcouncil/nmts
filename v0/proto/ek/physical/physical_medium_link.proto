@@ -19,6 +19,7 @@ package nmts.ek.physical;
 import "google/protobuf/duration.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.physical";
+option deprecated = true;
 
 // Represents the physical medium underlying higher layer communications
 // channels. Can represent P2P media, like a fibre or copper Ethernet cable

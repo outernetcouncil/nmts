@@ -23,6 +23,7 @@ package nmts.types.geophys;
 import "google/type/quaternion.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.types.geophys";
+option deprecated = true;
 
 enum CentralBody {
   CENTRAL_BODY_UNSPECIFIED = 0;

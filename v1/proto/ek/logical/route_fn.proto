@@ -1,0 +1,52 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.v1.ek.logical;
+
+import "nmts/v1/proto/types/ietf/routing.proto";
+
+option java_package = "org.outernetcouncil.nmts.v1.proto.ek.logical";
+option go_package = "outernetcouncil.org/nmts/v1/proto/ek/logical";
+
+// Entity Kind: Route Function (`EK_ROUTE_FN`)
+//
+// A Layer 3 Routing Network Function; represents an IP VRF domain.
+//
+// May have an associated RIB, FIB, and/or MPLS LFIB.
+//
+// May have an additional ACL/filter/firewall ruleset.
+message RouteFn {
+  // The router ID of this logical route function.
+  types.ietf.RouterId router_id = 1;
+
+  message SegmentRouting {
+    bool enabled = 1;
+
+    // The (primary) Segment Routing Node SID identifying this node
+    // (i.e., this `EK_ROUTE_FN` associated with a corresponding
+    // `EK_NETWORK_NODE`).
+    types.ietf.SegmentId node_sid = 2;
+
+    // Maximum SID Depth, specifically the RFC 8491 Node MSD-Type value.
+    //
+    // The proto3-default value of zero means no max SID depth is given.
+    // A modeling implementation MAY apply a default max SID depth.
+    //
+    // See also RFCs 8476, 8491, 8664, and 8814.
+    int32 max_sid_depth = 3;
+  }
+  SegmentRouting sr = 2;
+}

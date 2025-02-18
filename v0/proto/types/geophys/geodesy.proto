@@ -21,6 +21,7 @@ syntax = "proto3";
 package nmts.types.geophys;
 
 option java_package = "org.outernetcouncil.nmts.proto.types.geophys";
+option deprecated = true;
 
 // GeodeticWgs84 and GeodeticMsl are sets of curvilinear 3D coordinates
 // with different vertical datum. These are natural choices to describe

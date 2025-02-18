@@ -1,4 +1,4 @@
 # Ignore directories that contain nested MODULE.bazel files.
 # https://github.com/bazelbuild/bazel/issues/21515
 v0/examples/
-v1alpha/examples/
+v1/examples/

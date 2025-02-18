@@ -19,6 +19,7 @@ package nmts.ek.service;
 import "nmts/v0/proto/types/mef/uni.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.service";
+option deprecated = true;
 
 // EK_UNI
 //

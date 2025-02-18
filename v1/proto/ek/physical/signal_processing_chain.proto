@@ -1,0 +1,211 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// This file contains messages used to model a chain of signal processors, such
+// as amplifiers, filters, and mixers.
+
+syntax = "proto3";
+
+package nmts.v1.ek.physical;
+
+option java_package = "org.outernetcouncil.nmts.v1.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
+
+/******************************************************************************/
+/* Amplifiers                                                                 */
+/******************************************************************************/
+// TODO: Add comments to describe how gain and noise are computed from
+// the fields in these messages.
+message ConstantGainAmplifier {
+  // Required.
+  double gain_db = 1;
+  // Required.
+  double noise_factor = 2;
+  // Required.
+  double reference_temperature_k = 3;
+}
+
+message LowNoiseAmplifier {
+  // Required.
+  double pre_lna_gain_db = 1;
+  // Required.
+  double lna_gain_db = 2;
+  // Required.
+  double post_lna_gain_db = 3;
+  // Required.
+  double noise_factor = 4;
+  // Required.
+  double reference_temperature_k = 5;
+}
+
+// A miscellaneous gain or loss that can be used to model any other effects
+// in the signal processing chain.
+message MiscGainOrLoss {
+  // A name that describes the gain or loss.
+  string name = 1;
+
+  // The gain (positive values) or loss (negative values), in dB.
+  // Required.
+  double gain_or_loss_db = 2;
+}
+
+/******************************************************************************/
+/* Filters                                                                    */
+/******************************************************************************/
+// TODO: Add comments to describe how the noise and gain are computed
+// from the fields in these messages.
+message RectangularFilter {
+  // Set this only if the filter's frequency is static.
+  // If the field is not set, it will be configured dynamically according to the
+  // center frequency of the channel in use.
+  double frequency_hz = 1;
+
+  // The offset to the lower bandwidth limit, in Hz.
+  // If the field is not set, it will be configured dynamically according to the
+  // bandwidth of the channel in use.
+  double lower_bandwidth_limit_hz = 2;
+
+  // The offset to the upper bandwidth limit, in Hz.
+  // If the field is not set, it will be configured dynamically according to the
+  // bandwidth of the channel in use.
+  double upper_bandwidth_limit_hz = 3;
+
+  // The thermal noise temperature of the filter, in Kelvin.
+  // Required.
+  double noise_temperature_k = 4;
+}
+
+message LinearFilter {
+  // The amount of attentunation (rejection) of the output signal, in
+  // Decibels, per Hz of difference between the input signal frequency and the
+  // filter's configured / design frequency. This should be a positive value.
+  // Required.
+  double rejection_db_per_hz = 1;
+
+  // Set this only if the filter's frequency is static.
+  // If the field is not set, it will be configured dynamically according to the
+  // center frequency of the channel in use.
+  double frequency_hz = 2;
+
+  // The offset to the lower bandwidth limit, in Hz.
+  // If the field is not set, it will be configured dynamically according to the
+  // bandwidth of the channel in use.
+  double lower_bandwidth_limit_hz = 3;
+
+  // The offset to the upper bandwidth limit, in Hz.
+  // If the field is not set, it will be configured dynamically according to the
+  // bandwidth of the channel in use.
+  double upper_bandwidth_limit_hz = 4;
+
+  // The thermal noise temperature of the filter, in Kelvin.
+  // Required.
+  double noise_temperature_k = 5;
+}
+
+/*
+ * Models of photodetectors used in free-space optical communications.
+ */
+message AvalanchePhotodiode {
+  // Required.
+  double field_of_view_rad = 1;
+  // Required.
+  double bandwidth_hz = 2;
+  // Required.
+  double noise_temperature_k = 3;
+  // Required.
+  double efficiency_percent = 4;
+  // Required.
+  double dark_current_amp = 5;
+  // Required.
+  double load_impedance_ohm = 6;
+  // Required.
+  double noise_factor = 7;
+  // Required.
+  double gain_db = 8;
+  // Required.
+  double optical_bandpass_filter_bandwidth_hz = 9;
+
+  // Units for radiance: W * m^-2 * sr^-1 * Hz^-1
+  // Required.
+  double sky_spectral_radiance = 10;
+
+  // Units for emittance: W * m^-2 * Hz^-1
+  // Required.
+  double sun_spectral_radiant_emittance = 11;
+
+  // Must be greater than or equal to 2.99792458E-9 meters and less than
+  // or equal to 9.993081933333333E-5 meters to model an optical wavelength.
+  // Required.
+  double wavelength_m = 12;
+}
+
+message PinPhotodiode {
+  // Required.
+  double field_of_view_rad = 1;
+  // Required.
+  double bandwidth_hz = 2;
+  // Required.
+  double noise_temperature_k = 3;
+  // Required.
+  double efficiency_percent = 4;
+  // Required.
+  double dark_current_amp = 5;
+  // Required.
+  double load_impedance_ohm = 6;
+  // Required.
+  double optical_bandpass_filter_bandwidth_hz = 7;
+
+  // Units for radiance: W * m^-2 * sr^-1 * Hz^-1
+  // Required.
+  double sky_spectral_radiance = 8;
+
+  // Units for emittance: W * m^-2 * Hz^-1
+  // Required.
+  double sun_spectral_radiant_emittance = 9;
+
+  // Must be greater than or equal to 2.99792458E-9 meters and less than
+  // or equal to 9.993081933333333E-5 meters to model an optical wavelength.
+  // Required.
+  double wavelength_m = 10;
+}
+
+/******************************************************************************/
+/* Mixers                                                                     */
+/******************************************************************************/
+// TODO: Complete these.
+message VariableFrequencyMixer {
+}
+
+message ConstantFrequencyMixer {
+}
+
+// Models a chain of signal processors. These processors modify the signal in
+// the analysis of its wireless propagation.
+message SignalProcessingChain {
+  message Element {
+    oneof type {
+      ConstantGainAmplifier constant_gain_amplifier = 1;
+      LowNoiseAmplifier low_noise_amplifier = 2;
+      MiscGainOrLoss misc_gain_or_loss = 3;
+      RectangularFilter rectangular_filter = 4;
+      LinearFilter linear_filter = 5;
+      AvalanchePhotodiode avalanche_photodiode = 6;
+      PinPhotodiode pin_photodiode = 7;
+      VariableFrequencyMixer variable_frequency_mixer = 8;
+      ConstantFrequencyMixer constant_frequency_mixer = 9;
+    }
+  }
+  // Required.
+  repeated Element elements = 1;
+}

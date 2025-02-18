@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.types.iana;
 
 option java_package = "org.outernetcouncil.nmts.proto.types.iana";
+option deprecated = true;
 
 // Identifies an "Internet Protocol Numbers" value ("ipproto").
 //
