@@ -16,7 +16,6 @@ syntax = "proto3";
 
 package nmts.ek.logical;
 
-import "google/protobuf/duration.proto";
 import "nmts/v0/proto/types/ietf/routing.proto";
 
 option java_package = "org.outernetcouncil.nmts.proto.ek.logical";
@@ -39,9 +38,6 @@ message LogicalPacketLink {
   }
   Properties properties = 1;
 
-  // Latency (one-way frame delay).
-  google.protobuf.Duration latency = 3;
-
   // TODO: move this info out into an EK_NEXT_HOP entity which
   // has a clear relationship with an EK_ROUTE_FN, so that the
   // adjacency SIDs are associated with a given IP VRF.
@@ -57,7 +53,7 @@ message LogicalPacketLink {
   }
   SegmentRouting sr = 2;
 
-  reserved 4 to 9;
+  reserved 3 to 9;
 
   // LogicalPacketLink payload type.
   //

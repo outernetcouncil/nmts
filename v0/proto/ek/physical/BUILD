@@ -54,9 +54,6 @@ proto_library(
     name = "physical_medium_link_proto",
     srcs = ["physical_medium_link.proto"],
     import_prefix = "nmts",
-    deps = [
-        "@protobuf//:duration_proto",
-    ],
 )
 
 proto_library(

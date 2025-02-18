@@ -25,7 +25,7 @@ go_library(
         "prolog.go",
         "validate.go",
     ],
-    importpath = "outernetcouncil.org/nmts/v0/cmd/nmtscli",
+    importpath = "aalyria.com/spacetime/nmts/v0/cmd/nmtscli",
     deps = [
         "//v0/lib/entityrelationship",
         "//v0/lib/validation",
