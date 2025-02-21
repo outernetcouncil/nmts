@@ -22,7 +22,6 @@ package nmts.v1.types.geophys;
 
 import "google/protobuf/timestamp.proto";
 import "google/type/interval.proto";
-import "google/type/quaternion.proto";
 import "nmts/v1/proto/types/geophys/coordinates.proto";
 import "nmts/v1/proto/types/geophys/geodesy.proto";
 import "nmts/v1/proto/types/geophys/orbital.proto";

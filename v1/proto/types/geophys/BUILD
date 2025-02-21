@@ -56,7 +56,6 @@ proto_library(
         ":geodesy_proto",
         ":orbital_proto",
         "@googleapis//google/type:interval_proto",
-        "@googleapis//google/type:quaternion_proto",
         "@protobuf//:timestamp_proto",
     ],
 )
