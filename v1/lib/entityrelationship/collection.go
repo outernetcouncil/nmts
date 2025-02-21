@@ -64,11 +64,11 @@ func (erColl *Collection) InsertEntity(entity *npb.Entity) error {
 	return nil
 }
 
-func (erColl *Collection) InsertRelationshipProto(relationship *npb.Relationship) error {
-	return erColl.InsertRelationship(RelationshipFromProto(relationship))
+func (erColl *Collection) CreateRelationshipProto(relationship *npb.Relationship) error {
+	return erColl.CreateRelationship(RelationshipFromProto(relationship))
 }
 
-func (erColl *Collection) InsertRelationship(r Relationship) error {
+func (erColl *Collection) CreateRelationship(r Relationship) error {
 	errs := []error{}
 
 	if !erColl.EntityExists(r.A) {

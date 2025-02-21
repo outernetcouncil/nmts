@@ -90,7 +90,7 @@ func (builder *CollectionBuilder) InsertFragments(fragments ...*npb.Fragment) er
 						continue
 					}
 				}
-				errs = append(errs, builder.erColl.InsertRelationship(rel))
+				errs = append(errs, builder.erColl.CreateRelationship(rel))
 			}
 		}
 	}
