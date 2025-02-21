@@ -158,6 +158,16 @@ message CompatibilityLabels {
   // TODO: Consider how compatibility should be modeled.
 }
 
+enum AccessProtocol {
+  ACCESS_PROTOCOL_UNSPECIFIED = 0;
+  // Indicates that the modem is intended to transmit to or receive from only  
+  // one transceiver at a time.
+  ACCESS_PROTOCOL_POINT_TO_POINT = 1;
+  // Indicates that the modem supports protocols to transmit to or receive from
+  // multiple transceivers simultaneously.
+  ACCESS_PROTOCOL_MULTIPLE_ACCESS = 2;
+}
+
 // Models a modulator.
 message Modulator {
   // Arbitrary compatibility labels can be used to constrain the formation of
@@ -180,8 +190,8 @@ message Modulator {
   repeated AdaptiveCodingAndModulationForChannelBandwidth
     adaptive_coding_and_modulation_for_channel_bandwidths = 2;
 
-  // TODO: Add a field to indicate whether this modem is capable of
-  // forming multiple-access links.
+  // Required.
+  AccessProtocol access_protocol = 3;
 }
 
 // Models a demodulator.
@@ -206,6 +216,6 @@ message Demodulator {
   repeated AdaptiveCodingAndModulationForChannelBandwidth
     adaptive_coding_and_modulation_for_channel_bandwidths = 2;
 
-  // TODO: Add a field to indicate whether this modem is capable of
-  // forming multiple-access links.
+  // Required.
+  AccessProtocol access_protocol = 3;
 }
