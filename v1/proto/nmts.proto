@@ -20,7 +20,6 @@ syntax = "proto3";
 
 package nmts.v1;
 
-import "google/protobuf/field_mask.proto";
 import "nmts/v1/proto/ek/logical/bp_agent_fn.proto";
 import "nmts/v1/proto/ek/logical/interface.proto";
 import "nmts/v1/proto/ek/logical/logical_packet_link.proto";
@@ -142,45 +141,4 @@ message EntityEdges {
 message Fragment {
   repeated Entity entity = 1;
   repeated Relationship relationship = 2;
-}
-
-// An Entity with a FieldMask indicating fields of importance.
-//
-// Fields listed in the |mask| are the fields that are
-// relevant to the context in which this message appears.
-//
-// Fields not listed in the |mask| SHALL be ignored.
-//
-// A PartialEntity is considered invalid whenever any of the
-// following conditions are found to be true:
-//
-//   * |entity| is invalid (see above)
-//   * |mask| specifies fields in a specific kind that differs
-//     from the spefic kind given in |entity|
-//   * |mask| is empty or only mentions "entity.id"
-//
-// The |id| field in |entity| is REQUIRED to be present and
-// non-empty (in order for a model instance to determine which
-// specific Entity is referenced). As such, |mask| MAY omit a
-// mention of the "entity.id".
-message PartialEntity {
-  Entity entity = 1;
-  google.protobuf.FieldMask mask = 2;
-}
-
-// The changes required to move a model from one state to another.
-//
-// The entirety of the Delta MUST be considered invalid if any of
-// the messages it comprises are determined to be invalid. Empty
-// string entries in |deleted_ids| are considered invalid.
-//
-// Note: as with a Fragment, a single Delta applied to an existing
-// model (graph) is not required to leave the model in a consistent
-// state. When a model is assessed for logical consistency is a
-// separate concern.
-message Delta {
-  repeated Fragment upserts = 1;
-  repeated PartialEntity updates = 2;
-  repeated string deleted_entity_ids = 3;
-  repeated Relationship deleted_relationships = 4;
 }

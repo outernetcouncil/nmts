@@ -44,7 +44,6 @@ proto_library(
         "//v1/proto/ek/physical:port_proto",
         "//v1/proto/ek/physical:signal_processing_chain_proto",
         "//v1/proto/ek/physical:transceiver_proto",
-        "@protobuf//:field_mask_proto",
     ],
 )
 
