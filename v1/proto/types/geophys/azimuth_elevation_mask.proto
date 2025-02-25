@@ -18,8 +18,6 @@ syntax = "proto3";
 
 package nmts.v1.types.geophys;
 
-import "nmts/v1/proto/types/geophys/coordinates.proto";
-
 option java_package = "org.outernetcouncil.nmts.v1.proto.types.geophys";
 option go_package = "outernetcouncil.org/nmts/v1/proto/types/geophys";
 

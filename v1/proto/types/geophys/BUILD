@@ -29,9 +29,6 @@ proto_library(
     name = "azimuth_elevation_mask_proto",
     srcs = ["azimuth_elevation_mask.proto"],
     import_prefix = "nmts",
-    deps = [
-        ":coordinates_proto",
-    ],
 )
 
 proto_library(
