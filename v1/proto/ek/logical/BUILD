@@ -71,6 +71,9 @@ proto_library(
     name = "sdn_agent_proto",
     srcs = ["sdn_agent.proto"],
     import_prefix = "nmts",
+    deps = [
+        "@protobuf//:duration_proto",
+    ],
 )
 
 proto_library(

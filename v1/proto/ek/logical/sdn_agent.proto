@@ -16,6 +16,8 @@ syntax = "proto3";
 
 package nmts.v1.ek.logical;
 
+import "google/protobuf/duration.proto";
+
 option java_package = "org.outernetcouncil.nmts.v1.proto.ek.logical";
 option go_package = "outernetcouncil.org/nmts/v1/proto/ek/logical";
 
@@ -37,4 +39,31 @@ option go_package = "outernetcouncil.org/nmts/v1/proto/ek/logical";
 // traverse other entities in the model (e.g. control plane channels
 // that are routed over/like data plane channels).
 message SdnAgent {
+  // When sending updates to this agent, an SDN controller must factor
+  // in the communications latency between itself and the agent. This
+  // field SHOULD be kept as up-to-date as possible; otherwise schedule
+  // updates for enactment times in the very near future might not
+  // arrive in adequate time.
+  //
+  // If an agent is functioning as a proxy for an element, for example
+  // a satellite, the latency for delivering enactment commands via
+  // in-band channels is likely to be substantially lower than the
+  // latency of out-of-band channels (e.g., a TT&C connection via some
+  // future orbital pass). Strategies for setting this field incluce:
+  //
+  //   [1] set this latency field to the worst-case latency, or
+  //   [2] update this field whenever the proxy-agent-to-satellite
+  //       latency changes between in-band and out-of-band paths.
+  //
+  // The former might mean a controller does not command some state
+  // changes when the in-band channel is working because it has
+  // incorrectly evaluated that the commands cannot be implemented
+  // in time. The latter approach requires continuous monitoring of
+  // proxy-agent-to-satellite (for example) latency and continually
+  // issuing updates to this field.
+  //
+  // This value is unrelated to other latency fields that affect
+  // enactment timing, like the angular rate contraints present in
+  // the EK_ANTENNA entity.
+  google.protobuf.Duration controller_to_agent_latency = 1;
 }
