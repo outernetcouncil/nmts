@@ -127,14 +127,6 @@ message Relationship {
   string z = 3;
 }
 
-// An Entity and a collection of its participating Relationships,
-// for convenience. Whether the set of Relationships is complete or
-// not is function of additional context.
-message EntityEdges {
-  Entity entity = 1;
-  repeated Relationship relationship = 2;
-}
-
 // A collection of Entities and/or Relationships grouped together
 // for convenience.  Not necessarily a complete graph, often only
 // a fragment (or subgraph, "patch", et cetera).
