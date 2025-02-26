@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.v1.ek.physical;
 
 import "google/protobuf/duration.proto";
+import "nmts/v1/proto/ek/physical/common.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
@@ -33,4 +34,11 @@ message PhysicalMediumLink {
 
   // Latency (one-way frame delay).
   google.protobuf.Duration latency = 2;
+
+  ///
+  // Simple, time-invariant link characteristics.
+  ///
+  Signal signal = 3;
+  // The transmit power, in watts.
+  double transmit_power_w = 4;
 }

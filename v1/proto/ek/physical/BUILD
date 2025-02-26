@@ -52,6 +52,7 @@ proto_library(
     srcs = ["physical_medium_link.proto"],
     import_prefix = "nmts",
     deps = [
+        ":common_proto",
         "@protobuf//:duration_proto",
     ],
 )
