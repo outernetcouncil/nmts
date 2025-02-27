@@ -23,8 +23,10 @@ option java_package = "org.outernetcouncil.nmts.v1.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
 
 // Represents the physical medium underlying higher layer communications
-// channels. Can represent P2P media, like a fibre or copper Ethernet cable
-// or P2MP media like RF and some free space optical links.
+// channels. Can represent P2P media, like a fibre or copper Ethernet
+// cable, or a P2P RF or free space optical link.
+//
+// TODO: consider P2MP and MP2MP modeling scenarios.
 message PhysicalMediumLink {
   // Peak information rate (PIR) of this link in bits per second.
   //
