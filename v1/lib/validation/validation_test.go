@@ -33,8 +33,18 @@ type testCase struct {
 var relationshipTestCases = []testCase{
 	{
 		entityA: `id: "antennaA" ek_antenna{}`,
+		rk:      npb.RK_RK_ORIGINATES,
+		entityZ: `id: "physical_medium_linkZ" ek_physical_medium_link{}`,
+	},
+	{
+		entityA: `id: "antennaA" ek_antenna{}`,
 		rk:      npb.RK_RK_SIGNAL_TRANSITS,
 		entityZ: `id: "receiverZ" ek_receiver{}`,
+	},
+	{
+		entityA: `id: "antennaA" ek_antenna{}`,
+		rk:      npb.RK_RK_TERMINATES,
+		entityZ: `id: "physical_medium_linkZ" ek_physical_medium_link{}`,
 	},
 
 	{
@@ -156,18 +166,8 @@ var relationshipTestCases = []testCase{
 	},
 	{
 		entityA: `id: "portA" ek_port{}`,
-		rk:      npb.RK_RK_ORIGINATES,
-		entityZ: `id: "physical_medium_linkZ" ek_physical_medium_link{}`,
-	},
-	{
-		entityA: `id: "portA" ek_port{}`,
 		rk:      npb.RK_RK_TERMINATES,
 		entityZ: `id: "demodulatorZ" ek_demodulator{}`,
-	},
-	{
-		entityA: `id: "portA" ek_port{}`,
-		rk:      npb.RK_RK_TERMINATES,
-		entityZ: `id: "physical_medium_linkZ" ek_physical_medium_link{}`,
 	},
 
 	{

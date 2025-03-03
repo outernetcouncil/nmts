@@ -26,7 +26,11 @@ option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
 // channels. Can represent P2P media, like a fibre or copper Ethernet
 // cable, or a P2P RF or free space optical link.
 //
-// TODO: consider P2MP and MP2MP modeling scenarios.
+// Presently EK_ANTENNAs can RK_ORIGINATES and RK_TERMINATES these
+// entities.
+//
+// TODO: consider P2MP and MP2MP modeling scenarios (possibly using
+// something like an EK_SHARED_MEDIUM/EK_SHARED_MEDIUM_LINK instead).
 message PhysicalMediumLink {
   // Peak information rate (PIR) of this link in bits per second.
   //

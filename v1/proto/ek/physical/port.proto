@@ -29,12 +29,14 @@ option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
 //
 // This Entity should only participate in RK_ORIGINATES, RK_TERMINATES, and
 // RK_TRAVERSES relationships.
+//
 // To indicate the direction in which a signal is transmitted, there should be
 // an RK_ORIGINATES relationship in the following direction:
-// Port --RK_ORIGINATES--> {a physical Entity}.
+//     Port --RK_ORIGINATES--> {a physical Entity}.
+//
 // To indicate the direction in which a signal is received, there should be an
 // RK_TERMINATES relationship in the following direction:
-// Port --RK_TERMINATES--> {a physical Entity}.
+//     Port --RK_TERMINATES--> {a physical Entity}.
 message Port {
   // The name of the port as known to the operating system on the
   // containing Platform that might need to refer to this port
