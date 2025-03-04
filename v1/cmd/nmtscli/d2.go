@@ -31,30 +31,28 @@ func exportD2(appCtx *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	rules := graphToPrologFacts(g)
 
 	p := prolog.New(nil, nil)
-	if err = p.Exec(rules); err != nil {
-		return err
+	if err := addGraphToPrologInterpreter(p, g); err != nil {
+		return fmt.Errorf("loading graph: %w", err)
 	}
-
 	roots, err := queryForRootContainers(p)
 	if err != nil {
 		return err
 	}
-	seen := map[prologEntity]struct{}{}
+	seen := map[string]struct{}{}
 	subgraphTmpl := template.Must(template.New("subgraphs").Parse(`
-{{.Parent.ID}} {
-	label: "{{.Parent.Name}}";
-	{{ printf "%q" .Parent.Name }}
+{{.Parent}} {
+	label: "{{.Parent}}";
+	{{ printf "%q" .Parent }}
 	{{ range .Children }}
-	{{- printf "%q" .Name }}
+	{{- printf "%q" . }}
 	{{ end }}
 }
 `))
 	type subgraphInput struct {
-		Parent   prologEntity
-		Children []prologEntity
+		Parent   string
+		Children []string
 		N        int
 	}
 
@@ -64,38 +62,36 @@ func exportD2(appCtx *cli.Context) error {
 
 	// first, iterate the roots and create subgraphs
 	for parent, children := range roots {
-		prefixes[parent.ID] = parent.ID
+		prefixes[parent] = parent
 		seen[parent] = struct{}{}
 		for _, c := range children {
-			prefixes[c.ID] = parent.ID
+			prefixes[c] = parent
 			seen[c] = struct{}{}
 		}
 	}
-	ents, err := collectQuery[prologEntity](p, `is_entity(ID), display_name(ID, Name).`)
+	ents, err := collectQuery[prologEntity](p, `is_entity(EK, ID).`)
 	if err != nil {
 		return err
 	}
 	for _, e := range ents {
-		if _, ok := seen[e]; ok {
+		if _, ok := seen[e.ID]; ok {
 			continue
 		}
-		seen[e] = struct{}{}
-		fmt.Fprintf(buf, "%q\n", e.Name)
+		seen[e.ID] = struct{}{}
+		fmt.Fprintf(buf, "%q\n", e.ID)
 	}
 
-	rs, err := collectQuery[struct {
-		AID, AName, ZID, ZName, K string
-	}](p, `connected(AID, ZID, K), display_name(AID, AName), display_name(ZID, ZName).`)
+	rs, err := collectQuery[struct{ A, Z, RK string }](p, `edge(A, Z, RK).`)
 	for _, r := range rs {
-		aName := fmt.Sprintf("%q", r.AName)
-		if aPrefix, ok := prefixes[r.AID]; ok {
-			aName = fmt.Sprintf("%s.%q", aPrefix, r.AName)
+		aName := fmt.Sprintf("%q", r.A)
+		if aPrefix, ok := prefixes[r.A]; ok {
+			aName = fmt.Sprintf("%s.%q", aPrefix, r.A)
 		}
-		zName := fmt.Sprintf("%q", r.ZName)
-		if zPrefix, ok := prefixes[r.ZID]; ok {
-			zName = fmt.Sprintf("%s.%q", zPrefix, r.ZName)
+		zName := fmt.Sprintf("%q", r.Z)
+		if zPrefix, ok := prefixes[r.Z]; ok {
+			zName = fmt.Sprintf("%s.%q", zPrefix, r.Z)
 		}
-		fmt.Fprintf(buf, "%s -> %s: %q\n", aName, zName, r.K)
+		fmt.Fprintf(buf, "%s -> %s: %q\n", aName, zName, r.RK)
 	}
 
 	// finally, iterate the roots and create subgraphs
