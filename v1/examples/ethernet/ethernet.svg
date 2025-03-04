@@ -389,12 +389,12 @@ g.cluster.solid-outline polygon {
 <title xmlns="http://www.w3.org/2000/svg">G</title>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="white" stroke="transparent" points="-4,4 -4,-544 2415,-544 2415,4 -4,4"></polygon>
 <g xmlns="http://www.w3.org/2000/svg" id="clust1" class="cluster">
-<title xmlns="http://www.w3.org/2000/svg">cluster_6</title>
+<title xmlns="http://www.w3.org/2000/svg">cluster_0</title>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="8,-8 8,-532 824,-532 824,-8 8,-8"></polygon>
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="416" y="-516.8" font-family="Times,serif" font-size="14.00">uuid8(sw1/platform)</text>
 </g>
 <g xmlns="http://www.w3.org/2000/svg" id="clust2" class="cluster">
-<title xmlns="http://www.w3.org/2000/svg">cluster_12</title>
+<title xmlns="http://www.w3.org/2000/svg">cluster_1</title>
 <polygon xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" points="1587,-8 1587,-532 2403,-532 2403,-8 1587,-8"></polygon>
 <text xmlns="http://www.w3.org/2000/svg" text-anchor="middle" x="1995" y="-516.8" font-family="Times,serif" font-size="14.00">uuid8(sw2/platform)</text>
 </g>

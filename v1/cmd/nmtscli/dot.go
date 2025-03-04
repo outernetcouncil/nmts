@@ -52,42 +52,40 @@ func exportDot(appCtx *cli.Context) error {
 	seen := map[string]struct{}{}
 	toLabel := func(key string) string { return toRecordLabels(g.Entities[key]) }
 	subgraphTmpl := template.Must(template.New("subgraphs").Funcs(template.FuncMap{"toLabel": toLabel}).Parse(`
-subgraph cluster_{{.N}} {
-	label = "{{.Parent.ID}}";
-	{{ printf "%q [label=%q, class=%q]" .Parent.ID (toLabel .Parent.ID) .Parent.Class }}
-	{{ range .Children }}
-	{{- printf "%q [label=%q, class=%q]" .ID (toLabel .ID) .Class }}
-	{{ end }}
-}
+	subgraph cluster_{{.SubgraphID}} {
+		label = "{{.Parent.ID}}";
+		{{ printf "%q [label=%q, class=%q]" .Parent.ID (toLabel .Parent.ID) .Parent.Class }}
+		{{ range .Children }}
+		{{- printf "%q [label=%q, class=%q]" .ID (toLabel .ID) .Class }}
+		{{ end }}
+	}
 `))
 	type graphEntity struct {
 		ID, Class string
 	}
 	type subgraphInput struct {
-		Parent   graphEntity
-		Children []graphEntity
-		N        int
+		Parent     graphEntity
+		Children   []graphEntity
+		SubgraphID int
 	}
 
 	buf := &bytes.Buffer{}
 	buf.WriteString("digraph G {\n")
-	buf.WriteString("node [shape=record];\n")
+	buf.WriteString("\tnode [shape=record];\n")
 
 	keys := slices.Sorted(maps.Keys(roots))
 
 	// first, iterate the roots and create subgraphs
-	for _, parent := range keys {
+	for idx, parent := range keys {
 		children := roots[parent]
 		slices.Sort(children)
+
 		seen[parent] = struct{}{}
 		for _, c := range children {
 			seen[c] = struct{}{}
 		}
 
-		sgParent := graphEntity{
-			ID:    parent,
-			Class: containerClass,
-		}
+		sgParent := graphEntity{ID: parent, Class: containerClass}
 		sgChildren := []graphEntity{}
 		for _, c := range children {
 			class, err := toNodeClass(p, c)
@@ -97,19 +95,19 @@ subgraph cluster_{{.N}} {
 			sgChildren = append(sgChildren, graphEntity{ID: c, Class: class})
 		}
 		if err := subgraphTmpl.Execute(buf, subgraphInput{
-			N:        len(seen),
-			Parent:   sgParent,
-			Children: sgChildren,
+			SubgraphID: idx,
+			Parent:     sgParent,
+			Children:   sgChildren,
 		}); err != nil {
 			return fmt.Errorf("executing template for parent %q: %w", parent, err)
 		}
 	}
-	ents, err := collectQuery[prologEntity](p, `is_entity(EK, ID).`)
+	remaining, err := collectQuery[prologEntity](p, `is_entity(EK, ID).`)
 	if err != nil {
 		return err
 	}
-	slices.SortFunc(ents, compareEntity)
-	for _, e := range ents {
+	slices.SortFunc(remaining, compareEntity)
+	for _, e := range remaining {
 		if _, ok := seen[e.ID]; ok {
 			continue
 		}
@@ -119,7 +117,7 @@ subgraph cluster_{{.N}} {
 		if err != nil {
 			return err
 		}
-		fmt.Fprintf(buf, "%q [label=%q, class=%q]\n", e.ID, toLabel(e.ID), class)
+		fmt.Fprintf(buf, "\t%q [label=%q, class=%q]\n", e.ID, toLabel(e.ID), class)
 	}
 
 	type edge struct{ A, Z, RK string }
@@ -131,7 +129,7 @@ subgraph cluster_{{.N}} {
 		return cmp.Or(cmp.Compare(l.A, r.A), cmp.Compare(l.Z, r.Z), cmp.Compare(l.RK, r.RK))
 	})
 	for _, r := range rs {
-		fmt.Fprintf(buf, "%q -> %q [label=%q]\n", r.A, r.Z, r.RK)
+		fmt.Fprintf(buf, "\t%q -> %q [label=%q]\n", r.A, r.Z, r.RK)
 	}
 
 	buf.WriteString("}\n")

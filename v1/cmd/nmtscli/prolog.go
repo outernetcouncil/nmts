@@ -122,7 +122,7 @@ func queryForRootContainers(p *prolog.Interpreter) (map[string][]string, error) 
 		Parent   string
 		Children []string
 	}
-	results, err := collectQuery[root](p, `bagof(C, (is_root(Parent), reachable_via(Parent, C, "rk_contains")), Children).`)
+	results, err := collectQuery[root](p, `setof(C, (is_root(Parent), reachable_via(Parent, C, "rk_contains")), Children).`)
 	if err != nil {
 		return nil, err
 	}
