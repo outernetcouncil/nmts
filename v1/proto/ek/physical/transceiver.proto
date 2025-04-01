@@ -65,4 +65,8 @@ message Receiver {
   // The carriers that this receiver supports.
   // Required.
   repeated Signal signals = 1;
+
+  // Reference Saturation Flux Density (SFD), measured in dBW/m^2.
+  // This is the minimum SFD at the receiver with 0 dB/K G/T.
+  float reference_saturation_flux_density_dbw_m2 = 2;
 }

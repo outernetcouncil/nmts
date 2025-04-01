@@ -188,6 +188,30 @@ message VariableFrequencyMixer {
 }
 
 message ConstantFrequencyMixer {
+  // A simple (ideal) constant frequency mixer.
+  // 
+  // This type represents an ideal mixer which takes an input signal and a
+  // 'signal' based on a given reference frequency and multiplies the two
+  // waveforms together.
+  //   
+  // Normally, a non-linear mixer would produce at least two signals mirrored
+  // on either side of the frequency of the incoming carrier. However, this
+  // simple ideal mixer treats all but the additive signal as being "filtered
+  // out" and also ignores any power loss due to the multiple output signals.
+  // So, while the real case involves the sinusoidal behavior of the reference
+  // signal with respect to the input signals, this mixer simply adds the 
+  // reference frequency onto each incoming signal.
+  // 
+  // For frequency conversion, positive values refer to up-conversion, while
+  // negative values refer to down-conversion.
+
+  // The additive frequency in hertz.
+  int64 additive_frequency_hz = 1;
+
+  // The noise temperature of this mixer, measured in degrees Kelvin.
+  // This can be ignored in the ideal mixer (or if unknown) and should default
+  // to 0K noise temperature.
+  double noise_temperature_k = 2; 
 }
 
 // Models a chain of signal processors. These processors modify the signal in
