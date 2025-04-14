@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# gazelle:prefix outernetcouncil.org/nmts/lib
-
 package(
     default_visibility = ["//visibility:public"],
 )

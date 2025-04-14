@@ -15,7 +15,7 @@
 load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "svgstyle_lib",
+    name = "svgstyle",
     srcs = ["svgstyle.go"],
     embedsrcs = ["graphviz-style.css"],
     importpath = "outernetcouncil.org/nmts/v0/lib/svgstyle",

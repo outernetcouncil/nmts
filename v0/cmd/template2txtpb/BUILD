@@ -17,7 +17,7 @@ load("@rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "template2txtpb_lib",
     srcs = ["main.go"],
-    importpath = "aalyria.com/spacetime/nmts/v0/cmd/template2txtpb",
+    importpath = "outernetcouncil.org/nmts/v0/cmd/template2txtpb",
     deps = [
         "//v0/proto:nmts_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",

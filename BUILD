@@ -12,4 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@gazelle//:def.bzl", "gazelle", "gazelle_test")
+
 # gazelle:go_naming_convention_external import
+gazelle(name = "gazelle")
+
+gazelle_test(
+    name = "gazelle_test",
+    workspace = "//:BUILD",
+)

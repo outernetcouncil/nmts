@@ -26,7 +26,7 @@ bazel_dep(
 
 bazel_dep(
     name = "protobuf",
-    version = "29.0-rc3",
+    version = "29.1",
 )
 
 bazel_dep(
@@ -35,23 +35,28 @@ bazel_dep(
 )
 
 bazel_dep(
+    name = "grpc",
+    version = "1.66.0.bcr.2",
+)
+
+bazel_dep(
     name = "rules_proto_grpc_cpp",
-    version = "5.0.0",
+    version = "5.0.1",
 )
 
 bazel_dep(
     name = "rules_proto_grpc_java",
-    version = "5.0.0",
+    version = "5.0.1",
 )
 
 bazel_dep(
     name = "rules_proto_grpc_python",
-    version = "5.0.0",
+    version = "5.0.1",
 )
 
 bazel_dep(
     name = "toolchains_protoc",
-    version = "0.3.6",
+    version = "0.3.7",
 )
 
 # Configure the protoc toolchain used by rules_proto_grpc to use protoc v28.0.
@@ -63,7 +68,7 @@ protoc = use_extension("@toolchains_protoc//protoc:extensions.bzl", "protoc")
 
 protoc.toolchain(
     google_protobuf = "com_google_protobuf",
-    version = "v29.0-rc3",
+    version = "v29.1",
 )
 
 go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
