@@ -18,6 +18,7 @@ go_library(
     name = "template2txtpb_lib",
     srcs = ["main.go"],
     importpath = "outernetcouncil.org/nmts/v0/cmd/template2txtpb",
+    visibility = ["//visibility:private"],
     deps = [
         "//v0/proto:nmts_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",

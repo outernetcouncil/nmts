@@ -32,7 +32,7 @@ def _nmts_gen_txtpbs_impl(ctx):
             ctx.file.template.short_path,
         ]
         for template in ctx.files.templates:
-            inputs += [template]
+            inputs.append(template)
             arguments += ["--tmpl_filename", template.short_path]
 
         ctx.actions.run(

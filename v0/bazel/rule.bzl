@@ -312,6 +312,8 @@ def nmts_graph(name, srcs, svg = None, html = None, **kwargs):
     Args:
         name: The basename to use in the rules. This will be the name of the rendered SVG, but will also be used as the basename of the output files (i.e. "${NAME}.dot")
         srcs: The .txtpb files that make up the NMTS graph.
+        svg: The optional in-tree golden SVG file to compare results to.
+        html: The optional in-tree golden HTML file to compare results to.
         **kwargs: Extra arguments to pass to the underlying rules.
     """
     rankdir = kwargs.pop("rankdir", "LR")

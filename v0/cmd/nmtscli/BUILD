@@ -26,6 +26,7 @@ go_library(
         "validate.go",
     ],
     importpath = "outernetcouncil.org/nmts/v0/cmd/nmtscli",
+    visibility = ["//visibility:private"],
     deps = [
         "//v0/lib/entityrelationship",
         "//v0/lib/validation",

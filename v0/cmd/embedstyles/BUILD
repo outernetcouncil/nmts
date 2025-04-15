@@ -18,6 +18,7 @@ go_library(
     name = "embedstyles_lib",
     srcs = ["main.go"],
     importpath = "outernetcouncil.org/nmts/v0/cmd/embedstyles",
+    visibility = ["//visibility:private"],
     deps = ["//v0/lib/svgstyle"],
 )
 
