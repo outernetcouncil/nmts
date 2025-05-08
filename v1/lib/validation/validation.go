@@ -62,9 +62,13 @@ func (DefaultValidator) ValidateEntity(coll *er.Collection, entity *npb.Entity) 
 	return IsEntityMinimallyWellFormed(entity)
 }
 
-type allowedRelationship = struct {
+type allowedRelationship struct {
 	a, z string
 	rk   npb.RK
+}
+
+func (aRel allowedRelationship) String() string {
+	return fmt.Sprintf("%s->%s->%s", aRel.a, aRel.rk, aRel.z)
 }
 
 var permittedRelationships = map[allowedRelationship]struct{}{
@@ -133,14 +137,15 @@ func (DefaultValidator) ValidateRelationship(coll *er.Collection, rel er.Relatio
 	kindA := er.EntityKindStringFromProto(coll.Entities[rel.A])
 	kindZ := er.EntityKindStringFromProto(coll.Entities[rel.Z])
 
-	if _, ok := permittedRelationships[allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}]; ok {
+	key := allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}
+	if _, ok := permittedRelationships[key]; ok {
 		return nil
 	}
 
 	// More detailed checks can be added here, after basic validity
 	// has been checked and before the "default deny" error.
 
-	return fmt.Errorf("unsupported relationship between entites: '%v'", rel.String())
+	return fmt.Errorf("unsupported relationship between entites: '%v' i.e. '%v'", rel.String(), key)
 }
 
 // Validate the complete collection.
@@ -160,12 +165,13 @@ func (DefaultGraphValidator) ValidateRelationship(g *graph.Graph, rel er.Relatio
 	kindA := g.Node(rel.A).GetKind()
 	kindZ := g.Node(rel.Z).GetKind()
 
-	if _, ok := permittedRelationships[allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}]; ok {
+	key := allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}
+	if _, ok := permittedRelationships[key]; ok {
 		return nil
 	}
 
 	// More detailed checks can be added here, after basic validity
 	// has been checked and before the "default deny" error.
 
-	return fmt.Errorf("unsupported relationship between entites: '%v'", rel.String())
+	return fmt.Errorf("unsupported relationship between entites: '%v' i.e. '%v'", rel.String(), key)
 }
