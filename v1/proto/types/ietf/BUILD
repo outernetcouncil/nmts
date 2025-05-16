@@ -57,6 +57,9 @@ cpp_proto_library(
         ":inet_proto",
         ":routing_proto",
     ],
+    deps = [
+        "@protovalidate//proto/protovalidate/buf/validate:validate_proto_cc",
+    ]
 )
 
 go_proto_library(
