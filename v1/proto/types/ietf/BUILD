@@ -37,7 +37,7 @@ proto_library(
     import_prefix = "nmts",
     deps = [
         "@protovalidate//proto/protovalidate/buf/validate:validate_proto",
-    ]
+    ],
 )
 
 proto_library(
@@ -59,7 +59,7 @@ cpp_proto_library(
     ],
     deps = [
         "@protovalidate//proto/protovalidate/buf/validate:validate_proto_cc",
-    ]
+    ],
 )
 
 go_proto_library(
@@ -72,7 +72,7 @@ go_proto_library(
     ],
     deps = [
         "@build_buf_gen_go_bufbuild_protovalidate_protocolbuffers_go//buf/validate",
-    ]
+    ],
 )
 
 java_proto_library(
@@ -83,8 +83,8 @@ java_proto_library(
         ":routing_proto",
     ],
     deps = [
-        "@maven//:build_buf_protovalidate"
-    ]
+        "@maven//:build_buf_protovalidate",
+    ],
 )
 
 python_proto_library(
