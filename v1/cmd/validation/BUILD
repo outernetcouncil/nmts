@@ -20,7 +20,7 @@ go_library(
     importpath = "outernetcouncil.org/nmts/v1alpha/example/validation",
     deps = [
         "//v1/proto/types/ietf:ietf_go_proto",
-        "@com_github_bufbuild_protovalidate_go//:protovalidate-go",
+        "@build_buf_go_protovalidate//:protovalidate-go",
     ],
 )
 
