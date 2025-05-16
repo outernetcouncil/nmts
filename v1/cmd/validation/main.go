@@ -17,7 +17,7 @@ package main
 import (
 	"log"
 
-	protovalidate "github.com/bufbuild/protovalidate-go"
+	protovalidate "buf.build/go/protovalidate"
 	"outernetcouncil.org/nmts/v1/proto/types/ietf"
 )
 
