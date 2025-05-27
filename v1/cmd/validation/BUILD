@@ -12,22 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-bazel_dep(name = "org_outernetcouncil_nmts")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
-bazel_dep(name = "cel-cpp", version = "0.11.0", repo_name = "com_google_cel_cpp")
-bazel_dep(name = "protovalidate-cc", version = "0.6.0")
-git_override(
-    module_name = "protovalidate-cc",
-    commit = "ad2d0117ecf660f13f1c5f1d3a864ed6042a6f65",
-    remote = "https://github.com/bufbuild/protovalidate-cc.git",
-)
-git_override(
-    module_name = "cel-cpp",
-    commit = "030da750375d5741d71d0a193f8dd3d3cc8d7696",
-    remote = "https://github.com/google/cel-cpp.git",
+go_library(
+    name = "validation_lib",
+    srcs = ["main.go"],
+    importpath = "outernetcouncil.org/nmts/v1/cmd/validation",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//v1/proto/types/ietf:ietf_go_proto",
+        "@build_buf_go_protovalidate//:protovalidate",
+    ],
 )
 
-local_path_override(
-    module_name = "org_outernetcouncil_nmts",
-    path = "../../",
+go_binary(
+    name = "validation",
+    embed = [":validation_lib"],
+    visibility = ["//visibility:public"],
 )

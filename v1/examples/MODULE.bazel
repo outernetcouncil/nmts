@@ -14,6 +14,19 @@
 
 bazel_dep(name = "org_outernetcouncil_nmts")
 
+bazel_dep(name = "cel-cpp", version = "0.11.0", repo_name = "com_google_cel_cpp")
+bazel_dep(name = "protovalidate-cc", version = "0.6.0")
+git_override(
+    module_name = "protovalidate-cc",
+    commit = "ad2d0117ecf660f13f1c5f1d3a864ed6042a6f65",
+    remote = "https://github.com/bufbuild/protovalidate-cc.git",
+)
+git_override(
+    module_name = "cel-cpp",
+    commit = "030da750375d5741d71d0a193f8dd3d3cc8d7696",
+    remote = "https://github.com/google/cel-cpp.git",
+)
+
 local_path_override(
     module_name = "org_outernetcouncil_nmts",
     path = "../../",
