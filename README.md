@@ -60,3 +60,40 @@ Controller.
 ## Documentation
 
 * [Entity-Relationship model](docs/entity_relationship.md)
+
+## Command-line Tool: nmtscli
+
+`nmtscli` is a general-purpose command-line tool that can validate NMTS graph files and export them in various formats for visualization. Note that validation provides minimal integrity checks only.
+
+### Building nmtscli
+
+To build the CLI tool using Bazel:
+
+```sh
+bazel build //v1/cmd/nmtscli:nmtscli
+```
+
+You can run the CLI directly with Bazel:
+
+```sh
+bazel run //v1/cmd/nmtscli:nmtscli -- [command] [options] [input files]
+```
+
+### Commands
+
+- `validate [input files]` — Validates the provided NMTS graph files.
+- `export dot|d2|html|nquads|prolog [input files]` — Exports the graph in the specified format.
+
+### Example Usage
+
+Validate a graph file:
+
+```sh
+bazel run //v1/cmd/nmtscli:nmtscli -- validate example_graph.textproto
+```
+
+Export a graph to HTML for visualization:
+
+```sh
+bazel run //v1/cmd/nmtscli:nmtscli -- export html example_graph.textproto > graph.html
+```

@@ -36,5 +36,10 @@ func validateGraph(appCtx *cli.Context) error {
 		errs = append(errs, fmt.Errorf("graph had no relationships"))
 	}
 
+	if len(errs) == 0 {
+		fmt.Println("Initial validation passed")
+		return nil
+	}
+
 	return errors.Join(errs...)
 }
