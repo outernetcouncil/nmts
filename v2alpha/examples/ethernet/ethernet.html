@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orb | Render a simple graph</title>
+  <script src="https://unpkg.com/@memgraph/orb@0.4.3/dist/browser/orb.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    #graph {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="graph"></div>
+  <script>
+    const container = document.getElementById('graph');
+
+    const nodes = [
+
+      { id: "uuid8(sdn_agent/primary)", label: "uuid8(sdn_agent/primary)" },
+
+      { id: "uuid8(sw1/intf/0)", label: "uuid8(sw1/intf/0)" },
+
+      { id: "uuid8(sw1/intf/0->sw2/intf/0)", label: "uuid8(sw1/intf/0->sw2/intf/0)" },
+
+      { id: "uuid8(sw1/intf/0/mpls)", label: "uuid8(sw1/intf/0/mpls)" },
+
+      { id: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", label: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)" },
+
+      { id: "uuid8(sw1/network_node)", label: "uuid8(sw1/network_node)" },
+
+      { id: "uuid8(sw1/network_node/ipvrf0)", label: "uuid8(sw1/network_node/ipvrf0)" },
+
+      { id: "uuid8(sw1/platform)", label: "uuid8(sw1/platform)" },
+
+      { id: "uuid8(sw1/port/0)", label: "uuid8(sw1/port/0)" },
+
+      { id: "uuid8(sw2/intf/0)", label: "uuid8(sw2/intf/0)" },
+
+      { id: "uuid8(sw2/intf/0->sw1/intf/0)", label: "uuid8(sw2/intf/0->sw1/intf/0)" },
+
+      { id: "uuid8(sw2/intf/0/mpls)", label: "uuid8(sw2/intf/0/mpls)" },
+
+      { id: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", label: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)" },
+
+      { id: "uuid8(sw2/network_node)", label: "uuid8(sw2/network_node)" },
+
+      { id: "uuid8(sw2/network_node/ipvrf0)", label: "uuid8(sw2/network_node/ipvrf0)" },
+
+      { id: "uuid8(sw2/platform)", label: "uuid8(sw2/platform)" },
+
+      { id: "uuid8(sw2/port/0)", label: "uuid8(sw2/port/0)" },
+
+    ];
+    const edges = [
+
+      { id: "uuid8(sw1/intf/0)__RK_ORIGINATES__uuid8(sw1/intf/0->sw2/intf/0)", start: "uuid8(sw1/intf/0)", end: "uuid8(sw1/intf/0->sw2/intf/0)", label: "RK_ORIGINATES" },
+
+      { id: "uuid8(sw1/intf/0/mpls)__RK_ORIGINATES__uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", start: "uuid8(sw1/intf/0/mpls)", end: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", label: "RK_ORIGINATES" },
+
+      { id: "uuid8(sw2/intf/0)__RK_ORIGINATES__uuid8(sw2/intf/0->sw1/intf/0)", start: "uuid8(sw2/intf/0)", end: "uuid8(sw2/intf/0->sw1/intf/0)", label: "RK_ORIGINATES" },
+
+      { id: "uuid8(sw2/intf/0/mpls)__RK_ORIGINATES__uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", start: "uuid8(sw2/intf/0/mpls)", end: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", label: "RK_ORIGINATES" },
+
+      { id: "uuid8(sw1/intf/0)__RK_TERMINATES__uuid8(sw2/intf/0->sw1/intf/0)", start: "uuid8(sw1/intf/0)", end: "uuid8(sw2/intf/0->sw1/intf/0)", label: "RK_TERMINATES" },
+
+      { id: "uuid8(sw1/intf/0/mpls)__RK_TERMINATES__uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", start: "uuid8(sw1/intf/0/mpls)", end: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", label: "RK_TERMINATES" },
+
+      { id: "uuid8(sw2/intf/0)__RK_TERMINATES__uuid8(sw1/intf/0->sw2/intf/0)", start: "uuid8(sw2/intf/0)", end: "uuid8(sw1/intf/0->sw2/intf/0)", label: "RK_TERMINATES" },
+
+      { id: "uuid8(sw2/intf/0/mpls)__RK_TERMINATES__uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", start: "uuid8(sw2/intf/0/mpls)", end: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", label: "RK_TERMINATES" },
+
+      { id: "uuid8(sw1/intf/0)__RK_TRAVERSES__uuid8(sw1/port/0)", start: "uuid8(sw1/intf/0)", end: "uuid8(sw1/port/0)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw1/intf/0/mpls)__RK_TRAVERSES__uuid8(sw1/intf/0)", start: "uuid8(sw1/intf/0/mpls)", end: "uuid8(sw1/intf/0)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)__RK_TRAVERSES__uuid8(sw1/intf/0->sw2/intf/0)", start: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)", end: "uuid8(sw1/intf/0->sw2/intf/0)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw2/intf/0)__RK_TRAVERSES__uuid8(sw2/port/0)", start: "uuid8(sw2/intf/0)", end: "uuid8(sw2/port/0)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw2/intf/0/mpls)__RK_TRAVERSES__uuid8(sw2/intf/0)", start: "uuid8(sw2/intf/0/mpls)", end: "uuid8(sw2/intf/0)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)__RK_TRAVERSES__uuid8(sw2/intf/0->sw1/intf/0)", start: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)", end: "uuid8(sw2/intf/0->sw1/intf/0)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw1/network_node)__RK_CONTAINS__uuid8(sw1/intf/0)", start: "uuid8(sw1/network_node)", end: "uuid8(sw1/intf/0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw1/network_node)__RK_CONTAINS__uuid8(sw1/intf/0/mpls)", start: "uuid8(sw1/network_node)", end: "uuid8(sw1/intf/0/mpls)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw1/network_node)__RK_CONTAINS__uuid8(sw1/network_node/ipvrf0)", start: "uuid8(sw1/network_node)", end: "uuid8(sw1/network_node/ipvrf0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw1/platform)__RK_CONTAINS__uuid8(sw1/network_node)", start: "uuid8(sw1/platform)", end: "uuid8(sw1/network_node)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw1/platform)__RK_CONTAINS__uuid8(sw1/port/0)", start: "uuid8(sw1/platform)", end: "uuid8(sw1/port/0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw2/network_node)__RK_CONTAINS__uuid8(sw2/intf/0)", start: "uuid8(sw2/network_node)", end: "uuid8(sw2/intf/0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw2/network_node)__RK_CONTAINS__uuid8(sw2/intf/0/mpls)", start: "uuid8(sw2/network_node)", end: "uuid8(sw2/intf/0/mpls)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw2/network_node)__RK_CONTAINS__uuid8(sw2/network_node/ipvrf0)", start: "uuid8(sw2/network_node)", end: "uuid8(sw2/network_node/ipvrf0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw2/platform)__RK_CONTAINS__uuid8(sw2/network_node)", start: "uuid8(sw2/platform)", end: "uuid8(sw2/network_node)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw2/platform)__RK_CONTAINS__uuid8(sw2/port/0)", start: "uuid8(sw2/platform)", end: "uuid8(sw2/port/0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sdn_agent/primary)__RK_CONTROLS__uuid8(sw1/network_node)", start: "uuid8(sdn_agent/primary)", end: "uuid8(sw1/network_node)", label: "RK_CONTROLS" },
+
+      { id: "uuid8(sdn_agent/primary)__RK_CONTROLS__uuid8(sw2/network_node)", start: "uuid8(sdn_agent/primary)", end: "uuid8(sw2/network_node)", label: "RK_CONTROLS" },
+
+      { id: "uuid8(sw1/network_node/ipvrf0)__RK_CONTROLS__uuid8(sw1/network_node)", start: "uuid8(sw1/network_node/ipvrf0)", end: "uuid8(sw1/network_node)", label: "RK_CONTROLS" },
+
+      { id: "uuid8(sw2/network_node/ipvrf0)__RK_CONTROLS__uuid8(sw2/network_node)", start: "uuid8(sw2/network_node/ipvrf0)", end: "uuid8(sw2/network_node)", label: "RK_CONTROLS" },
+
+    ];
+
+    const orb = new Orb.Orb(container);
+
+    
+    orb.data.setup({ nodes, edges });
+
+	orb.view.setSettings({
+		simulation: {
+		  isPhysicsEnabled: true,
+		},
+	});
+
+    
+    orb.view.render(() => {
+      orb.view.recenter();
+    });
+  </script>
+</body>
+</html>

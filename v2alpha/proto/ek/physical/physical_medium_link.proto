@@ -1,0 +1,50 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.v2alpha.ek.physical;
+
+import "google/protobuf/duration.proto";
+import "nmts/v2alpha/proto/ek/physical/common.proto";
+
+option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
+
+// Represents the physical medium underlying higher layer communications
+// channels. Can represent P2P media, like a fibre or copper Ethernet
+// cable, or a P2P RF or free space optical link.
+//
+// Presently EK_ANTENNAs can RK_ORIGINATES and RK_TERMINATES these
+// entities.
+//
+// TODO: consider P2MP and MP2MP modeling scenarios (possibly using
+// something like an EK_SHARED_MEDIUM/EK_SHARED_MEDIUM_LINK instead).
+message PhysicalMediumLink {
+  // Peak information rate (PIR) of this link in bits per second.
+  //
+  // Link speed MAY also be inferred from EK_PORTs to which this link
+  // is connected.
+  int64 max_data_rate_bps = 1;
+
+  // Latency (one-way frame delay).
+  google.protobuf.Duration latency = 2;
+
+  ///
+  // Simple, time-invariant link characteristics.
+  ///
+  Signal signal = 3;
+  // The transmit power, in watts.
+  double transmit_power_w = 4;
+}

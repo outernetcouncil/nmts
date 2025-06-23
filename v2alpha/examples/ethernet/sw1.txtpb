@@ -1,0 +1,87 @@
+##
+# Entity definition for "sw1" (switch1)
+##
+entity {
+  id: "uuid8(sw1/platform)"
+  ek_platform {
+  }
+}
+entity {
+  id: "uuid8(sw1/port/0)"
+  ek_port {
+    name: "eth0"
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw1/platform)"
+  z: "uuid8(sw1/port/0)"
+}
+entity {
+  id: "uuid8(sw1/network_node)"
+  ek_network_node {
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw1/platform)"
+  z: "uuid8(sw1/network_node)"
+}
+entity {
+  id: "uuid8(sw1/intf/0)"
+  ek_interface {
+    eth {
+      mac_addr: {
+        str: "02:00:03:04:05:06"
+      }
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw1/network_node)"
+  z: "uuid8(sw1/intf/0)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8(sw1/intf/0)"
+  z: "uuid8(sw1/port/0)"
+}
+entity {
+  id: "uuid8(sw1/intf/0/mpls)"
+  ek_interface {
+    admin_status: IF_ADMIN_STATUS_UP
+    mpls {
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw1/network_node)"
+  z: "uuid8(sw1/intf/0/mpls)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8(sw1/intf/0/mpls)"
+  z: "uuid8(sw1/intf/0)"
+}
+entity {
+  id: "uuid8(sw1/network_node/ipvrf0)"
+  ek_route_fn {
+    router_id: {
+      dotted_quad: {
+        str: "1.1.1.1"
+      }
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw1/network_node)"
+  z: "uuid8(sw1/network_node/ipvrf0)"
+}
+relationship {
+  kind: RK_CONTROLS
+  a: "uuid8(sw1/network_node/ipvrf0)"
+  z: "uuid8(sw1/network_node)"
+}

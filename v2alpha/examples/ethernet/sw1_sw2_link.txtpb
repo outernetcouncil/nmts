@@ -1,0 +1,85 @@
+##
+# Bidirectional Ethernet link over sw1/intf/0<->sw2/intf/0
+##
+entity {
+  id: "uuid8(sw1/intf/0->sw2/intf/0)"
+  ek_logical_packet_link {
+    eth {
+    }
+  }
+}
+relationship {
+  kind: RK_ORIGINATES
+  a: "uuid8(sw1/intf/0)"
+  z: "uuid8(sw1/intf/0->sw2/intf/0)"
+}
+relationship {
+  kind: RK_TERMINATES
+  a: "uuid8(sw2/intf/0)"
+  z: "uuid8(sw1/intf/0->sw2/intf/0)"
+}
+entity {
+  id: "uuid8(sw2/intf/0->sw1/intf/0)"
+  ek_logical_packet_link {
+    eth {
+    }
+  }
+}
+relationship {
+  kind: RK_ORIGINATES
+  a: "uuid8(sw2/intf/0)"
+  z: "uuid8(sw2/intf/0->sw1/intf/0)"
+}
+relationship {
+  kind: RK_TERMINATES
+  a: "uuid8(sw1/intf/0)"
+  z: "uuid8(sw2/intf/0->sw1/intf/0)"
+}
+
+##
+# Bidirectional MPLS link over sw1/intf/0<->sw2/intf/0
+##
+entity {
+  id: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)"
+  ek_logical_packet_link {
+    mpls {
+    }
+  }
+}
+relationship {
+  kind: RK_ORIGINATES
+  a: "uuid8(sw1/intf/0/mpls)"
+  z: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)"
+}
+relationship {
+  kind: RK_TERMINATES
+  a: "uuid8(sw2/intf/0/mpls)"
+  z: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8(sw1/intf/0/mpls->sw2/intf/0/mpls)"
+  z: "uuid8(sw1/intf/0->sw2/intf/0)"
+}
+entity {
+  id: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)"
+  ek_logical_packet_link {
+    mpls {
+    }
+  }
+}
+relationship {
+  kind: RK_ORIGINATES
+  a: "uuid8(sw2/intf/0/mpls)"
+  z: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)"
+}
+relationship {
+  kind: RK_TERMINATES
+  a: "uuid8(sw1/intf/0/mpls)"
+  z: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8(sw2/intf/0/mpls->sw1/intf/0/mpls)"
+  z: "uuid8(sw2/intf/0->sw1/intf/0)"
+}

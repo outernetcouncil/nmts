@@ -1,0 +1,37 @@
+{{- define "emit_ek_interface" -}}
+entity {
+  id: "uuid8({{ index . 0 }}/intf/{{index . 1}})"
+  ek_interface {
+    name: "{{index . 0}}"
+#    max_data_rate_bps: 1.0E10
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ index . 0 }}/network_node)"
+  z: "uuid8({{ index . 0 }}/intf/{{index . 1}})"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ index . 0 }}/intf/{{index . 1}})"
+  z: "uuid8({{ index . 0 }}/port/{{index . 1}})"
+}
+entity {
+  id: "uuid8({{ index . 0 }}/intf/{{index . 1}}/mpls)"
+  ek_interface {
+    admin_status: IF_ADMIN_STATUS_UP
+    mpls {
+    }
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8({{ index . 0 }}/network_node)"
+  z: "uuid8({{ index . 0 }}/intf/{{index . 1}}/mpls)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8({{ index . 0 }}/intf/{{index . 1}}/mpls)"
+  z: "uuid8({{ index . 0 }}/intf/{{index . 1}})"
+}
+{{- end -}}

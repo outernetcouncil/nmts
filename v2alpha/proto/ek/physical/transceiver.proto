@@ -1,0 +1,72 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// This file contains messages used to model transmitters and receivers.
+
+syntax = "proto3";
+
+package nmts.v2alpha.ek.physical;
+
+import "nmts/v2alpha/proto/ek/physical/common.proto";
+
+option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
+
+// Models a transmitter.
+//
+// Transmitters should have an RK_SIGNAL_TRANSITS relationship with the
+// nmts.ek.physical.Antenna to which they are connected, in the following
+// direction: Transmitter --RK_SIGNAL_TRANSITS--> nmts.ek.physical.Antenna.
+// No references to Adaptive Coding and Modulation configurations exist in
+// this message since this transmitter is used in both transparent and
+// regenerative architectures. The Adaptive Coding and Modulation configuration
+// is defined by nmts.ek.physical.Modulator.
+message Transmitter {
+  // A signal that can be transmitted by a wireless device.
+  // This message also conceptually represents a carrier wave.
+  message TransmitSignal {
+    // Required.
+    Signal signal = 1;
+    // The maximum transmit power, in watts.
+    // This value further constrains the max_transmit_power_w in the
+    // nmts.ek.physical.Antenna to which this transmitter is attached, in order
+    // to model transmitters whose maximum transmit power varies with frequency.
+    double max_power_w = 2;
+  }
+  // The carriers that this transmitter supports.
+  // If multiple elements have the same TransmitSignal.signal field but each has
+  // a different TransmitSignal.max_power_w field, the max_power_w for the
+  // signal will be determined from the first such element.
+  // Required.
+  repeated TransmitSignal signals = 1;
+}
+
+// Models a receiver.
+//
+// Receivers should have an RK_SIGNAL_TRANSITS relationship with the
+// nmts.ek.physical.Antenna to which they are connected, in the following
+// direction: nmts.ek.physical.Antenna --RK_SIGNAL_TRANSITS--> Receiver.
+// No references to Adaptive Coding and Modulation configurations exist in
+// this message since this receiver is used in both transparent and
+// regenerative architectures. The Adaptive Coding and Modulation configuration
+// is defined by nmts.ek.physical.Demodulator.
+message Receiver {
+  // The carriers that this receiver supports.
+  // Required.
+  repeated Signal signals = 1;
+
+  // Reference Saturation Flux Density (SFD), measured in dBW/m^2.
+  // This is the minimum SFD at the receiver with 0 dB/K G/T.
+  float reference_saturation_flux_density_dbw_m2 = 2;
+}
