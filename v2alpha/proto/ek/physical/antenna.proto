@@ -89,25 +89,6 @@ message Antenna {
   // Required.
   bool is_steerable = 4;
 
-  message PointingFormat {
-    oneof type {
-      CartesianParameters cartesian = 1;
-      StateVectorParameters state_vector = 2;
-    }
-
-    message CartesianParameters {
-      nmts.v2alpha.types.geophys.CoordinateFrame reference_frame = 1;
-    }
-
-    message StateVectorParameters {
-      nmts.v2alpha.types.geophys.CoordinateFrame reference_frame = 1;
-    }
-  }
-
-  // A specification of the format that beam pointing information delivered to
-  // the antenna should take.
-  PointingFormat pointing_format = 17;
-
   // A fixed translational or rotational offset from the
   // nmts.ek.physical.Platform that has an RK_CONTAINS relationship with this
   // Antenna. If this field is not used, the antenna is considered to share the

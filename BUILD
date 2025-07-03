@@ -14,17 +14,6 @@
 
 load("@gazelle//:def.bzl", "gazelle", "gazelle_test")
 
-# For go module source files
-# use the files as is to prevent getting out of sync
-filegroup(
-    name = "go_module_source",
-    srcs = [
-        "go.mod",
-        "go.sum",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 # gazelle:go_naming_convention_external import
 gazelle(name = "gazelle")
 
