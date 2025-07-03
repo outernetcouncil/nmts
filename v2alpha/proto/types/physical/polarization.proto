@@ -29,18 +29,12 @@ message Polarization {
     double tilt_angle_deg = 1;
   }
 
-  // Constant polarization over time.
-  message Constant {
-    // Required.
-    oneof type {
-      google.protobuf.Empty left_hand_circular = 1;
-      google.protobuf.Empty right_hand_circular = 2;
-      Linear linear = 3;
-    }
+  // Required.
+  oneof type {
+    google.protobuf.Empty left_hand_circular = 2;
+    google.protobuf.Empty right_hand_circular = 3;
+    Linear linear = 4;
   }
 
-  // Required.
-  oneof source {
-    Constant constant = 1;
-  }
+  reserved 1;
 }
