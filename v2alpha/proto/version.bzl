@@ -12,23 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@gazelle//:def.bzl", "gazelle", "gazelle_test")
+"Release Version Number"
 
-# For go module source files
-# use the files as is to prevent getting out of sync
-filegroup(
-    name = "go_module_source",
-    srcs = [
-        "go.mod",
-        "go.sum",
-    ],
-    visibility = ["//visibility:public"],
-)
+# Increment before releasing a public version.
+# -------------------------------------------------------------
+# This allows to publish bugfixes to the released version
+# through increments of MINOR segment.
+MINOR = 0
 
-# gazelle:go_naming_convention_external import
-gazelle(name = "gazelle")
-
-gazelle_test(
-    name = "gazelle_test",
-    workspace = "//:BUILD",
-)
+# Build metadata. Typically a unix timestamp when the version was landed on the main branch.
+# -------------------------------------------------------------
+# Line updated by CICD automation before bazel execution.
+PATCH = 0
