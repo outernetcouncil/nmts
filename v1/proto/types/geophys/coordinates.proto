@@ -43,6 +43,13 @@ enum CoordinateFrame {
   // This indicates the frame used for most E-M Lagrange point orbit studies.
   // It is a natural and convenient way to input E-M L1/L2 orbits.
   COORDINATE_FRAME_EARTH_MOON_BARYCENTER_SYNODIC = 2;
+
+  // International Terrestrial Reference Frame, 2020. The 2020 realization of
+  // the International Terrestrial Reference System (ITRS). An Earth-centered,
+  // Earth-fixed reference frame.
+  //
+  // https://itrf.ign.fr/en/solutions/itrf2020
+  COORDINATE_FRAME_ITRF2020 = 3;
 }
 
 // A set of rectilinear 3D coordinates described as (x, y, z) in meters.
