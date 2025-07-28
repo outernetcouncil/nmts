@@ -38,7 +38,8 @@ enum CoordinateFrame {
 
   // Earth-centered, Earth-fixed.
   // Implies CENTRAL_BODY_EARTH, where applicable.
-  COORDINATE_FRAME_ECEF = 1;
+  // Deprecated in favor of COORDINATE_FRAME_ITRF2020.
+  COORDINATE_FRAME_ECEF = 1 [deprecated = true];
 
   // This indicates the frame used for most E-M Lagrange point orbit studies.
   // It is a natural and convenient way to input E-M L1/L2 orbits.

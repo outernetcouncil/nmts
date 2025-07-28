@@ -28,7 +28,7 @@ option go_package = "outernetcouncil.org/nmts/v2alpha/proto/types/geophys";
 // the motion of terrestrial platforms.
 //
 // When a platform's motion is described using GeodeticWgs84 or GeodeticMsl,
-// the platform's axes are oriented in COORDINATE_FRAME_ECEF, such that:
+// the platform's axes are oriented in COORDINATE_FRAME_ITRF2020, such that:
 //  - The x-axis points in the local East direction.
 //  - The y-axis points in the local North direction.
 //  - The z-axis points in the direction of the normal vector to the WGS 84

@@ -142,7 +142,7 @@ message MotionDescription {
   // When a platform's motion is described using message types that lack
   // an explicit indication of platform body axes, the platform's axes may
   // be assumed to be oriented in an axis system most commonly expected
-  // for messages of the given type (e.g. COORDINATE_FRAME_ECEF and
+  // for messages of the given type (e.g. COORDINATE_FRAME_ITRF2020 and
   // East-North-Up, for some Earth-fixed location/motion message types).
   // More detailed information on implicit axis system is documented with
   // each message type.
