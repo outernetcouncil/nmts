@@ -74,3 +74,7 @@ build --tool_java_language_version=21 --java_language_version=21
 # overlapping import paths.
 ##
 build --incompatible_default_to_explicit_init_py
+
+# Attempt to load an optional cache.bazelrc file that defines a remote cache
+# endpoint.
+try-import %workspace%/cache.bazelrc
