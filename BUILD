@@ -19,6 +19,7 @@ load("@gazelle//:def.bzl", "gazelle", "gazelle_test")
 filegroup(
     name = "go_module_source",
     srcs = [
+        "LICENSE",
         "go.mod",
         "go.sum",
     ],
