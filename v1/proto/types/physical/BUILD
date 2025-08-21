@@ -38,11 +38,18 @@ proto_library(
     deps = ["@protobuf//:empty_proto"],
 )
 
+proto_library(
+    name = "waveform_proto",
+    srcs = ["waveform.proto"],
+    import_prefix = "nmts",
+)
+
 cpp_proto_library(
     name = "physical_cpp_proto",
     protos = [
         ":antenna_pattern_proto",
         ":polarization_proto",
+        ":waveform_proto",
     ],
 )
 
@@ -52,6 +59,7 @@ go_proto_library(
     protos = [
         ":antenna_pattern_proto",
         ":polarization_proto",
+        ":waveform_proto",
     ],
 )
 
@@ -60,6 +68,7 @@ java_proto_library(
     protos = [
         ":antenna_pattern_proto",
         ":polarization_proto",
+        ":waveform_proto",
     ],
 )
 
@@ -68,5 +77,6 @@ python_proto_library(
     protos = [
         ":antenna_pattern_proto",
         ":polarization_proto",
+        ":waveform_proto",
     ],
 )

@@ -19,6 +19,8 @@ syntax = "proto3";
 
 package nmts.v2alpha.ek.physical;
 
+import "nmts/v2alpha/proto/types/physical/waveform.proto";
+
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 
@@ -118,7 +120,8 @@ message CarrierToNoisePlusInterferenceThresholdToDataRate {
   double data_rate_bps = 3;
 }
 
-// Models the adaptive coding and modulation behavior for one channel bandwidth.
+// Models the adaptive coding and modulation behavior for a channel with a 
+// specified waveform and channel bandwidth.
 message AdaptiveCodingAndModulationForChannelBandwidth {
   // A list of CarrierToNoisePlusInterferenceThresholdToDataRate messages for
   // use in the adaptive_coding_and_modulation field.
@@ -143,6 +146,10 @@ message AdaptiveCodingAndModulationForChannelBandwidth {
   // should be calculated based on this channel bandwidth.
   // Required.
   int64 channel_bandwidth_hz = 2;
+
+  // The waveform to which the adaptive coding and modulation configuration 
+  // applies.
+  nmts.v2alpha.types.physical.Waveform waveform = 4;
 
   // The channel center frequencies to which the adaptive coding and modulation
   // configuration applies.

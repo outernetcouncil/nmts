@@ -20,6 +20,7 @@ syntax = "proto3";
 package nmts.v2alpha.ek.physical;
 
 import "nmts/v2alpha/proto/types/physical/polarization.proto";
+import "nmts/v2alpha/proto/types/physical/waveform.proto";
 
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
@@ -34,4 +35,5 @@ message Signal {
   nmts.v2alpha.types.physical.Polarization polarization = 3;
   // The symbol rate (baud rate), in symbols per second.
   int64 symbol_rate_symbols_per_second = 4;
+  nmts.v2alpha.types.physical.Waveform waveform = 5;
 }

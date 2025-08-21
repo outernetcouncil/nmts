@@ -38,13 +38,19 @@ proto_library(
     name = "common_proto",
     srcs = ["common.proto"],
     import_prefix = "nmts",
-    deps = ["//v2alpha/proto/types/physical:polarization_proto"],
+    deps = [
+        "//v2alpha/proto/types/physical:polarization_proto",
+        "//v2alpha/proto/types/physical:waveform_proto",
+    ],
 )
 
 proto_library(
     name = "modem_proto",
     srcs = ["modem.proto"],
     import_prefix = "nmts",
+    deps = [
+        "//v2alpha/proto/types/physical:waveform_proto",
+    ],
 )
 
 proto_library(
