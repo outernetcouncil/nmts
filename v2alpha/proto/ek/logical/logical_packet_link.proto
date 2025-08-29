@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.v2alpha.ek.logical;
 
 import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
 import "nmts/v2alpha/proto/types/ietf/routing.proto";
 
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.logical";
@@ -48,11 +49,17 @@ message LogicalPacketLink {
   // TODO: figure out a proper model for RIBs/FIBs/LFIBs.
   message SegmentRouting {
     bool enabled = 1;
-
-    // The (primary) Segment Routing Adjaceny SID assigned to this
-    // link by the router than `RK_CONTAINS` the `EK_INTERFACE` that
-    // `RK_ORIGINATES` this link.
-    types.ietf.SegmentId adjacency_sid = 2;
+        
+    oneof adjacency_sid_type {
+      // The (primary) Segment Routing Adjacency SID assigned to this
+      // link by the router than `RK_CONTAINS` the `EK_INTERFACE` that
+      // `RK_ORIGINATES` this link.
+      types.ietf.SegmentId explicit = 4;
+      
+      // Indicates that the adjacency SID is defined in layers below this
+      // interface, with the exact semantics out of scope of this layer.
+      google.protobuf.Empty derived_from_lower_layer = 5;
+    }
 
     // Maximum SID Depth, specifically the RFC 8491 Link MSD-Type value.
     //

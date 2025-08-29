@@ -199,6 +199,30 @@ message Modulator {
 
   // Required.
   AccessProtocol access_protocol = 3;
+
+  // For each waveform, this message defines the maximum aggregate bandwidth 
+  // that can be processed by the modulator and the maximum number of channels 
+  // into which this available bandwidth can be allocated.
+  message WaveformToChannelBandwidthAllocation {
+    nmts.v1.types.physical.Waveform waveform = 1;
+  
+    // The maximum aggregate signal bandwidth, in Hz, that can be processed by 
+    // the modulator.
+    int64 maximum_aggregate_bandwidth_hz = 2;
+    
+    // The maximum number of channels into which the available bandwidth can be
+    // divided. At most one carrier can be allocated to each entry of the 
+    // channels list.
+    //
+    // The list of carriers that can be allocated to each channel is defined in 
+    // the transmitter to which the modulator is connected in the network model.
+    message Channel {
+      string id = 1;
+    }
+    repeated Channel channels = 3;
+  }
+  repeated WaveformToChannelBandwidthAllocation 
+    waveform_to_channel_bandwidth_allocations = 4;
 }
 
 // Models a demodulator.
@@ -225,4 +249,25 @@ message Demodulator {
 
   // Required.
   AccessProtocol access_protocol = 3;
+
+  // For each waveform, this message defines the maximum aggregate bandwidth 
+  // that can be processed by the demodulator and the maximum number of channels
+  // into which this available bandwidth can be allocated.
+  message WaveformToChannelBandwidthAllocation {
+    nmts.v1.types.physical.Waveform waveform = 1;
+  
+    // The maximum aggregate signal bandwidth, in Hz, that can be processed by 
+    // the demodulator.
+    int64 maximum_aggregate_bandwidth_hz = 2;
+    
+    // The maximum number of channels into which the available bandwidth can be
+    // divided. At most one carrier can be allocated to each entry of the 
+    // channels list.
+    //
+    // The list of carriers that can be allocated to each channel is defined in 
+    // the receiver to which the demodulator is connected in the network model.
+    repeated string channel_ids = 3;
+  }
+  repeated WaveformToChannelBandwidthAllocation 
+    waveform_to_channel_bandwidth_allocations = 4;
 }
