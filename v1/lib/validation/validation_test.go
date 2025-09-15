@@ -172,7 +172,7 @@ var relationshipTestCases = []testCase{
 
 	{
 		entityA: `id: "receiverA" ek_receiver{}`,
-		rk:      npb.RK_RK_TERMINATES,
+		rk:      npb.RK_RK_SIGNAL_TRANSITS,
 		entityZ: `id: "signal_processing_chainZ" ek_signal_processing_chain{}`,
 	},
 
@@ -267,7 +267,9 @@ func TestSimpleCollectionEntityRelationshipValidation(t *testing.T) {
 			Kind: tc.rk,
 			Z:    entityZ.Id,
 		}
-		validator.ValidateRelationship(collection, relationship)
+		if err := validator.ValidateRelationship(collection, relationship); err != nil {
+			t.Errorf("Relationship validation error for %q: %q", relationship, err)
+		}
 	}
 }
 
@@ -303,7 +305,9 @@ func TestSimpleGraphEntityRelationshipValidation(t *testing.T) {
 			Kind: tc.rk,
 			Z:    entityZ.Id,
 		}
-		validator.ValidateRelationship(g, relationship)
+		if err := validator.ValidateRelationship(g, relationship); err != nil {
+			t.Errorf("Relationship validation error for %q: %q", relationship, err)
+		}
 	}
 }
 
