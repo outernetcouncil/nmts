@@ -19,6 +19,8 @@ syntax = "proto3";
 
 package nmts.v1.ek.physical;
 
+import "google/protobuf/duration.proto";
+
 option java_package = "org.outernetcouncil.nmts.v1.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
 
@@ -214,6 +216,30 @@ message ConstantFrequencyMixer {
   double noise_temperature_k = 2; 
 }
 
+// A constraint on channel assignment introduced by an element of the signal
+// processing chain.
+//
+// This element models architectures in which a set of transmitters or receivers
+// may support channels of many sizes, but they need to be configured in one 
+// of a predetermined set of profiles that allows only a subset of those 
+// bandwidths to be processed simultaneously.
+message ChannelBandwidthProfileConfiguration {
+  // Defines the bandwidth profiles supported by the set of transmitters or 
+  // receivers to which this signal processing chain is connected in the model. 
+  // The bandwidths of the carriers that are assigned to the connected 
+  // transmitters or receivers should always be less than or equal to the 
+  // bandwidths specified by one of the entries of this list. 
+  message BandwidthProfile {
+    repeated int64 bandwidths_hz = 1;
+  }
+  repeated BandwidthProfile bandwidth_profiles = 1;
+
+  // The time required to switch between bandwidth profiles.
+  // During this period, this element is inactive, so no beams that transit 
+  // this element can be formed.
+  google.protobuf.Duration reconfiguration_duration = 2;
+}
+  
 // Models a chain of signal processors. These processors modify the signal in
 // the analysis of its wireless propagation.
 message SignalProcessingChain {
@@ -228,6 +254,8 @@ message SignalProcessingChain {
       PinPhotodiode pin_photodiode = 7;
       VariableFrequencyMixer variable_frequency_mixer = 8;
       ConstantFrequencyMixer constant_frequency_mixer = 9;
+      ChannelBandwidthProfileConfiguration 
+        channel_bandwidth_profile_configuration = 10;
     }
   }
   // Required.

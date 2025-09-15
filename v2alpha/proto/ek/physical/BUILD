@@ -85,6 +85,9 @@ proto_library(
     name = "signal_processing_chain_proto",
     srcs = ["signal_processing_chain.proto"],
     import_prefix = "nmts",
+    deps = [
+        "@protobuf//:duration_proto",
+    ],
 )
 
 proto_library(
