@@ -33,6 +33,8 @@ option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 // regenerative architectures. The Adaptive Coding and Modulation configuration
 // is defined by nmts.ek.physical.Modulator.
 message Transmitter {
+  string display_name = 2;
+
   // A signal that can be transmitted by a wireless device.
   // This message also conceptually represents a carrier wave.
   message TransmitSignal {
@@ -62,6 +64,8 @@ message Transmitter {
 // regenerative architectures. The Adaptive Coding and Modulation configuration
 // is defined by nmts.ek.physical.Demodulator.
 message Receiver {
+  string display_name = 3;
+
   // The carriers that this receiver supports.
   // Required.
   repeated Signal signals = 1;
