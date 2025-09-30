@@ -18,8 +18,6 @@ syntax = "proto3";
 
 package nmts.v2alpha.ek.physical;
 
-import "nmts/v2alpha/proto/ek/physical/common.proto";
-
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 
@@ -34,24 +32,6 @@ option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 // is defined by nmts.ek.physical.Modulator.
 message Transmitter {
   string display_name = 2;
-
-  // A signal that can be transmitted by a wireless device.
-  // This message also conceptually represents a carrier wave.
-  message TransmitSignal {
-    // Required.
-    Signal signal = 1;
-    // The maximum transmit power, in watts.
-    // This value further constrains the max_transmit_power_w in the
-    // nmts.ek.physical.Antenna to which this transmitter is attached, in order
-    // to model transmitters whose maximum transmit power varies with frequency.
-    double max_power_w = 2;
-  }
-  // The carriers that this transmitter supports.
-  // If multiple elements have the same TransmitSignal.signal field but each has
-  // a different TransmitSignal.max_power_w field, the max_power_w for the
-  // signal will be determined from the first such element.
-  // Required.
-  repeated TransmitSignal signals = 1;
 }
 
 // Models a receiver.
@@ -65,10 +45,6 @@ message Transmitter {
 // is defined by nmts.ek.physical.Demodulator.
 message Receiver {
   string display_name = 3;
-
-  // The carriers that this receiver supports.
-  // Required.
-  repeated Signal signals = 1;
 
   // Reference Saturation Flux Density (SFD), measured in dBW/m^2.
   // This is the minimum SFD at the receiver with 0 dB/K G/T.

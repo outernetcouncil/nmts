@@ -27,6 +27,8 @@ option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
 
 // Models a signal and its properties, such as its center frequency, bandwidth,
 // and polarization.
+//
+// This message has been deprecated. The Carrier message should be used instead.
 message Signal {
   // Required.
   int64 center_frequency_hz = 1;
@@ -36,4 +38,20 @@ message Signal {
   // The symbol rate (baud rate), in symbols per second.
   int64 symbol_rate_symbols_per_second = 4;
   nmts.v1.types.physical.Waveform waveform = 5;
+}
+
+// Models properties of a carrier signal, which is a modulated waveform at a 
+// specific center frequency and with a specific bandwidth. 
+message Carrier {
+  // Required.
+  int64 center_frequency_hz = 1;
+  // Required.
+  int64 bandwidth_hz = 2;
+  nmts.v1.types.physical.Polarization polarization = 3;
+  // The symbol rate (baud rate), in symbols per second.
+  int64 symbol_rate_symbols_per_second = 4;
+  nmts.v1.types.physical.Waveform waveform = 5;
+
+  // If applicable, defines an ID for this carrier. 
+  string config_id = 6;
 }

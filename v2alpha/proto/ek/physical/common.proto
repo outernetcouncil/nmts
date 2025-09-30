@@ -25,9 +25,9 @@ import "nmts/v2alpha/proto/types/physical/waveform.proto";
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 
-// Models a signal and its properties, such as its center frequency, bandwidth,
-// and polarization.
-message Signal {
+// Models properties of a carrier signal, which is a modulated waveform at a 
+// specific center frequency and with a specific bandwidth. 
+message Carrier {
   // Required.
   int64 center_frequency_hz = 1;
   // Required.
@@ -36,4 +36,7 @@ message Signal {
   // The symbol rate (baud rate), in symbols per second.
   int64 symbol_rate_symbols_per_second = 4;
   nmts.v2alpha.types.physical.Waveform waveform = 5;
+
+  // If applicable, defines an ID for this carrier. 
+  string config_id = 6;
 }

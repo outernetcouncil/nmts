@@ -35,6 +35,15 @@ proto_library(
 )
 
 proto_library(
+    name = "carrier_configuration_proto",
+    srcs = ["carrier_configuration.proto"],
+    import_prefix = "nmts",
+    deps = [
+        ":common_proto",
+    ],
+)
+
+proto_library(
     name = "common_proto",
     srcs = ["common.proto"],
     import_prefix = "nmts",
@@ -94,15 +103,13 @@ proto_library(
     name = "transceiver_proto",
     srcs = ["transceiver.proto"],
     import_prefix = "nmts",
-    deps = [
-        ":common_proto",
-    ],
 )
 
 cpp_proto_library(
     name = "physical_cpp_proto",
     protos = [
         ":antenna_proto",
+        ":carrier_configuration_proto",
         ":common_proto",
         ":modem_proto",
         ":physical_medium_link_proto",
@@ -123,6 +130,7 @@ go_proto_library(
     importpath = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical",
     protos = [
         ":antenna_proto",
+        ":carrier_configuration_proto",
         ":common_proto",
         ":modem_proto",
         ":physical_medium_link_proto",
@@ -142,6 +150,7 @@ java_proto_library(
     name = "physical_java_proto",
     protos = [
         ":antenna_proto",
+        ":carrier_configuration_proto",
         ":common_proto",
         ":modem_proto",
         ":physical_medium_link_proto",
@@ -161,6 +170,7 @@ python_proto_library(
     name = "physical_python_proto",
     protos = [
         ":antenna_proto",
+        ":carrier_configuration_proto",
         ":common_proto",
         ":modem_proto",
         ":physical_medium_link_proto",

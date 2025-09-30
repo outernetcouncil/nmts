@@ -29,6 +29,7 @@ import "nmts/v1/proto/ek/logical/sdn_agent.proto";
 import "nmts/v1/proto/ek/logical/switch_fn.proto";
 import "nmts/v1/proto/ek/logical/uni.proto";
 import "nmts/v1/proto/ek/physical/antenna.proto";
+import "nmts/v1/proto/ek/physical/carrier_configuration.proto";
 import "nmts/v1/proto/ek/physical/modem.proto";
 import "nmts/v1/proto/ek/physical/physical_medium_link.proto";
 import "nmts/v1/proto/ek/physical/platform.proto";
@@ -93,6 +94,7 @@ message Entity {
     ek.physical.Transmitter ek_transmitter = 38;
     ek.physical.Receiver ek_receiver = 39;
     ek.physical.Antenna ek_antenna = 40;
+    ek.physical.CarrierConfiguration ek_carrier_configuration = 41;
     ek.logical.SdnAgent ek_sdn_agent = 100;
   }
 }
@@ -106,6 +108,7 @@ enum RK {
   RK_AGGREGATES = 5;
   RK_CONTROLS = 6;
   RK_SIGNAL_TRANSITS = 8;
+  RK_SUPPORTS = 9;
 }
 
 // A Relationship message MUST be considered invalid whenever any

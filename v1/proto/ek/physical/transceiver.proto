@@ -46,12 +46,10 @@ message Transmitter {
     // to model transmitters whose maximum transmit power varies with frequency.
     double max_power_w = 2;
   }
-  // The carriers that this transmitter supports.
-  // If multiple elements have the same TransmitSignal.signal field but each has
-  // a different TransmitSignal.max_power_w field, the max_power_w for the
-  // signal will be determined from the first such element.
-  // Required.
-  repeated TransmitSignal signals = 1;
+  // The carriers that this transmitter supports should be defined in a 
+  // CarrierConfiguration and related to the transmitter by:
+  // Transmitter --RK_SUPPORTS--> CarrierConfiguration. 
+  repeated TransmitSignal signals = 1 [deprecated = true];
 }
 
 // Models a receiver.
@@ -66,9 +64,10 @@ message Transmitter {
 message Receiver {
   string display_name = 3;
 
-  // The carriers that this receiver supports.
-  // Required.
-  repeated Signal signals = 1;
+  // The carriers that this receiver supports should be defined in a 
+  // CarrierConfiguration entity and related to the receiver by:
+  // Receiver --RK_SUPPORTS--> CarrierConfiguration. 
+  repeated Signal signals = 1 [deprecated = true];
 
   // Reference Saturation Flux Density (SFD), measured in dBW/m^2.
   // This is the minimum SFD at the receiver with 0 dB/K G/T.

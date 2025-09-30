@@ -44,7 +44,8 @@ message PhysicalMediumLink {
   ///
   // Simple, time-invariant link characteristics.
   ///
-  Signal signal = 3;
+  Signal signal = 3 [deprecated = true];
+  Carrier carrier = 5;
   // The transmit power, in watts.
   double transmit_power_w = 4;
 }

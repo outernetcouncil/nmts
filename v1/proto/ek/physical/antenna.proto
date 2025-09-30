@@ -62,7 +62,7 @@ message Antenna {
   // different time interval however, suppose the SDN Controller chooses to use
   // only 4 beams. In this case, each beam could have a maximum transmit power
   // of 6 dBW (3.96 W).
-  // The max_power_w in nmts.ek.physical.Transmitter.TransmitSignal can further
+  // The max_power_w in nmts.ek.physical.Transmitter.TransmitCarrier can further
   // constrain the maximum transmit power to model transmitters whose maximum
   // transmit power varies with frequency.
   // Required.
