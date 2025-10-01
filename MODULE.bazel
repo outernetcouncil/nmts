@@ -55,8 +55,23 @@ bazel_dep(
 )
 
 bazel_dep(
+    name = "rules_rust",
+    version = "0.63.0",
+)
+
+bazel_dep(
+    name = "rules_rust_prost",
+    version = "0.63.0",
+)
+
+bazel_dep(
     name = "toolchains_protoc",
     version = "0.3.7",
+)
+
+bazel_dep(
+    name = "toolchains_llvm",
+    version = "1.4.0",
 )
 
 # Configure the protoc toolchain used by rules_proto_grpc to use protoc v28.0.
@@ -100,3 +115,70 @@ switched_rules.use_languages(
     java = True,
     python = True,
 )
+
+##
+# TODO: extract Rust config to separate location for cleanliness.
+##
+
+#llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
+
+# LLVM Versions and platforms
+# https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
+
+# Host LLVM toolchain.
+#llvm.toolchain(
+#    name = "llvm_toolchain",
+#    llvm_version = "20.1.2",
+#)
+#use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
+
+#register_toolchains("@llvm_toolchain//:all")
+
+RUST_EDITION = "2024"
+
+RUST_VERSION = "1.89.0"
+
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+
+rust.toolchain(
+    edition = RUST_EDITION,
+    versions = [RUST_VERSION],
+)
+
+use_repo(rust, "rust_toolchains")
+
+register_toolchains("@rust_toolchains//:all")
+
+# Custom Prost toolchain
+register_toolchains(
+    "//build_tools/prost_toolchain",
+)
+
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+
+crate.from_cargo(
+    name = "crates_io",
+    cargo_lockfile = "//:Cargo.lock",
+    manifests = ["//:Cargo.toml"],
+)
+
+crate.annotation(
+    crate = "protoc-gen-prost",
+    gen_binaries = ["protoc-gen-prost"],
+)
+
+use_repo(crate, "crates_io")
+
+crate.spec(
+    package = "protoc-gen-tonic",
+    version = "0.4.0",
+)
+
+crate.annotation(
+    crate = "protoc-gen-tonic",
+    gen_binaries = ["protoc-gen-tonic"],
+)
+
+crate.from_specs()
+
+use_repo(crate, "crates")

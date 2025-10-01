@@ -17,6 +17,7 @@ load("@rules_go//proto:def.bzl", "go_proto_library")
 load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_proto_library")
 load("@rules_proto_grpc_java//:defs.bzl", "java_proto_library")
 load("@rules_proto_grpc_python//:defs.bzl", "python_proto_library")
+load("@rules_rust_prost//:defs.bzl", "rust_prost_library")
 
 # gazelle:proto disable_global
 
@@ -84,4 +85,9 @@ python_proto_library(
         "//v2alpha/proto/ek/logical:logical_python_proto",
         "//v2alpha/proto/ek/physical:physical_python_proto",
     ],
+)
+
+rust_prost_library(
+    name = "nmts_rust_proto",
+    proto = ":nmts_proto",
 )
