@@ -50,6 +50,20 @@ message Transmitter {
   // CarrierConfiguration and related to the transmitter by:
   // Transmitter --RK_SUPPORTS--> CarrierConfiguration. 
   repeated TransmitSignal signals = 1 [deprecated = true];
+
+  // The maximum aggregate bandwidth, in Hz, of all carriers assigned to be 
+  // routed through this transmitter.
+  //
+  // If a SignalProcessingChain is connected to this transmitter
+  // (nmts.v1.ek.physical.SignalProcessingChain --RK_SIGNAL_TRANSITS--> 
+  // Transmitter) and that chain contains an 
+  // nmts.v1.ek.physical.ChannelBandwidthProfileConfiguration, this field limits
+  // (number of carriers) * (the bandwidth value(s) in 
+  // ChannelBandwidthProfileConfiguration.bandwidth_profiles).
+  // This is not the same as constraining the aggregate carrier bandwidth 
+  // since assigned carriers may have smaller bandwidths than those defined in 
+  // the bandwidth profile.
+  int64 maximum_aggregate_bandwidth_hz = 3;
 }
 
 // Models a receiver.
@@ -72,4 +86,18 @@ message Receiver {
   // Reference Saturation Flux Density (SFD), measured in dBW/m^2.
   // This is the minimum SFD at the receiver with 0 dB/K G/T.
   float reference_saturation_flux_density_dbw_m2 = 2;
+
+  // The maximum aggregate bandwidth, in Hz, of all carriers assigned to be 
+  // routed through this receiver.
+  //
+  // If a SignalProcessingChain is connected to this receiver
+  // (Receiver --RK_SIGNAL_TRANSITS-->  
+  // nmts.v1.ek.physical.SignalProcessingChain) and that chain contains an 
+  // nmts.v1.ek.physical.ChannelBandwidthProfileConfiguration, this field limits
+  // (number of carriers) * (the bandwidth value(s) in 
+  // ChannelBandwidthProfileConfiguration.bandwidth_profiles).
+  // This is not the same as constraining the aggregate carrier bandwidth 
+  // since assigned carriers may have smaller bandwidths than those defined in 
+  // the bandwidth profile. 
+  int64 maximum_aggregate_bandwidth_hz = 4;
 }
