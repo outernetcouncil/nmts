@@ -45,12 +45,28 @@ message Antenna {
   /****************************************************************************/
   /* Physical Parameters                                                      */
   /****************************************************************************/
-  // The maximum number of beams that can be formed by this antenna.
-  // WARNING: This field defaults to 0 because the proto3 framework does not
-  // allow non-zero default values. If the antenna is able to form wireless
-  // links, this field must be set to a value that is greater than 0.
-  // Required.
-  int32 max_num_beams = 2;
+  // This field is deprecated. See the comments above supports_multiple_beams
+  // for how an antenna with multiple beams is modeled.
+  int32 max_num_beams = 2 [deprecated = true];
+
+  // Indicates whether the antenna supports multiple, independently targetable
+  // beams.
+  //
+  // When true, each carrier routed across this antenna is considered to be 
+  // transmitted or received in a separate beam. When false, all carriers are
+  // considered to share a single beam.
+  // The ability for multiple carriers to be routed across an antenna can be 
+  // modeled through graphs such as:
+  // EK_MODULATOR --> EK_SIGNAL_PROCESSING_CHAIN --> EK_TRANSMITTER ---|
+  //                                                                   v
+  //                                                                EK_ANTENNA
+  //                                                                   ^
+  // EK_MODULATOR --> EK_SIGNAL_PROCESSING_CHAIN --> EK_TRANSMITTER ---|
+  // (All edges are RK_SIGNAL_TRANSITS relationships.)
+  // In this example, each modulator may generate one or more carriers, so the 
+  // graph structure allows a model observer to determine that these carriers
+  // are transmitted through the same antenna.
+  bool supports_multiple_beams = 18;
 
   // The aggregate maximum transmit power across all beams formed by this
   // antenna, in watts.
