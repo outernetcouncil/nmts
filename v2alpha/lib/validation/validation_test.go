@@ -259,6 +259,17 @@ var relationshipTestCases = []testCase{
 		rk:      npb.RK_RK_SIGNAL_TRANSITS,
 		entityZ: `id: "antennaZ" ek_antenna{}`,
 	},
+
+	{
+		entityA: `id: "transmitterA" ek_transmitter{}`,
+		rk:      npb.RK_RK_SUPPORTS,
+		entityZ: `id: "carrier_configurationZ" ek_carrier_configuration{}`,
+	},
+	{
+		entityA: `id: "receiverA" ek_receiver{}`,
+		rk:      npb.RK_RK_SUPPORTS,
+		entityZ: `id: "carrier_configurationZ" ek_carrier_configuration{}`,
+	},
 }
 
 func TestSimpleCollectionEntityRelationshipValidation(t *testing.T) {

@@ -113,9 +113,9 @@ var permittedRelationships = map[allowedRelationship]struct{}{
 	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_SIGNAL_PROCESSING_CHAIN"}: {},
 	{a: "EK_PLATFORM", rk: npb.RK_RK_CONTAINS, z: "EK_TRANSMITTER"}:             {},
 
-	{a: "EK_PORT", rk: npb.RK_RK_ORIGINATES, z: "EK_MODULATOR"}:   {},
-	{a: "EK_PORT", rk: npb.RK_RK_ORIGINATES, z: "EK_PHYSICAL_MEDIUM_LINK"}:   {},
-	{a: "EK_PORT", rk: npb.RK_RK_TERMINATES, z: "EK_DEMODULATOR"}: {},
+	{a: "EK_PORT", rk: npb.RK_RK_ORIGINATES, z: "EK_MODULATOR"}:            {},
+	{a: "EK_PORT", rk: npb.RK_RK_ORIGINATES, z: "EK_PHYSICAL_MEDIUM_LINK"}: {},
+	{a: "EK_PORT", rk: npb.RK_RK_TERMINATES, z: "EK_DEMODULATOR"}:          {},
 	{a: "EK_PORT", rk: npb.RK_RK_TERMINATES, z: "EK_PHYSICAL_MEDIUM_LINK"}: {},
 
 	{a: "EK_RECEIVER", rk: npb.RK_RK_SIGNAL_TRANSITS, z: "EK_SIGNAL_PROCESSING_CHAIN"}: {},
@@ -135,6 +135,9 @@ var permittedRelationships = map[allowedRelationship]struct{}{
 	{a: "EK_SIGNAL_PROCESSING_CHAIN", rk: npb.RK_RK_SIGNAL_TRANSITS, z: "EK_TRANSMITTER"}:             {},
 
 	{a: "EK_TRANSMITTER", rk: npb.RK_RK_SIGNAL_TRANSITS, z: "EK_ANTENNA"}: {},
+
+	{a: "EK_TRANSMITTER", rk: npb.RK_RK_SUPPORTS, z: "EK_CARRIER_CONFIGURATION"}: {},
+	{a: "EK_RECEIVER", rk: npb.RK_RK_SUPPORTS, z: "EK_CARRIER_CONFIGURATION"}:    {},
 }
 
 // Validate each relationship as it's loaded within the collection
