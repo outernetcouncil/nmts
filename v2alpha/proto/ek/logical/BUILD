@@ -43,6 +43,12 @@ proto_library(
 )
 
 proto_library(
+    name = "internal_fabric_proto",
+    srcs = ["internal_fabric.proto"],
+    import_prefix = "nmts",
+)
+
+proto_library(
     name = "logical_packet_link_proto",
     srcs = ["logical_packet_link.proto"],
     import_prefix = "nmts",
@@ -95,6 +101,7 @@ cpp_proto_library(
     protos = [
         ":bp_agent_fn_proto",
         ":interface_proto",
+        ":internal_fabric_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
         ":route_fn_proto",
@@ -115,6 +122,7 @@ go_proto_library(
     protos = [
         ":bp_agent_fn_proto",
         ":interface_proto",
+        ":internal_fabric_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
         ":route_fn_proto",
@@ -134,6 +142,7 @@ java_proto_library(
     protos = [
         ":bp_agent_fn_proto",
         ":interface_proto",
+        ":internal_fabric_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
         ":route_fn_proto",
@@ -153,6 +162,7 @@ python_proto_library(
     protos = [
         ":bp_agent_fn_proto",
         ":interface_proto",
+        ":internal_fabric_proto",
         ":logical_packet_link_proto",
         ":network_node_proto",
         ":route_fn_proto",

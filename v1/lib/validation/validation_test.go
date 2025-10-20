@@ -49,6 +49,11 @@ var relationshipTestCases = []testCase{
 
 	{
 		entityA: `id: "interfaceA" ek_interface{}`,
+		rk:      npb.RK_RK_DATA_TRANSITS,
+		entityZ: `id: "internal_fabricZ" ek_internal_fabric{}`,
+	},
+	{
+		entityA: `id: "interfaceA" ek_interface{}`,
 		rk:      npb.RK_RK_ORIGINATES,
 		entityZ: `id: "logical_packet_linkZ" ek_logical_packet_link{}`,
 	},
@@ -66,6 +71,17 @@ var relationshipTestCases = []testCase{
 		entityA: `id: "interfaceA" ek_interface{}`,
 		rk:      npb.RK_RK_TRAVERSES,
 		entityZ: `id: "interfaceZ" ek_interface{}`,
+	},
+
+	{
+		entityA: `id: "internal_fabricA" ek_internal_fabric{}`,
+		rk:      npb.RK_RK_DATA_TRANSITS,
+		entityZ: `id: "interfaceZ" ek_interface{}`,
+	},
+	{
+		entityA: `id: "internal_fabricA" ek_internal_fabric{}`,
+		rk:      npb.RK_RK_DATA_TRANSITS,
+		entityZ: `id: "internal_fabricZ" ek_internal_fabric{}`,
 	},
 
 	{

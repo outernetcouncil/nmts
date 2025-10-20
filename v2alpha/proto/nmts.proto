@@ -22,6 +22,7 @@ package nmts.v2alpha;
 
 import "nmts/v2alpha/proto/ek/logical/bp_agent_fn.proto";
 import "nmts/v2alpha/proto/ek/logical/interface.proto";
+import "nmts/v2alpha/proto/ek/logical/internal_fabric.proto";
 import "nmts/v2alpha/proto/ek/logical/logical_packet_link.proto";
 import "nmts/v2alpha/proto/ek/logical/network_node.proto";
 import "nmts/v2alpha/proto/ek/logical/route_fn.proto";
@@ -83,6 +84,7 @@ message Entity {
     ek.physical.Port ek_port = 13;
     ek.logical.BpAgentFn ek_bp_agent_fn = 21;
     ek.logical.Interface ek_interface = 31;
+    ek.logical.InternalFabric ek_internal_fabric = 14;
     ek.logical.LogicalPacketLink ek_logical_packet_link = 20;
     ek.logical.NetworkNode ek_network_node = 30;
     ek.logical.RouteFn ek_route_fn = 32;
@@ -109,6 +111,7 @@ enum RK {
   RK_CONTROLS = 6;
   RK_SIGNAL_TRANSITS = 8;
   RK_SUPPORTS = 9;
+  RK_DATA_TRANSITS = 10;
 }
 
 // A Relationship message MUST be considered invalid whenever any

@@ -32,6 +32,7 @@ proto_library(
     deps = [
         "//v2alpha/proto/ek/logical:bp_agent_fn_proto",
         "//v2alpha/proto/ek/logical:interface_proto",
+        "//v2alpha/proto/ek/logical:internal_fabric_proto",
         "//v2alpha/proto/ek/logical:logical_packet_link_proto",
         "//v2alpha/proto/ek/logical:network_node_proto",
         "//v2alpha/proto/ek/logical:route_fn_proto",

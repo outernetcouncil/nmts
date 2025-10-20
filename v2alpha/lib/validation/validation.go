@@ -76,10 +76,14 @@ var permittedRelationships = map[allowedRelationship]struct{}{
 	{a: "EK_ANTENNA", rk: npb.RK_RK_SIGNAL_TRANSITS, z: "EK_RECEIVER"}:        {},
 	{a: "EK_ANTENNA", rk: npb.RK_RK_TERMINATES, z: "EK_PHYSICAL_MEDIUM_LINK"}: {},
 
+	{a: "EK_INTERFACE", rk: npb.RK_RK_DATA_TRANSITS, z: "EK_INTERNAL_FABRIC"}:  {},
 	{a: "EK_INTERFACE", rk: npb.RK_RK_ORIGINATES, z: "EK_LOGICAL_PACKET_LINK"}: {},
 	{a: "EK_INTERFACE", rk: npb.RK_RK_TERMINATES, z: "EK_LOGICAL_PACKET_LINK"}: {},
 	{a: "EK_INTERFACE", rk: npb.RK_RK_TRAVERSES, z: "EK_PORT"}:                 {},
 	{a: "EK_INTERFACE", rk: npb.RK_RK_TRAVERSES, z: "EK_INTERFACE"}:            {},
+
+	{a: "EK_INTERNAL_FABRIC", rk: npb.RK_RK_DATA_TRANSITS, z: "EK_INTERFACE"}:       {},
+	{a: "EK_INTERNAL_FABRIC", rk: npb.RK_RK_DATA_TRANSITS, z: "EK_INTERNAL_FABRIC"}: {},
 
 	{a: "EK_LOGICAL_PACKET_LINK", rk: npb.RK_RK_TRAVERSES, z: "EK_PHYSICAL_MEDIUM_LINK"}: {},
 	{a: "EK_LOGICAL_PACKET_LINK", rk: npb.RK_RK_TRAVERSES, z: "EK_LOGICAL_PACKET_LINK"}:  {},

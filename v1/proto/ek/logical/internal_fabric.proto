@@ -1,0 +1,106 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.v1.ek.logical;
+
+option java_package = "org.outernetcouncil.nmts.v1.proto.ek.logical";
+option go_package = "outernetcouncil.org/nmts/v1/proto/ek/logical";
+
+// Entity Kind: InternalFabric (`EK_INTERNAL_FABRIC`)
+//
+// Many network devices are internally nonblocking, i.e. the data
+// rate of ingress and egress interfaces is the primary constraint
+// and the forwarding of data within a node does not impose a limit
+// that warrants modeling.
+//
+// For nodes where this is not the case, the EK_INTERNAL_FABRIC
+// entity can be used to capture constraints experienced by data
+// as it transits from ingress interface to egress interface. It
+// functions like a multipoint-to-multipoint EK_LOGICAL_PACKET_LINK,
+// among elements within an EK_NETWORK_NODE.
+//
+// EK_INTERFACEs can be connected to EK_INTERNAL_FABRIC entities via
+// an RK_DATA_TRANSITS relationship. An EK_INTERNAL_FABRIC entity may
+// also be connected to another EK_INTERNAL_FABRIC entity by the same
+// relationship kind. A loop-free path from an ingress to egress
+// EK_INTERFACE following directed RK_DATA_TRANSITS relationships may
+// be used to accumulate all internal constraints encountered by a data
+// flow transiting the given pair of EK_INTERFACEs. If more than one
+// such path exists it is an implementation matter to resolve which
+// path should be used in which circumstances.
+//
+// RK_DATA_TRANSITS relationships are unidirectional, enabling modeling
+// of RX-only or TX-only paths through a fabric.
+//
+// For example:
+//
+// (all arrows RK_DATA_TRANSITS relationships)
+//
+//     +----------------+
+//     | EK_INTERFACE   |
+//     | id="oisl-east" |
+//     +----------------+
+//         ^     |
+//         |     |
+//         |     v 
+// +---------------------------+         +---------------------------+
+// | EK_INTERNAL_FABRIC        | ------> | EK_INTERNAL_FABRIC        |
+// | id="board0"               | <------ | id="board1"               |
+// | max_data_rate_bps=100gbps |         | max_data_rate_bps=100gbps |
+// +---------------------------+         +---------------------------+
+//         ^     |                               ^     |
+//         |     |                               |     |
+//         |     v                               |     v
+// +-----------------------------+     +-----------------------------+
+// | EK_INTERNAL_FABRIC          |     | EK_INTERNAL_FABRIC          |
+// | id="sfp0"                   |     | id="sfp1"                   |
+// | max_data_rate_bps=10gbps    |     | max_data_rate_bps=10gbps    |
+// | max_packets_per_second=5mil |     | max_packets_per_second=5mil |
+// +-----------------------------+     +-----------------------------+
+//         ^               |                          |
+//         |               |                          |
+//         |               v                          v
+// +--------------+    +--------------+        +--------------+
+// | EK_INTERFACE |    | EK_INTERFACE |        | EK_INTERFACE |
+// | id="rx0.0"   |    | id="tx0.0"   |        | id="tx1.0"   |
+// +--------------+    +--------------+        +--------------+
+//
+// A data flow transiting from rx0.0 to oisl-east would encounter
+// constraints amounting to 10gbps max data rate and a 5 million
+// packets per second limitation.
+//
+// A data flow transiting from rx0.0 to tx1.0 would encounter
+// constraints amounting to 10gbps max data rate and two different
+// elements constrained to 5 million packets per second .
+message InternalFabric {
+  // The peak information rate through this internal fabric element,
+  // in bits per second.
+  //
+  // See also RFC 8343 "speed" / RFC 2863 "ifSpeed" and "ifHighSpeed":
+  //
+  // Default value (zero) implies the constraint is unset.
+  int64 max_data_rate_bps = 1;
+
+  // The maximum number of packets per second that may be processed
+  // by this internal fabric element.
+  //
+  // Converting between a data rate and a packet rate requires an
+  // assessment of the distribution of packet sizes expected in the
+  // network. This is not presently represented in the model.
+  //
+  // Default value (zero) implies the constraint is unset.
+  int64 max_packets_per_second = 2;
+}
