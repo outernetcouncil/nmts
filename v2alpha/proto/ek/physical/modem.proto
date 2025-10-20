@@ -157,14 +157,6 @@ message AdaptiveCodingAndModulationForChannelBandwidth {
   repeated int64 center_frequencies_hz = 3;
 }
 
-// Arbitrary compatibility labels that can constrain the formation of wireless
-// links. For example, these labels can be used to indicate that links should
-// not be formed between modems which do not support the same waveforms or
-// between modems from two vendors which are not interoperable.
-message CompatibilityLabels {
-  // TODO: Consider how compatibility should be modeled.
-}
-
 enum AccessProtocol {
   ACCESS_PROTOCOL_UNSPECIFIED = 0;
   // Indicates that the modem is intended to transmit to or receive from only  
@@ -177,9 +169,11 @@ enum AccessProtocol {
 
 // Models a modulator.
 message Modulator {
-  // Arbitrary compatibility labels can be used to constrain the formation of
-  // wireless links.
-  CompatibilityLabels compatibility_labels = 1;
+  // Tags that can be used to constrain the formation of wireless links.
+  // If empty, the modulator is considered to be compatible with any
+  // demodulator. Otherwise, at least one element of this field must match
+  // between a modulator and demodulator in order for a link to be established. 
+  repeated string compatibility_tags = 1;
 
   // The adaptive coding and modulation configurations supported by this modem.
   // Each element describes the behavior for one channel bandwidth.
@@ -227,9 +221,11 @@ message Modulator {
 
 // Models a demodulator.
 message Demodulator {
-  // Arbitrary compatibility labels can be used to constrain the formation of
-  // wireless links.
-  CompatibilityLabels compatibility_labels = 1;
+  // Tags that can be used to constrain the formation of wireless links.
+  // If empty, the demodulator is considered to be compatible with any
+  // modulator. Otherwise, at least one element of this field must match
+  // between a modulator and demodulator in order for a link to be established. 
+  repeated string compatibility_tags = 1;
 
   // The adaptive coding and modulation configurations supported by this modem.
   // Each element describes the behavior for one channel bandwidth.
