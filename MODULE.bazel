@@ -116,6 +116,51 @@ switched_rules.use_languages(
     python = True,
 )
 
+# For TypeScript targets.
+bazel_dep(
+    name = "aspect_rules_js",
+    version = "2.1.0",
+)
+
+bazel_dep(
+    name = "rules_nodejs",
+    version = "6.3.1",
+)
+
+node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
+
+node.toolchain()
+
+npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm")
+
+npm.npm_translate_lock(
+    name = "npm_nmts",
+    npmrc = "@@//:.npmrc",
+    pnpm_lock = "//:pnpm-lock.yaml",
+)
+
+use_repo(npm, "npm_nmts")
+
+bazel_dep(
+    name = "aspect_rules_ts",
+    version = "3.7.0",
+)
+
+rules_ts_ext = use_extension(
+    "@aspect_rules_ts//ts:extensions.bzl",
+    "ext",
+    dev_dependency = True,
+)
+
+rules_ts_ext.deps(
+    # The integrity value will need to be updated along with typescript version changes in package.json.
+    # `curl --silent https://registry.npmjs.org/typescript/5.4.5 | jq -r '.dist.integrity'`
+    ts_integrity = "sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==",
+    ts_version_from = "//:package.json",
+)
+
+use_repo(rules_ts_ext, "npm_typescript")
+
 ##
 # TODO: extract Rust config to separate location for cleanliness.
 ##

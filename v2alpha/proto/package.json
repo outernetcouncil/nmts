@@ -1,0 +1,12 @@
+{
+  "name": "nmts-v2proto",
+  "version": "2.0.0",
+  "description": "Project exposing proto libraries for TypeScript.",
+  "private": true,
+  "packageManager": "pnpm@8.14.0",
+  "devDependencies": {
+    "@bufbuild/protobuf": "^2.2.2",
+    "@bufbuild/protoc-gen-es": "^2.2.0",
+    "typescript": "5.4.5"
+  }
+}

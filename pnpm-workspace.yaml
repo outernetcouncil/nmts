@@ -1,0 +1,6 @@
+# Specify where to look for JS packages when running `pnpm install`
+# (which is required to generate the `pnpm-lock.yaml` used by both
+# pnpm and bazel).
+# A JS package is a subdirectory that contains a `package.json` file.
+packages:
+  - 'v2alpha/proto'

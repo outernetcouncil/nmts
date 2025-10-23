@@ -13,6 +13,7 @@
 # limitations under the License.
 
 load("@gazelle//:def.bzl", "gazelle", "gazelle_test")
+load("@npm_nmts//:defs.bzl", "npm_link_all_packages")
 
 # For go module source files
 # use the files as is to prevent getting out of sync
@@ -33,3 +34,5 @@ gazelle_test(
     name = "gazelle_test",
     workspace = "//:BUILD",
 )
+
+npm_link_all_packages(name = "node_modules")

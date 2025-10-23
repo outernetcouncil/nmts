@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@aspect_rules_ts//ts:proto.bzl", "ts_proto_library")
 load("@protobuf//bazel:proto_library.bzl", "proto_library")
 load("@rules_go//proto:def.bzl", "go_proto_library")
 load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_proto_library")
@@ -81,5 +82,48 @@ python_proto_library(
         ":common_proto",
         ":inet_proto",
         ":routing_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "common_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v2alpha/proto:node_modules",
+    proto = ":common_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "inet_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v2alpha/proto:node_modules",
+    proto = ":inet_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "routing_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v2alpha/proto:node_modules",
+    proto = ":routing_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        ":common_ts_proto",
+        ":inet_ts_proto",
     ],
 )
