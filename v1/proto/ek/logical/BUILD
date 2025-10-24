@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@aspect_rules_ts//ts:proto.bzl", "ts_proto_library")
 load("@protobuf//bazel:proto_library.bzl", "proto_library")
 load("@rules_go//proto:def.bzl", "go_proto_library")
 load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_proto_library")
@@ -174,5 +175,135 @@ python_proto_library(
         "//v1/proto/types/ieee:ieee_python_proto",
         "//v1/proto/types/ietf:ietf_python_proto",
         "//v1/proto/types/mef:mef_python_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "bp_agent_fn_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":bp_agent_fn_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "interface_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":interface_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/ieee:ieee802_ts_proto",
+        "//v1/proto/types/ietf:inet_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "internal_fabric_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":internal_fabric_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "logical_packet_link_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":logical_packet_link_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/ietf:routing_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "network_node_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":network_node_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "route_fn_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":route_fn_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/ietf:routing_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "sdn_agent_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":sdn_agent_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "switch_fn_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":switch_fn_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "uni_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":uni_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/mef:uni_ts_proto",
     ],
 )

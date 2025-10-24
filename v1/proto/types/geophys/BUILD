@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@aspect_rules_ts//ts:proto.bzl", "ts_proto_library")
 load("@protobuf//bazel:proto_library.bzl", "proto_library")
 load("@rules_go//proto:def.bzl", "go_proto_library")
 load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_proto_library")
@@ -124,5 +125,78 @@ python_proto_library(
     deps = [
         "@googleapis//google/type:interval_py_proto",
         "@googleapis//google/type:quaternion_py_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "azimuth_elevation_mask_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":azimuth_elevation_mask_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "coordinates_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":coordinates_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "geodesy_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":geodesy_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "motion_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":motion_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        ":coordinates_ts_proto",
+        ":geodesy_ts_proto",
+        ":orbital_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "orbital_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":orbital_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        ":coordinates_ts_proto",
     ],
 )

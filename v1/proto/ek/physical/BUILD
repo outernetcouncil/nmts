@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@aspect_rules_ts//ts:proto.bzl", "ts_proto_library")
 load("@protobuf//bazel:proto_library.bzl", "proto_library")
 load("@rules_go//proto:def.bzl", "go_proto_library")
 load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_proto_library")
@@ -187,4 +188,138 @@ python_proto_library(
         "//v1/proto/types/ietf:ietf_python_proto",
         "//v1/proto/types/physical:physical_python_proto",
     ],
+)
+
+ts_proto_library(
+    name = "antenna_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":antenna_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/geophys:azimuth_elevation_mask_ts_proto",
+        "//v1/proto/types/geophys:coordinates_ts_proto",
+        "//v1/proto/types/physical:antenna_pattern_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "carrier_configuration_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":carrier_configuration_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "common_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":common_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "modem_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":modem_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/physical:waveform_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "physical_medium_link_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":physical_medium_link_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        ":common_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "platform_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":platform_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/geophys:motion_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "port_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":port_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/ietf:inet_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "signal_processing_chain_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":signal_processing_chain_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
+    name = "transceiver_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":transceiver_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
 )

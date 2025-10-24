@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@aspect_rules_ts//ts:proto.bzl", "ts_proto_library")
 load("@protobuf//bazel:proto_library.bzl", "proto_library")
 load("@rules_go//go:def.bzl", "go_test")
 load("@rules_go//proto:def.bzl", "go_proto_library")
@@ -105,5 +106,41 @@ go_test(
     deps = [
         ":core_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",
+    ],
+)
+
+ts_proto_library(
+    name = "classifier_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":classifier_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        ":packet_ts_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "packet_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":packet_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/iana:ipproto_ts_proto",
+        "//v1/proto/types/ieee:ethertype_ts_proto",
+        "//v1/proto/types/ieee:ieee802_ts_proto",
+        "//v1/proto/types/ietf:common_ts_proto",
+        "//v1/proto/types/ietf:inet_ts_proto",
     ],
 )

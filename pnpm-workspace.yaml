@@ -3,4 +3,5 @@
 # pnpm and bazel).
 # A JS package is a subdirectory that contains a `package.json` file.
 packages:
+  - 'v1/proto'
   - 'v2alpha/proto'
