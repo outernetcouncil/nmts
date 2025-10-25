@@ -135,7 +135,7 @@ npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm")
 
 npm.npm_translate_lock(
     name = "npm_nmts",
-    npmrc = "@@//:.npmrc",
+    npmrc = "//:.npmrc",
     pnpm_lock = "//:pnpm-lock.yaml",
 )
 
