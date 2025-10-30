@@ -50,7 +50,6 @@ proto_library(
     import_prefix = "nmts",
     deps = [
         "//v2alpha/proto/types/physical:polarization_proto",
-        "//v2alpha/proto/types/physical:waveform_proto",
     ],
 )
 
@@ -58,9 +57,6 @@ proto_library(
     name = "modem_proto",
     srcs = ["modem.proto"],
     import_prefix = "nmts",
-    deps = [
-        "//v2alpha/proto/types/physical:waveform_proto",
-    ],
 )
 
 proto_library(
@@ -242,9 +238,6 @@ ts_proto_library(
     protoc_gen_options = {
         "json_types": "true",
     },
-    deps = [
-        "//v2alpha/proto/types/physical:waveform_ts_proto",
-    ],
 )
 
 ts_proto_library(

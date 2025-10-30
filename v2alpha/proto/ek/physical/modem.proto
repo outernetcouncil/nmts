@@ -19,8 +19,6 @@ syntax = "proto3";
 
 package nmts.v2alpha.ek.physical;
 
-import "nmts/v2alpha/proto/types/physical/waveform.proto";
-
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 
@@ -147,9 +145,12 @@ message AdaptiveCodingAndModulationForChannelBandwidth {
   // Required.
   int64 channel_bandwidth_hz = 2;
 
-  // The waveform to which the adaptive coding and modulation configuration 
-  // applies.
-  nmts.v2alpha.types.physical.Waveform waveform = 4;
+  // The waveform to which the adaptive coding and modulation configuration
+  // applies. Use identical string values to refer to the same waveform across
+  // all fields that reference a waveform, including Carrier.waveform,
+  // Modulator.WaveformToChannelBandwidthAllocation.waveform, and
+  // Demodulator.WaveformToChannelBandwidthAllocation.waveform.
+  string waveform = 4;
 
   // The channel center frequencies to which the adaptive coding and modulation
   // configuration applies.
@@ -198,7 +199,11 @@ message Modulator {
   // that can be processed by the modulator and the maximum number of channels 
   // into which this available bandwidth can be allocated.
   message WaveformToChannelBandwidthAllocation {
-    nmts.v2alpha.types.physical.Waveform waveform = 1;
+    // Use identical string values to refer to the same waveform across all
+    // fields that reference a waveform, including Carrier.waveform,
+    // AdaptiveCodingAndModulationForChannelBandwidth.waveform, and
+    // Demodulator.WaveformToChannelBandwidthAllocation.waveform.
+    string waveform = 1;
   
     // The maximum aggregate signal bandwidth, in Hz, that can be processed by 
     // the modulator.
@@ -250,7 +255,11 @@ message Demodulator {
   // that can be processed by the demodulator and the maximum number of channels
   // into which this available bandwidth can be allocated.
   message WaveformToChannelBandwidthAllocation {
-    nmts.v2alpha.types.physical.Waveform waveform = 1;
+    // Use identical string values to refer to the same waveform across all
+    // fields that reference a waveform, including Carrier.waveform,
+    // AdaptiveCodingAndModulationForChannelBandwidth.waveform, and
+    // Modulator.WaveformToChannelBandwidthAllocation.waveform.
+    string waveform = 1;
   
     // The maximum aggregate signal bandwidth, in Hz, that can be processed by 
     // the demodulator.

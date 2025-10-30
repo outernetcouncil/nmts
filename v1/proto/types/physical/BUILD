@@ -39,18 +39,11 @@ proto_library(
     deps = ["@protobuf//:empty_proto"],
 )
 
-proto_library(
-    name = "waveform_proto",
-    srcs = ["waveform.proto"],
-    import_prefix = "nmts",
-)
-
 cpp_proto_library(
     name = "physical_cpp_proto",
     protos = [
         ":antenna_pattern_proto",
         ":polarization_proto",
-        ":waveform_proto",
     ],
 )
 
@@ -60,7 +53,6 @@ go_proto_library(
     protos = [
         ":antenna_pattern_proto",
         ":polarization_proto",
-        ":waveform_proto",
     ],
 )
 
@@ -69,7 +61,6 @@ java_proto_library(
     protos = [
         ":antenna_pattern_proto",
         ":polarization_proto",
-        ":waveform_proto",
     ],
 )
 
@@ -78,7 +69,6 @@ python_proto_library(
     protos = [
         ":antenna_pattern_proto",
         ":polarization_proto",
-        ":waveform_proto",
     ],
 )
 
@@ -103,19 +93,6 @@ ts_proto_library(
     gen_connect_es = False,
     node_modules = "//v1/proto:node_modules",
     proto = ":polarization_proto",
-    protoc_gen_options = {
-        "json_types": "true",
-    },
-)
-
-ts_proto_library(
-    name = "waveform_ts_proto",
-    # Don't attempt to add source files.
-    copy_files = False,
-    # gen_connect_es is not currently compatible with json_types=true.
-    gen_connect_es = False,
-    node_modules = "//v1/proto:node_modules",
-    proto = ":waveform_proto",
     protoc_gen_options = {
         "json_types": "true",
     },

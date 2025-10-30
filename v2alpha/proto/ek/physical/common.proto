@@ -20,7 +20,6 @@ syntax = "proto3";
 package nmts.v2alpha.ek.physical;
 
 import "nmts/v2alpha/proto/types/physical/polarization.proto";
-import "nmts/v2alpha/proto/types/physical/waveform.proto";
 
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
@@ -35,7 +34,12 @@ message Carrier {
   nmts.v2alpha.types.physical.Polarization polarization = 3;
   // The symbol rate (baud rate), in symbols per second.
   int64 symbol_rate_symbols_per_second = 4;
-  nmts.v2alpha.types.physical.Waveform waveform = 5;
+  // The waveform of the carrier. Use identical string values to refer to the
+  // same waveform across all fields that reference a waveform, including
+  // AdaptiveCodingAndModulationForChannelBandwidth.waveform,
+  // Modulator.WaveformToChannelBandwidthAllocation.waveform, and
+  // Demodulator.WaveformToChannelBandwidthAllocation.waveform.
+  string waveform = 5;
 
   // If applicable, defines an ID for this carrier. 
   string config_id = 6;
