@@ -211,14 +211,12 @@ message Modulator {
     
     // The maximum number of channels into which the available bandwidth can be
     // divided. At most one carrier can be allocated to each entry of the 
-    // channels list.
+    // channels list. There must be at least this many ports connected to the 
+    // modulator in the network model. 
     //
     // The list of carriers that can be allocated to each channel is defined in 
     // the transmitter to which the modulator is connected in the network model.
-    message Channel {
-      string id = 1;
-    }
-    repeated Channel channels = 3;
+    int32 max_channels = 3;
   }
   repeated WaveformToChannelBandwidthAllocation 
     waveform_to_channel_bandwidth_allocations = 4;
@@ -267,11 +265,12 @@ message Demodulator {
     
     // The maximum number of channels into which the available bandwidth can be
     // divided. At most one carrier can be allocated to each entry of the 
-    // channels list.
+    // channels list. There must be at least this many ports connected to the 
+    // demodulator in the network model. 
     //
     // The list of carriers that can be allocated to each channel is defined in 
     // the receiver to which the demodulator is connected in the network model.
-    repeated string channel_ids = 3;
+    int32 max_channels = 3;
   }
   repeated WaveformToChannelBandwidthAllocation 
     waveform_to_channel_bandwidth_allocations = 4;

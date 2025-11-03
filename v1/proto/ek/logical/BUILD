@@ -56,7 +56,6 @@ proto_library(
     deps = [
         "//v1/proto/types/ietf:routing_proto",
         "@protobuf//:duration_proto",
-        "@protobuf//:empty_proto",
     ],
 )
 
