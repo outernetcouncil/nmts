@@ -33,6 +33,12 @@ proto_library(
 )
 
 proto_library(
+    name = "eirp_proto",
+    srcs = ["eirp.proto"],
+    import_prefix = "nmts",
+)
+
+proto_library(
     name = "polarization_proto",
     srcs = ["polarization.proto"],
     import_prefix = "nmts",
@@ -43,6 +49,7 @@ cpp_proto_library(
     name = "physical_cpp_proto",
     protos = [
         ":antenna_pattern_proto",
+        ":eirp_proto",
         ":polarization_proto",
     ],
 )
@@ -52,6 +59,7 @@ go_proto_library(
     importpath = "outernetcouncil.org/nmts/v1/proto/types/physical",
     protos = [
         ":antenna_pattern_proto",
+        ":eirp_proto",
         ":polarization_proto",
     ],
 )
@@ -60,6 +68,7 @@ java_proto_library(
     name = "physical_java_proto",
     protos = [
         ":antenna_pattern_proto",
+        ":eirp_proto",
         ":polarization_proto",
     ],
 )
@@ -68,6 +77,7 @@ python_proto_library(
     name = "physical_python_proto",
     protos = [
         ":antenna_pattern_proto",
+        ":eirp_proto",
         ":polarization_proto",
     ],
 )

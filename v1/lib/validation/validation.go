@@ -171,8 +171,17 @@ func (DefaultValidator) ValidateCollection(coll *er.Collection) error {
 type DefaultGraphValidator struct{}
 
 func (DefaultGraphValidator) ValidateRelationship(g *graph.Graph, rel er.Relationship) error {
-	kindA := g.Node(rel.A).GetKind()
-	kindZ := g.Node(rel.Z).GetKind()
+	a := g.Node(rel.A)
+	if a == nil {
+		return fmt.Errorf("A entity %q does not exist", rel.A)
+	}
+	kindA := a.GetKind()
+
+	z := g.Node(rel.Z)
+	if z == nil {
+		return fmt.Errorf("Z entity %q does not exist", rel.Z)
+	}
+	kindZ := z.GetKind()
 
 	key := allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}
 	if _, ok := permittedRelationships[key]; ok {

@@ -21,6 +21,7 @@ package nmts.v1.ek.physical;
 import "nmts/v1/proto/types/geophys/azimuth_elevation_mask.proto";
 import "nmts/v1/proto/types/geophys/coordinates.proto";
 import "nmts/v1/proto/types/physical/antenna_pattern.proto";
+import "nmts/v1/proto/types/physical/eirp.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
@@ -52,10 +53,10 @@ message Antenna {
   // Indicates whether the antenna supports multiple, independently targetable
   // beams.
   //
-  // When true, each carrier routed across this antenna is considered to be 
+  // When true, each carrier routed across this antenna is considered to be
   // transmitted or received in a separate beam. When false, all carriers are
   // considered to share a single beam.
-  // The ability for multiple carriers to be routed across an antenna can be 
+  // The ability for multiple carriers to be routed across an antenna can be
   // modeled through graphs such as:
   // EK_MODULATOR --> EK_SIGNAL_PROCESSING_CHAIN --> EK_TRANSMITTER ---|
   //                                                                   v
@@ -63,7 +64,7 @@ message Antenna {
   //                                                                   ^
   // EK_MODULATOR --> EK_SIGNAL_PROCESSING_CHAIN --> EK_TRANSMITTER ---|
   // (All edges are RK_SIGNAL_TRANSITS relationships.)
-  // In this example, each modulator may generate one or more carriers, so the 
+  // In this example, each modulator may generate one or more carriers, so the
   // graph structure allows a model observer to determine that these carriers
   // are transmitted through the same antenna.
   bool supports_multiple_beams = 18;
@@ -83,6 +84,9 @@ message Antenna {
   // transmit power varies with frequency.
   // Required.
   double max_transmit_power_w = 3;
+
+  // Effective Isotropic Radiating Power (EIRP) limits.
+  nmts.v1.types.physical.EirpLimits eirp_limits = 19;
 
   // Determines whether the antenna is steerable, including both mechanical
   // and electronic steering mechanisms.

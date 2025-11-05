@@ -32,6 +32,7 @@ proto_library(
         "//v1/proto/types/geophys:azimuth_elevation_mask_proto",
         "//v1/proto/types/geophys:coordinates_proto",
         "//v1/proto/types/physical:antenna_pattern_proto",
+        "//v1/proto/types/physical:eirp_proto",
     ],
 )
 
