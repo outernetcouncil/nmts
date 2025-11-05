@@ -84,8 +84,12 @@ message Antenna {
   // Effective Isotropic Radiating Power (EIRP) limits.
   nmts.v2alpha.types.physical.EirpLimits eirp_limits = 18;
 
-  // Determines whether the antenna is steerable, including both mechanical
-  // and electronic steering mechanisms.
+  // Set to true if the antenna is mechanically-steerable. If an antenna is
+  // only electronically-steerable, this will be false. Note that an 
+  // antenna's electronic-steerability is implicitly determined based on the
+  // type of antenna pattern in that any antennas with scan-angle-dependent
+  // gain patterns (such as CustomGainPatternPerAngle) will be assumed to
+  // be electronically-steerable.
   // If enabled, the boresight direction of the antenna is oriented along the
   // link vector when evaluating the wireless propagation of the signal.
   // WARNING: If the gain pattern of an electronically steerable antenna varies
