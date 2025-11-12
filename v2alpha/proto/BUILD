@@ -65,7 +65,7 @@ cpp_proto_library(
 go_proto_library(
     name = "nmts_go_proto",
     importpath = "outernetcouncil.org/nmts/v2alpha/proto",
-    proto = ":nmts_proto",
+    protos = [":nmts_proto"],
     deps = [
         "//v2alpha/proto/ek/logical:logical_go_proto",
         "//v2alpha/proto/ek/physical:physical_go_proto",

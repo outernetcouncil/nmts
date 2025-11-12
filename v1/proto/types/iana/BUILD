@@ -40,7 +40,7 @@ cpp_proto_library(
 go_proto_library(
     name = "iana_go_proto",
     importpath = "outernetcouncil.org/nmts/v1/proto/types/iana",
-    proto = ":ipproto_proto",
+    protos = [":ipproto_proto"],
 )
 
 java_proto_library(

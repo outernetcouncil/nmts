@@ -36,6 +36,7 @@ import "nmts/v0/proto/ek/physical/signal_processing_chain.proto";
 import "nmts/v0/proto/ek/physical/transceiver.proto";
 import "nmts/v0/proto/ek/service/uni.proto";
 
+option go_package = "outernetcouncil.org/nmts/v0/proto";
 option java_package = "org.outernetcouncil.nmts.proto";
 option deprecated = true;
 

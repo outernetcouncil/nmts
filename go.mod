@@ -9,7 +9,7 @@ require (
 	github.com/samber/lo v1.47.0
 	github.com/urfave/cli/v2 v2.27.6
 	golang.org/x/text v0.24.0
-	google.golang.org/protobuf v1.36.3
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
