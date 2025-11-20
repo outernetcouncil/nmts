@@ -174,7 +174,7 @@ message Modulator {
   // If empty, the modulator is considered to be compatible with any
   // demodulator. Otherwise, at least one element of this field must match
   // between a modulator and demodulator in order for a link to be established. 
-  repeated string compatibility_tags = 1;
+  repeated string compatibility_tags = 5;
 
   // The adaptive coding and modulation configurations supported by this modem.
   // Each element describes the behavior for one channel bandwidth.
@@ -220,6 +220,8 @@ message Modulator {
   }
   repeated WaveformToChannelBandwidthAllocation 
     waveform_to_channel_bandwidth_allocations = 4;
+
+  reserved 1;
 }
 
 // Models a demodulator.
@@ -228,7 +230,7 @@ message Demodulator {
   // If empty, the demodulator is considered to be compatible with any
   // modulator. Otherwise, at least one element of this field must match
   // between a modulator and demodulator in order for a link to be established. 
-  repeated string compatibility_tags = 1;
+  repeated string compatibility_tags = 5;
 
   // The adaptive coding and modulation configurations supported by this modem.
   // Each element describes the behavior for one channel bandwidth.
@@ -274,4 +276,6 @@ message Demodulator {
   }
   repeated WaveformToChannelBandwidthAllocation 
     waveform_to_channel_bandwidth_allocations = 4;
+
+  reserved 1;
 }
