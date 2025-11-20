@@ -36,9 +36,8 @@ message Carrier {
   int64 symbol_rate_symbols_per_second = 4;
   // The waveform of the carrier. Use identical string values to refer to the
   // same waveform across all fields that reference a waveform, including
-  // AdaptiveCodingAndModulationForChannelBandwidth.waveform,
-  // Modulator.WaveformToChannelBandwidthAllocation.waveform, and
-  // Demodulator.WaveformToChannelBandwidthAllocation.waveform.
+  // AdaptiveCodingAndModulationForChannelBandwidth.waveform and
+  // WaveformToChannelBandwidthAllocation.waveform.
   string waveform = 5;
 
   // If applicable, defines an ID for this carrier. 
