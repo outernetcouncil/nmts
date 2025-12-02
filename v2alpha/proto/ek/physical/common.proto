@@ -29,7 +29,8 @@ option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 message Carrier {
   // Required.
   int64 center_frequency_hz = 1;
-  // Required.
+  // Required. Represents the total, pre-filter bandwidth of the carrier,
+  // including any roll-off.
   int64 bandwidth_hz = 2;
   nmts.v2alpha.types.physical.Polarization polarization = 3;
   // The symbol rate (baud rate), in symbols per second.
