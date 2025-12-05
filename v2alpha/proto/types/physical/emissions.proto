@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// This file contains messages used to model antenna Effective Isotropic
-// Radiating Power (EIRP) limits.
+// This file contains messages used to model antenna emissions.
 
 syntax = "proto3";
 
-package nmts.v1.types.physical;
+package nmts.v2alpha.types.physical;
 
-option java_package = "org.outernetcouncil.nmts.v1.proto.types.physical";
-option go_package = "outernetcouncil.org/nmts/v1/proto/types/physical";
+option java_package = "org.outernetcouncil.nmts.v2alpha.proto.types.physical";
+option go_package = "outernetcouncil.org/nmts/v2alpha/proto/types/physical";
 
 // Power Spectral Density specifies the power
 message PowerSpectralDensity {
@@ -55,4 +54,15 @@ message EirpsdMask {
 message EirpLimits {
   // Power Spectral Density Masks. The minimum applicable mask will be used.
   repeated EirpsdMask eirpsd_masks = 1;
+}
+
+// Power Flux Density.
+message PowerFluxDensity {
+  // The maximum beam power transmitted, in dbW/m^2.
+  // Required.
+  double dbw_per_m2 = 1;
+
+  // The reference bandwidth over which power_dbw applies, in Hz.
+  // Required.
+  double reference_bandwidth_hz = 2;
 }

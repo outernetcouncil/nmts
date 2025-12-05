@@ -24,7 +24,7 @@ import "google/protobuf/empty.proto";
 import "nmts/v2alpha/proto/types/geophys/azimuth_elevation_mask.proto";
 import "nmts/v2alpha/proto/types/geophys/coordinates.proto";
 import "nmts/v2alpha/proto/types/physical/antenna_pattern.proto";
-import "nmts/v2alpha/proto/types/physical/eirp.proto";
+import "nmts/v2alpha/proto/types/physical/emissions.proto";
 
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
