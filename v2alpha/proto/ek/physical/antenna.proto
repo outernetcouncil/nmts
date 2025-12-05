@@ -18,6 +18,9 @@ syntax = "proto3";
 
 package nmts.v2alpha.ek.physical;
 
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+
 import "nmts/v2alpha/proto/types/geophys/azimuth_elevation_mask.proto";
 import "nmts/v2alpha/proto/types/geophys/coordinates.proto";
 import "nmts/v2alpha/proto/types/physical/antenna_pattern.proto";
@@ -113,6 +116,12 @@ message Antenna {
     oneof type {
       CartesianParameters cartesian = 1;
       StateVectorParameters state_vector = 2;
+      ChebyshevCoefficients chebyshev_coefficients = 3;
+
+      // Indicates that the antenna needs only the target `EK_ANTENNA`
+      // identifier and is presumed to have an alternate mechanism to
+      // determine relevant pointing information from this alone.
+      google.protobuf.Empty target_antenna_id = 4;
     }
 
     message CartesianParameters {
@@ -121,6 +130,30 @@ message Antenna {
 
     message StateVectorParameters {
       nmts.v2alpha.types.geophys.CoordinateFrame reference_frame = 1;
+    }
+
+    message ChebyshevCoefficients {
+      nmts.v2alpha.types.geophys.CoordinateFrame reference_frame = 1;
+
+      // The minimum desired polynomial order, assumed to be required
+      // for accurate pointing of this aperture.
+      int32 min_order = 2;
+
+      // The shortest desired time any set of coefficients should span.
+      google.protobuf.Duration min_interval = 3;
+
+      // The longest desirable time between updates of coefficients.
+      //
+      // Choosing a max_update_period shorter than min_interval can
+      // allow for a system to provide overlap information according
+      // to a desired strategy.  For example:
+      //
+      //     * max_update_period = 10 minutes
+      //     * min_interval = 12 minutes
+      //
+      // would allow a system to allocate 2 minutes of overlap of
+      // coefficients.
+      google.protobuf.Duration max_update_period = 4;
     }
   }
 

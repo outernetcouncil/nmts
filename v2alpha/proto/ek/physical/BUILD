@@ -33,6 +33,8 @@ proto_library(
         "//v2alpha/proto/types/geophys:coordinates_proto",
         "//v2alpha/proto/types/physical:antenna_pattern_proto",
         "//v2alpha/proto/types/physical:eirp_proto",
+        "@protobuf//:duration_proto",
+        "@protobuf//:empty_proto",
     ],
 )
 

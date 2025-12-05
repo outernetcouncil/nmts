@@ -161,6 +161,12 @@ message AdaptiveCodingAndModulationForChannelBandwidth {
 message CompatibilityLabels {
 }
 
+message DvbS2Capabilities {
+  // Indicates physical layer scrambling codes supported by the modem. Mapping
+  // to particular sequences may be user-defined.
+  repeated uint32 supported_pl_scrambling_codes = 1;
+}
+
 enum AccessProtocol {
   ACCESS_PROTOCOL_UNSPECIFIED = 0;
   // Indicates that the modem is intended to transmit to or receive from only  
@@ -229,6 +235,10 @@ message Modulator {
   // modulated for each supported waveform.
   repeated WaveformToChannelBandwidthAllocation 
     waveform_to_channel_bandwidth_allocations = 4;
+
+  // If present, indicates the DVB-S2 capabilities of the modem. DVB-S2
+  // capabilities will always be utilized if supported.
+  DvbS2Capabilities dvbs2_capabilities = 6;
 }
 
 // Models a demodulator.
@@ -265,4 +275,8 @@ message Demodulator {
   // demodulated for each supported waveform.
   repeated WaveformToChannelBandwidthAllocation 
     waveform_to_channel_bandwidth_allocations = 4;
+
+  // If present, indicates the DVB-S2 capabilities of the modem. DVB-S2
+  // capabilities will always be utilized if supported.
+  DvbS2Capabilities dvbs2_capabilities = 6;
 }

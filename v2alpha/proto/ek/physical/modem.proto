@@ -191,6 +191,12 @@ message WaveformToChannelBandwidthAllocation {
   int32 max_channels = 3;
 }
 
+message DvbS2Capabilities {
+  // Indicates physical layer scrambling codes supported by the modem. Mapping
+  // to particular sequences may be user-defined.
+  repeated uint32 supported_pl_scrambling_codes = 1;
+}
+
 // Models a modulator.
 message Modulator {
   // Tags that can be used to constrain the formation of wireless links.
@@ -222,6 +228,10 @@ message Modulator {
   // modulated for each supported waveform.
   repeated WaveformToChannelBandwidthAllocation 
     waveform_to_channel_bandwidth_allocations = 4;
+
+  // If present, indicates the DVB-S2 capabilities of the modem. DVB-S2
+  // capabilities will always be utilized if supported.
+  DvbS2Capabilities dvbs2_capabilities = 6;
 
   reserved 1;
 }
@@ -257,6 +267,10 @@ message Demodulator {
   // demodulated for each supported waveform.
   repeated WaveformToChannelBandwidthAllocation 
     waveform_to_channel_bandwidth_allocations = 4;
+
+  // If present, indicates the DVB-S2 capabilities of the modem. DVB-S2
+  // capabilities will always be utilized if supported.
+  DvbS2Capabilities dvbs2_capabilities = 6;
 
   reserved 1;
 }
