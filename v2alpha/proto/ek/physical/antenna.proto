@@ -38,6 +38,8 @@ option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 // Antenna, and a translational or rotational offset from the Platform's center
 // can be defined in this message.
 message Antenna {
+  reserved 2;
+
   enum Type {
     TYPE_UNSPECIFIED = 0;
     RF = 1;
@@ -52,24 +54,28 @@ message Antenna {
   // Indicates whether the antenna supports multiple, independently targetable
   // beams.
   //
-  // When true, each carrier routed across this antenna is considered to be 
+  // When true, each carrier routed across this antenna is considered to be
   // transmitted or received in a separate beam. When false, all carriers are
   // considered to share a single beam.
-  // The ability for multiple carriers to be routed across an antenna can be 
+  // The ability for multiple carriers to be routed across an antenna can be
   // modeled through graphs such as:
+  //
   // EK_MODULATOR --> EK_SIGNAL_PROCESSING_CHAIN --> EK_TRANSMITTER ---|
   //                                                                   v
   //                                                                EK_ANTENNA
   //                                                                   ^
   // EK_MODULATOR --> EK_SIGNAL_PROCESSING_CHAIN --> EK_TRANSMITTER ---|
+  //
   // (All edges are RK_SIGNAL_TRANSITS relationships.)
-  // In this example, each modulator may generate one or more carriers, so the 
+  //
+  // In this example, each modulator may generate one or more carriers, so the
   // graph structure allows a model observer to determine that these carriers
   // are transmitted through the same antenna.
-  bool supports_multiple_beams = 2;
+  bool supports_multiple_beams = 18;
 
   // The aggregate maximum transmit power across all beams formed by this
   // antenna, in watts.
+  //
   // As an example of how this value is used for antennas that can form multiple
   // beams, suppose an antenna is capable of forming 8 beams and has a
   // maximum aggregate transmit power of 12 dBW (15.85 W). In a given time
@@ -78,14 +84,16 @@ message Antenna {
   // different time interval however, suppose the SDN Controller chooses to use
   // only 4 beams. In this case, each beam could have a maximum transmit power
   // of 6 dBW (3.96 W).
+  //
   // The max_power_w in nmts.ek.physical.Transmitter.TransmitCarrier can further
   // constrain the maximum transmit power to model transmitters whose maximum
   // transmit power varies with frequency.
+  //
   // Required.
   double max_transmit_power_w = 3;
 
   // Effective Isotropic Radiating Power (EIRP) limits.
-  nmts.v2alpha.types.physical.EirpLimits eirp_limits = 18;
+  nmts.v2alpha.types.physical.EirpLimits eirp_limits = 19;
 
   // Set to true if the antenna is mechanically-steerable. If an antenna is
   // only electronically-steerable, this will be false. Note that an 
@@ -93,6 +101,7 @@ message Antenna {
   // type of antenna pattern in that any antennas with scan-angle-dependent
   // gain patterns (such as CustomGainPatternPerAngle) will be assumed to
   // be electronically-steerable.
+  //
   // If enabled, the boresight direction of the antenna is oriented along the
   // link vector when evaluating the wireless propagation of the signal.
   // WARNING: If the gain pattern of an electronically steerable antenna varies
@@ -107,8 +116,10 @@ message Antenna {
   // the boresight direction of this antenna is oriented along the link vector,
   // the gain in the link direction will be the gain defined at phi = 0 and
   // theta = 0.
+  //
   // If enabled, all beams that can be formed by this antenna are considered to
   // be steerable.
+  //
   // Required.
   bool is_steerable = 4;
 
@@ -222,19 +233,31 @@ message Antenna {
     double minimum_rate_deg_per_sec = 1;
     double maximum_rate_deg_per_sec = 2;
   }
+  // To estimate the Duration required for a course-grained repointing
+  // maneuver.
   AzimuthAngleRateConstraint azimuth_angle_rate = 13;
 
   message ElevationAngleRateConstraint {
     double minimum_rate_deg_per_sec = 1;
     double maximum_rate_deg_per_sec = 2;
   }
+  // To estimate the Duration required for a course-grained repointing
+  // maneuver.
   ElevationAngleRateConstraint elevation_angle_rate = 14;
 
   message TotalAngularRateConstraint {
     double minimum_rate_deg_per_sec = 1;
     double maximum_rate_deg_per_sec = 2;
   }
+  // To estimate the Duration required for a course-grained repointing
+  // maneuver.
   TotalAngularRateConstraint total_angular_rate = 15;
+
+  // Additional Duration required for a steerable aperture to complete
+  // link acquisition after course-grained (re)pointing has completed.
+  // This might include, for example, time reserved for a fine-grained
+  // search pattern.
+  google.protobuf.Duration additional_acquisition_time = 20;
 
   // Link accessibility will be constrained when the angle between the sun's
   // center of mass and a receiving antenna's boresight is less than this
