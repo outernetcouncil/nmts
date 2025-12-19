@@ -30,7 +30,7 @@ option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 // attached to the platform in the following direction:
 // Platform --RK_CONTAINS--> nmts.ek.physical.Antenna.
 message Platform {
-  reserved 4 to max;
+  reserved 5 to max;
 
   string name = 1;
 
@@ -42,4 +42,42 @@ message Platform {
   // the orientation axes of the platform, which are considered when determining
   // the boresight direction for each antenna on the platform.
   types.geophys.Motion motion = 3;
+
+  // This optional message is used to explicitly mark a Platform (e.g. a
+  // satellite, ground station, etc) as an external or foreign system to the
+  // network being modeled or managed.
+  //
+  // This can be used for example to identify foreign receivers to be protected
+  // from emissions by the managed system, as well as known or suspected foreign
+  // sources of interference.
+  //
+  // The 'description field' can be used as an indication of the provenance,
+  // ownership, and/or reason for including it.
+  //
+  // Examples might include:
+  //
+  //   is_external_system {
+  //     description: "other satellite operator"
+  //   }
+  //   is_external_system {
+  //     description: "radio astronomy site"
+  //   }
+  //   is_external_system {
+  //     description: "other satellite constellation's name"
+  //   }
+  //   is_external_system {
+  //     description: "this satellite operator's OTHER constellation"
+  //   }
+  //   is_external_system {
+  //     description: "ITU-R Article 22"
+  //   }
+  //
+  // On the other hand, if this field is unset or empty, then the Platform
+  // MAY be part of the system being modeled.  RK_CONTROLS relationships
+  // between contained Entities and an EK_SDN_AGENT specifically indicate
+  // a direct control and/or management plane channel.
+  message IsExternalSystem {
+    string description = 1;
+  }
+  IsExternalSystem is_external_system = 4;
 }
