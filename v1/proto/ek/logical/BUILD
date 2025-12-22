@@ -23,9 +23,6 @@ package(
     default_visibility = ["//visibility:public"],
 )
 
-##
-# Per-proto file library rules.
-##
 proto_library(
     name = "bp_agent_fn_proto",
     srcs = ["bp_agent_fn.proto"],

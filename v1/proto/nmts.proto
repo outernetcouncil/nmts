@@ -24,7 +24,7 @@ import "nmts/v1/proto/ek/logical/bp_agent_fn.proto";
 import "nmts/v1/proto/ek/logical/interface.proto";
 import "nmts/v1/proto/ek/logical/internal_fabric.proto";
 import "nmts/v1/proto/ek/logical/logical_packet_link.proto";
-import "nmts/v1/proto/ek/logical/network_node.proto";
+import "nmts/v1/proto/ek/logical/network_node.proto"; 
 import "nmts/v1/proto/ek/logical/route_fn.proto";
 import "nmts/v1/proto/ek/logical/sdn_agent.proto";
 import "nmts/v1/proto/ek/logical/switch_fn.proto";
