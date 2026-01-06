@@ -231,6 +231,20 @@ message ChannelBandwidthProfileConfiguration {
   // bandwidths specified by one of the entries of this list. 
   message BandwidthProfile {
     repeated int64 bandwidths_hz = 1;
+
+    // For hardware supporting beams of a given bandwidth bundled into
+    // slots, the number of such beams of the lowest bandwidth in this
+    // profile that may be packed together. If larger bandwidth beams
+    // are selected they consume proportionally more "beams". The number
+    // and order of bundle slots should be assumed to be meaningful.
+    //
+    // A set of beam bundles may require selecting only specific subsets
+    // frequency shifts.  These should be expressed in any accompanying
+    // EK_CARRIER_CONFIGURATION entity.
+    //
+    // TODO: expand documentation with examples and clarifying text.
+    //
+    repeated int32 max_beams_per_bundle = 4;
   }
   repeated BandwidthProfile bandwidth_profiles = 1;
 
@@ -239,7 +253,7 @@ message ChannelBandwidthProfileConfiguration {
   // this element can be formed.
   google.protobuf.Duration reconfiguration_duration = 2;
 }
-
+  
 // Models a chain of signal processors. These processors modify the signal in
 // the analysis of its wireless propagation.
 message SignalProcessingChain {
