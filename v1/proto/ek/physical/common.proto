@@ -30,14 +30,14 @@ option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
 // This message has been deprecated. The Carrier message should be used instead.
 message Signal {
   // Required.
-  int64 center_frequency_hz = 1;
+  int64 center_frequency_hz = 1 [deprecated = true];
   // Required. Represents the total, pre-filter bandwidth of the carrier,
   // including any roll-off.
-  int64 bandwidth_hz = 2;
-  nmts.v1.types.physical.Polarization polarization = 3;
+  int64 bandwidth_hz = 2 [deprecated = true];
+  nmts.v1.types.physical.Polarization polarization = 3 [deprecated = true];
   // The symbol rate (baud rate), in symbols per second.
-  int64 symbol_rate_symbols_per_second = 4;
-  string waveform = 5;
+  int64 symbol_rate_symbols_per_second = 4 [deprecated = true];
+  string waveform = 5 [deprecated = true];
 }
 
 // Models properties of a carrier signal, which is a modulated waveform at a 
