@@ -321,32 +321,57 @@ func FindBentPipeReceiverFromTransmitter(g *graph.Graph, transmitterID string) s
 	return receiverID
 }
 
+// Walk RK_TRAVERSES relationships to collect all lower layer entities
+// of the specified type(s). Does not handle RK_AGGREGATES.
+// isDesiredKind should return true for any of the types in the path,
+// including the starting point.
+// The returned slice of IDs is only in order of highest to lowest level
+// if the graph does not branch from one entity to many entities.
+func GetAllTraversedEntitiesBeneath(g *graph.Graph, isDesiredKind func(*nmtspb.Entity) bool, startingID string) []string {
+	startingEntity := g.Node(startingID).GetEntity()
+	if startingEntity == nil || !isDesiredKind(startingEntity) {
+		return []string{}
+	}
+
+	visited := set.NewSet[string](startingID)
+	return getAllTraversedEntitiesBeneathHelper(g, isDesiredKind, startingID, visited)
+}
+
+func getAllTraversedEntitiesBeneathHelper(g *graph.Graph, isDesiredKind func(*nmtspb.Entity) bool, startingID string, visited set.Set[string]) []string {
+	traversedEntities := []string{startingID}
+	for edge := range FilterFor(OutEdgesFrom(g, startingID), nmtspb.RK_RK_TRAVERSES).Iter() {
+		nextID := edge.GetZ()
+		// Don't traverse if this entity has already been visited.
+		if e := g.Node(nextID).GetEntity(); e != nil && isDesiredKind(e) && !visited.Contains(nextID) {
+			visited.Add(nextID)
+			traversedEntities = append(traversedEntities, getAllTraversedEntitiesBeneathHelper(g, isDesiredKind, nextID, visited)...)
+		}
+	}
+	return traversedEntities
+}
+
 // Walk RK_TRAVERSES relationships to find the lowest layer entity
 // of the specified type, if any. Does not handle RK_AGGREGATES.
 // isDesiredKind should return true for any of the types in the path,
-// including the starting point
+// including the starting point.
 func findRootTraversedEntityBeneath(g *graph.Graph, isDesiredKind func(*nmtspb.Entity) bool, startingID string) string {
-	startingEntity := g.Node(startingID).GetEntity()
-	if startingEntity == nil || !isDesiredKind(startingEntity) {
+	entities := GetAllTraversedEntitiesBeneath(g, isDesiredKind, startingID)
+	if len(entities) == 0 {
 		return ""
 	}
-	rootEntityID := startingID
-
-	for edge := range FilterFor(OutEdgesFrom(g, rootEntityID), nmtspb.RK_RK_TRAVERSES).Iter() {
-		if e := g.Node(edge.GetZ()).GetEntity(); e != nil && isDesiredKind(e) {
-			return findRootTraversedEntityBeneath(g, isDesiredKind, edge.GetZ())
-		}
-	}
-
-	return rootEntityID
+	return entities[len(entities)-1]
 }
 
+// WARNING: This will be non-deterministic in finding a root entity if
+// the graph branches from one entity to many entities.
 func FindRootInterfaceBeneath(g *graph.Graph, startingID string) string {
 	return findRootTraversedEntityBeneath(g, func(e *nmtspb.Entity) bool {
 		return e.GetEkInterface() != nil
 	}, startingID)
 }
 
+// WARNING: This will be non-deterministic in finding a root entity if
+// the graph branches from one entity to many entities.
 func FindRootLogicalPacketLinkBeneath(g *graph.Graph, startingID string) string {
 	return findRootTraversedEntityBeneath(g, func(e *nmtspb.Entity) bool {
 		return e.GetEkLogicalPacketLink() != nil
@@ -520,25 +545,107 @@ func GetRouteFnsFromInterface(g *graph.Graph, interfaceID string) []*nmtspb.Enti
 
 // @Experimental
 // This is still under development and may change at any time.
+func GetAllEntityIDsUnderNetworkNode(g *graph.Graph, startingID string) []string {
+	startingEntity := g.Node(startingID).GetEntity()
+	if startingEntity == nil {
+		return []string{}
+	}
+	if startingEntity.GetEkNetworkNode() == nil {
+		return []string{}
+	}
+
+	entityIds := set.NewSet[string]()
+	c := countdown{value: 4096}
+
+	onVisitFn := func(g *graph.Graph, entityID string) {
+		if e := g.Node(entityID).GetEntity(); e != nil {
+			entityIds.Add(entityID)
+		}
+	}
+	shouldStopFn := func(entityID string) bool {
+		c.Decrement()
+		return c.Stopped()
+	}
+	traverseFn := func(g *graph.Graph, _ string, candidateEdge *graph.Edge) bool {
+		a := g.Node(candidateEdge.GetA()).GetEntity()
+		return encompassingEntityInternalTraversal(g, "", candidateEdge) && a.GetEkPlatform() == nil
+	}
+
+	dfs := graph.DepthFirst{
+		Visit:    onVisitFn,
+		Traverse: traverseFn,
+	}
+	dfs.Walk(g, startingID, shouldStopFn)
+
+	return entityIds.ToSlice()
+}
+
+// @Experimental
+// This is still under development and may change at any time.
 //
 // Given a list of entity IDs that are affected by a fault, returns a list of all
 // transitively affected entity IDs.
 func ComputeTransitivelyAffectedIDsForFault(g *graph.Graph, affectedEntityIDs []string) []string {
-	entityIDs := set.NewSet[string]()
-	for _, affectedEntityID := range affectedEntityIDs {
-		e := g.Node(affectedEntityID).GetEntity()
-		switch {
-		case e.GetEkPort() != nil:
-			if interfaceID, ok := GetAFromZ(g, affectedEntityID, nmtspb.RK_RK_TRAVERSES,
-				func(id string) bool {
-					return g.Node(id).GetEntity().GetEkInterface() != nil
-				}); ok {
-				entityIDs.Add(interfaceID)
-			}
-		}
-	}
+	computedEntityIDs := computeTransitivelyAffectedIDsForFaultHelper(g, set.NewSet[string](affectedEntityIDs...), set.NewSet[string]())
 	// Remove any transitively affected entities that are in affected entities.
-	// This should be a no-op if the entity is not in entityIds.
-	entityIDs.RemoveAll(affectedEntityIDs...)
-	return entityIDs.ToSlice()
+	// This should be a no-op if none of the affectedEntityIDs are in computedEntityIds.
+	computedEntityIDs.RemoveAll(affectedEntityIDs...)
+	return set.Sorted(computedEntityIDs)
+}
+
+func computeTransitivelyAffectedIDsForFaultHelper(g *graph.Graph, affectedEntityIDs set.Set[string], allEntityIDs set.Set[string]) set.Set[string] {
+	allEntityIDs = allEntityIDs.Union(affectedEntityIDs)
+	computedEntityIDs := set.NewSet[string]()
+	for entityID := range affectedEntityIDs.Iter() {
+		e := g.Node(entityID).GetEntity()
+		switch {
+		// EK_INTERFACE: any interfaces that RK_TRAVERSES this interface.
+		case e.GetEkInterface() != nil:
+			computedEntityIDs.Append(getInIDs(g, entityID, nmtspb.RK_RK_TRAVERSES)...)
+		// EK_LOGICAL_PACKET_LINK: any logical packet links or physical medium links that this logical packet link traverses.
+		case e.GetEkLogicalPacketLink() != nil:
+			computedEntityIDs.Append(GetAllTraversedEntitiesBeneath(g, func(e *nmtspb.Entity) bool {
+				return e.GetEkLogicalPacketLink() != nil || e.GetEkPhysicalMediumLink() != nil
+			}, entityID)...)
+		// EK_PHYSICAL_MEDIUM_LINK: the logical packet link that RK_TRAVERSES this physical medium link (if any).
+		case e.GetEkPhysicalMediumLink() != nil:
+			if lplID, ok := GetAFromZ(g, entityID, nmtspb.RK_RK_TRAVERSES,
+				func(id string) bool {
+					return g.Node(id).GetEntity().GetEkLogicalPacketLink() != nil
+				}); ok {
+				computedEntityIDs.Add(lplID)
+			}
+		// EK_PLATFORM: all entities under the platform.
+		case e.GetEkPlatform() != nil:
+			containedIDs := getOutIDs(g, entityID, nmtspb.RK_RK_CONTAINS)
+			computedEntityIDs.Append(containedIDs...)
+			networkNodeIDs := lo.Filter(containedIDs,
+				func(id string, _ int) bool {
+					return g.Node(id).GetEntity().GetEkNetworkNode() != nil
+				})
+			for _, networkNodeID := range networkNodeIDs {
+				computedEntityIDs.Append(GetAllEntityIDsUnderNetworkNode(g, networkNodeID)...)
+			}
+		// EK_NETWORK_NODE: all entities under the network node.
+		case e.GetEkNetworkNode() != nil:
+			computedEntityIDs.Append(GetAllEntityIDsUnderNetworkNode(g, entityID)...)
+		}
+		// The following entity kinds do not transitively affect any other entities:
+		// EK_PORT
+		// EK_ANTENNA
+		// EK_MODULATOR
+		// EK_DEMODULATOR
+		// EK_TRANSMITTER
+		// EK_RECEIVER
+		// EK_ROUTE_FN
+		// EK_SDN_AGENT
+	}
+	if computedEntityIDs.IsSubset(allEntityIDs) {
+		// If this round of computation didn't add any new entities, we're done.
+		return allEntityIDs
+	}
+	// Otherwise compute the transitively affected entities based on the new entities we found.
+	computedEntityIDs.RemoveAll(allEntityIDs.ToSlice()...)
+	allEntityIDs = allEntityIDs.Union(computedEntityIDs)
+	return computeTransitivelyAffectedIDsForFaultHelper(g, computedEntityIDs, allEntityIDs)
 }

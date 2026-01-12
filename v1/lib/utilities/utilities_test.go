@@ -580,6 +580,10 @@ func getBasicBentPipeSatellite() *graph.Graph {
 	return lo.Must(testutil.GraphFromFragments(getBasicBentPipeSatelliteNMTSFragment()...))
 }
 
+func getBentPipeTransponder() *graph.Graph {
+	return lo.Must(testutil.GraphFromFragments(getBentPipeTransponderNMTSFragments()...))
+}
+
 // Testing sets of pointers to graph Edges for equality is a bit of
 // a pain. Convert to sets of strings for comparison instead.
 func toStringSet(relationships []*nmtspb.Relationship) set.Set[string] {
@@ -831,7 +835,7 @@ func TestFindEncompassingEntitiesForBentPipeTransponderTopology(t *testing.T) {
 	}
 
 	for _, expect := range expectations {
-		g := lo.Must(testutil.GraphFromFragments(getBentPipeTransponderNMTSFragments()...))
+		g := getBentPipeTransponder()
 		if n := graphutil.FindEncompassingPlatform(g, expect.start); n != expect.ekPlatform {
 			t.Errorf("from: %q want: %q, got: %q", expect.start, expect.ekPlatform, n)
 		}
@@ -843,7 +847,7 @@ func TestFindEncompassingEntitiesForBentPipeTransponderTopology(t *testing.T) {
 			t.Errorf("from: %q want: '', got: %q", expect.start, n)
 		}
 
-		g = lo.Must(testutil.GraphFromFragments(getBentPipeTransponderNMTSFragments()...))
+		g = getBentPipeTransponder()
 		if n := graphutil.FindEncompassingNetworkNode(g, expect.start); n != expect.ekNetworkNode {
 			t.Errorf("from: %q want: %q, got: %q", expect.start, expect.ekNetworkNode, n)
 		}
@@ -854,6 +858,27 @@ func TestFindEncompassingEntitiesForBentPipeTransponderTopology(t *testing.T) {
 		if n := graphutil.FindEncompassingNetworkNode(g, expect.start); n != "" {
 			t.Errorf("from: %q want: '', got: %q", expect.start, n)
 		}
+	}
+}
+
+func TestGetAllTraversedEntitiesBeneathCyclic(t *testing.T) {
+	const interfacesTxtpb = `
+entity { id: "interface0" ek_interface{} }
+entity { id: "interface1" ek_interface{} }
+entity { id: "interface2" ek_interface{} }
+relationship { a: "interface0" kind: RK_TRAVERSES z: "interface1" }
+relationship { a: "interface1" kind: RK_TRAVERSES z: "interface2" }
+relationship { a: "interface2" kind: RK_TRAVERSES z: "interface0" }
+`
+	fragment := lo.Must(testutil.FragmentFrom(interfacesTxtpb))
+	g := lo.Must(testutil.GraphFromFragments(fragment))
+
+	want := []string{"interface0", "interface1", "interface2"}
+	got := graphutil.GetAllTraversedEntitiesBeneath(g, func(e *nmtspb.Entity) bool {
+		return e.GetEkInterface() != nil
+	}, "interface0")
+	if diff := gcmp.Diff(want, got); diff != "" {
+		t.Errorf("unexpected traversed IDs (-want +got): %s", diff)
 	}
 }
 
@@ -1038,16 +1063,134 @@ func TestGetRouteFnsFromInterface(t *testing.T) {
 	}
 }
 
-func TestGetTransitivelyAffectedIDsForPort(t *testing.T) {
-	const portInterfaceTxtpb = `
-entity { id: "port"   ek_port{} }
-entity { id: "interface"	ek_interface{} }
-relationship { a: "interface" kind: RK_TRAVERSES z: "port" }
+func TestComputeTransitivelyAffectedIDsForPML(t *testing.T) {
+	g := getBentPipeTransponder()
+	want := []string{"logical-uplink", "physical-downlink"}
+	got := graphutil.ComputeTransitivelyAffectedIDsForFault(g, []string{"physical-uplink"})
+	if diff := gcmp.Diff(want, got); diff != "" {
+		t.Errorf("unexpected transitively affected IDs (-want +got): %s", diff)
+	}
+}
+
+func TestComputeTransitivelyAffectedIDsIgnoreEntities(t *testing.T) {
+	g := getBentPipeTransponder()
+	downIDs := []string{"tx_terminal/modulator", "tx_terminal/transmitter", "tx_terminal/port"}
+	want := []string{}
+	got := graphutil.ComputeTransitivelyAffectedIDsForFault(g, downIDs)
+	if diff := gcmp.Diff(want, got); diff != "" {
+		t.Errorf("unexpected transitively affected IDs (-want +got): %s", diff)
+	}
+}
+
+func TestComputeTransitivelyAffectedIDsForLayeredInterfaces(t *testing.T) {
+	const interfacesTxtpb = `
+entity { id: "interface0" ek_interface{} }
+entity { id: "interface1" ek_interface{} }
+entity { id: "interface2" ek_interface{} }
+entity { id: "interface3" ek_interface{} }
+entity { id: "port" ek_port{} }
+relationship { a: "interface0" kind: RK_TRAVERSES z: "port" }
+relationship { a: "interface1" kind: RK_TRAVERSES z: "interface0" }
+relationship { a: "interface2" kind: RK_TRAVERSES z: "interface0" }
+relationship { a: "interface3" kind: RK_TRAVERSES z: "interface2" }
 `
-	fragment := lo.Must(testutil.FragmentFrom(portInterfaceTxtpb))
+	fragment := lo.Must(testutil.FragmentFrom(interfacesTxtpb))
 	g := lo.Must(testutil.GraphFromFragments(fragment))
-	want := []string{"interface"}
-	got := graphutil.ComputeTransitivelyAffectedIDsForFault(g, []string{"port"})
+
+	want := []string{"interface1", "interface2", "interface3"}
+	got := graphutil.ComputeTransitivelyAffectedIDsForFault(g, []string{"interface0"})
+	if diff := gcmp.Diff(want, got); diff != "" {
+		t.Errorf("unexpected transitively affected IDs (-want +got): %s", diff)
+	}
+	want = []string{"interface3"}
+	got = graphutil.ComputeTransitivelyAffectedIDsForFault(g, []string{"interface2"})
+	if diff := gcmp.Diff(want, got); diff != "" {
+		t.Errorf("unexpected transitively affected IDs (-want +got): %s", diff)
+	}
+}
+
+func TestComputeTransitivelyAffectedIDsForLogicalPacketLink(t *testing.T) {
+	const interfacesTxtpb = `
+entity { id: "lpl1" ek_logical_packet_link{} }
+entity { id: "lpl2" ek_logical_packet_link{} }
+entity { id: "pml1" ek_physical_medium_link{} }
+entity { id: "pml2" ek_physical_medium_link{} }
+relationship { a: "lpl1" kind: RK_TRAVERSES z: "lpl2" }
+relationship { a: "lpl2" kind: RK_TRAVERSES z: "pml1" }
+relationship { a: "lpl2" kind: RK_TRAVERSES z: "pml2" }
+`
+	fragment := lo.Must(testutil.FragmentFrom(interfacesTxtpb))
+	g := lo.Must(testutil.GraphFromFragments(fragment))
+
+	want := []string{"lpl2", "pml1", "pml2"}
+	got := graphutil.ComputeTransitivelyAffectedIDsForFault(g, []string{"lpl1"})
+	if diff := gcmp.Diff(want, got); diff != "" {
+		t.Errorf("unexpected transitively affected IDs (-want +got): %s", diff)
+	}
+}
+
+func TestComputeTransitivelyAffectedIDsForNetworkNode(t *testing.T) {
+	g := getBasicWorkingGraph()
+	wantPop := []string{
+		"uuid(pop1/network_node/interfaces/eth0)",
+		"uuid(pop1/network_node/interfaces/eth0.mpls)",
+		"uuid(pop1/network_node/logical_packet_links/eth0.mpls/0)",
+	}
+	gotPop := graphutil.ComputeTransitivelyAffectedIDsForFault(g, []string{"uuid(pop1/network_node)"})
+	if diff := gcmp.Diff(wantPop, gotPop); diff != "" {
+		t.Errorf("unexpected transitively affected IDs (-want +got): %s", diff)
+	}
+
+	wantGS := []string{
+		"uuid(gs1/network_node/bpagent)",
+		"uuid(gs1/network_node/interfaces/antenna0)",
+		"uuid(gs1/network_node/interfaces/antenna0.mpls)",
+		"uuid(gs1/network_node/interfaces/eth0)",
+		"uuid(gs1/network_node/interfaces/eth0.mpls)",
+		"uuid(gs1/network_node/ipvrf0)",
+		"uuid(gs1/network_node/logical_packet_links/antenna0.mpls/0)",
+		"uuid(gs1/network_node/logical_packet_links/eth0.mpls/0)",
+		"uuid(gs1/network_node/logical_packet_links/eth0/0)",
+		"uuid(gs1/platform/antennas/0)",
+		"uuid(gs1/platform/demodulators/0)",
+		"uuid(gs1/platform/modulators/0)",
+		"uuid(gs1/platform/ports/antenna0)",
+		"uuid(gs1/platform/ports/unused_port0)",
+		"uuid(gs1/platform/receivers/0)",
+		"uuid(gs1/platform/sigproc/rx0)",
+		"uuid(gs1/platform/sigproc/tx0)",
+		"uuid(gs1/platform/transmitters/0)",
+	}
+	gotGS := graphutil.ComputeTransitivelyAffectedIDsForFault(g, []string{"uuid(gs1/network_node)"})
+	if diff := gcmp.Diff(wantGS, gotGS); diff != "" {
+		t.Errorf("unexpected transitively affected IDs (-want +got): %s", diff)
+	}
+}
+
+func TestComputeTransitivelyAffectedIDsForPlatform(t *testing.T) {
+	g := getBasicWorkingGraph()
+	want := []string{
+		"uuid(gs1/network_node)",
+		"uuid(gs1/network_node/bpagent)",
+		"uuid(gs1/network_node/interfaces/antenna0)",
+		"uuid(gs1/network_node/interfaces/antenna0.mpls)",
+		"uuid(gs1/network_node/interfaces/eth0)",
+		"uuid(gs1/network_node/interfaces/eth0.mpls)",
+		"uuid(gs1/network_node/ipvrf0)",
+		"uuid(gs1/network_node/logical_packet_links/antenna0.mpls/0)",
+		"uuid(gs1/network_node/logical_packet_links/eth0.mpls/0)",
+		"uuid(gs1/network_node/logical_packet_links/eth0/0)",
+		"uuid(gs1/platform/antennas/0)",
+		"uuid(gs1/platform/demodulators/0)",
+		"uuid(gs1/platform/modulators/0)",
+		"uuid(gs1/platform/ports/antenna0)",
+		"uuid(gs1/platform/ports/unused_port0)",
+		"uuid(gs1/platform/receivers/0)",
+		"uuid(gs1/platform/sigproc/rx0)",
+		"uuid(gs1/platform/sigproc/tx0)",
+		"uuid(gs1/platform/transmitters/0)",
+	}
+	got := graphutil.ComputeTransitivelyAffectedIDsForFault(g, []string{"uuid(gs1/platform)"})
 	if diff := gcmp.Diff(want, got); diff != "" {
 		t.Errorf("unexpected transitively affected IDs (-want +got): %s", diff)
 	}
