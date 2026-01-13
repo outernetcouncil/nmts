@@ -47,6 +47,13 @@ message Transmitter {
   // the bandwidth profile.
   int64 maximum_aggregate_bandwidth_hz = 3;
 
+  // The maximum number of RF carriers that can simultaneously be routed through
+  // this transmitter.
+  //
+  // If this field is unset or contains the proto3-default zero value, a model 
+  // consumer MAY derive a value from other context in the model.
+  int32 max_carrier_count = 4;
+
   reserved 1;
 }
 
@@ -79,6 +86,13 @@ message Receiver {
   // since assigned carriers may have smaller bandwidths than those defined in 
   // the bandwidth profile.
   int64 maximum_aggregate_bandwidth_hz = 4;
+
+  // The maximum number of RF carriers that can simultaneously be routed through
+  // this receiver.
+  //
+  // If this field is unset or contains the proto3-default zero value, a model 
+  // consumer MAY derive a value from other context in the model.
+  int32 max_carrier_count = 5;
 
   reserved 1;
 }
