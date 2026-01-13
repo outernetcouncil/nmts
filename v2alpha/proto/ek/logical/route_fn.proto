@@ -28,6 +28,10 @@ option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/logical";
 // May have an associated RIB, FIB, and/or MPLS LFIB.
 //
 // May have an additional ACL/filter/firewall ruleset.
+//
+// When an EK_SDN_AGENT has an RK_CONTROLS relationship to an EK_ROUTE_FN
+// it MAY be used to indicate that a PCEP-like protocol (RFC 5440,
+// RFC 8231, etc.) can be used.
 message RouteFn {
   // The router ID of this logical route function.
   types.ietf.RouterId router_id = 1;
@@ -47,6 +51,9 @@ message RouteFn {
     //
     // See also RFCs 8476, 8491, 8664, and 8814.
     int32 max_sid_depth = 3;
+
+    // TODO: explicit P2P SR-TE policy capability indication.
+    // TODO: explicit P2MP SR-TE policy capability indication.
   }
   SegmentRouting sr = 2;
 }
