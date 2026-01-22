@@ -170,6 +170,9 @@ message Antenna {
 
   // A specification of the format that beam pointing information delivered to
   // the antenna should take.
+  //
+  // If unset, the antenna is assumed to not need any explicit pointing 
+  // information from the model consumer.
   PointingFormat pointing_format = 17;
 
   // A fixed translational or rotational offset from the
