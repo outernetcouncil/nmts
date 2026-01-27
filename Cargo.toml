@@ -12,14 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-[workspace]
+# This is a dummy package to declare dependencies for rules_rust crate_universe.
+# It is not intended to be built directly.
+[package]
+name = "nmts-bazel-deps"
+version = "0.0.1"
+edition = "2024"
+
 [dependencies]
 clap = { version = "4.5.45", features = ["derive"] }
 petgraph = { version = "0.8.2" }
 prost = { version = "0.13.1" }
 tokio = { version = "1.38", features = ["macros", "net", "rt-multi-thread", "signal"], default-features = false }
 prost-reflect = { version = "0.13.1", features = ["text-format"] }
-prost-types = { version = "0.13.1", default_features = false }
+prost-types = { version = "0.13.1", default-features = false }
 protoc-gen-prost = { version = "0.4.0" }
 # protoc-gen-tonic = { version = "0.4.0" }
 tonic = { version = "0.12.1", features = ["transport"] }

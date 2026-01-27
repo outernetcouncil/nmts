@@ -76,12 +76,12 @@ bazel_dep(
 
 bazel_dep(
     name = "rules_rust",
-    version = "0.63.0",
+    version = "0.68.0",
 )
 
 bazel_dep(
     name = "rules_rust_prost",
-    version = "0.63.0",
+    version = "0.68.0",
 )
 
 bazel_dep(
