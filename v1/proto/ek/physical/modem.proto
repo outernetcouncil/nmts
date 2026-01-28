@@ -58,7 +58,7 @@ option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
 //    For QPSK 9/20, min_carrier_to_noise_plus_interference_db is -0.1939 dB.
 //    For QPSK 11/20, min_carrier_to_noise_plus_interference_db is 1.0361 dB.
 //
-// 2) To populate adaptive_coding_and_modulation in 
+// 2) To populate adaptive_coding_and_modulation in
 //    AdaptiveCodingAndModulationForChannelBandwidth:
 //    Note that:
 //      Data rate = (spectral_efficiency) * (symbol_rate)
@@ -69,7 +69,7 @@ option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
 //    Therefore, for the 100Msps channel, for QPSK 2/9:
 //      Data rate = (0.43484 bits/symbol) * (100_000_000 symbols/second)
 //                = 43_484_000 bits/second
-//    This process can be repeated for each MODCOD in the table above to 
+//    This process can be repeated for each MODCOD in the table above to
 //    populate a CarrierToNoisePlusInterferenceThresholdToDataRateList:
 //    carrier_to_noise_plus_interference_threshold_to_data_rate_list {
 //      carrier_to_noise_plus_interference_threshold_to_data_rates {
@@ -92,12 +92,12 @@ option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
 //        min_carrier_to_noise_plus_interference_db: 1.0361
 //        data_rate_bps: 108_858_100
 //      }
-//    } 
+//    }
 //
 // This approach can be tuned based on the actual modems and their measured
 // implementation loss and supported set of MODCODs, etc.
 
-// A threshold of carrier to noise-plus-interference that is required to use a 
+// A threshold of carrier to noise-plus-interference that is required to use a
 // particular modulation and coding (MODCOD) scheme.
 message CarrierToNoisePlusInterferenceThresholdToDataRate {
   // A human readable name (e.g. "QPSK-LDPC-2-3") describing the MODCOD.
@@ -112,35 +112,35 @@ message CarrierToNoisePlusInterferenceThresholdToDataRate {
   double min_carrier_to_noise_plus_interference_db = 2;
 
   // The expected Layer 2 data rate of the channel, provided that the receiver
-  // receives at least the threshold specified by 
+  // receives at least the threshold specified by
   // min_carrier_to_noise_plus_interference_db.
   // Required.
   double data_rate_bps = 3;
 }
 
-// Models the adaptive coding and modulation behavior for a channel with a 
+// Models the adaptive coding and modulation behavior for a channel with a
 // specified waveform and channel bandwidth.
 message AdaptiveCodingAndModulationForChannelBandwidth {
   // A list of CarrierToNoisePlusInterferenceThresholdToDataRate messages for
   // use in the adaptive_coding_and_modulation field.
   message CarrierToNoisePlusInterferenceThresholdToDataRateList {
-    repeated CarrierToNoisePlusInterferenceThresholdToDataRate 
+    repeated CarrierToNoisePlusInterferenceThresholdToDataRate
         carrier_to_noise_plus_interference_threshold_to_data_rates = 1;
   }
 
-  // Maps thresholds of received signal quality to the Layer 2 data rate 
-  // achievable over the channel. 
+  // Maps thresholds of received signal quality to the Layer 2 data rate
+  // achievable over the channel.
   // Required.
   oneof adaptive_coding_and_modulation {
-    CarrierToNoisePlusInterferenceThresholdToDataRateList 
+    CarrierToNoisePlusInterferenceThresholdToDataRateList
         carrier_to_noise_plus_interference_threshold_to_data_rate_list = 1;
     // Other thresholds of received signal quality may be supported in the
-    // future, such as energy per symbol to noise power spectral density 
+    // future, such as energy per symbol to noise power spectral density
     // (Es/N0).
   }
 
   // The channel bandwidth to which the adaptive coding and modulation
-  // configuration applies. The data rates in adaptive_coding_and_modulation 
+  // configuration applies. The data rates in adaptive_coding_and_modulation
   // should be calculated based on this channel bandwidth.
   // Required.
   int64 channel_bandwidth_hz = 2;
@@ -169,7 +169,7 @@ message DvbS2Capabilities {
 
 enum AccessProtocol {
   ACCESS_PROTOCOL_UNSPECIFIED = 0;
-  // Indicates that the modem is intended to transmit to or receive from only  
+  // Indicates that the modem is intended to transmit to or receive from only
   // one transceiver at a time.
   ACCESS_PROTOCOL_POINT_TO_POINT = 1;
   // Indicates that the modem supports protocols to transmit to or receive from
@@ -177,7 +177,7 @@ enum AccessProtocol {
   ACCESS_PROTOCOL_MULTIPLE_ACCESS = 2;
 }
 
-// For a given waveform, this message defines constraints on the maximum 
+// For a given waveform, this message defines constraints on the maximum
 // aggregate bandwidth that can be modulated or demodulated.
 message WaveformToChannelBandwidthAllocation {
   // Use identical string values to refer to the same waveform across all
@@ -189,16 +189,45 @@ message WaveformToChannelBandwidthAllocation {
   int64 maximum_aggregate_bandwidth_hz = 2;
 
   // The maximum number of channels into which the available bandwidth can be
-  // divided. In this context, each channel corresponds to an independently 
+  // divided. In this context, each channel corresponds to an independently
   // processed IF passband signal that is forwarded to or from the RF chain, and
-  // the bandwidth of the channel corresponds to the sampling bandwidth 
+  // the bandwidth of the channel corresponds to the sampling bandwidth
   // configured for that passband.
   //
-  // A model observer may allocate at most one RF carrier to each of these 
+  // A model observer may allocate at most one RF carrier to each of these
   // channels. It is expected that at least this many EK_PORTs are connected to
   // the modulator or demodulator in the network model. The supported RF
   // carriers are defined in EK_CARRIER_CONFIGURATION.
   int32 max_channels = 3;
+}
+
+// Constrains the allowed line-of-sight range rate between the transmitter
+// and receiver.
+//
+// The range rate is defined as the relative velocity component in
+// the line of sight direction.
+//
+// Sign convention:
+//   * Negative values indicate the objects are approaching each other
+//     (range is decreasing).
+//   * Positive values indicate the objects are receding from each other
+//     (range is increasing).
+//
+// The constraint is satisfied when:
+//
+//   minimum_range_rate_meters_per_second
+//       ≤ range_rate
+//       ≤ maximum_range_rate_meters_per_second
+message LinkRangeRateConstraint {
+  // Minimum allowed range rate (m/s).
+  // Typically a negative value, representing the maximum allowed
+  // approaching speed along the line of sight.
+  double minimum_range_rate_meters_per_second = 1;
+
+  // Maximum allowed range rate (m/s).
+  // Typically a positive value, representing the maximum allowed
+  // receding speed along the line of sight.
+  double maximum_range_rate_meters_per_second = 2;
 }
 
 // Models a modulator.
@@ -209,20 +238,20 @@ message Modulator {
   // Tags that can be used to constrain the formation of wireless links.
   // If empty, the modulator is considered to be compatible with any
   // demodulator. Otherwise, at least one element of this field must match
-  // between a modulator and demodulator in order for a link to be established. 
+  // between a modulator and demodulator in order for a link to be established.
   repeated string compatibility_tags = 5;
 
   // The adaptive coding and modulation configurations supported by this modem.
   // Each element describes the behavior for one channel bandwidth.
   // Note that if a channel is not present in
-  // adaptive_coding_and_modulation_for_channel_bandwidths, that channel is 
+  // adaptive_coding_and_modulation_for_channel_bandwidths, that channel is
   // considered to be unsupported by the modem.
   // In order to form a wireless link, the adaptive coding and modulation
   // configuration for the channel, as specified by
   // AdaptiveCodingAndModulationForChannelBandwidth
-  // .adaptive_coding_and_modulation, must match exactly between the Modulator 
+  // .adaptive_coding_and_modulation, must match exactly between the Modulator
   // and Demodulator. If a channel is present in multiple elements of this list,
-  // the adaptive coding and modulation will be determined from the first such 
+  // the adaptive coding and modulation will be determined from the first such
   // element.
   // Required.
   repeated AdaptiveCodingAndModulationForChannelBandwidth
@@ -231,14 +260,17 @@ message Modulator {
   // Required.
   AccessProtocol access_protocol = 3;
 
-  // Defines constraints on the maximum aggregate bandwidth that can be 
+  // Defines constraints on the maximum aggregate bandwidth that can be
   // modulated for each supported waveform.
-  repeated WaveformToChannelBandwidthAllocation 
+  repeated WaveformToChannelBandwidthAllocation
     waveform_to_channel_bandwidth_allocations = 4;
 
   // If present, indicates the DVB-S2 capabilities of the modem. DVB-S2
   // capabilities will always be utilized if supported.
   DvbS2Capabilities dvbs2_capabilities = 6;
+
+  // Range-rate constraint applied to the link geometry.
+  LinkRangeRateConstraint link_range_rate_constraint = 7;
 }
 
 // Models a demodulator.
@@ -249,20 +281,20 @@ message Demodulator {
   // Tags that can be used to constrain the formation of wireless links.
   // If empty, the demodulator is considered to be compatible with any
   // modulator. Otherwise, at least one element of this field must match
-  // between a modulator and demodulator in order for a link to be established. 
+  // between a modulator and demodulator in order for a link to be established.
   repeated string compatibility_tags = 5;
 
   // The adaptive coding and modulation configurations supported by this modem.
   // Each element describes the behavior for one channel bandwidth.
   // Note that if a channel is not present in
-  // adaptive_coding_and_modulation_for_channel_bandwidths, that channel is 
+  // adaptive_coding_and_modulation_for_channel_bandwidths, that channel is
   // considered to be unsupported by the modem.
   // In order to form a wireless link, the adaptive coding and modulation
   // configuration for the channel, as specified by
   // AdaptiveCodingAndModulationForChannelBandwidth
-  // .adaptive_coding_and_modulation, must match exactly between the Modulator 
+  // .adaptive_coding_and_modulation, must match exactly between the Modulator
   // and Demodulator. If a channel is present in multiple elements of this list,
-  // the adaptive coding and modulation will be determined from the first such 
+  // the adaptive coding and modulation will be determined from the first such
   // element.
   // Required.
   repeated AdaptiveCodingAndModulationForChannelBandwidth
@@ -271,12 +303,15 @@ message Demodulator {
   // Required.
   AccessProtocol access_protocol = 3;
 
-  // Defines constraints on the maximum aggregate bandwidth that can be 
+  // Defines constraints on the maximum aggregate bandwidth that can be
   // demodulated for each supported waveform.
-  repeated WaveformToChannelBandwidthAllocation 
+  repeated WaveformToChannelBandwidthAllocation
     waveform_to_channel_bandwidth_allocations = 4;
 
   // If present, indicates the DVB-S2 capabilities of the modem. DVB-S2
   // capabilities will always be utilized if supported.
   DvbS2Capabilities dvbs2_capabilities = 6;
+
+  // Range-rate constraint applied to the link geometry.
+  LinkRangeRateConstraint link_range_rate_constraint = 7;
 }

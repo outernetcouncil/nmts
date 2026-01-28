@@ -98,7 +98,7 @@ message Antenna {
   nmts.v1.types.physical.EirpLimits eirp_limits = 19;
 
   // Set to true if the antenna is mechanically-steerable. If an antenna is
-  // only electronically-steerable, this will be false. Note that an 
+  // only electronically-steerable, this will be false. Note that an
   // antenna's electronic-steerability is implicitly determined based on the
   // type of antenna pattern in that any antennas with scan-angle-dependent
   // gain patterns (such as CustomGainPatternPerAngle) will be assumed to
@@ -173,7 +173,7 @@ message Antenna {
   // A specification of the format that beam pointing information delivered to
   // the antenna should take.
   //
-  // If unset, the antenna is assumed to not need any explicit pointing 
+  // If unset, the antenna is assumed to not need any explicit pointing
   // information from the model consumer.
   PointingFormat pointing_format = 17;
 
