@@ -637,7 +637,6 @@ dependencies = [
  "prost-reflect",
  "prost-types 0.13.5",
  "protoc-gen-prost",
- "protoc-gen-tonic",
  "tokio",
  "tonic",
  "tonic-build",
@@ -850,25 +849,6 @@ dependencies = [
  "prost-build",
  "prost-types 0.13.5",
  "regex",
-]
-
-[[package]]
-name = "protoc-gen-tonic"
-version = "0.4.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6ab6a0d73a0914752ed8fd7cc51afe169e28da87be3efef292de5676cc527634"
-dependencies = [
- "heck",
- "prettyplease",
- "proc-macro2",
- "prost 0.13.5",
- "prost-build",
- "prost-types 0.13.5",
- "protoc-gen-prost",
- "quote",
- "regex",
- "syn",
- "tonic-build",
 ]
 
 [[package]]
