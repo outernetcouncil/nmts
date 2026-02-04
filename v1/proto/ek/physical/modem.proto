@@ -118,6 +118,23 @@ message CarrierToNoisePlusInterferenceThresholdToDataRate {
   double data_rate_bps = 3;
 }
 
+// This message is used when no wireless signal propagation analysis is required
+// to evaluate the accessibility of links. Physical constraints on the antennas
+// of both link endpoints will be considered, but the expected data rate of the
+// link is estimated solely based on the link range.
+//
+// As a consequence of this, a set of supported carriers is not required to be 
+// associated with the transmitters and receivers to which the modulators and 
+// demodulators are connected. If no carriers are modeled, the configuration
+// produced by the model observer to set up beams in the network will not 
+// include carrier configuration information, such as the center frequency or 
+// bandwidth. 
+message LinkRangeToDataRate {
+  // The maximum link range in meters for which data_rate_bps is achievable.
+  float max_link_range_m = 1; 
+  float data_rate_bps = 2;
+}
+
 // Models the adaptive coding and modulation behavior for a channel with a
 // specified waveform and channel bandwidth.
 message AdaptiveCodingAndModulationForChannelBandwidth {
@@ -128,12 +145,26 @@ message AdaptiveCodingAndModulationForChannelBandwidth {
         carrier_to_noise_plus_interference_threshold_to_data_rates = 1;
   }
 
+  // A representation of the adaptive coding and modulation behavior as a 
+  // function of the link range.
+  //
+  // To compute the expected data rate of a link, a model observer should 
+  // determine the largest data rate that is achievable for the link range. An
+  // approach may be:
+  //   1. Sort link_range_to_data_rates by data_rate_bps in descending order.
+  //   2. Return the data_rate_bps of the first entry where the link range
+  //      is less than or equal to max_link_range_m.
+  message LinkRangeToDataRateList {
+    repeated LinkRangeToDataRate link_range_to_data_rates = 1;
+  }
+
   // Maps thresholds of received signal quality to the Layer 2 data rate
   // achievable over the channel.
   // Required.
   oneof adaptive_coding_and_modulation {
     CarrierToNoisePlusInterferenceThresholdToDataRateList
         carrier_to_noise_plus_interference_threshold_to_data_rate_list = 1;
+    LinkRangeToDataRateList link_range_to_data_rate_list = 5;
     // Other thresholds of received signal quality may be supported in the
     // future, such as energy per symbol to noise power spectral density
     // (Es/N0).
@@ -142,7 +173,10 @@ message AdaptiveCodingAndModulationForChannelBandwidth {
   // The channel bandwidth to which the adaptive coding and modulation
   // configuration applies. The data rates in adaptive_coding_and_modulation
   // should be calculated based on this channel bandwidth.
-  // Required.
+  //
+  // Required when using
+  // carrier_to_noise_plus_interference_threshold_to_data_rate_list.
+  // Ignored when using link_range_to_data_rate_list.
   int64 channel_bandwidth_hz = 2;
 
   // The waveform to which the adaptive coding and modulation configuration
@@ -153,7 +187,10 @@ message AdaptiveCodingAndModulationForChannelBandwidth {
 
   // The channel center frequencies to which the adaptive coding and modulation
   // configuration applies.
-  // Required.
+  //
+  // Required when using
+  // carrier_to_noise_plus_interference_threshold_to_data_rate_list.
+  // Ignored when using link_range_to_data_rate_list.
   repeated int64 center_frequencies_hz = 3;
 }
 
@@ -242,7 +279,6 @@ message Modulator {
   repeated string compatibility_tags = 5;
 
   // The adaptive coding and modulation configurations supported by this modem.
-  // Each element describes the behavior for one channel bandwidth.
   // Note that if a channel is not present in
   // adaptive_coding_and_modulation_for_channel_bandwidths, that channel is
   // considered to be unsupported by the modem.
@@ -253,6 +289,9 @@ message Modulator {
   // and Demodulator. If a channel is present in multiple elements of this list,
   // the adaptive coding and modulation will be determined from the first such
   // element.
+  // All elements must set the same type for 
+  // AdaptiveCodingAndModulationForChannelBandwidth
+  // .adaptive_coding_and_modulation.
   // Required.
   repeated AdaptiveCodingAndModulationForChannelBandwidth
     adaptive_coding_and_modulation_for_channel_bandwidths = 2;
@@ -285,7 +324,6 @@ message Demodulator {
   repeated string compatibility_tags = 5;
 
   // The adaptive coding and modulation configurations supported by this modem.
-  // Each element describes the behavior for one channel bandwidth.
   // Note that if a channel is not present in
   // adaptive_coding_and_modulation_for_channel_bandwidths, that channel is
   // considered to be unsupported by the modem.
@@ -296,6 +334,9 @@ message Demodulator {
   // and Demodulator. If a channel is present in multiple elements of this list,
   // the adaptive coding and modulation will be determined from the first such
   // element.
+  // All elements must set the same type for 
+  // AdaptiveCodingAndModulationForChannelBandwidth
+  // .adaptive_coding_and_modulation.
   // Required.
   repeated AdaptiveCodingAndModulationForChannelBandwidth
     adaptive_coding_and_modulation_for_channel_bandwidths = 2;
