@@ -22,8 +22,7 @@ import (
 	npb "outernetcouncil.org/nmts/v0/proto"
 )
 
-type DefaultValidator struct {
-}
+type DefaultValidator struct{}
 
 // Validate each entity as it's loaded within the collection context
 // assembled up to that point.

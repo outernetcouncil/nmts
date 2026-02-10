@@ -119,7 +119,7 @@ func exportHtml(appCtx *cli.Context) error {
 		input.Nodes = append(input.Nodes, e)
 	}
 	for _, rSet := range g.OutEdges {
-		for r, _ := range rSet.Relations {
+		for r := range rSet.Relations {
 			input.Edges = append(input.Edges, r)
 		}
 	}
