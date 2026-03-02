@@ -20,6 +20,7 @@ syntax = "proto3";
 
 package nmts.v2alpha;
 
+import "nmts/v2alpha/proto/ek/logical/access_fn.proto";
 import "nmts/v2alpha/proto/ek/logical/bp_agent_fn.proto";
 import "nmts/v2alpha/proto/ek/logical/interface.proto";
 import "nmts/v2alpha/proto/ek/logical/internal_fabric.proto";
@@ -82,6 +83,7 @@ message Entity {
     ek.physical.Platform ek_platform = 11;
     ek.physical.PhysicalMediumLink ek_physical_medium_link = 12;
     ek.physical.Port ek_port = 13;
+    ek.logical.AccessFn ek_access_fn = 42;
     ek.logical.BpAgentFn ek_bp_agent_fn = 21;
     ek.logical.Interface ek_interface = 31;
     ek.logical.InternalFabric ek_internal_fabric = 14;

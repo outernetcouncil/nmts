@@ -32,6 +32,7 @@ proto_library(
     srcs = ["nmts.proto"],
     import_prefix = "nmts",
     deps = [
+        "//v2alpha/proto/ek/logical:access_fn_proto",
         "//v2alpha/proto/ek/logical:bp_agent_fn_proto",
         "//v2alpha/proto/ek/logical:interface_proto",
         "//v2alpha/proto/ek/logical:internal_fabric_proto",
@@ -107,6 +108,7 @@ ts_proto_library(
         "json_types": "true",
     },
     deps = [
+        "//v2alpha/proto/ek/logical:access_fn_ts_proto",
         "//v2alpha/proto/ek/logical:bp_agent_fn_ts_proto",
         "//v2alpha/proto/ek/logical:interface_ts_proto",
         "//v2alpha/proto/ek/logical:logical_packet_link_ts_proto",

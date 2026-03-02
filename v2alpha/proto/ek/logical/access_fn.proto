@@ -1,0 +1,236 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.v2alpha.ek.logical;
+
+import "nmts/v2alpha/proto/types/threegpp/nrm.proto";
+
+option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.logical";
+option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/logical";
+
+// Entity Kind: Access Function (`EK_ACCESS_FN`)
+
+// A model representation of an Access Network node. Could be based on, or 
+// support, a variety of access technologies, often for "radio" access, 
+// also known as "Radio Access Technologies (RAT)" e.g. from the DVB, WiFi,
+// 3GPP families (e.g. 5G NR, LTE E-UTRA, GSM, UMTS) or proprietary (e.g.
+// satcom vendor- or operator-specific), but also potentially non-radio.
+// An EK_ACCESS_FN can be deployed anywhere in a network (pooled in a data
+// centre, colocated with a gateway, onboard a satellite, etc.).
+// An EK_ACCESS_FN can support single or multiple access types.
+//
+// A single AccessFn can be modeled as supporting:
+// - Single RAT - single access type (e.g. 5G NR -or- 4G E-UTRA)
+// - Multi RAT - multiple access types (e.g. dual stack 4G + 5G, 5G + DVB)
+// 
+// A multi-RAT AccessFn can be modeled by including multiple Access Function
+// types when defining the AccessFn.
+//
+message AccessFn {
+  // 
+  // 5G New Radio (NR) Radio Access Function types
+  // 
+
+  // Disaggregated gNodeB Centralized Unit (CU)
+  //
+  // Note: It is possible for a gNodeB CU to be further disaggregated
+  // into its Control Plane (CP) and User Plane (UP) subcomponents,
+  // and this is represented in their models, but in practice it can be
+  // assumed that these will be combined in a single CU instance.
+  message GnbCu {
+    types.threegpp.OGnbCuCpFunction o_gnb_cu_cp_function = 1;
+    types.threegpp.OGnbCuUpFunction o_gnb_cu_up_function = 2;
+
+    // A single gNodeB CU can contain at any time a number of active
+    // NRCellCU instances. In practice, there will be a constraint on
+    // the maximum number of cells that a single CU can operate in 
+    // parallel.
+    repeated types.threegpp.ONrCellCu o_nr_cell_cu = 3;
+  }
+
+  // Disaggregated gNodeB Distributed Unit (DU)
+  message GnbDu {
+    types.threegpp.OGnbDuFunction o_gnb_du_function = 1;
+
+    // A single gNodeB DU can contain at any time a number of active
+    // NRCellDU instances. In practice, there will be a constraint on
+    // the maximum number of cells that a single DU can operate in 
+    // parallel.
+    //
+    // NOTE: When configuring viable cells during the NMTS modeling stage,
+    // only a subset of ONCrCellDu parameters is supposed to be contained by
+    // the model, such as the cell_local_id, different states, etc.
+    // Other parameters such as arfcn_dl, bs_channel_bw_dl, nr_pci, etc.
+    // are meant to be generated as a dynamic configuration and communicated
+    // to the gNB.
+    repeated types.threegpp.ONrCellDu o_nr_cell_du = 2;
+  }
+
+  // Monolithic gNodeB
+  // Logically comprising of a combined CU and DU (and RU).
+  message Gnb {
+    GnbCu gnb_cu = 1;
+    GnbDu gnb_du = 2;
+  }
+
+  //
+  // 4G LTE E-UTRA Radio Access Function types
+  //
+
+  // Monolithic eNodeB.
+  // Note: TBD
+  message Enb {
+  }
+
+  // 
+  // Non-3GPP Radio Access Function types
+  //
+
+  // DVB-based radio access network function, supporting a radio
+  // interface from the Digital Video Broadcast (DVB) family, e.g.
+  // - DVB-S2 
+  // - DVB-S2X 
+  // - DVB-RCS 
+  // - DVB-RCS2 
+  // - etc.
+  // TODO: extend or refactor this message with actual options.
+  message Dvb {
+  }
+  
+  // Supported control, configuration and management interfaces.
+  // Eventually to be augmented with versions.
+  // TODO: consider refactoring to individual messages instead of bools.
+  message InterfacesOam {
+    // E2 Application Protocol
+    enum E2Ap {
+      E2AP_UNSPECIFIED = 0;
+      E2AP_V1 = 1;
+      E2AP_V2 = 2;
+      E2AP_V3 = 3;
+      E2AP_V4 = 4; 
+      E2AP_V5 = 5;
+      E2AP_V6 = 6;
+      E2AP_V7 = 7;
+      E2AP_V8 = 8;
+    }
+
+    // E2 Service Model - Key Performance Monitoring
+    enum E2SmKpm {
+      E2SM_KPM_UNSPECIFIED = 0;
+      E2SM_KPM_V1 = 1;
+      E2SM_KPM_V2 = 2;
+      E2SM_KPM_V3 = 3;
+      E2SM_KPM_V4 = 4;
+      E2SM_KPM_V5 = 5;
+      E2SM_KPM_V6 = 6;
+      E2SM_KPM_V7 = 7;
+    }
+
+    // E2 Service Model - RAN Control
+    enum E2SmRc {
+      E2SM_RC_UNSPECIFIED = 0;
+      E2SM_RC_V1 = 1;
+      E2SM_RC_V2 = 2;
+      E2SM_RC_V3 = 3;
+      E2SM_RC_V4 = 4;
+      E2SM_RC_V5 = 5;
+      E2SM_RC_V6 = 6;
+      E2SM_RC_V7 = 7;
+      E2SM_RC_V8 = 8;
+      E2SM_RC_V9 = 9;
+    }
+
+    // E2 Service Model - Cell Configuration & Control
+    enum E2SmCcc {
+      E2SM_CCC_UNSPECIFIED = 0;
+      E2SM_CCC_V1 = 1;
+      E2SM_CCC_V2 = 2;
+      E2SM_CCC_V3 = 3;
+      E2SM_CCC_V4 = 4;
+      E2SM_CCC_V5 = 5;
+      E2SM_CCC_V6 = 6;
+    }
+
+    // O1 interface
+    message O1 {
+      message Netconf {
+        oneof transport {
+          string ssh = 1;
+          string tls = 2;
+        }
+      }
+
+      message Restconf {
+      }
+
+      Netconf netconf = 1;
+      Restconf restconf = 2;
+    }
+
+    // Aalyria Southbound Interface
+    message Sbi {
+    }
+
+    E2Ap e2ap = 1;
+    E2SmKpm e2sm_kpm = 2;
+    E2SmRc e2sm_rc = 3;
+    E2SmCcc e2sm_ccc = 4;
+    O1 o1 = 5;
+    Sbi sbi = 6;
+  }
+
+  message Capabilities {
+    // Defines the kinds of Mobility procedures supported by the AccessFn.
+    message Mobility {
+      // Layer 3 Handover (LegacyHO)
+      bool l3ho = 1;
+
+      // Time-based Conditional Handover (T1 CHO)
+      bool t1cho = 2;
+
+      // Distance-based Conditional Handover (D1 CHO)
+      // Note: Intended for Earth-Fixed Cells
+      bool d1cho = 3;
+    }
+
+    Mobility mobility = 1;
+  }
+
+  // A single AccessFn is to be modeled as containing at least a single instance
+  // of one of the following:
+  // - a single monolithic eNB or gNB,
+  // - a disaggregated subcomponent of a gNB (for the time being modeled
+  //   as either being a CU or a DU using the 3GPP Functional Split Option 2; to
+  //   be followed with further support for a separate RU according to the
+  //   various applicable Functional Split Options 6, 7.x or 8),
+  // - a DVB-based access node.
+  //
+  // If the AccessFn implements in practice multiple Radio Access Technologies,
+  // this would be reflected by more than one of the following fields being
+  // populated.
+  Enb enb = 1;
+  Gnb gnb = 2;
+  GnbCu gnb_cu = 3;
+  GnbDu gnb_du = 4;
+  Dvb dvb = 5;
+  
+  // Used to define which control, configuration and management interfaces 
+  // the AccessFn supports.
+  InterfacesOam interfaces_oam = 7;
+
+  // Used to define the gamut of capabilities of an AccessFn.
+  Capabilities capabilities = 8;
+}

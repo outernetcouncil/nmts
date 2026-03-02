@@ -1,0 +1,507 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.v2alpha.types.threegpp;
+
+option java_package = "org.outernetcouncil.nmts.v2alpha.proto.types.threegpp";
+option go_package = "outernetcouncil.org/nmts/v2alpha/proto/types/threegpp";
+
+// Simplified and distilled 3GPP Network Resource Model (NRM)
+
+// NOTE: This initial version has been derived from O-RAN E2SM-CCC OpenAPI, 
+// Version: O-RAN.WG3.E2SM-CCC-R004-v06.00
+//
+// TODO: bump this to align with actual 3GPP SA5 NRM Rel-18+ and
+// consider separating the O-RAN extensions in a separate proto file.
+// We should also discuss a broader mechanism for version alignment with 3GPP 
+// and O-RAN releases of the full models as they are released
+//
+
+// This type library collects the main 3GPP (and O-RAN E2) types from the 
+// 3GPP SA5 NR Network Resource Model (NRM) (TS 28.541), and, as of now,
+// O-RAN WG3 E2 Service Model for Cell Configuration and Control (E2SM-CCC).
+// The types defined below represent the most critical messages required to
+// define a 5G NR gNB, and 4G LTE eNB (to some extent) and configure it.
+//
+
+// -----------------------------
+// Scalar wrapper types (aliases)
+// -----------------------------
+
+message GnbId { // integer [0, 4294967295]
+  uint32 value = 1;
+}
+
+message GnbIdLength { // integer [22, 32]
+  uint32 value = 1;
+}
+
+message GnbName { // string, maxLength 150
+  string value = 1;
+}
+
+message GnbDuId { // number [0, 68719476735]
+  uint64 value = 1;
+}
+
+message GnbCuUpId { // number [0, 68719476735]
+  uint64 value = 1;
+}
+
+message Sst { // integer [0, 255]
+  uint32 value = 1;
+}
+
+message NrPci { // integer [0,503]
+  uint32 value = 1;
+}
+
+message NrTac { // integer [0,16777215]
+  uint32 value = 1;
+}
+
+message Mcc { // string pattern [0-9]{3}
+  string value = 1;
+}
+
+message Mnc { // string pattern [0-9]{2}|[0-9]{3}
+  string value = 1;
+}
+
+message NrCellIdentity { // string
+  string value = 1;
+}
+
+message EutraCellIdentity { // string
+  string value = 1;
+}
+
+// -----------------------------
+// Common structures
+// -----------------------------
+message Snssai {
+  Sst sst = 1;
+  string sd = 2; // no max length specified
+}
+
+message PlmnId {
+  Mcc mcc = 1;
+  Mnc mnc = 2;
+}
+
+message PlmnInfo {
+  PlmnId plmn_id = 1;
+  Snssai snssai = 2;
+}
+
+message RrmPolicyMember {
+  PlmnId plmn_id = 1;
+  Snssai snssai = 2;
+}
+
+// ID strings with patterns; keep as strings and validate externally.
+message GGnbId { 
+  // pattern: ^[0-9]{3}[0-9]{2,3}-(22|23|24|25|26|27|28|29|30|31|32)-[0-9]{1,10}
+  string value = 1;
+}
+
+message GEnbId { // pattern: ^[0-9]{3}[0-9]{2,3}-(18|20|21|22)-[0-9]{1,7}
+  string value = 1;
+}
+
+// -----------------------------
+// Enums
+// -----------------------------
+
+// TODO: re-evaluate these fields as they are marked as "read-only" in the 
+// latest version of the 3GPP NRM, and today we do not represent telemetry 
+// or operational state in NMTS.
+//
+enum OperationalState {
+  ENABLED = 0;
+  DISABLED = 1;
+}
+
+
+// TODO: re-evaluate these fields as they are marked as "read-only" in the
+// latest version of the 3GPP NRM, and today we do not represent telemetry/
+// operational state in NMTS.
+enum AdministrativeState {
+  LOCKED = 0;
+  SHUTTINGDOWN = 1;
+  UNLOCKED = 2;
+}
+
+// TODO: re-evaluate these fields as they are marked as "read-only" in the
+// latest version of the 3GPP NRM, and today we do not represent telemetry/
+// operational state in NMTS.
+enum CellState {
+  IDLE = 0;
+  INACTIVE = 1;
+  ACTIVE = 2;
+}
+
+enum CyclicPrefix {
+  CYCLIC_PREFIX_UNSPECIFIED = 0;
+  CYCLIC_PREFIX_15 = 15;
+  CYCLIC_PREFIX_30 = 30;
+  CYCLIC_PREFIX_60 = 60;
+  CYCLIC_PREFIX_120 = 120;
+}
+
+message BwpContext {
+  enum Context {
+    DL = 0;
+    UL = 1;
+    SUL = 2;
+  }
+
+  Context context = 1;
+}
+
+message IsInitialBwp {
+  enum Is {
+    INITIAL = 0;
+    OTHER = 1;
+    SUL = 2;
+  }
+
+  Is is = 1;
+}
+
+// When encoding into JSON, the enum constant will be used
+// This is because we want `"subCarrierSpacing": 15`
+// and not `"subCarrierSpacing": SCS_KHZ_15`
+enum SubCarrierSpacing {
+  SUB_CARRIER_SPACING_UNSPECIFIED = 0;
+  SUB_CARRIER_SPACING_KHZ_15 = 15;
+  SUB_CARRIER_SPACING_KHZ_30 = 30;
+  SUB_CARRIER_SPACING_KHZ_60 = 60;
+  SUB_CARRIER_SPACING_KHZ_120 = 120;
+}
+
+// When encoding into JSON, the enum constant will be used
+// This is because we want `"ssbPeriodicity": 5`
+// and not `"ssbPeriodicity": SSB_PERIODICITY_5`
+enum SsbPeriodicity {
+  SSB_PERIODICITY_UNSPECIFIED = 0;
+  SSB_PERIODICITY_5 = 5;
+  SSB_PERIODICITY_10 = 10;
+  SSB_PERIODICITY_20 = 20;
+  SSB_PERIODICITY_40 = 40;
+  SSB_PERIODICITY_80 = 80;
+  SSB_PERIODICITY_160 = 160;
+}
+
+enum SsbDuration {
+  SSB_DURATION_UNSPECIFIED = 0;
+  SSB_DURATION_1 = 1;
+  SSB_DURATION_2 = 2;
+  SSB_DURATION_3 = 3;
+  SSB_DURATION_4 = 4;
+  SSB_DURATION_5 = 5;
+}
+
+enum SsbSubCarrierSpacing {
+  SSB_SUB_CARRIER_SPACING_UNSPECIFIED = 0;
+  SSB_SUB_CARRIER_SPACING_KHZ_15 = 15;
+  SSB_SUB_CARRIER_SPACING_KHZ_30 = 30;
+  SSB_SUB_CARRIER_SPACING_KHZ_120 = 120;
+  SSB_SUB_CARRIER_SPACING_KHZ_240 = 240;
+}
+
+enum ResourceType {
+  PRB_DL = 0;
+  PRB_UL = 1;
+  DRB = 2;
+  RRC = 3;
+}
+
+enum IndicationReason {
+  UPON_SUBSCRIPTION = 0; // uponSubscription
+  UPON_CHANGE = 1; // uponChange
+  PERIODIC = 2; // periodic
+}
+
+enum ReportType {
+  ALL = 0; // "all"
+  CHANGE = 1; // "change"
+}
+
+enum Cause {
+  NOT_SUPPORTED = 0;
+  NOT_AVAILABLE = 1;
+  INCOMPATIBLE_STATE = 2;
+  JSON_ERROR = 3;
+  SEMANTIC_ERROR = 4;
+}
+
+// NES/CES enums
+
+enum EnergySavingState {
+  IS_NOT_ENERGY_SAVING = 0;
+  IS_ENERGY_SAVING = 1;
+}
+
+enum EnergySavingControl {
+  TO_BE_ENERGY_SAVING = 0;
+  TO_BE_NOT_ENERGY_SAVING = 1;
+}
+
+enum NesPolicyType {
+  ASM = 0;
+  TRX_CONTROL = 1;
+}
+
+enum NesSleepMode {
+  NES_SLEEP_MODE_0 = 0;
+  NES_SLEEP_MODE_1 = 1;
+  NES_SLEEP_MODE_2 = 2;
+  NES_SLEEP_MODE_3 = 3;
+}
+
+enum DataDir {
+  DL = 0;
+  UL = 1;
+}
+
+// -----------------------------
+// BWP and RRM
+// -----------------------------
+message OBwp {
+  BwpContext bwp_context = 1;
+  IsInitialBwp is_initial_bwp = 2;
+  SubCarrierSpacing sub_carrier_spacing = 3;
+  CyclicPrefix cyclic_prefix = 4;
+  uint32 start_rb = 5;
+  uint32 number_of_rbs = 6;
+}
+
+message ORrmPolicyRatio {
+  ResourceType resource_type = 1;
+  repeated RrmPolicyMember rrm_policy_member_list = 2;
+  uint32 rrm_policy_max_ratio = 3;
+  uint32 rrm_policy_min_ratio = 4;
+  uint32 rrm_policy_dedicated_ratio = 5;
+}
+
+// -----------------------------
+// Partitions
+// -----------------------------
+message FiveQiList { // from "5QiList"
+  repeated uint32 value = 1;
+}
+
+message PartitionFlow {
+  Snssai snssai = 1;
+  PlmnId plmn_id = 2;
+  FiveQiList five_qi_list = 3; // original: 5qiList
+}
+
+message Partition {
+  uint32 p_offset_to_point_a = 1;
+  uint32 p_number_of_rbs = 2;
+  repeated PartitionFlow partition_flow_list = 3;
+}
+
+// -----------------------------
+// NES/CES
+// -----------------------------
+message EsObjective {
+  oneof objective {
+    double target_ec = 1; // number
+    uint32 es_percentage = 2; // 0..100
+  }
+}
+
+message OCesManagementFunction {
+  bool ces_switch = 1;
+  EnergySavingState energy_saving_state = 2;
+  EnergySavingControl energy_saving_control = 3;
+}
+
+message ONesPolicy {
+  NesPolicyType policy_type = 1;
+  string antenna_mask_name = 2;
+  string antenna_mask = 3;
+  NesSleepMode sleep_mode = 4;
+  DataDir data_dir = 5;
+  uint32 symbol_mask = 6; // [0,16383]
+  string slot_mask = 7; // string per schema
+  uint32 valid_duration = 8;
+  EsObjective es_objective = 9;
+}
+
+// -----------------------------
+// Node/Cell functions
+// -----------------------------
+message OGnbCuCpFunction {
+  GnbId gnb_id = 1;
+  GnbIdLength gnb_id_length = 2;
+  GnbName gnb_cu_name = 3;
+  PlmnId plmn_id = 4;
+  repeated GEnbId x2_block_list = 5;
+  repeated GGnbId xn_block_list = 6;
+  repeated GEnbId x2_allow_list = 7;
+  repeated GGnbId xn_allow_list = 8;
+  repeated GEnbId x2_ho_block_list = 9;
+  repeated GGnbId xn_ho_block_list = 10;
+}
+
+message OGnbCuUpFunction {
+  GnbId gnb_id = 1;
+  GnbIdLength gnb_id_length = 2;
+  GnbCuUpId gnb_cu_up_id = 3;
+  repeated PlmnInfo plmn_info_list = 4;
+}
+
+message OGnbDuFunction {
+  GnbDuId gnb_du_id = 1;
+  GnbName gnb_du_name = 2;
+  GnbId gnb_id = 3;
+  GnbIdLength gnb_id_length = 4;
+}
+
+message ONrCellCu {
+  uint32 cell_local_id = 1;
+  repeated PlmnInfo plmn_info_list = 2;
+}
+
+message ONrCellDu {
+  uint32 cell_local_id = 1;
+  OperationalState operational_state = 2;
+  AdministrativeState administrative_state = 3;
+  CellState cell_state = 4;
+  repeated PlmnInfo plmn_info_list = 5;
+  NrPci nr_pci = 6;
+  NrTac nr_tac = 7;
+  uint32 arfcn_dl = 8;
+  uint32 arfcn_ul = 9;
+  uint32 arfcn_sul = 10;
+  uint32 bs_channel_bw_dl = 11;
+  uint32 ssb_frequency = 12; // [0, 3279165]
+  SsbPeriodicity ssb_periodicity = 13;
+  SsbSubCarrierSpacing ssb_sub_carrier_spacing = 14;
+  uint32 ssb_offset = 15; // [0, 159]
+  SsbDuration ssb_duration = 16;
+  uint32 bs_channel_bw_ul = 17;
+  uint32 bs_channel_bw_sul = 18;
+  repeated OBwp bwp_list = 19;
+  repeated Partition partition_list = 20;
+}
+
+message CellGlobalId {
+  oneof kind {
+    NrCgi nr_cgi = 1;
+    Eutra_Cgi eutra_cgi = 2;
+  }
+}
+
+message NrCgi {
+  PlmnId plmn_identity = 1;
+  NrCellIdentity nr_cell_identity = 2;
+}
+message Eutra_Cgi {
+  PlmnId plmn_identity = 1;
+  EutraCellIdentity eutra_cell_identity = 2;
+}
+
+// -----------------------------
+// RAN Function Definition
+// -----------------------------
+message RanFunctionDefinition {
+  RanFunctionName ran_function_name = 1;
+  repeated RanConfigurationStructure list_of_supported_node_level_configuration_structures = 2;
+  repeated CellForRanFunctionDefinition list_of_cells_for_ran_function_definition = 3;
+}
+
+message RanFunctionName {
+  string ran_function_short_name = 1;
+  string ran_function_service_model_oid = 2;
+  string ran_function_description = 3;
+  uint32 ran_function_instance = 4; // optional
+}
+
+message RanConfigurationStructure {
+  string ran_configuration_structure_name = 1;
+  repeated Attribute list_of_supported_attributes = 2;
+}
+
+message Attribute {
+  string attribute_name = 1;
+  RicServices supported_services = 2;
+}
+
+message RicServices {
+  EventTrigger event_trigger = 1; // optional in schema
+  ReportService report_service = 2;
+  InsertService insert_service = 3; // empty in schema
+  ControlService control_service = 4;
+  PolicyService policy_service = 5; // empty in schema
+}
+
+message EventTrigger {
+  repeated EventTriggerStyle list_of_supported_event_trigger_styles = 1;
+}
+
+message EventTriggerStyle {
+  uint32 event_trigger_style_type = 1;
+  string event_trigger_style_name = 2;
+  uint32 event_trigger_format_type = 3;
+}
+
+message EventTriggerStyleType {
+  uint32 event_trigger_style_type = 1;
+}
+
+message ReportService {
+  repeated ReportStyle list_of_supported_report_styles = 1;
+}
+
+message ReportStyle {
+  uint32 report_service_style_type = 1;
+  string report_service_style_name = 2;
+  repeated EventTriggerStyleType list_of_supported_event_trigger_styles_for_report_style = 3;
+  uint32 report_service_action_definition_format_type = 4;
+  uint32 report_service_indication_header_format_type = 5;
+  uint32 report_service_indication_message_format_type = 6;
+}
+
+message InsertService {
+
+}
+
+message ControlService {
+  repeated ControlStyle list_of_supported_control_styles = 1;
+}
+
+message ControlStyle {
+  uint32 control_service_style_type = 1;
+  string control_service_style_name = 2;
+  uint32 control_service_header_format_type = 3;
+  uint32 control_service_message_format_type = 4;
+  uint32 ric_call_process_id_format_type = 5; // optional per schema
+  uint32 control_service_control_outcome_format_type = 6;
+}
+
+message PolicyService {
+
+}
+
+message CellForRanFunctionDefinition {
+  NrCgi cell_global_id = 1;
+  repeated RanConfigurationStructure list_of_supported_cell_level_ran_configuration_structures = 2;
+}

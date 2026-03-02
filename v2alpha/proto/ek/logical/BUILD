@@ -27,6 +27,15 @@ package(
 # Per-proto file library rules.
 ##
 proto_library(
+    name = "access_fn_proto",
+    srcs = ["access_fn.proto"],
+    import_prefix = "nmts",
+    deps = [
+        "//v2alpha/proto/types/threegpp:nrm_proto",
+    ],
+)
+
+proto_library(
     name = "bp_agent_fn_proto",
     srcs = ["bp_agent_fn.proto"],
     import_prefix = "nmts",
@@ -99,6 +108,7 @@ proto_library(
 cpp_proto_library(
     name = "logical_cpp_proto",
     protos = [
+        ":access_fn_proto",
         ":bp_agent_fn_proto",
         ":interface_proto",
         ":internal_fabric_proto",
@@ -113,6 +123,7 @@ cpp_proto_library(
         "//v2alpha/proto/types/ieee:ieee_cpp_proto",
         "//v2alpha/proto/types/ietf:ietf_cpp_proto",
         "//v2alpha/proto/types/mef:mef_cpp_proto",
+        "//v2alpha/proto/types/threegpp:threegpp_cpp_proto",
     ],
 )
 
@@ -120,6 +131,7 @@ go_proto_library(
     name = "logical_go_proto",
     importpath = "outernetcouncil.org/nmts/v2alpha/proto/ek/logical",
     protos = [
+        ":access_fn_proto",
         ":bp_agent_fn_proto",
         ":interface_proto",
         ":internal_fabric_proto",
@@ -134,12 +146,14 @@ go_proto_library(
         "//v2alpha/proto/types/ieee:ieee_go_proto",
         "//v2alpha/proto/types/ietf:ietf_go_proto",
         "//v2alpha/proto/types/mef:mef_go_proto",
+        "//v2alpha/proto/types/threegpp:threegpp_go_proto",
     ],
 )
 
 java_proto_library(
     name = "logical_java_proto",
     protos = [
+        ":access_fn_proto",
         ":bp_agent_fn_proto",
         ":interface_proto",
         ":internal_fabric_proto",
@@ -154,12 +168,14 @@ java_proto_library(
         "//v2alpha/proto/types/ieee:ieee_java_proto",
         "//v2alpha/proto/types/ietf:ietf_java_proto",
         "//v2alpha/proto/types/mef:mef_java_proto",
+        "//v2alpha/proto/types/threegpp:threegpp_java_proto",
     ],
 )
 
 python_proto_library(
     name = "logical_python_proto",
     protos = [
+        ":access_fn_proto",
         ":bp_agent_fn_proto",
         ":interface_proto",
         ":internal_fabric_proto",
@@ -174,6 +190,23 @@ python_proto_library(
         "//v2alpha/proto/types/ieee:ieee_python_proto",
         "//v2alpha/proto/types/ietf:ietf_python_proto",
         "//v2alpha/proto/types/mef:mef_python_proto",
+        "//v2alpha/proto/types/threegpp:threegpp_python_proto",
+    ],
+)
+
+ts_proto_library(
+    name = "access_fn_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v2alpha/proto:node_modules",
+    proto = ":access_fn_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v2alpha/proto/types/threegpp:threegpp_ts_proto",
     ],
 )
 

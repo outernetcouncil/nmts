@@ -1,0 +1,5 @@
+# NMTS 3GPP library
+
+The NMTS 3GPP library under `//v1/proto/types/threegpp` is intended to augment NMTS with the modelling constructs stemming from the [3GPP SA5 Network Resource Model (NRM)](https://forge.3gpp.org/rep/sa5/MnS), defined using YANG models. This is required to enable NMTS to model 3GPP-defined Entities (e.g. gNodeBs) and their configurations.
+
+The topmost level model is the [3GPP ManagedElement](https://forge.3gpp.org/rep/sa5/MnS/-/blob/Rel-18/yang-models/_3gpp-common-managed-element.yang?ref_type=heads). It contains the full subset of child models which define things like the `GNBCUCPFunction`, `GNBCUUPFunction`, `GNBDUFunction`, `NRCellCU`, `NRCellDU`, etc. These define the live configuration of a 3GPP entity such as a gNodeB (modelled in NMTS in `//v1/proto/ek/logical/access_fn.proto`), and can also be modified at runtime in order to change the configuration (for instance, to modify the centre frequency and bandwidth which is allocated to a 3GPP Cell).
