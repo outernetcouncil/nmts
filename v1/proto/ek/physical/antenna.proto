@@ -187,6 +187,19 @@ message Antenna {
   /* Antenna Pattern                                                          */
   /****************************************************************************/
   // Models the antenna pattern that characterizes this antenna.
+  //
+  // When they are present, the limits in eirp_limits constrain the maximum EIRP
+  // of a link. If the transmit antenna pattern in this field and the 
+  // per-carrier maximum transmit power (in 
+  // CarrierConfiguration.TransmitCarrier.max_power_w) are also set, the gain in
+  // the link direction plus the maximum transmit power (in dBW) may further 
+  // constrain the EIRP of the link. 
+  //
+  // If eirp_limits is not set, both the transmit antenna pattern and the 
+  // per-carrier maximum transmit power must be set in order for the antenna to
+  // be used to transmit.
+  //
+  // For more detail, see nmts.v1.types.physical.EirpLimits.
   nmts.v1.types.physical.AntennaPattern antenna_pattern = 6;
 
   /****************************************************************************/

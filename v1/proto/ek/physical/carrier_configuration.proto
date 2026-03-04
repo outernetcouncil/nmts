@@ -39,6 +39,17 @@ message CarrierConfiguration {
     // This value further constrains the max_transmit_power_w in the
     // nmts.ek.physical.Antenna when the maximum transmit power varies with the
     // frequency of the carrier.
+    //
+    // When they are present, the limits in Antenna.eirp_limits constrain the
+    // maximum EIRP of a link. If the transmit antenna pattern (in 
+    // Antenna.antenna_pattern) and this per-carrier maximum transmit power are
+    // also set, the gain in the link direction plus the maximum transmit power
+    // (in dBW) in this field may further constrain the EIRP of the link. 
+    //
+    // If Antenna.eirp_limits is not set, both the transmit antenna pattern and
+    // this field must be set in order for the antenna to be used to transmit.
+    //
+    // For more detail, see nmts.v1.types.physical.EirpLimits.
     double max_power_w = 2;
   }
 

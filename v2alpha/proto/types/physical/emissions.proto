@@ -52,6 +52,60 @@ message EirpsdMask {
 
 // Effective Isotropic Radiating Power (EIRP) limits.
 message EirpLimits {
+  // The maximum EIRP in the direction of a link is constrained by the following
+  // factors, each of which is considered when present:
+  //   - the gain in the link direction based on the gain pattern (defined in
+  //     Antenna.antenna_pattern) plus the per-carrier maximum transmit power 
+  //     (defined in CarrierConfiguration.TransmitCarrier.max_power_w) in dBW
+  //   - maximum EIRP
+  //   - maximum EIRP spectral density
+  //   - PFD target of the link, which can be defined in
+  //     aalyria.spacetime.api.provisioning.v1alpha.EmissionsTarget.
+  //
+  // The following table describes how the maximum EIRP of a link is calculated
+  // depending on which fields are present:
+  //
+  //
+  // | EIRP limits | Antenna | Per-carrier max | EIRP Calculation                       |
+  // |             | pattern | transmit power  |                                        |
+  // |-------------|---------|-----------------|----------------------------------------|
+  // | Yes         | Yes     | Yes             | The antenna pattern and per-carrier    |
+  // |             |         |                 | max transmit power, as well as the     |
+  // |             |         |                 | EIRP limits in this message, constrain |
+  // |             |         |                 | the EIRP                               |
+  // |-------------|---------|-----------------|----------------------------------------|
+  // | Yes         | Yes     | No              | EIRP is constrained by the limits in   |
+  // |             |         |                 | this message                           |
+  // |-------------|---------|-----------------|----------------------------------------|
+  // | Yes         | No      | Yes             | EIRP is constrained by the limits in   |
+  // |             |         |                 | this message                           |
+  // |-------------|---------|-----------------|----------------------------------------|
+  // | Yes         | No      | No              | EIRP is constrained by the limits in   |
+  // |             |         |                 | this message                           |
+  // |-------------|---------|-----------------|----------------------------------------|
+  // | No          | Yes     | Yes             | EIRP is constrained by the gain in the |
+  // |             |         |                 | link direction and the per-carrier max |
+  // |             |         |                 | transmit power                         |
+  // |-------------|---------|-----------------|----------------------------------------|
+  // | No          | Yes     | No              | Insufficient information; antenna will |
+  // |             |         |                 | not be used to transmit                |
+  // |-------------|---------|-----------------|----------------------------------------|
+  // | No          | No      | Yes             | Insufficient information; antenna will |
+  // |             |         |                 | not be used to transmit                |
+  // |-------------|---------|-----------------|----------------------------------------|
+  // | No          | No      | No              | Insufficient information; antenna will |
+  // |             |         |                 | not be used to transmit                |
+  // |-------------|---------|-----------------|----------------------------------------|
+  //
+  //
+  // An EIRP limit in this message is required for the antenna to transmit
+  // unless both Antenna.antenna_pattern and
+  // CarrierConfiguration.TransmitCarrier.max_power_w are present.
+  //
+  // For multi-beam phased array antennas, this value should be interpreted as
+  // the maximum EIRP of any beam.
+  float maximum_eirp_dbw = 2;
+
   // Power Spectral Density Masks. The minimum applicable mask will be used.
   repeated EirpsdMask eirpsd_masks = 1;
 }
