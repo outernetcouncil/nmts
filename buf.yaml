@@ -5,7 +5,7 @@ deps:
 
 modules:
   - path: .
-    name: buf.build/brumhard-testing/nmts
+    name: buf.build/outernetcouncil/nmts
 
 lint:
   use:
