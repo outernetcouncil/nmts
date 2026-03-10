@@ -12,7 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// This file contains messages used to model Azimuth-Elevation Masks.
+// This file contains messages used to model azimuth-elevation masks. 
+// Azimuth-elevation masks describe the profile of the horizon as seen from a
+// ground antenna and are commonly used to model terrain, buildings, or other 
+// obstructions to wireless links. 
 
 syntax = "proto3";
 
@@ -21,60 +24,170 @@ package nmts.v1.types.geophys;
 option java_package = "org.outernetcouncil.nmts.v1.proto.types.geophys";
 option go_package = "outernetcouncil.org/nmts/v1/proto/types/geophys";
 
-// Each element of an Azimuth-Elevation Mask specifies the maximum obscured
-// elevation angle in a sampled direction from the antenna.
+// Each element of an azimuth-elevation mask specifies the obscured elevation 
+// angle(s) along a sampled direction from the antenna.
 message AzimuthElevationMaskElement {
-  // The azimuth angle in degrees measured from North toward East.
+  // The azimuth angle in degrees, measured clockwise from local North (0°) 
+  // towards local East (90°). The valid range of this field is [0°, 360°].
   // Required.
   double azimuth_deg = 1;
 
-  // The maximum obscured elevation angle, in degrees.
-  // Set to 90 deg if links in this azimuth direction are always inaccessible.
-  // Negative values are also allowed (for antennas above terrain).
+  // The maximum obscured elevation angle, in degrees, at azimuth_deg. 
+  //
+  // Elevation is measured from the antenna's local horizontal plane, such that:
+  //   - Positive values are interpreted as being above the horizon. 90° is 
+  //     directly "up", so setting this value to 90° implies that links along
+  //     this azimuth are always blocked. 
+  //   - Negative values are interpreted as being below the horizon. Negative 
+  //     values might be used for antennas on an elevated point, e.g. a tower or
+  //     hilltop, where the horizon is below the local horizontal plane.
+  // The valid range of this field is [-90°, 90°]. 
+  //
+  // When elevation_rise_elements are unset, this is the obscured elevation
+  // at the given azimuth. 
+  // When elevation_rise_elements are set, this value is the obscured elevation
+  // for distances beyond the last entry. Therefore, this value should be 
+  // greater than or equal to the largest obscured_elevation_deg in 
+  // elevation_rise_elements.
   // Required.
   double maximum_obscured_elevation_deg = 2;
 
-  // When needing to describe a richer variation in obscured elevation angle
-  // along a given azimuth than may be permitted by the "maximum obscured
-  // elevation angle" alone, a sequence of ElevationRise elements may be used.
-  // Taken together in order of increasing distance they describe how the
-  // angle of obscuration changes as a function of distance along the ray
-  // indicated by the azimuth.
+  // A list of ElevationRiseElements can be used to describe a richer profile of
+  // obscured elevation angles along a given azimuth. Specifically, these
+  // elements describe how the obscured elevation angle changes as a function of
+  // the distance from the antenna.
   //
-  // Nonsensical values should be silently discarded: negative distances as well
-  // as elevation angles lower than -90 degrees or higher than 90 degrees.
+  // Each element defines the obscured elevation for distances greater than
+  // distance_m up to and including the next element's distance. In other words,
+  // for distances between defined elements, the obscured elevation is computed
+  // by a step function, not linear interpolation. The values of
+  // obscured_elevation_deg at successive distances is expected to be
+  // monotonically increasing. For example, given:
   //
-  // Additionally, elements may be inserted at distance = 0.0m or appended to
-  // the end to complete the described curve from the origin point up to the
-  // above specified maximum_obscured_elevation_deg value.
+  //   maximum_obscured_elevation_deg: 30
+  //   elevation_rise_elements {
+  //     distance_m: 0
+  //     obscured_elevation_deg: 5
+  //   }
+  //   elevation_rise_elements {
+  //     distance_m: 100
+  //     obscured_elevation_deg: 20
+  //   }
+  //   elevation_rise_elements {
+  //     distance_m: 200
+  //     obscured_elevation_deg: 30
+  //   }
+  //
+  // The obscured elevations are:
+  //   - Interval (0m, 100m]: 5°
+  //   - Interval (100m, 200m]: 20°
+  //   - Beyond 200m: 30° (maximum_obscured_elevation_deg)
+  //
+  // Note that each interval is left-exclusive, right-inclusive. The last
+  // element's distance_m defines where the previous interval ends, and its 
+  // obscured_elevation_deg should match maximum_obscured_elevation_deg. 
+  // By default, at a distance of exactly 0m, which is at the antenna, no
+  // obstruction is considered to exist. This behavior can be overriden by
+  // setting an obscured elevation angle at 0m that is greater than -90°.
+  //
+  // These entries do not need to be sorted by distance. If any elements have
+  // the same distance, only the largest obscured elevation angle is considered.
   message ElevationRiseElement {
-    // Distance from the fixed antenna/aperature to the start of obscuration,
-    // in meters. If this field is absent the obscured_elevation_deg is used
-    // to create an ElevationRise at 0.0m distance.
+    // Distance from the antenna to an obstruction along the azimuth direction,
+    // in meters.
+    //
+    // This field must be non-negative.
     // Required.
     double distance_m = 1;
 
-    // The obscured elevation angle, in degrees, at this distance.
-    // Negative values are also allowed (for antennas above terrain).
+    // The obscured elevation angle at this distance, in degrees.
+    //
+    // Elevation is measured from the antenna's local horizontal plane, such 
+    // that:                                                        
+    //   - Positive values are interpreted as being above the horizon. 90° is 
+    //     directly "up", so setting this value to 90° implies that links along
+    //     this azimuth are always blocked. 
+    //   - Negative values are interpreted as being below the horizon. Negative 
+    //     values might be used for antennas that are positioned on an elevated
+    //     point, e.g. a tower or hilltop, where the horizon is below the local 
+    //     horizontal plane.
+    // The valid range of this field is [-90°, 90°]. It should not exceed the 
+    // maximum_obscured_elevation_deg at this azimuth.
     // Required.
     double obscured_elevation_deg = 2;
   }
   repeated ElevationRiseElement elevation_rise_elements = 3;
 }
 
-// Models an Azimuth-Elevation Mask, which describes how the horizon looks to an
-// antenna.
+// A link is obstructed when its elevation is within
+// minimum_azimuth_elevation_mask_separation_deg of the obstructed elevation at
+// a given azimuth. In other words, a link is obstructed when:
+//   link_elevation <= mask elevation + 
+//                          minimum_azimuth_elevation_mask_separation_deg
+//
+// where the mask elevation is determined based on:
+// 1) the AzimuthElevationMaskElement.maximum_obscured_elevation_deg, which is
+//    linearly interpolated between the nearest azimuth points in the mask
+// 2) the distance of the link (if 
+//    AzimuthElevationMaskElement.elevation_rise_elements are used) based on a
+//    step-function. The elevation at a target distance equals the 
+//    ElevationRiseElement.obscured_elevation_deg of the element with the  
+//    greatest distance that is less than the target distance.
+// See below and AzimuthElevationMaskElement for more details.
+//
+// Note that azimuth-elevation masks are only considered for antennas contained
+// by platforms whose motions are not time-varying, such as 
+// nmts.v1.types.geophys.GeodeticMsl, nmts.v1.types.geophys.GeodeticWgs84, or
+// nmts.v1.types.geophys.PointAxes.
 message AzimuthElevationMask {
+  // The elements that define the obstructions at each azimuth.
+  //
+  // For azimuth angles between defined elements, the obscured elevation angle
+  // is computed by linear interpolation between the surrounding elements. The 
+  // azimuth wraps at 360°, so entries approaching 360° interpolate to the 
+  // nearest azimuth greater than or equal to 0°. For example, given:
+  //
+  //   azimuth_elevation_mask_elements {
+  //     azimuth_deg: 0
+  //     maximum_obscured_elevation_deg: 5
+  //   }
+  //   azimuth_elevation_mask_elements {
+  //     azimuth_deg: 90
+  //     maximum_obscured_elevation_deg: 15
+  //   }
+  //   azimuth_elevation_mask_elements {
+  //     azimuth_deg: 180
+  //     maximum_obscured_elevation_deg: 25
+  //   }
+  //
+  // The obscured elevations are:
+  //   - Azimuth of 0°: 5°
+  //   - Azimuth of 45°: 10°  (linearly interpolated between elevations of 5°
+  //                           and 15°)
+  //   - Azimuth of 90°: 15°
+  //   - Azimuth of 270°: 15° (linearly interpolated between elevations of 25°
+  //                           and 5°, which correspond to azimuths of 180° to 
+  //                           0°)
+  //
+  // A uniform horizon, i.e., the same obscured elevation at all azimuths, can
+  // be modeled with two entries: one at 0 degrees and one at 360 degrees that
+  // both specify the same obscured elevation. Although 0° and 360° represent
+  // the same direction, they serve as boundary points and are not considered
+  // duplicates.
+  //
+  // Note that at least two elements must exist in
+  // azimuth_elevation_mask_elements. The elements of this list must be sorted
+  // by azimuth in ascending order. All elements should have a unique azimuth
+  // (with the exception that elements at azimuths of 0° and 360° can both be
+  // included).      
+  //
   // Required.
   repeated AzimuthElevationMaskElement azimuth_elevation_mask_elements = 1;
-  // Note that the definition of an Azimuth-Elevation Mask does not constrain
-  // link accessibility unless this field is set.
-  //
-  // Link accessibility will be constrained when the angle between the
-  // boresight and any AzimuthElevationMaskElement associated with the antenna
-  // is less than this threshold (in degrees). This angle is measured as the
-  // angular separation in the positive (vertical) direction from the maximum
-  // obscured elevation in the azimuth direction of the link vector.
-  // Required.
+
+  // The minimum angular separation required between a link direction and the
+  // mask's obscured elevation, in degrees. This separation is measured 
+  // vertically, i.e., 
+  //   (elevation of the link direction) - 
+  //    (obscured elevation of the mask at the link direction's azimuth)
   double minimum_azimuth_elevation_mask_separation_deg = 2;
 }
