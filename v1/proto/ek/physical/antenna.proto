@@ -189,13 +189,13 @@ message Antenna {
   // Models the antenna pattern that characterizes this antenna.
   //
   // When they are present, the limits in eirp_limits constrain the maximum EIRP
-  // of a link. If the transmit antenna pattern in this field and the 
-  // per-carrier maximum transmit power (in 
+  // of a link. If the transmit antenna pattern in this field and the
+  // per-carrier maximum transmit power (in
   // CarrierConfiguration.TransmitCarrier.max_power_w) are also set, the gain in
-  // the link direction plus the maximum transmit power (in dBW) may further 
-  // constrain the EIRP of the link. 
+  // the link direction plus the maximum transmit power (in dBW) may further
+  // constrain the EIRP of the link.
   //
-  // If eirp_limits is not set, both the transmit antenna pattern and the 
+  // If eirp_limits is not set, both the transmit antenna pattern and the
   // per-carrier maximum transmit power must be set in order for the antenna to
   // be used to transmit.
   //
@@ -293,6 +293,45 @@ message Antenna {
   // and margin for that should be built into the configured value, if it is
   // significant to the user.
   double minimum_sun_angle_deg = 16;
+
+  // Constraint that prevents this antenna from pointing within a specified
+  // angular distance of the geostationary arc.
+  //
+  // This is useful for modeling regulatory constraints (e.g., ITU Article 22,
+  // FCC Part 25) that require non-geostationary systems to avoid pointing near
+  // the GEO arc. For more detailed interference analysis involving power flux
+  // density limits or specific victim receivers, use InterferenceConstraint
+  // resources instead.
+  message GeoArcSeparationAngleConstraint {
+    // The minimum angular separation, in degrees, between the antenna's
+    // beam direction and the nearest point on the geostationary arc.
+    //
+    // Typical regulatory values range from about 2° to 10° depending on
+    // the frequency band and regulatory regime.
+    //
+    // Required.
+    double minimum_angle_deg = 1;
+
+    // If set, the constraint applies only to operations within the
+    // specified frequency range. This allows modeling band-specific
+    // regulatory requirements (e.g., a tighter constraint in Ka-band
+    // than in Ku-band).
+    //
+    // If unset, the constraint applies to all frequencies.
+    message FrequencyRange {
+      int64 min_frequency_hz = 1;
+      int64 max_frequency_hz = 2;
+    }
+    FrequencyRange frequency_range = 2;
+  }
+
+  // GEO arc avoidance constraints for this antenna. When specified, the
+  // SDN Controller will not establish links whose beam direction falls
+  // within the specified angular distance of the geostationary arc.
+  //
+  // Multiple constraints can be specified to model different exclusion
+  // angles for different frequency bands.
+  repeated GeoArcSeparationAngleConstraint geo_arc_separation_angles = 21;
 
   // TODO: Add beam hopping parameters.
 }
