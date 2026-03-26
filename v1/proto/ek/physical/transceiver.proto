@@ -19,6 +19,7 @@ syntax = "proto3";
 package nmts.v1.ek.physical;
 
 import "nmts/v1/proto/ek/physical/common.proto";
+import "nmts/v1/proto/types/physical/emissions.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
@@ -114,4 +115,18 @@ message Receiver {
   // If this field is unset or contains the proto3-default zero value, a model 
   // consumer MAY derive a value from other context in the model.
   int32 max_carrier_count = 5;
+
+  // Equivalent Power Flux Density (EPFD).
+  //
+  // The PFD as experienced by this antenna receiver from a given transmitter, 
+  // including antenna RX gain in the peak direction.
+  message EquivalentPFD {
+    // The desired input power flux density received by this antenna.
+    nmts.v1.types.physical.PowerFluxDensity target_power_flux_density = 1;
+  }
+  // The equivalent power flux density that applies per link.
+  //
+  // The intended usage of this field is for setting the power of a transmitter
+  // such that the receiver can receive the EquivalentPFD.
+  EquivalentPFD per_link_epfd = 6;
 }

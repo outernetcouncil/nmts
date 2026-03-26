@@ -105,6 +105,7 @@ proto_library(
     import_prefix = "nmts",
     deps = [
         ":common_proto",
+        "//v1/proto/types/physical:emissions_proto",
     ],
 )
 

@@ -103,6 +103,9 @@ proto_library(
     name = "transceiver_proto",
     srcs = ["transceiver.proto"],
     import_prefix = "nmts",
+    deps = [
+        "//v2alpha/proto/types/physical:emissions_proto",
+    ],
 )
 
 cpp_proto_library(
