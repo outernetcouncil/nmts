@@ -205,12 +205,21 @@ message Antenna {
   /****************************************************************************/
   /* Noise Properties                                                         */
   /****************************************************************************/
-  // The noise temperature of the antenna, in Kelvin
+  // The noise temperature of the antenna, in kelvin
   // (https://en.wikipedia.org/wiki/Noise_temperature_(antenna)).
-  // This field represents noise which comes from the antenna pointing at
-  // Earth's albedo and other environmental effects which affect the signal
-  // prior to reaching the signal processing chain. It is added to the noise
-  // that is determined by the signal's wireless propagation analysis.
+  //
+  // This field represents the noise temperature for the antenna's nominal
+  // pointing direction. For example, for ground antennas or spacecraft-zenith
+  // antennas that nominally point at empty space, this field could represent
+  // the cosmic background noise. For downward-pointing satellite antennas that
+  // nominally point at the Earth, this field could represent a fixed value for
+  // the effective noise temperature of the environmental effects that
+  // contribute noise.
+  //
+  // This field does not take into account the noise of pointing through a
+  // galactic noise source that differs from the background or past the field
+  // from any other strong interference source. These noise sources need to be
+  // dynamically evaluated by the model consumer.
   double antenna_noise_temperature_k = 8;
 
   /****************************************************************************/
