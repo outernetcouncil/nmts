@@ -200,6 +200,13 @@ message Antenna {
   // be used to transmit.
   //
   // For more detail, see nmts.v1.types.physical.EirpLimits.
+  //
+  // Either g_over_t_db_per_k must be specified, or both the receive antenna 
+  // pattern and sources of noise (in antenna_noise_temperature_k and/or the 
+  // signal processing chain) must be specified. Configurations that include G/T
+  // with either a receive antenna pattern or sources of noise are invalid. See 
+  // https://docs.spacetime.aalyria.com/data_model/antennas#g-over-t and
+  // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
   nmts.v1.types.physical.AntennaPattern antenna_pattern = 6;
 
   /****************************************************************************/
@@ -220,7 +227,24 @@ message Antenna {
   // galactic noise source that differs from the background or past the field
   // from any other strong interference source. These noise sources need to be
   // dynamically evaluated by the model consumer.
+  //
+  // Either g_over_t_db_per_k must be specified, or both the receive antenna 
+  // pattern and sources of noise (in this field and/or the signal processing 
+  // chain) must be specified. Configurations that include G/T with either a
+  // receive antenna pattern or sources of noise are invalid. See 
+  // https://docs.spacetime.aalyria.com/data_model/antennas#g-over-t and
+  // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
   double antenna_noise_temperature_k = 8;
+
+  // The G/T of the receive chain, in dB/K.
+  //
+  // Either G/T must be specified, or both the receive antenna pattern and
+  // sources of noise (in antenna_noise_temperature_k and/or the signal
+  // processing chain) must be specified. Configurations that include G/T with
+  // either a receive antenna pattern or sources of noise are invalid. See
+  // https://docs.spacetime.aalyria.com/data_model/antennas#g-over-t and
+  // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
+  float g_over_t_db_per_k = 22;
 
   /****************************************************************************/
   /* Field of regard constraints                                              */

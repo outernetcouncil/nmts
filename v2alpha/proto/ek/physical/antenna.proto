@@ -184,7 +184,7 @@ message Antenna {
   /****************************************************************************/
   /* Antenna Pattern                                                          */
   /****************************************************************************/
-  // Models the antenna pattern that characterizes this antenna.
+  // Models the transmit antenna pattern that characterizes this antenna.
   //
   // When they are present, the limits in eirp_limits constrain the maximum EIRP
   // of a link. If the transmit antenna pattern in this field and the
@@ -198,27 +198,44 @@ message Antenna {
   // be used to transmit.
   //
   // For more detail, see nmts.v2alpha.types.physical.EirpLimits.
-  nmts.v2alpha.types.physical.AntennaPattern antenna_pattern = 6;
+  nmts.v2alpha.types.physical.AntennaPattern transmit_antenna_pattern = 22;
 
-  /****************************************************************************/
-  /* Noise Properties                                                         */
-  /****************************************************************************/
-  // The noise temperature of the antenna, in kelvin
-  // (https://en.wikipedia.org/wiki/Noise_temperature_(antenna)).
-  //
-  // This field represents the noise temperature for the antenna's nominal
-  // pointing direction. For example, for ground antennas or spacecraft-zenith
-  // antennas that nominally point at empty space, this field could represent
-  // the cosmic background noise. For downward-pointing satellite antennas that
-  // nominally point at the Earth, this field could represent a fixed value for
-  // the effective noise temperature of the environmental effects that
-  // contribute noise.
-  //
-  // This field does not take into account the noise of pointing through a
-  // galactic noise source that differs from the background or past the field
-  // from any other strong interference source. These noise sources need to be
-  // dynamically evaluated by the model consumer.
-  double antenna_noise_temperature_k = 8;
+  message ReceiveAntennaPatternAndNoiseTemperature {
+    // Models the receive antenna pattern that characterizes this antenna.
+    nmts.v2alpha.types.physical.AntennaPattern receive_antenna_pattern = 23;
+
+    // The noise temperature of the antenna, in kelvin
+    // (https://en.wikipedia.org/wiki/Noise_temperature_(antenna)).
+    //
+    // This field represents the noise temperature for the antenna's nominal
+    // pointing direction. For example, for ground antennas or spacecraft-zenith
+    // antennas that nominally point at empty space, this field could represent
+    // the cosmic background noise. For downward-pointing satellite
+    // antennas that nominally point at the Earth, this field could
+    // represent a fixed value for the effective noise temperature of
+    // the environmental effects that contribute noise.
+    //
+    // This field does not take into account the noise of pointing through a
+    // galactic noise source that differs from the background or past the field
+    // from any other strong interference source. These noise sources need to be
+    // dynamically evaluated by the model consumer.
+    //
+    // See https://docs.spacetime.aalyria.com/data_model/sources_of_noise
+    // for details.
+    double antenna_noise_temperature_k = 8;
+  }
+
+  // Either g_over_t_db_per_k must be specified, or both the receive antenna
+  // pattern and sources of noise (in antenna_noise_temperature_k and/or the
+  // signal processing chain) must be specified. See
+  // https://docs.spacetime.aalyria.com/data_model/antennas#g-over-t and
+  // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
+  oneof receive_performance {
+    ReceiveAntennaPatternAndNoiseTemperature 
+        receive_antenna_pattern_and_noise_temperature = 24;
+    // The G/T of the receive chain, in dB/K.
+    float g_over_t_db_per_k = 25;
+  }
 
   /****************************************************************************/
   /* Field of regard constraints                                              */
@@ -332,4 +349,6 @@ message Antenna {
   repeated GeoArcSeparationAngleConstraint geo_arc_separation_angles = 21;
 
   // TODO: Add beam hopping parameters.
+
+  reserved 6;
 }

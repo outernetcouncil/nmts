@@ -348,6 +348,72 @@ func TestSimpleGraphEntityRelationshipValidation(t *testing.T) {
 	}
 }
 
+func TestValidateAntenna(t *testing.T) {
+	tests := []struct {
+		name    string
+		entity  string
+		wantErr bool
+	}{
+		{
+			name: "antenna with only G/T is valid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					g_over_t_db_per_k: 10.0
+				}`,
+			wantErr: false,
+		},
+		{
+			name: "antenna with receive pattern and noise temperature is valid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					antenna_pattern {
+						receive_frequency_range_to_gain_patterns {
+							min_frequency: 0
+							max_frequency: 300000000000
+						}
+					}
+					antenna_noise_temperature_k: 290.0
+				}`,
+			wantErr: false,
+		},
+		{
+			name: "antenna with G/T and receive pattern is invalid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					g_over_t_db_per_k: 10.0
+					antenna_pattern {
+						receive_frequency_range_to_gain_patterns {
+							min_frequency: 0
+							max_frequency: 300000000000
+						}
+					}
+				}`,
+			wantErr: true,
+		},
+		{
+			name: "antenna with G/T and noise temperature is invalid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					g_over_t_db_per_k: 10.0
+					antenna_noise_temperature_k: 290.0
+				}`,
+			wantErr: true,
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			entity := new(npb.Entity)
+			if err := prototext.Unmarshal([]byte(tc.entity), entity); err != nil {
+				t.Fatalf("failed to parse entity: %v", err)
+			}
+			err := validation.ValidateAntenna(entity)
+			if (err != nil) != tc.wantErr {
+				t.Errorf("ValidateAntenna() error = %v, wantErr %v", err, tc.wantErr)
+			}
+		})
+	}
+}
+
 func TestIsEntityMinimallyWellFormedFailsNil(t *testing.T) {
 	if err := validation.IsEntityMinimallyWellFormed(nil); err == nil {
 		t.Fatalf("failed to minimally invalidate nil")

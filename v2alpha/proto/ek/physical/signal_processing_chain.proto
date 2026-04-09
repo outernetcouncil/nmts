@@ -32,6 +32,12 @@ option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 message ConstantGainAmplifier {
   // Required.
   double gain_db = 1;
+
+  // Either Antenna.g_over_t_db_per_k must be specified, or both the receive
+  // antenna pattern and sources of noise (in the antenna noise temperature
+  // and/or these fields) must be specified. See
+  // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
+  //
   // Required.
   double noise_factor = 2;
   // Required.
@@ -45,6 +51,12 @@ message LowNoiseAmplifier {
   double lna_gain_db = 2;
   // Required.
   double post_lna_gain_db = 3;
+
+  // Either Antenna.g_over_t_db_per_k must be specified, or both the receive
+  // antenna pattern and sources of noise (in the antenna noise temperature
+  // and/or these fields) must be specified. See
+  // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
+  //
   // Required.
   double noise_factor = 4;
   // Required.
@@ -84,6 +96,12 @@ message RectangularFilter {
   double upper_bandwidth_limit_hz = 3;
 
   // The thermal noise temperature of the filter, in Kelvin.
+  //
+  // Either Antenna.g_over_t_db_per_k must be specified, or both the receive
+  // antenna pattern and sources of noise (in the antenna noise temperature
+  // and/or these fields) must be specified. See
+  // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
+  //
   // Required.
   double noise_temperature_k = 4;
 }
@@ -111,6 +129,12 @@ message LinearFilter {
   double upper_bandwidth_limit_hz = 4;
 
   // The thermal noise temperature of the filter, in Kelvin.
+  //
+  // Either Antenna.g_over_t_db_per_k must be specified, or both the receive
+  // antenna pattern and sources of noise (in the antenna noise temperature
+  // and/or these fields) must be specified. See
+  // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
+  //
   // Required.
   double noise_temperature_k = 5;
 }
@@ -213,7 +237,12 @@ message ConstantFrequencyMixer {
   // The noise temperature of this mixer, measured in degrees Kelvin.
   // This can be ignored in the ideal mixer (or if unknown) and should default
   // to 0K noise temperature.
-  double noise_temperature_k = 2; 
+  //
+  // Either Antenna.g_over_t_db_per_k must be specified, or both the receive
+  // antenna pattern and sources of noise (in the antenna noise temperature
+  // and/or these fields) must be specified. See
+  // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
+  double noise_temperature_k = 2;
 }
 
 // A constraint on channel assignment introduced by an element of the signal

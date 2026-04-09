@@ -54,12 +54,38 @@ func IsEntityMinimallyWellFormed(entity *npb.Entity) error {
 	return nil
 }
 
+func ValidateAntenna(entity *npb.Entity) error {
+	antenna := entity.GetEkAntenna()
+	if antenna == nil {
+		return nil
+	}
+
+	// Checks that the model of the antenna's receive performance is valid.
+	// Configurations that include G/T with either a receive antenna pattern or
+	// sources of noise are invalid.
+	hasGOverT := antenna.GetGOverTDbPerK() != 0
+	hasReceiveAntennaPattern := len(antenna.GetAntennaPattern().GetReceiveFrequencyRangeToGainPatterns()) > 0
+	hasNoiseTemperature := antenna.GetAntennaNoiseTemperatureK() != 0
+	if hasGOverT && (hasReceiveAntennaPattern || hasNoiseTemperature) {
+		return fmt.Errorf(
+			"Antenna %q: configurations that include G/T with either a "+
+				"receive antenna pattern or sources of noise are invalid",
+			entity.GetId(),
+		)
+	}
+
+	return nil
+}
+
 type DefaultValidator struct{}
 
 // Validate each entity as it's loaded within the collection context
 // assembled up to that point.
 func (DefaultValidator) ValidateEntity(coll *er.Collection, entity *npb.Entity) error {
-	return IsEntityMinimallyWellFormed(entity)
+	if err := IsEntityMinimallyWellFormed(entity); err != nil {
+		return err
+	}
+	return ValidateAntenna(entity)
 }
 
 type allowedRelationship struct {

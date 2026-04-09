@@ -395,22 +395,8 @@ message AntennaPattern {
   // frequency of the signal, antenna patterns are modeled by mapping a
   // range of frequencies to a corresponding GainPattern.
   // As an example, for a simple parabolic antenna, the
-  // transmit_frequency_range_to_gain_patterns and
-  // receive_frequency_range_to_gain_patterns could be configured as:
-  //   transmit_frequency_range_to_gain_patterns {
-  //     min_frequency: 0
-  //     // 300 GHz (should be replaced with whatever the maximum frequency
-  //     // is for this antenna).
-  //     max_frequency: 300000000
-  //     gain_pattern {
-  //       parabolic_gain_pattern {
-  //         diameter_m: 0.76
-  //         efficiency: 0.80
-  //         backlobe_gain_db: -60
-  //       }
-  //     }
-  //   }
-  //   receive_frequency_range_to_gain_patterns {
+  // frequency_range_to_gain_patterns could be configured as:
+  //   frequency_range_to_gain_patterns {
   //     min_frequency: 0
   //     // 300 GHz (should be replaced with whatever the maximum frequency
   //     // is for this antenna).
@@ -441,9 +427,7 @@ message AntennaPattern {
     }
   }
   // Required.
-  repeated FrequencyRangeToGainPattern
-    transmit_frequency_range_to_gain_patterns = 1;
-  // Required.
-  repeated FrequencyRangeToGainPattern
-    receive_frequency_range_to_gain_patterns = 2;
+  repeated FrequencyRangeToGainPattern frequency_range_to_gain_patterns = 3;
+
+  reserved 1, 2;
 }
