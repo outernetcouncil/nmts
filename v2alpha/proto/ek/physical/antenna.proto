@@ -29,6 +29,30 @@ import "nmts/v2alpha/proto/types/physical/emissions.proto";
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.physical";
 option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/physical";
 
+message ChebyshevCoefficients {
+  nmts.v2alpha.types.geophys.CoordinateFrame reference_frame = 1;
+
+  // The minimum desired polynomial order, assumed to be required
+  // for accurate pointing of this aperture.
+  int32 min_order = 2;
+
+  // The shortest desired time any set of coefficients should span.
+  google.protobuf.Duration min_interval = 3;
+
+  // The longest desirable time between updates of coefficients.
+  //
+  // Choosing a max_update_period shorter than min_interval can
+  // allow for a system to provide overlap information according
+  // to a desired strategy.  For example:
+  //
+  //     * max_update_period = 10 minutes
+  //     * min_interval = 12 minutes
+  //
+  // would allow a system to allocate 2 minutes of overlap of
+  // coefficients.
+  google.protobuf.Duration max_update_period = 4;
+}
+
 // Models an RF antenna or optical aperture.
 //
 // There should be an RK_CONTAINS relationship between the Antenna and the
@@ -142,30 +166,6 @@ message Antenna {
     message StateVectorParameters {
       nmts.v2alpha.types.geophys.CoordinateFrame reference_frame = 1;
     }
-
-    message ChebyshevCoefficients {
-      nmts.v2alpha.types.geophys.CoordinateFrame reference_frame = 1;
-
-      // The minimum desired polynomial order, assumed to be required
-      // for accurate pointing of this aperture.
-      int32 min_order = 2;
-
-      // The shortest desired time any set of coefficients should span.
-      google.protobuf.Duration min_interval = 3;
-
-      // The longest desirable time between updates of coefficients.
-      //
-      // Choosing a max_update_period shorter than min_interval can
-      // allow for a system to provide overlap information according
-      // to a desired strategy.  For example:
-      //
-      //     * max_update_period = 10 minutes
-      //     * min_interval = 12 minutes
-      //
-      // would allow a system to allocate 2 minutes of overlap of
-      // coefficients.
-      google.protobuf.Duration max_update_period = 4;
-    }
   }
 
   // A specification of the format that beam pointing information delivered to
@@ -174,6 +174,18 @@ message Antenna {
   // If unset, the antenna is assumed to not need any explicit pointing
   // information from the model consumer.
   PointingFormat pointing_format = 17;
+
+  message OriginFormat {
+    oneof type {
+      ChebyshevCoefficients chebyshev_coefficients = 1;
+    }
+  }
+  // A specification of the format that beam origin information delivered to
+  // the antenna should take.
+  //
+  // If unset, the antenna is assumed to not need any explicit
+  // information from the model consumer.
+  OriginFormat origin_format = 23;
 
   // A fixed translational or rotational offset from the
   // nmts.ek.physical.Platform that has an RK_CONTAINS relationship with this
@@ -231,8 +243,8 @@ message Antenna {
   // https://docs.spacetime.aalyria.com/data_model/antennas#g-over-t and
   // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
   oneof receive_performance {
-    ReceiveAntennaPatternAndNoiseTemperature 
-        receive_antenna_pattern_and_noise_temperature = 24;
+    ReceiveAntennaPatternAndNoiseTemperature  
+            receive_antenna_pattern_and_noise_temperature = 24;
     // The G/T of the receive chain, in dB/K.
     float g_over_t_db_per_k = 25;
   }

@@ -177,6 +177,18 @@ message Antenna {
   // information from the model consumer.
   PointingFormat pointing_format = 17;
 
+  message OriginFormat {
+    oneof type {
+      PointingFormat.ChebyshevCoefficients chebyshev_coefficients = 1;
+    }
+  }
+  // A specification of the format that beam origin information delivered to
+  // the antenna should take.
+  //
+  // If unset, the antenna is assumed to not need any explicit
+  // information from the model consumer.
+  OriginFormat origin_format = 23;
+
   // A fixed translational or rotational offset from the
   // nmts.ek.physical.Platform that has an RK_CONTAINS relationship with this
   // Antenna. If this field is not used, the antenna is considered to share the
