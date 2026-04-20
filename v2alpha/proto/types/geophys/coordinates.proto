@@ -46,6 +46,13 @@ enum CoordinateFrame {
   // This indicates the frame used for most E-M Lagrange point orbit studies.
   // It is a natural and convenient way to input E-M L1/L2 orbits.
   COORDINATE_FRAME_EARTH_MOON_BARYCENTER_SYNODIC = 2;
+
+  // Earth Mean Equator and Equinox of J2000.0 (EME2000), also known as J2000
+  // ECI. An Earth-centered, space-fixed inertial frame aligned with the mean
+  // equator and mean equinox at the J2000.0 epoch (2000-01-01T12:00:00 TT).
+  //
+  // https://public.ccsds.org/Pubs/500x0g4.pdf
+  COORDINATE_FRAME_EME2000 = 3;
 }
 
 // A set of rectilinear 3D coordinates described as (x, y, z) in meters.

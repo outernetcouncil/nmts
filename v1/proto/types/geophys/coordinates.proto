@@ -51,6 +51,13 @@ enum CoordinateFrame {
   //
   // https://itrf.ign.fr/en/solutions/itrf2020
   COORDINATE_FRAME_ITRF2020 = 3;
+
+  // Earth Mean Equator and Equinox of J2000.0 (EME2000), also known as J2000
+  // ECI. An Earth-centered, space-fixed inertial frame aligned with the mean
+  // equator and mean equinox at the J2000.0 epoch (2000-01-01T12:00:00 TT).
+  //
+  // https://public.ccsds.org/Pubs/500x0g4.pdf
+  COORDINATE_FRAME_EME2000 = 4;
 }
 
 // A set of rectilinear 3D coordinates described as (x, y, z) in meters.
