@@ -325,7 +325,8 @@ message GaussianOpticalGainPattern {
   // Must be within 0 and 1.
   double efficiency = 2;
   double divergence_angle_rad = 3;
-  double pointing_error_rad = 4;
+  // Deprecated: use Antenna.pointing_error_deg instead.
+  double pointing_error_rad = 4 [deprecated = true];
 }
 
 message PhasedArrayGainPattern {

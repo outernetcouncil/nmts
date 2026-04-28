@@ -369,5 +369,10 @@ message Antenna {
   // angles for different frequency bands.
   repeated GeoArcSeparationAngleConstraint geo_arc_separation_angles = 21;
 
+  // The pointing error of the antenna, in degrees. This represents the 
+  // statistical accuracy with which the antenna can point at its intended
+  // target.
+  double pointing_error_deg = 24;
+
   // TODO: Add beam hopping parameters.
 }
