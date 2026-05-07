@@ -37,6 +37,7 @@ import "nmts/v1/proto/ek/physical/physical_medium_link.proto";
 import "nmts/v1/proto/ek/physical/platform.proto";
 import "nmts/v1/proto/ek/physical/port.proto";
 import "nmts/v1/proto/ek/physical/signal_processing_chain.proto";
+import "nmts/v1/proto/ek/physical/spatial_region.proto";
 import "nmts/v1/proto/ek/physical/transceiver.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1.proto";
@@ -99,6 +100,7 @@ message Entity {
     ek.physical.Receiver ek_receiver = 39;
     ek.physical.Antenna ek_antenna = 40;
     ek.physical.CarrierConfiguration ek_carrier_configuration = 41;
+    ek.physical.SpatialRegion ek_spatial_region = 43;
     ek.logical.SdnAgent ek_sdn_agent = 100;
   }
 }

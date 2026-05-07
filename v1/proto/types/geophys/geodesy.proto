@@ -54,6 +54,97 @@ message GeodeticMsl {
   optional double height_msl_m = 3;
 }
 
+// Defines a vertical extent as an altitude range in a specific datum.
+// When used alongside an inherently 2D surface representation (e.g.
+// H3 cells, GeoJSON polygon), this effectively extrudes the surface
+// into a 3D volume bounded by the specified altitude bounds.
+// When omitted, the associated region is unbounded vertically.
+message AltitudeRange {
+  // An altitude range relative to the WGS84 reference ellipsoid.
+  // See the World Geodetic System - 1984 (WGS-84) Manual (Doc 9674
+  // of the International Civil Aviation Organization) for details on
+  // this vertical datum.
+  message Wgs84 {
+    // The lower bound of the altitude range, in meters above the
+    // WGS84 ellipsoid. If omitted, the range extends downward
+    // without limit.
+    optional double min_height_wgs84_m = 1;
+
+    // The upper bound of the altitude range, in meters above the
+    // WGS84 ellipsoid. If omitted, the range extends upward
+    // without limit.
+    optional double max_height_wgs84_m = 2;
+  }
+
+  // An altitude range relative to mean sea level (MSL).
+  message Msl {
+    // The lower bound of the altitude range, in meters above mean
+    // sea level. If omitted, the range extends downward without limit.
+    optional double min_height_msl_m = 1;
+
+    // The upper bound of the altitude range, in meters above mean
+    // sea level. If omitted, the range extends upward without limit.
+    optional double max_height_msl_m = 2;
+  }
+
+  // The altitude format. Exactly one must be specified.
+  oneof format {
+    // Altitude range relative to the WGS84 reference ellipsoid.
+    Wgs84 wgs84 = 1;
+
+    // Altitude range relative to mean sea level.
+    Msl msl = 2;
+  }
+}
+
+// A GeoJSON geometry object (RFC 7946) encoded as a JSON string.
+// The geometry field must contain a valid GeoJSON Geometry object
+// (e.g. Polygon, MultiPolygon, GeometryCollection). Composite types
+// such as MultiPolygon can represent non-contiguous areas within a
+// single geometry.
+//
+// Specification: https://datatracker.ietf.org/doc/html/rfc7946
+message GeoJson {
+  string geometry = 1;
+}
+
+// A GeoJSON geometry object (RFC 7946) encoded in Geobuf format.
+// Geobuf is a lossless, compressed binary representation of GeoJSON
+// designed for efficient Protocol Buffer serialization. It supports
+// the same geometry types as GeoJSON (Polygon, MultiPolygon, etc.).
+//
+// Specification and reference implementation:
+//   https://github.com/mapbox/geobuf
+// Language-specific libraries:
+//   JavaScript: https://www.npmjs.com/package/geobuf
+//   Python:     https://pypi.org/project/geobuf/
+//   Go:         https://github.com/cairnapp/go-geobuf
+message Geobuf {
+  bytes geometry = 1;
+}
+
+// A set of S2 cell IDs defining a region on a sphere.
+// S2 cells are part of a hierarchical spatial index over the unit sphere.
+// Arbitrary regions can be approximated as a collection of S2 cells at
+// various levels. See http://s2geometry.io/ for reference.
+message S2CellSet {
+  repeated uint64 cell_ids = 1;
+}
+
+// A set of H3 cell indices defining a region on a sphere.
+// H3 is a hierarchical hexagonal spatial index. See https://h3geo.org/
+// for reference. This version of NMTS assumes H3 4.x cell indexing.
+message H3CellSet {
+  // All cells in the set must be at the same H3 resolution.
+  repeated uint64 cell_indices = 1;
+
+  // The H3 resolution (0–15) of all cells in this set. This field
+  // enables quick validation and efficient use by model consumers
+  // without needing to decode individual cell indices. The value
+  // must match the resolution encoded in every cell index.
+  uint32 resolution = 2;
+}
+
 // A set of curvilinear 3D coordinates relative to the Mean Lunar Radius
 // according to the Report of the IAU/IAG Working Group on Cartographic
 // Coordinates and Rotational Elements of the Planets and satellites: 2000.

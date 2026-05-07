@@ -49,6 +49,7 @@ proto_library(
         "//v2alpha/proto/ek/physical:platform_proto",
         "//v2alpha/proto/ek/physical:port_proto",
         "//v2alpha/proto/ek/physical:signal_processing_chain_proto",
+        "//v2alpha/proto/ek/physical:spatial_region_proto",
         "//v2alpha/proto/ek/physical:transceiver_proto",
     ],
 )
@@ -124,6 +125,7 @@ ts_proto_library(
         "//v2alpha/proto/ek/physical:platform_ts_proto",
         "//v2alpha/proto/ek/physical:port_ts_proto",
         "//v2alpha/proto/ek/physical:signal_processing_chain_ts_proto",
+        "//v2alpha/proto/ek/physical:spatial_region_ts_proto",
         "//v2alpha/proto/ek/physical:transceiver_ts_proto",
     ],
 )

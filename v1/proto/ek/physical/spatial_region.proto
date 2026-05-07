@@ -1,0 +1,71 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package nmts.v1.ek.physical;
+
+import "nmts/v1/proto/types/geophys/geodesy.proto";
+
+option java_package = "org.outernetcouncil.nmts.v1.proto.ek.physical";
+option go_package = "outernetcouncil.org/nmts/v1/proto/ek/physical";
+
+// Entity Kind: Spatial Region (`EK_SPATIAL_REGION`)
+//
+// A named spatial region that can be referenced by other entities.
+// A spatial region defines a bounded area or volume using one of
+// several supported geometric representations.
+//
+// Regions may represent:
+//   - Administrative or regulatory boundaries (countries, states,
+//     ITU regions, FCC license areas, etc.)
+//   - Custom operational areas (service areas, exclusion zones,
+//     coverage targets, etc.)
+//   - Altitude-bounded volumes (e.g. airspace sectors for ATG or
+//     UAV coverage, altitude-specific regulatory constraints)
+//
+// When a region's definition omits an altitude range, it is treated
+// as a 2D surface region unbounded vertically. When different altitude
+// ranges apply to different parts of a surface area, separate
+// EK_SPATIAL_REGION entities should be created for each distinct
+// altitude band.
+message SpatialRegion {
+  string display_name = 1;
+
+  // A region defined by a GeoJSON geometry (RFC 7946), supplied as
+  // either a raw JSON string or a Geobuf-encoded binary payload.
+  // The geometry typically represents a Polygon or MultiPolygon.
+  message GeoJsonRegion {
+    // The geometry payload. Exactly one format must be specified.
+    oneof geometry {
+      // GeoJSON geometry as a raw JSON string.
+      types.geophys.GeoJson geojson = 1;
+
+      // GeoJSON geometry in Geobuf binary encoding.
+      types.geophys.Geobuf geobuf = 2;
+    }
+
+    // Optional vertical extent. When present, the 2D geometry is
+    // extruded into a 3D volume bounded by the specified altitude range.
+    types.geophys.AltitudeRange altitude_range = 3;
+  }
+
+  // The geometric definition of this region. Exactly one must be
+  // specified.
+  oneof definition {
+    // A region defined by a GeoJSON geometry, in either raw JSON
+    // or Geobuf encoding.
+    GeoJsonRegion geojson = 2;
+  }
+}

@@ -25,6 +25,15 @@ package(default_visibility = ["//visibility:public"])
 # Per-proto file library rules.
 ##
 proto_library(
+    name = "spatial_region_proto",
+    srcs = ["spatial_region.proto"],
+    import_prefix = "nmts",
+    deps = [
+        "//v1/proto/types/geophys:geodesy_proto",
+    ],
+)
+
+proto_library(
     name = "antenna_proto",
     srcs = ["antenna.proto"],
     import_prefix = "nmts",
@@ -120,6 +129,7 @@ cpp_proto_library(
         ":platform_proto",
         ":port_proto",
         ":signal_processing_chain_proto",
+        ":spatial_region_proto",
         ":transceiver_proto",
     ],
     deps = [
@@ -141,6 +151,7 @@ go_proto_library(
         ":platform_proto",
         ":port_proto",
         ":signal_processing_chain_proto",
+        ":spatial_region_proto",
         ":transceiver_proto",
     ],
     deps = [
@@ -161,6 +172,7 @@ java_proto_library(
         ":platform_proto",
         ":port_proto",
         ":signal_processing_chain_proto",
+        ":spatial_region_proto",
         ":transceiver_proto",
     ],
     deps = [
@@ -181,6 +193,7 @@ python_proto_library(
         ":platform_proto",
         ":port_proto",
         ":signal_processing_chain_proto",
+        ":spatial_region_proto",
         ":transceiver_proto",
     ],
     deps = [
@@ -306,6 +319,22 @@ ts_proto_library(
     protoc_gen_options = {
         "json_types": "true",
     },
+)
+
+ts_proto_library(
+    name = "spatial_region_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":spatial_region_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+    deps = [
+        "//v1/proto/types/geophys:geodesy_ts_proto",
+    ],
 )
 
 ts_proto_library(
