@@ -33,7 +33,7 @@ const orbHtmlTemplate = `
 <head>
   <meta charset="UTF-8" />
   <title>Orb | Render a simple graph</title>
-  <script src="https://unpkg.com/@memgraph/orb@0.4.3/dist/browser/orb.js"></script>
+  <script integrity="sha256-xx0jnfkXJvxRnG63LTGOxlggYnIysveWIZ6H3PNdCrQ=" src="https://unpkg.com/@memgraph/orb@0.4.3/dist/browser/orb.js"></script>
   <style>
     html, body {
       height: 100%;
