@@ -5,3 +5,8 @@
 packages:
   - 'v1/proto'
   - 'v2alpha/proto'
+
+# Packages with install/postinstall scripts that pnpm 10+ should run.
+# Required by aspect_rules_js v3+; see
+# https://pnpm.io/10.x/settings#onlybuiltdependencies
+onlyBuiltDependencies: []

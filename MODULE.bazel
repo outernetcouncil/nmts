@@ -139,7 +139,7 @@ switched_rules.use_languages(
 # For TypeScript targets.
 bazel_dep(
     name = "aspect_rules_js",
-    version = "2.1.0",
+    version = "3.0.3",
 )
 
 bazel_dep(
