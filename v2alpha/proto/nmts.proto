@@ -131,6 +131,12 @@ enum RK {
 // previously defined within the model, or whether |kind| here is
 // appropriate for the two Entities |a| and |z| (requires testing
 // the |kind| of the Entities), et cetera.
+//
+// Relationships have no separate identifier: the tuple (|a|, |kind|, |z|)
+// is the identity of a Relationship within a model, and a model MUST NOT
+// contain two Relationship instances sharing the same tuple. Producers
+// that need a stable string identifier for a Relationship (e.g. as a key
+// in an external store) should derive it from this tuple.
 message Relationship {
   RK kind = 1;
   string a = 2;

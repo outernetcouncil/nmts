@@ -71,3 +71,16 @@ service modeling goals of NMTS.
 
 As in MALT, relationships do not have attributes.  They are directed edges
 that have a tail (`a:`), a head (`z:`), and a kind.
+
+A Relationship has no separate identifier; its identity within a model is
+the tuple (`a`, `kind`, `z`). A model MUST NOT contain two Relationship
+instances sharing the same tuple — for example, a single pair of Entities
+cannot be related twice by `RK_CONTAINS`, even if other relationships of
+different kinds also exist between them. Producers that need a stable
+string identifier for a Relationship (for example, as a key in an external
+store) should derive it from this tuple. One conventional encoding is
+`"{a}->{kind}->{z}"`, where `{kind}` is the `RK` enum's protobuf name (e.g.
+`RK_CONTAINS`); the NMTS Go `entityrelationship` package exposes this
+form via `Relationship.String()`, and producers in other languages may use
+the same encoding or any other tuple-derived form suitable for their
+consumer.
