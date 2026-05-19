@@ -1,0 +1,126 @@
+##
+# A single switch wired with 10 Gbps Ethernet on every port and interface,
+# but whose internal forwarding plane can only push 1 Gbps of aggregate
+# traffic. This is the case the EK_INTERNAL_FABRIC entity exists to model:
+# the ingress/egress link speeds suggest 10 Gbps is achievable, but the
+# fabric itself is the bottleneck and caps any flow (or sum of flows)
+# crossing the node at 1 Gbps. Without the EK_INTERNAL_FABRIC, a solver
+# would see only the 10 Gbps interface speeds and overestimate capacity.
+##
+entity {
+  id: "uuid8(sw/platform)"
+  ek_platform {}
+}
+entity {
+  id: "uuid8(sw/port/0)"
+  ek_port {
+    name: "eth0"
+    max_data_rate_bps: 10000000000  # 10 Gbps
+  }
+}
+entity {
+  id: "uuid8(sw/port/1)"
+  ek_port {
+    name: "eth1"
+    max_data_rate_bps: 10000000000  # 10 Gbps
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw/platform)"
+  z: "uuid8(sw/port/0)"
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw/platform)"
+  z: "uuid8(sw/port/1)"
+}
+
+entity {
+  id: "uuid8(sw/network_node)"
+  ek_network_node {}
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw/platform)"
+  z: "uuid8(sw/network_node)"
+}
+
+entity {
+  id: "uuid8(sw/intf/0)"
+  ek_interface {
+    eth {
+      mac_addr: { str: "02:00:00:00:00:00" }
+    }
+    max_data_rate_bps: 10000000000  # 10 Gbps, matching the underlying port
+  }
+}
+entity {
+  id: "uuid8(sw/intf/1)"
+  ek_interface {
+    eth {
+      mac_addr: { str: "02:00:00:00:00:01" }
+    }
+    max_data_rate_bps: 10000000000  # 10 Gbps, matching the underlying port
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw/network_node)"
+  z: "uuid8(sw/intf/0)"
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw/network_node)"
+  z: "uuid8(sw/intf/1)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8(sw/intf/0)"
+  z: "uuid8(sw/port/0)"
+}
+relationship {
+  kind: RK_TRAVERSES
+  a: "uuid8(sw/intf/1)"
+  z: "uuid8(sw/port/1)"
+}
+
+##
+# An EK_INTERNAL_FABRIC directly contained by the EK_NETWORK_NODE. It is
+# the binding constraint on this switch: data from any interface to any
+# other interface must cross it, and the fabric caps the aggregate at
+# 1 Gbps even though each interface can do ten times that.
+##
+entity {
+  id: "uuid8(sw/fabric)"
+  ek_internal_fabric {
+    max_data_rate_bps: 1000000000  # 1 Gbps -- 10x slower than the interfaces
+  }
+}
+relationship {
+  kind: RK_CONTAINS
+  a: "uuid8(sw/network_node)"
+  z: "uuid8(sw/fabric)"
+}
+
+# Bidirectional data transit through the fabric for each interface.
+relationship {
+  kind: RK_DATA_TRANSITS
+  a: "uuid8(sw/intf/0)"
+  z: "uuid8(sw/fabric)"
+}
+relationship {
+  kind: RK_DATA_TRANSITS
+  a: "uuid8(sw/fabric)"
+  z: "uuid8(sw/intf/0)"
+}
+relationship {
+  kind: RK_DATA_TRANSITS
+  a: "uuid8(sw/intf/1)"
+  z: "uuid8(sw/fabric)"
+}
+relationship {
+  kind: RK_DATA_TRANSITS
+  a: "uuid8(sw/fabric)"
+  z: "uuid8(sw/intf/1)"
+}

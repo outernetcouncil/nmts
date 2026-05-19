@@ -114,6 +114,11 @@ var relationshipTestCases = []testCase{
 	{
 		entityA: `id: "network_nodeA" ek_network_node{}`,
 		rk:      npb.RK_RK_CONTAINS,
+		entityZ: `id: "internal_fabricZ" ek_internal_fabric{}`,
+	},
+	{
+		entityA: `id: "network_nodeA" ek_network_node{}`,
+		rk:      npb.RK_RK_CONTAINS,
 		entityZ: `id: "route_fnZ" ek_route_fn{}`,
 	},
 	{
