@@ -204,6 +204,9 @@ message AccessFn {
       // Distance-based Conditional Handover (D1 CHO)
       // Note: Intended for Earth-Fixed Cells
       bool d1cho = 3;
+
+      // Satellite Switch with Re-Synchronization (SSWR)
+      bool sswr = 4;
     }
 
     Mobility mobility = 1;
