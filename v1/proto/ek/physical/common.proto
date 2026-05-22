@@ -48,6 +48,19 @@ message Carrier {
   // Required. Represents the total, pre-filter bandwidth of the carrier,
   // including any roll-off.
   int64 bandwidth_hz = 2;
+  // The roll-off factor, which is a measure of the excess bandwidth of a
+  // carrier's pulse-shaping filter, as a decimal value.
+  //
+  // If this field is not set, model observers must not make any assumptions
+  // about how the roll-off is computed. Although the bandwidth, symbol rate,
+  // and roll-off are related by the standard relationship of
+  // bandwidth_hz = symbol_rate_symbols_per_second * (1 + roll_off_factor),
+  // in practice, the configured filter passband may need to include an
+  // additional margin beyond the intended occupied carrier bandwidth to account
+  // for efficiency losses. Because of this margin, this standard equation does
+  // not hold for certain filters, so the roll-off must be explicitly defined.
+  float roll_off_factor = 7;
+
   nmts.v1.types.physical.Polarization polarization = 3;
   // The symbol rate (baud rate), in symbols per second.
   int64 symbol_rate_symbols_per_second = 4;
