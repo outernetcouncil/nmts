@@ -69,6 +69,9 @@ proto_library(
     name = "modem_proto",
     srcs = ["modem.proto"],
     import_prefix = "nmts",
+    deps = [
+        "@protobuf//:duration_proto",
+    ],
 )
 
 proto_library(
