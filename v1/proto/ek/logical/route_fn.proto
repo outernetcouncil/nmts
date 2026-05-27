@@ -16,6 +16,8 @@ syntax = "proto3";
 
 package nmts.v1.ek.logical;
 
+import "google/protobuf/duration.proto";
+
 import "nmts/v1/proto/types/ietf/routing.proto";
 
 option java_package = "org.outernetcouncil.nmts.v1.proto.ek.logical";
@@ -56,4 +58,24 @@ message RouteFn {
     // TODO: explicit P2MP SR-TE policy capability indication.
   }
   SegmentRouting sr = 2;
+
+  // The latency incurred when enacting a schedule update on this
+  // entity. This duration encompasses:
+  //
+  //   - The maximum time the EK_SDN_AGENT that RK_CONTROLS this
+  //     entity needs to process the SBI message before forwarding
+  //     it for enactment.
+  //   - The maximum communications latency between the agent and the
+  //     controlled entity (analogous to the EK_SDN_AGENT's
+  //     controller_to_agent_latency, but for the agent-to-entity hop).
+  //   - The maximum time the controlled entity itself needs to apply
+  //     the received enactment.
+  //
+  // Combined with the EK_SDN_AGENT's controller_to_agent_latency,
+  // this defines the total latency between the SDN controller
+  // producing a schedule and the entity enacting it. Indirectly,
+  // this also imposes a minimum reconfiguration interval: the
+  // controller cannot schedule a subsequent reconfiguration sooner
+  // than this duration after the previous one.
+  google.protobuf.Duration enactment_latency = 3;
 }
