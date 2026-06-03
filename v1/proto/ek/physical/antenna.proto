@@ -213,10 +213,10 @@ message Antenna {
   //
   // For more detail, see nmts.v1.types.physical.EirpLimits.
   //
-  // Either g_over_t_db_per_k must be specified, or both the receive antenna 
-  // pattern and sources of noise (in antenna_noise_temperature_k and/or the 
+  // Either g_over_t_db_per_k must be specified, or both the receive antenna
+  // pattern and sources of noise (in antenna_noise_temperature_k and/or the
   // signal processing chain) must be specified. Configurations that include G/T
-  // with either a receive antenna pattern or sources of noise are invalid. See 
+  // with either a receive antenna pattern or sources of noise are invalid. See
   // https://docs.spacetime.aalyria.com/data_model/antennas#g-over-t and
   // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
   nmts.v1.types.physical.AntennaPattern antenna_pattern = 6;
@@ -240,10 +240,10 @@ message Antenna {
   // from any other strong interference source. These noise sources need to be
   // dynamically evaluated by the model consumer.
   //
-  // Either g_over_t_db_per_k must be specified, or both the receive antenna 
-  // pattern and sources of noise (in this field and/or the signal processing 
+  // Either g_over_t_db_per_k must be specified, or both the receive antenna
+  // pattern and sources of noise (in this field and/or the signal processing
   // chain) must be specified. Configurations that include G/T with either a
-  // receive antenna pattern or sources of noise are invalid. See 
+  // receive antenna pattern or sources of noise are invalid. See
   // https://docs.spacetime.aalyria.com/data_model/antennas#g-over-t and
   // https://docs.spacetime.aalyria.com/data_model/sources_of_noise for details.
   double antenna_noise_temperature_k = 8;
@@ -373,6 +373,20 @@ message Antenna {
   // statistical accuracy with which the antenna can point at its intended
   // target.
   double pointing_error_deg = 24;
+
+  // Characterizes this antenna's emissions for interference analysis.
+  //
+  // For antennas on external-system platforms (platforms with field
+  // is_external_system), this describes the worst-case emission envelope used
+  // to compute the interference contribution of this emitter at victim
+  // receivers.
+  //
+  // For antennas on first-party platforms, this field is optional and can be
+  // used for self-interference analysis.
+  //
+  // This field is independent of eirp_limits, which constrains per-beam EIRP
+  // for scheduling purposes.
+  nmts.v1.types.physical.EmissionEnvelope emission_envelope = 25;
 
   // TODO: Add beam hopping parameters.
 }

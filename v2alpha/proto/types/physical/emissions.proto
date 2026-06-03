@@ -21,10 +21,11 @@ package nmts.v2alpha.types.physical;
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.types.physical";
 option go_package = "outernetcouncil.org/nmts/v2alpha/proto/types/physical";
 
-// Power Spectral Density specifies the power
+// Power Spectral Density specifies the power.
 message PowerSpectralDensity {
   oneof type {
     FixedPower fixed = 1;
+    OffAxisPower off_axis = 3;
   }
 
   // Fixed power profile, that does not vary over angle or frequency.
@@ -34,8 +35,30 @@ message PowerSpectralDensity {
     double power_dbw = 1;
   }
 
-  // TODO: Add support for angle/frequency variant power.
-  // (i.e., 19 - 25 log Φ dBW)
+  // Off-axis EIRP envelope as a piecewise-linear function of angle from
+  // antenna's z-axis.
+  // stations). This matches how ITU/FCC regulatory filings express off-axis
+  // EIRP density limits (e.g., 29 - 25·log(θ) dBW/4kHz).
+  //
+  // Control points define the envelope. Between control points, power is
+  // linearly interpolated in dB. Below the smallest angle, the power of the
+  // first control point applies. Above the largest angle, the power of the
+  // last control point applies.
+  message OffAxisPower {
+    message ControlPoint {
+      // Off-axis angle in degrees from the reference direction.
+      // Required.
+      double angle_deg = 1;
+
+      // EIRP spectral density at this angle, in dBW per reference bandwidth.
+      // Required.
+      double power_dbw = 2;
+    }
+
+    // At least two control points are required, ordered by non-decreasing
+    // angle_deg.
+    repeated ControlPoint control_points = 1;
+  }
 
   // The reference bandwidth over which power_dbw applies, in Hz.
   // Required.
@@ -47,7 +70,9 @@ message EirpsdMask {
   // Power Spectral Density for the mask.
   PowerSpectralDensity power_spectral_density = 1;
 
-  // TODO: Add support for different applicable angle and frequency bands.
+  // The frequency range over which this mask applies.
+  // If unset the mask applies to all frequencies.
+  FrequencyRange frequency_range = 2;
 }
 
 // Effective Isotropic Radiating Power (EIRP) limits.
@@ -55,7 +80,7 @@ message EirpLimits {
   // The maximum EIRP in the direction of a link is constrained by the following
   // factors, each of which is considered when present:
   //   - the gain in the link direction based on the gain pattern (defined in
-  //     Antenna.antenna_pattern) plus the per-carrier maximum transmit power 
+  //     Antenna.antenna_pattern) plus the per-carrier maximum transmit power
   //     (defined in CarrierConfiguration.TransmitCarrier.max_power_w) in dBW
   //   - maximum EIRP
   //   - maximum EIRP spectral density
@@ -110,6 +135,14 @@ message EirpLimits {
   repeated EirpsdMask eirpsd_masks = 1;
 }
 
+// A range of frequencies.
+message FrequencyRange {
+  // The lower bound of the frequency range, in hertz (inclusive).
+  int64 min_frequency_hz = 1;
+  // The upper bound of the frequency range, in hertz (exclusive).
+  int64 max_frequency_hz = 2;
+}
+
 // Power Flux Density.
 message PowerFluxDensity {
   // The maximum beam power transmitted, in dbW/m^2.
@@ -119,4 +152,18 @@ message PowerFluxDensity {
   // The reference bandwidth over which power_dbw applies, in Hz.
   // Required.
   double reference_bandwidth_hz = 2;
+}
+
+// Characterizes an antenna's emissions for interference analysis.
+//
+// For external-system antennas (platforms with is_external_system set), this
+// describes the worst-case emission envelope. For first-party antennas, this
+// is optional and can be used for self-interference analysis.
+message EmissionEnvelope {
+  // One mask per frequency band the emitter operates in. Each mask describes
+  // the worst-case EIRP spectral density over that band.
+  //
+  // When evaluating interference, only masks whose frequency_range overlaps
+  // with the victim link's carrier are considered.
+  repeated EirpsdMask eirpsd_masks = 1;
 }
