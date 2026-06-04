@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orb | Render a simple graph</title>
+  <script integrity="sha256-xx0jnfkXJvxRnG63LTGOxlggYnIysveWIZ6H3PNdCrQ=" src="https://unpkg.com/@memgraph/orb@0.4.3/dist/browser/orb.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    #graph {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="graph"></div>
+  <script>
+    const container = document.getElementById('graph');
+
+    const nodes = [
+
+      { id: "uuid8(sw/fabric)", label: "uuid8(sw/fabric)" },
+
+      { id: "uuid8(sw/intf/0)", label: "uuid8(sw/intf/0)" },
+
+      { id: "uuid8(sw/intf/1)", label: "uuid8(sw/intf/1)" },
+
+      { id: "uuid8(sw/network_node)", label: "uuid8(sw/network_node)" },
+
+      { id: "uuid8(sw/platform)", label: "uuid8(sw/platform)" },
+
+      { id: "uuid8(sw/port/0)", label: "uuid8(sw/port/0)" },
+
+      { id: "uuid8(sw/port/1)", label: "uuid8(sw/port/1)" },
+
+    ];
+    const edges = [
+
+      { id: "uuid8(sw/intf/0)__RK_TRAVERSES__uuid8(sw/port/0)", start: "uuid8(sw/intf/0)", end: "uuid8(sw/port/0)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw/intf/1)__RK_TRAVERSES__uuid8(sw/port/1)", start: "uuid8(sw/intf/1)", end: "uuid8(sw/port/1)", label: "RK_TRAVERSES" },
+
+      { id: "uuid8(sw/network_node)__RK_CONTAINS__uuid8(sw/fabric)", start: "uuid8(sw/network_node)", end: "uuid8(sw/fabric)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw/network_node)__RK_CONTAINS__uuid8(sw/intf/0)", start: "uuid8(sw/network_node)", end: "uuid8(sw/intf/0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw/network_node)__RK_CONTAINS__uuid8(sw/intf/1)", start: "uuid8(sw/network_node)", end: "uuid8(sw/intf/1)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw/platform)__RK_CONTAINS__uuid8(sw/network_node)", start: "uuid8(sw/platform)", end: "uuid8(sw/network_node)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw/platform)__RK_CONTAINS__uuid8(sw/port/0)", start: "uuid8(sw/platform)", end: "uuid8(sw/port/0)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw/platform)__RK_CONTAINS__uuid8(sw/port/1)", start: "uuid8(sw/platform)", end: "uuid8(sw/port/1)", label: "RK_CONTAINS" },
+
+      { id: "uuid8(sw/fabric)__RK_DATA_TRANSITS__uuid8(sw/intf/0)", start: "uuid8(sw/fabric)", end: "uuid8(sw/intf/0)", label: "RK_DATA_TRANSITS" },
+
+      { id: "uuid8(sw/fabric)__RK_DATA_TRANSITS__uuid8(sw/intf/1)", start: "uuid8(sw/fabric)", end: "uuid8(sw/intf/1)", label: "RK_DATA_TRANSITS" },
+
+      { id: "uuid8(sw/intf/0)__RK_DATA_TRANSITS__uuid8(sw/fabric)", start: "uuid8(sw/intf/0)", end: "uuid8(sw/fabric)", label: "RK_DATA_TRANSITS" },
+
+      { id: "uuid8(sw/intf/1)__RK_DATA_TRANSITS__uuid8(sw/fabric)", start: "uuid8(sw/intf/1)", end: "uuid8(sw/fabric)", label: "RK_DATA_TRANSITS" },
+
+    ];
+
+    const orb = new Orb.Orb(container);
+
+    
+    orb.data.setup({ nodes, edges });
+
+	orb.view.setSettings({
+		simulation: {
+		  isPhysicsEnabled: true,
+		},
+	});
+
+    
+    orb.view.render(() => {
+      orb.view.recenter();
+    });
+  </script>
+</body>
+</html>
