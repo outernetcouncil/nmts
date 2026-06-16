@@ -55,8 +55,8 @@ message PowerSpectralDensity {
       double power_dbw = 2;
     }
 
-    // At least two control points are required, ordered by non-decreasing
-    // angle_deg.
+    // At least two control points are required, ordered by monotonically
+    // increasing angle_deg.
     repeated ControlPoint control_points = 1;
   }
 
