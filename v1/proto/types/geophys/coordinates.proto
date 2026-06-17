@@ -115,6 +115,24 @@ message Projection {
     // Angle between the positive Z-axis and an optional, interior conical
     // volume of exclusion. Used to optionally restrict the volume.
     double inner_half_angle_deg = 2;
+
+    // Optional azimuthal ("clock") bounds that restrict the conic volume to a
+    // wedge about the Z-axis rather than a full surface of revolution. The
+    // clock angle is measured in the XY-plane from the positive X-axis toward
+    // the positive Y-axis and is expected in the range [-180, 180] degrees.
+    //
+    // The wedge spans from clock_angle_start_deg to clock_angle_end_deg in the
+    // direction of increasing clock angle. When the start exceeds the end, the
+    // wedge wraps across the +/-180 degree meridian (e.g. start=170, end=-170
+    // selects the 20-degree wedge straddling 180 degrees). Both bounds are
+    // inclusive.
+    //
+    // If only one bound is set, the other defaults to the corresponding edge of
+    // the half-circle: an unset start defaults to -180 degrees and an unset end
+    // defaults to +180 degrees. If neither bound is set, the volume is
+    // unrestricted in azimuth (a full 360-degree surface of revolution).
+    optional double clock_angle_start_deg = 3;
+    optional double clock_angle_end_deg = 4;
   }
 
   // Defines a rectangular projection
