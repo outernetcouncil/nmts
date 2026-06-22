@@ -33,5 +33,28 @@ message BpAgentFn {
   // previously stored, or some mix of the two), per local policy.
   int64 max_capacity_bytes = 1;  // ~8 exabytes
 
+  // The IPN Administrative Endpoint ID of this BP Agent, expressed as
+  // an 'ipn' scheme URI (RFC 9171 §4.2.5.2, RFC 9758).
+  //
+  // RFC 9758 defines the canonical three-component text form:
+  //
+  //   ipn:<allocator_id>.<node_nbr>.<service_nbr>
+  //
+  // The IPN Administrative Endpoint ID is a Singleton EID, so the
+  // service_nbr component is always 0. The allocator_id identifies the
+  // Numbering Authority that assigned the node_nbr; allocator_id 0
+  // denotes the IANA Default Allocator (RFC 9758 §3.2.2), which is
+  // backward-compatible with the two-component form defined in RFC 7116.
+  //
+  // The two-component form (e.g. "ipn:15.0") from RFC 7116 is still
+  // valid and equivalent to "ipn:0.15.0", but new configurations
+  // SHOULD use the three-component form.
+  //
+  // Examples (allocator_id 974849 is in the RFC 9758 Example Range,
+  // 0xEE000-0xEEFFF, reserved for documentation purposes):
+  //   "ipn:0.15.0"          -- node 15, IANA Default Allocator
+  //   "ipn:974849.7.0"      -- node 7, non-default allocator
+  string ipn_admin_eid = 2;
+
   // TODO: add CLA capabilities attributes.
 }
