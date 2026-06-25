@@ -189,9 +189,13 @@ def _nmts_to_svg_impl(ctx):
     )
 
     run_tmpl = ctx.actions.declare_file(ctx.label.name + "run_tmpl.txt")
+
+    # buildifier: disable=canonical-repository
     ctx.actions.write(run_tmpl, "cat \"@@FILE@@\"", is_executable = True)
 
     run_script = ctx.actions.declare_file(ctx.label.name + "_run.sh")
+
+    # buildifier: disable=canonical-repository
     ctx.actions.expand_template(template = run_tmpl, output = run_script, substitutions = {"@@FILE@@": svg_file.short_path}, is_executable = True)
 
     return DefaultInfo(files = depset([svg_file]), executable = run_script, runfiles = ctx.runfiles(files = [svg_file]))
@@ -234,9 +238,13 @@ def _nmts_to_html_impl(ctx):
     )
 
     run_tmpl = ctx.actions.declare_file(ctx.label.name + "run_tmpl.txt")
+
+    # buildifier: disable=canonical-repository
     ctx.actions.write(run_tmpl, "cat \"@@FILE@@\"", is_executable = True)
 
     run_script = ctx.actions.declare_file(ctx.label.name + "_run.sh")
+
+    # buildifier: disable=canonical-repository
     ctx.actions.expand_template(template = run_tmpl, output = run_script, substitutions = {"@@FILE@@": out_file.short_path}, is_executable = True)
 
     return DefaultInfo(files = depset([out_file]), executable = run_script, runfiles = ctx.runfiles(files = [out_file]))
@@ -259,6 +267,8 @@ _nmts_to_html = rule(
 
 def _check_output_test_impl(ctx):
     diff_template = ctx.actions.declare_file("%s_diff_tmpl.txt" % ctx.label.name)
+
+    # buildifier: disable=canonical-repository
     ctx.actions.write(diff_template, """#!/usr/bin/env bash
 main() {
   local target="@@TARGET@@"
@@ -280,6 +290,8 @@ main "$@"
     target_parts = ctx.file.want.short_path.rsplit("/", 1)
 
     diff_script = ctx.actions.declare_file("%s_diff.sh" % ctx.label.name)
+
+    # buildifier: disable=canonical-repository
     ctx.actions.expand_template(template = diff_template, output = diff_script, substitutions = {
         "@@WANT_FILE@@": ctx.file.want.short_path,
         "@@GOT_FILE@@": ctx.file.got.short_path,
