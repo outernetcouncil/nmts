@@ -41,6 +41,7 @@ message Platform {
   // The time-dynamic position and orientation. The type of motion determines
   // the orientation axes of the platform, which are considered when determining
   // the boresight direction for each antenna on the platform.
+  // Required.
   types.geophys.Motion motion = 3;
 
   // This optional message is used to explicitly mark a Platform (e.g. a
