@@ -75,13 +75,8 @@ bazel_dep(
 )
 
 bazel_dep(
-    name = "rules_rust",
-    version = "0.68.0",
-)
-
-bazel_dep(
-    name = "rules_rust_prost",
-    version = "0.68.0",
+    name = "rules_rs",
+    version = "0.0.94",
 )
 
 bazel_dep(
@@ -117,10 +112,12 @@ single_version_override(
     version = "1.19.1",
 )
 
-# Patch gRPC v1.74.1 to fix RBE build with strict header checking.
-# The issue: xds_route_config target is missing upb library dependencies,
-# which causes undeclared inclusion errors for envoy upb-generated headers
-# when building with RBE's strict header checking.
+# grpc is a direct dep here and is also pulled in by rules_proto_grpc_*. Patch it
+# to match the monorepo. The upb-gen include-shadowing patch drops grpc's
+# committed upb-gen include dirs, which otherwise shadow protobuf's generated upb
+# headers and cause "undeclared inclusion" failures under strict header checking
+# (e.g. when compiling cygrpc). The rbe_xds patch supplies header deps needed for
+# RBE + xDS builds.
 single_version_override(
     module_name = "grpc",
     patch_strip = 0,
@@ -253,42 +250,55 @@ register_toolchains(
 
 RUST_EDITION = "2024"
 
-RUST_VERSION = "1.89.0"
+RUST_VERSION = "1.94.1"
 
-rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+# rules_rs toolchains. When this module is consumed by the Spacetime monorepo,
+# the toolchains extension is shared across the module graph and errors on
+# conflicting same-name tags, so this configuration (edition, version,
+# extra_rustc_flags) MUST match the consuming root module's exactly.
+rs_toolchains = use_extension("@rules_rs//rs/toolchains:module_extension.bzl", "toolchains")
 
-rust.toolchain(
+rs_toolchains.toolchain(
     edition = RUST_EDITION,
-    versions = [RUST_VERSION],
+    # -Clink-self-contained=no: link with the registered cc toolchain's linker.
+    # rules_rs's rustc does not ship the self-contained linker (rust-lld). Must
+    # match the consuming root module's toolchain tag exactly.
+    extra_exec_rustc_flags = {
+        "x86_64-unknown-linux-gnu": ["-Clink-self-contained=no"],
+    },
+    extra_rustc_flags = {
+        "x86_64-unknown-linux-gnu": [
+            "-Clink-self-contained=no",
+            "-Ctarget-cpu=x86-64-v3",
+        ],
+    },
+    version = RUST_VERSION,
 )
 
-use_repo(rust, "rust_toolchains")
+use_repo(rs_toolchains, "default_rust_toolchains")
 
-register_toolchains("@rust_toolchains//:all")
+# Re-export the pinned, patched @rules_rust so existing @rules_rust// loads keep
+# working. rules_rs bundles the prost extension under @rules_rust//extensions/prost.
+rules_rust = use_extension("@rules_rs//rs:rules_rust.bzl", "rules_rust")
+
+use_repo(rules_rust, "rules_rust")
+
+register_toolchains("@default_rust_toolchains//:all")
 
 # Custom Prost toolchain
 register_toolchains(
     "//build_tools/prost_toolchain",
 )
 
-crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
-
-crate.from_cargo(
-    name = "crates_io",
-    cargo_lockfile = "//:Cargo.lock",
-    manifests = ["//:Cargo.toml"],
-)
+# Rust crate dependencies via rules_rs crate_universe (from_cargo). rules_rs
+# supports only from_cargo, so the former from_specs "crates" hub is folded in:
+# protoc-gen-tonic is now a Cargo.toml dependency and everything resolves in the
+# single "crates_io" hub.
+crate = use_extension("@rules_rs//rs:extensions.bzl", "crate")
 
 crate.annotation(
     crate = "protoc-gen-prost",
     gen_binaries = ["protoc-gen-prost"],
-)
-
-use_repo(crate, "crates_io")
-
-crate.spec(
-    package = "protoc-gen-tonic",
-    version = "0.4.0",
 )
 
 crate.annotation(
@@ -296,6 +306,11 @@ crate.annotation(
     gen_binaries = ["protoc-gen-tonic"],
 )
 
-crate.from_specs()
+crate.from_cargo(
+    name = "crates_io",
+    cargo_lock = "//:Cargo.lock",
+    cargo_toml = "//:Cargo.toml",
+    platform_triples = ["x86_64-unknown-linux-gnu"],
+)
 
-use_repo(crate, "crates")
+use_repo(crate, "crates_io")

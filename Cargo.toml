@@ -12,12 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This is a dummy package to declare dependencies for rules_rust crate_universe.
-# It is not intended to be built directly.
+# This is a dummy package to declare dependencies for rules_rs crate_universe
+# (from_cargo). It is not intended to be built directly.
 [package]
 name = "nmts-bazel-deps"
 version = "0.0.1"
 edition = "2024"
+
+# Stub target: rules_rs from_cargo runs `cargo` against this manifest, which
+# requires a target. lib.rs is an empty placeholder; nothing is built from it.
+[lib]
+path = "lib.rs"
 
 [dependencies]
 clap = { version = "4.5.45", features = ["derive"] }
@@ -27,6 +32,6 @@ tokio = { version = "1.38", features = ["macros", "net", "rt-multi-thread", "sig
 prost-reflect = { version = "0.13.1", features = ["text-format"] }
 prost-types = { version = "0.13.1", default-features = false }
 protoc-gen-prost = { version = "0.4.0" }
-# protoc-gen-tonic = { version = "0.4.0" }
+protoc-gen-tonic = { version = "0.4.0" }
 tonic = { version = "0.12.1", features = ["transport"] }
 tonic-build = { version = "0.12.1" }

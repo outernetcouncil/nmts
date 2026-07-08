@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@rules_rust//extensions/prost:defs.bzl", "rust_prost_toolchain")
 load("@rules_rust//rust:defs.bzl", "rust_library_group")
-load("@rules_rust_prost//:defs.bzl", "rust_prost_toolchain")
 
 rust_library_group(
     name = "prost_runtime",
@@ -35,12 +35,12 @@ rust_prost_toolchain(
     prost_plugin = "@crates_io//:protoc-gen-prost__protoc-gen-prost",
     prost_runtime = ":prost_runtime",
     prost_types = "@crates_io//:prost-types",
-    tonic_plugin = "@crates//:protoc-gen-tonic__protoc-gen-tonic",
+    tonic_plugin = "@crates_io//:protoc-gen-tonic__protoc-gen-tonic",
     tonic_runtime = ":tonic_runtime",
 )
 
 toolchain(
     name = "prost_toolchain",
     toolchain = "prost_toolchain_impl",
-    toolchain_type = "@rules_rust_prost//:toolchain_type",
+    toolchain_type = "@rules_rust//extensions/prost:toolchain_type",
 )
