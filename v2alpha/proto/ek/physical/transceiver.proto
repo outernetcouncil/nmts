@@ -52,7 +52,7 @@ message Transmitter {
   // The maximum number of RF carriers that can simultaneously be routed through
   // this transmitter.
   //
-  // If this field is unset or contains the proto3-default zero value, a model 
+  // If this field is unset or contains the proto3-default zero value, a model
   // consumer MAY derive a value from other context in the model.
   int32 max_carrier_count = 4;
 

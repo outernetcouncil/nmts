@@ -63,6 +63,48 @@ message LowNoiseAmplifier {
   double reference_temperature_k = 5;
 }
 
+// Models a high power amplifier (HPA), the transmit-side counterpart to the
+// LowNoiseAmplifier.
+message HighPowerAmplifier {
+  // Noise power ratio (NPR) characterizing in-band intermodulation noise from
+  // amplifier nonlinearity (e.g., intermodulation products near saturation).
+  message NoisePowerRatio {
+    // A control point on a piecewise-linear NPR adjustment curve. Within a
+    // curve, the adjustment is linearly interpolated between control points;
+    // below the smallest input the first control point's adjustment applies,
+    // and above the largest input the last control point's applies. A curve
+    // MUST have at least two control points, ordered by strictly increasing
+    // input.
+    message ControlPoint {
+      // The operating-parameter value. Units are defined by the field that
+      // holds this control point.
+      double input = 1;
+
+      // The value added to reference_noise_power_ratio_db at this input. A
+      // positive value improves (raises) NPR.
+      double npr_delta_db = 2;
+    }
+
+    // Required. NPR at the reference operating point, in dB. A higher value
+    // indicates less intermodulation noise. When both curves below are empty,
+    // this is applied directly as a static NPR.
+    double reference_noise_power_ratio_db = 1;
+
+    // NPR adjustment as a function of amplifier output power, in dBW. If empty,
+    // output power has no effect on NPR.
+    repeated ControlPoint output_power_dbw_control_points = 2;
+
+    // NPR adjustment as a function of carrier center frequency, in dB-Hz. If
+    // empty, center frequency has no effect on NPR.
+    repeated ControlPoint center_frequency_db_hz_control_points = 3;
+  }
+  // Noise power ratio characteristics of this amplifier. The effective NPR is
+  // reference_noise_power_ratio_db plus the interpolated adjustment from each
+  // populated curve. If unset, the amplifier contributes no intermodulation
+  // noise.
+  NoisePowerRatio noise_power_ratio = 1;
+}
+
 // A miscellaneous gain or loss that can be used to model any other effects
 // in the signal processing chain.
 message MiscGainOrLoss {
@@ -297,8 +339,9 @@ message SignalProcessingChain {
       PinPhotodiode pin_photodiode = 7;
       VariableFrequencyMixer variable_frequency_mixer = 8;
       ConstantFrequencyMixer constant_frequency_mixer = 9;
-      ChannelBandwidthProfileConfiguration 
+      ChannelBandwidthProfileConfiguration
         channel_bandwidth_profile_configuration = 10;
+      HighPowerAmplifier high_power_amplifier = 11;
     }
   }
   // Required.
