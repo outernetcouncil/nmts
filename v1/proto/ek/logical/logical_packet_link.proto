@@ -83,6 +83,11 @@ message LogicalPacketLink {
   }
   message IpProtoPayload {
   }
+  message GsePayload {
+    // The GSE label set in the GSE header of packets transmitted over this
+    // link.
+    int32 gse_label = 1;
+  }
 
   oneof payload {
     EthernetPayload eth = 10;
@@ -90,5 +95,6 @@ message LogicalPacketLink {
     MplsPayload mpls = 12;
     IpPayload ip = 13;
     IpProtoPayload ip_proto = 14;
+    GsePayload gse = 15;
   }
 }
