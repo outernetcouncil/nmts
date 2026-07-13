@@ -131,7 +131,10 @@ message EirpLimits {
   // the maximum EIRP of any beam.
   float maximum_eirp_dbw = 2;
 
-  // Power Spectral Density Masks. The minimum applicable mask will be used.
+  // The maximum permitted beam-peak EIRPSD, as a function of beam-pointing
+  // direction. Bounds the main-lobe peak only. Side-lobe and grating-lobe
+  // emissions must have been included in the assumptions used to compute the
+  // main-lobe limit. The minimum applicable mask will be used.
   repeated EirpsdMask eirpsd_masks = 1;
 }
 

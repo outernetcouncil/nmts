@@ -22,6 +22,7 @@ import (
 	er "outernetcouncil.org/nmts/v1/lib/entityrelationship"
 	"outernetcouncil.org/nmts/v1/lib/graph"
 	npb "outernetcouncil.org/nmts/v1/proto"
+	physicalpb "outernetcouncil.org/nmts/v1/proto/types/physical"
 )
 
 func IsEntityMinimallyWellFormed(entity *npb.Entity) error {
@@ -74,6 +75,84 @@ func ValidateAntenna(entity *npb.Entity) error {
 		)
 	}
 
+	if err := validateEirpLimits(antenna.GetEirpLimits(), entity.GetId()); err != nil {
+		return err
+	}
+
+	for i, mask := range antenna.GetEmissionEnvelope().GetEirpsdMasks() {
+		if err := validateEirpsdMask(mask); err != nil {
+			return fmt.Errorf("antenna %q: emission_envelope.eirpsd_masks[%d]: %w", entity.GetId(), i, err)
+		}
+	}
+
+	return nil
+}
+
+// validateEirpLimits checks an antenna's eirp_limits and its nested EIRPSD masks.
+// eirp_limits is optional, so a nil value is valid.
+func validateEirpLimits(limits *physicalpb.EirpLimits, id string) error {
+	if limits == nil {
+		return nil
+	}
+	for i, mask := range limits.GetEirpsdMasks() {
+		if err := validateEirpsdMask(mask); err != nil {
+			return fmt.Errorf("Antenna %q: eirp_limits.eirpsd_masks[%d]: %w", id, i, err)
+		}
+	}
+	return nil
+}
+
+func validateEirpsdMask(mask *physicalpb.EirpsdMask) error {
+	psd := mask.GetPowerSpectralDensity()
+	if psd == nil {
+		return fmt.Errorf("power_spectral_density is required")
+	}
+	// frequency_range is optional (an unset range applies to all frequencies), but
+	// when present it must be a non-empty half-open [min, max) interval.
+	if fr := mask.GetFrequencyRange(); fr != nil {
+		if fr.GetMinFrequencyHz() < 0 {
+			return fmt.Errorf("frequency_range.min_frequency_hz must be non-negative: %d", fr.GetMinFrequencyHz())
+		}
+		if fr.GetMaxFrequencyHz() <= fr.GetMinFrequencyHz() {
+			return fmt.Errorf(
+				"frequency_range.max_frequency_hz (%d) must be greater than min_frequency_hz (%d)",
+				fr.GetMaxFrequencyHz(), fr.GetMinFrequencyHz())
+		}
+	}
+	return validatePowerSpectralDensity(psd)
+}
+
+func validatePowerSpectralDensity(psd *physicalpb.PowerSpectralDensity) error {
+	if psd.GetReferenceBandwidthHz() <= 0.0 {
+		return fmt.Errorf(
+			"power_spectral_density.reference_bandwidth_hz must be positive: %v",
+			psd.GetReferenceBandwidthHz())
+	}
+	switch t := psd.GetType().(type) {
+	case *physicalpb.PowerSpectralDensity_Fixed:
+		// Any finite power_dbw is valid; proto3 cannot distinguish an unset scalar from 0.
+		return nil
+	case *physicalpb.PowerSpectralDensity_OffAxis:
+		return validateOffAxisPower(t.OffAxis)
+	case nil:
+		return fmt.Errorf("power_spectral_density.type must be set")
+	default:
+		return fmt.Errorf("power_spectral_density has unknown type: %T", t)
+	}
+}
+
+func validateOffAxisPower(o *physicalpb.PowerSpectralDensity_OffAxisPower) error {
+	points := o.GetControlPoints()
+	if len(points) < 2 {
+		return fmt.Errorf("off_axis.control_points must have at least two entries, got %d", len(points))
+	}
+	for i := 1; i < len(points); i++ {
+		if points[i].GetAngleDeg() < points[i-1].GetAngleDeg() {
+			return fmt.Errorf(
+				"off_axis.control_points must be ordered by non-decreasing angle_deg: %v after %v",
+				points[i].GetAngleDeg(), points[i-1].GetAngleDeg())
+		}
+	}
 	return nil
 }
 

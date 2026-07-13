@@ -404,6 +404,118 @@ func TestValidateAntenna(t *testing.T) {
 				}`,
 			wantErr: true,
 		},
+		{
+			name: "eirp_limits with fixed psd and frequency range is valid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					eirp_limits {
+						eirpsd_masks {
+							frequency_range { min_frequency_hz: 0 max_frequency_hz: 300000000000 }
+							power_spectral_density {
+								reference_bandwidth_hz: 1000000
+								fixed { power_dbw: 20 }
+							}
+						}
+					}
+				}`,
+			wantErr: false,
+		},
+		{
+			name: "eirp_limits with ordered off_axis control points is valid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					eirp_limits {
+						eirpsd_masks {
+							power_spectral_density {
+								reference_bandwidth_hz: 1000000
+								off_axis {
+									control_points { angle_deg: 0 power_dbw: 20 }
+									control_points { angle_deg: 5 power_dbw: 10 }
+								}
+							}
+						}
+					}
+				}`,
+			wantErr: false,
+		},
+		{
+			name: "eirp_limits mask with zero reference_bandwidth_hz is invalid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					eirp_limits {
+						eirpsd_masks {
+							power_spectral_density {
+								reference_bandwidth_hz: 0
+								fixed { power_dbw: 20 }
+							}
+						}
+					}
+				}`,
+			wantErr: true,
+		},
+		{
+			name: "eirp_limits mask without power_spectral_density is invalid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					eirp_limits {
+						eirpsd_masks {
+							frequency_range { min_frequency_hz: 0 max_frequency_hz: 1000 }
+						}
+					}
+				}`,
+			wantErr: true,
+		},
+		{
+			name: "eirp_limits off_axis with one control point is invalid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					eirp_limits {
+						eirpsd_masks {
+							power_spectral_density {
+								reference_bandwidth_hz: 1000000
+								off_axis {
+									control_points { angle_deg: 0 power_dbw: 20 }
+								}
+							}
+						}
+					}
+				}`,
+			wantErr: true,
+		},
+		{
+			name: "eirp_limits off_axis with out-of-order angles is invalid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					eirp_limits {
+						eirpsd_masks {
+							power_spectral_density {
+								reference_bandwidth_hz: 1000000
+								off_axis {
+									control_points { angle_deg: 5 power_dbw: 10 }
+									control_points { angle_deg: 0 power_dbw: 20 }
+								}
+							}
+						}
+					}
+				}`,
+			wantErr: true,
+		},
+		{
+			name: "eirp_limits frequency_range with max not greater than min is invalid",
+			entity: `id: "my-antenna"
+				ek_antenna {
+					eirp_limits {
+						eirpsd_masks {
+							frequency_range { min_frequency_hz: 1000 max_frequency_hz: 1000 }
+							power_spectral_density {
+								reference_bandwidth_hz: 1000000
+								fixed { power_dbw: 20 }
+							}
+						}
+					}
+				}`,
+			wantErr: true,
+		},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
