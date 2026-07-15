@@ -16,7 +16,7 @@ package graph
 
 import (
 	"fmt"
-	"slices"
+	"iter"
 
 	"github.com/samber/lo"
 
@@ -26,6 +26,12 @@ import (
 
 type Node struct {
 	entity *npb.Entity
+	// kind caches the EK string for the entity; computing it on demand costs a
+	// reflection call per lookup, which dominates large-graph traversals.
+	// Empty means either "not populated via UpsertEntity" or "entity has no
+	// kind set" — GetKind falls back to computing for both, which is cheap for
+	// the latter (a nil-kind entity short-circuits before any reflection).
+	kind string
 }
 
 func (n *Node) GetEntity() *npb.Entity {
@@ -39,10 +45,18 @@ func (n *Node) GetID() string {
 	return n.GetEntity().GetId()
 }
 
-// GetKind returns the EK string returned by calling entityrelationship.EntityKindStringFromProto on
-// the underlying NMTS entity.
+// GetKind returns the EK string for the underlying NMTS entity, as defined by
+// entityrelationship.EntityKindStringFromProto. For nodes built via UpsertEntity the value is
+// cached at upsert time; mutating the entity's kind oneof in place afterwards is not supported.
 func (n *Node) GetKind() string {
-	return er.EntityKindStringFromProto(n.GetEntity())
+	if n == nil {
+		return ""
+	}
+	if n.kind != "" {
+		return n.kind
+	}
+	// Compute without caching: a lazy write here would race with concurrent readers.
+	return er.EntityKindStringFromProto(n.entity)
 }
 
 type Edge struct {
@@ -105,24 +119,25 @@ func (g *Graph) NodesOfKind(ek string) []*Node {
 }
 
 func (g *Graph) UpsertEntity(entity *npb.Entity) (*Node, error) {
+	newEK := er.EntityKindStringFromProto(entity)
 	node := g.nodes[entity.GetId()]
 	if node != nil {
-		if newEK := er.EntityKindStringFromProto(entity); node.GetKind() != newEK {
+		if node.GetKind() != newEK {
 			return nil, fmt.Errorf("node for ID %s already existed and had a different EK; old EK: %s, new EK: %s", node.GetID(), node.GetKind(), newEK)
 		}
 	} else {
 		node = &Node{}
 	}
 	node.entity = entity
+	node.kind = newEK
 	g.nodes[node.GetID()] = node
 
-	kind := node.GetKind()
-	nodesOfKind := g.nodesByKind[kind]
+	nodesOfKind := g.nodesByKind[newEK]
 	if nodesOfKind == nil {
 		nodesOfKind = map[string]*Node{}
 	}
 	nodesOfKind[node.GetID()] = node
-	g.nodesByKind[kind] = nodesOfKind
+	g.nodesByKind[newEK] = nodesOfKind
 
 	return node, nil
 }
@@ -144,36 +159,15 @@ func (g *Graph) RemoveEntity(id string) error {
 }
 
 func (g *Graph) AddRelationship(relationship *npb.Relationship) (*Edge, error) {
-	edge := &Edge{
-		relationship: relationship,
-	}
-
-	edges := g.Edges(edge.GetA(), edge.GetZ())
-	if slices.ContainsFunc(edges, edge.Same) {
+	edge, added := g.TryAddRelationship(relationship)
+	if !added {
 		return nil, fmt.Errorf(
 			"already contains an edge of kind %s between %s and %s",
-			edge.GetKind(),
-			edge.GetA(),
-			edge.GetZ(),
+			relationship.GetKind(),
+			relationship.GetA(),
+			relationship.GetZ(),
 		)
 	}
-
-	addMappingToEdge := func(x, y string) {
-		edgesByNeighbor := g.edges[x]
-		if edgesByNeighbor == nil {
-			edgesByNeighbor = map[string][]*Edge{}
-		}
-		edgesToY := edgesByNeighbor[y]
-		if edgesToY == nil {
-			edgesToY = []*Edge{}
-		}
-		edgesToY = append(edgesToY, edge)
-		edgesByNeighbor[y] = edgesToY
-		g.edges[x] = edgesByNeighbor
-	}
-	addMappingToEdge(edge.GetA(), edge.GetZ())
-	addMappingToEdge(edge.GetZ(), edge.GetA())
-
 	return edge, nil
 }
 
@@ -222,6 +216,92 @@ func (g *Graph) RemoveRelationship(relationship *npb.Relationship) error {
 func (g *Graph) Neighbors(id string) []string {
 	edgesByNeighbor := g.edges[id]
 	return lo.Keys(edgesByNeighbor)
+}
+
+// TryAddRelationship adds the given relationship to the graph. It returns the new edge and true if
+// the relationship was added, or nil and false if the graph already contained an edge representing
+// the same relationship (as determined by Edge.Same). Unlike AddRelationship, the duplicate path
+// performs no allocations, making it suitable for bulk loads where duplicates are expected.
+func (g *Graph) TryAddRelationship(relationship *npb.Relationship) (*Edge, bool) {
+	// The probe stays a stack value so the duplicate path allocates nothing.
+	probe := Edge{relationship: relationship}
+	for _, existing := range g.Edges(probe.GetA(), probe.GetZ()) {
+		if probe.Same(existing) {
+			return nil, false
+		}
+	}
+	edge := &Edge{
+		relationship: relationship,
+	}
+
+	addMappingToEdge := func(x, y string) {
+		edgesByNeighbor := g.edges[x]
+		if edgesByNeighbor == nil {
+			edgesByNeighbor = map[string][]*Edge{}
+		}
+		edgesToY := edgesByNeighbor[y]
+		if edgesToY == nil {
+			edgesToY = []*Edge{}
+		}
+		edgesToY = append(edgesToY, edge)
+		edgesByNeighbor[y] = edgesToY
+		g.edges[x] = edgesByNeighbor
+	}
+	addMappingToEdge(edge.GetA(), edge.GetZ())
+	if edge.GetA() != edge.GetZ() {
+		// Self-loops live in a single (A, A) slot; mirroring would store them twice.
+		addMappingToEdge(edge.GetZ(), edge.GetA())
+	}
+
+	return edge, true
+}
+
+// AllNeighbors returns an iterator over the IDs of all nodes adjacent to the node with the given
+// ID, paired with the edges connecting them, regardless of the direction of the relationships.
+// The graph must not be modified during iteration.
+//
+// NOTE: Like Neighbors, this is based entirely on the relationships that have been loaded into the
+// graph; the yielded IDs may not correspond to actual graph nodes.
+func (g *Graph) AllNeighbors(id string) iter.Seq2[string, []*Edge] {
+	return func(yield func(string, []*Edge) bool) {
+		for neighbor, edges := range g.edges[id] {
+			if !yield(neighbor, edges) {
+				return
+			}
+		}
+	}
+}
+
+// AllNodesOfKind returns an iterator over all nodes of the given kind. The graph must not be
+// modified during iteration.
+func (g *Graph) AllNodesOfKind(ek string) iter.Seq[*Node] {
+	return func(yield func(*Node) bool) {
+		for _, node := range g.nodesByKind[ek] {
+			if !yield(node) {
+				return
+			}
+		}
+	}
+}
+
+// AllEdges returns an iterator over all edges in the graph, yielding each edge exactly once. The
+// graph must not be modified during iteration.
+func (g *Graph) AllEdges() iter.Seq[*Edge] {
+	return func(yield func(*Edge) bool) {
+		for x, edgesByNeighbor := range g.edges {
+			for y, edges := range edgesByNeighbor {
+				if x > y {
+					// This pair's edges are also stored under (y, x); yield them there.
+					continue
+				}
+				for _, edge := range edges {
+					if !yield(edge) {
+						return
+					}
+				}
+			}
+		}
+	}
 }
 
 // Edges returns all edges connecting the nodes with the given IDs, regardless of the order of the

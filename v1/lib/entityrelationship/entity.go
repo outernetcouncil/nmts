@@ -17,9 +17,15 @@ package entityrelationship
 import (
 	"reflect"
 	"strings"
+	"sync"
 
 	npb "outernetcouncil.org/nmts/v1/proto"
 )
+
+// entityKindStrings memoizes the EK string per oneof wrapper type; deriving it
+// costs a reflection call plus string parsing, and there are only a few dozen
+// distinct kinds.
+var entityKindStrings sync.Map // reflect.Type -> string
 
 func EntityKindStringFromProto(e *npb.Entity) string {
 	if e == nil {
@@ -31,12 +37,20 @@ func EntityKindStringFromProto(e *npb.Entity) string {
 		return ""
 	}
 
-	tag := reflect.TypeOf(kind).Elem().Field(0).Tag.Get("protobuf")
-	for _, element := range strings.Split(tag, ",") {
-		if strings.HasPrefix(element, "name=") {
-			return strings.ToUpper(strings.TrimPrefix(element, "name="))
-		}
+	kindType := reflect.TypeOf(kind)
+	if cached, ok := entityKindStrings.Load(kindType); ok {
+		return cached.(string)
 	}
 
-	return ""
+	ekString := ""
+	tag := kindType.Elem().Field(0).Tag.Get("protobuf")
+	for _, element := range strings.Split(tag, ",") {
+		if strings.HasPrefix(element, "name=") {
+			ekString = strings.ToUpper(strings.TrimPrefix(element, "name="))
+			break
+		}
+	}
+	entityKindStrings.Store(kindType, ekString)
+
+	return ekString
 }

@@ -26,6 +26,7 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/testing/protocmp"
 
+	er "outernetcouncil.org/nmts/v2alpha/lib/entityrelationship"
 	npb "outernetcouncil.org/nmts/v2alpha/proto"
 	logicalpb "outernetcouncil.org/nmts/v2alpha/proto/ek/logical"
 )
@@ -300,6 +301,7 @@ func (tc *upsertEntityTestCase) Run(t *testing.T) {
 
 		wantNode := &Node{
 			entity: entity,
+			kind:   er.EntityKindStringFromProto(entity),
 		}
 		if *wantNode != *gotNode {
 			t.Errorf("unexpected node; want: %v; got: %v", wantNode, gotNode)
@@ -522,6 +524,16 @@ var removeRelationshipTestCases = []removeRelationshipTestCase{
 			`a: "node" kind: RK_CONTAINS z: "platform"`,
 		},
 		remove: `a: "node" kind: RK_CONTAINS z: "platform"`,
+	},
+	{
+		desc: "removing self-loop relationship succeeds",
+		entities: []string{
+			`id: "node" ek_network_node{}`,
+		},
+		relationships: []string{
+			`a: "node" kind: RK_CONTAINS z: "node"`,
+		},
+		remove: `a: "node" kind: RK_CONTAINS z: "node"`,
 	},
 	{
 		desc: "removing non-existent relationship fails",
@@ -803,5 +815,210 @@ func (tc *edgesTestCase) Run(t *testing.T) {
 func TestEdges(t *testing.T) {
 	for _, tc := range edgesTestCases {
 		t.Run(tc.desc, tc.Run)
+	}
+}
+
+func TestTryAddRelationship(t *testing.T) {
+	g := New()
+	mustUpsertEntities(t, g, []string{
+		`id: "node" ek_network_node{}`,
+		`id: "interface" ek_interface{}`,
+	})
+
+	r := mustUnmarshalRelationship(t, `a: "node" kind: RK_CONTAINS z: "interface"`)
+	edge, added := g.TryAddRelationship(r)
+	if !added {
+		t.Fatalf("TryAddRelationship(%v) returned added=false for a new relationship", r)
+	}
+	if edge.GetRelationship() != r {
+		t.Errorf("TryAddRelationship returned edge with unexpected relationship; want: %v; got: %v", r, edge.GetRelationship())
+	}
+
+	duplicate := mustUnmarshalRelationship(t, `a: "node" kind: RK_CONTAINS z: "interface"`)
+	edge, added = g.TryAddRelationship(duplicate)
+	if added {
+		t.Errorf("TryAddRelationship(%v) returned added=true for a duplicate relationship", duplicate)
+	}
+	if edge != nil {
+		t.Errorf("TryAddRelationship returned non-nil edge for a duplicate relationship: %v", edge)
+	}
+	if gotEdges := g.Edges("node", "interface"); len(gotEdges) != 1 {
+		t.Errorf("unexpected number of edges after duplicate TryAddRelationship; want: 1; got: %d", len(gotEdges))
+	}
+}
+
+func TestAllNeighbors(t *testing.T) {
+	g := New()
+	mustUpsertEntities(t, g, testGraph.entities)
+	mustAddRelationships(t, g, testGraph.relationships)
+
+	wantNeighbors := map[string]set.Set[string]{
+		"port":         set.NewSet("interface", "modulator", "demodulator"),
+		"orphan":       set.NewSet[string](),
+		"doesnt_exist": set.NewSet[string](),
+	}
+	for nodeID, want := range wantNeighbors {
+		got := set.NewSet[string]()
+		for neighbor, edges := range g.AllNeighbors(nodeID) {
+			got.Add(neighbor)
+			if len(edges) == 0 {
+				t.Errorf("AllNeighbors(%s) yielded neighbor %s with no edges", nodeID, neighbor)
+			}
+			wantEdges := g.Edges(nodeID, neighbor)
+			if !slices.Equal(edges, wantEdges) {
+				t.Errorf("AllNeighbors(%s) yielded unexpected edges for %s; want: %v; got: %v", nodeID, neighbor, wantEdges, edges)
+			}
+		}
+		if !want.Equal(got) {
+			t.Errorf("AllNeighbors(%s) yielded unexpected neighbors; want: %v; got: %v", nodeID, want, got)
+		}
+	}
+
+	yields := 0
+	for range g.AllNeighbors("port") {
+		yields++
+		break
+	}
+	if yields != 1 {
+		t.Errorf("AllNeighbors with early break yielded %d times; want: 1", yields)
+	}
+}
+
+func TestAllNodesOfKind(t *testing.T) {
+	g := New()
+	mustUpsertEntities(t, g, testGraph.entities)
+
+	got := set.NewSet[string]()
+	for node := range g.AllNodesOfKind("EK_NETWORK_NODE") {
+		got.Add(node.GetID())
+	}
+	want := set.NewSet("node", "orphan")
+	if !want.Equal(got) {
+		t.Errorf("AllNodesOfKind(EK_NETWORK_NODE) yielded unexpected IDs; want: %v; got: %v", want, got)
+	}
+
+	for node := range g.AllNodesOfKind("EK_NO_SUCH_KIND") {
+		t.Errorf("AllNodesOfKind(EK_NO_SUCH_KIND) unexpectedly yielded %v", node)
+	}
+
+	yields := 0
+	for range g.AllNodesOfKind("EK_NETWORK_NODE") {
+		yields++
+		break
+	}
+	if yields != 1 {
+		t.Errorf("AllNodesOfKind with early break yielded %d times; want: 1", yields)
+	}
+}
+
+func edgeKey(e *Edge) string {
+	return e.GetA() + "|" + e.GetKind().String() + "|" + e.GetZ()
+}
+
+func TestAllEdges(t *testing.T) {
+	g := New()
+	mustUpsertEntities(t, g, testGraph.entities)
+	mustAddRelationships(t, g, testGraph.relationships)
+
+	want := set.NewSet[string]()
+	for _, r := range testGraph.relationships {
+		relationship := mustUnmarshalRelationship(t, r)
+		want.Add(edgeKey(&Edge{relationship: relationship}))
+	}
+
+	got := set.NewSet[string]()
+	yields := 0
+	for e := range g.AllEdges() {
+		got.Add(edgeKey(e))
+		yields++
+	}
+	if !want.Equal(got) {
+		t.Errorf("AllEdges yielded unexpected edges; want: %v; got: %v", want, got)
+	}
+	if yields != want.Cardinality() {
+		t.Errorf("AllEdges yielded %d times for %d distinct edges", yields, want.Cardinality())
+	}
+}
+
+func TestSelfLoopStoredOnce(t *testing.T) {
+	g := New()
+	mustUpsertEntities(t, g, []string{`id: "node" ek_network_node{}`})
+	mustAddRelationships(t, g, []string{`a: "node" kind: RK_CONTAINS z: "node"`})
+
+	if gotEdges := g.Edges("node", "node"); len(gotEdges) != 1 {
+		t.Errorf("Edges(node, node) returned %d edges for a single self-loop; want: 1", len(gotEdges))
+	}
+	if _, err := g.AddRelationship(mustUnmarshalRelationship(t, `a: "node" kind: RK_CONTAINS z: "node"`)); err == nil {
+		t.Errorf("AddRelationship of a duplicate self-loop unexpectedly succeeded")
+	}
+	if neighbors := g.Neighbors("node"); !slices.Equal(neighbors, []string{"node"}) {
+		t.Errorf("Neighbors(node) returned %v for a self-loop; want: [node]", neighbors)
+	}
+}
+
+func TestAllEdgesYieldsSelfLoopOnce(t *testing.T) {
+	g := New()
+	mustUpsertEntities(t, g, []string{`id: "node" ek_network_node{}`})
+	mustAddRelationships(t, g, []string{`a: "node" kind: RK_CONTAINS z: "node"`})
+
+	yields := 0
+	for range g.AllEdges() {
+		yields++
+	}
+	if yields != 1 {
+		t.Errorf("AllEdges yielded a self-loop edge %d times; want: 1", yields)
+	}
+}
+
+func benchmarkDuplicateGraph(b *testing.B) (*Graph, *npb.Relationship) {
+	b.Helper()
+	g := New()
+	entity := &npb.Entity{}
+	if err := prototext.Unmarshal([]byte(`id: "node" ek_network_node{}`), entity); err != nil {
+		b.Fatalf("unable to unmarshal entity: %v", err)
+	}
+	if _, err := g.UpsertEntity(entity); err != nil {
+		b.Fatalf("unable to upsert entity: %v", err)
+	}
+	r := &npb.Relationship{}
+	if err := prototext.Unmarshal([]byte(`a: "node" kind: RK_CONTAINS z: "interface"`), r); err != nil {
+		b.Fatalf("unable to unmarshal relationship: %v", err)
+	}
+	if _, err := g.AddRelationship(r); err != nil {
+		b.Fatalf("unable to add relationship: %v", err)
+	}
+	return g, r
+}
+
+func BenchmarkAddRelationshipDuplicate(b *testing.B) {
+	g, r := benchmarkDuplicateGraph(b)
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		g.AddRelationship(r)
+	}
+}
+
+func BenchmarkTryAddRelationshipDuplicate(b *testing.B) {
+	g, r := benchmarkDuplicateGraph(b)
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		g.TryAddRelationship(r)
+	}
+}
+
+func TestAllEdgesEarlyBreak(t *testing.T) {
+	g := New()
+	mustUpsertEntities(t, g, testGraph.entities)
+	mustAddRelationships(t, g, testGraph.relationships)
+
+	yields := 0
+	for range g.AllEdges() {
+		yields++
+		break
+	}
+	if yields != 1 {
+		t.Errorf("AllEdges with early break yielded %d times; want: 1", yields)
 	}
 }
