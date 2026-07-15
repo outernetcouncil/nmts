@@ -10,3 +10,15 @@ packages:
 # Required by aspect_rules_js v3+; see
 # https://pnpm.io/10.x/settings#onlybuiltdependencies
 onlyBuiltDependencies: []
+
+# Supply-chain hardening for `pnpm install`.
+# Wait at least seven days (10080 minutes) before installing a newly published
+# package version, giving malicious/compromised releases time to be caught and
+# unpublished before they reach us.
+minimumReleaseAge: 10080
+# Never let a package update silently weaken the settings above; a downgrade of
+# these protections must be an explicit, reviewed change.
+trustPolicy: no-downgrade
+# Refuse transitive dependencies pulled from non-registry ("exotic") sources
+# such as arbitrary git URLs or tarballs.
+blockExoticSubdeps: true
