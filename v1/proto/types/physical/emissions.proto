@@ -77,8 +77,8 @@ message EirpsdMask {
 
 // Effective Isotropic Radiating Power (EIRP) limits.
 message EirpLimits {
-  // The maximum EIRP in the direction of a link is constrained by the following
-  // factors, each of which is considered when present:
+  // The maximum EIRP in the direction of a link is constrained by the
+  // following factors, each of which is considered when present:
   //   - the gain in the link direction based on the antenna pattern (defined in
   //     Antenna.antenna_pattern) plus the per-carrier maximum transmit power
   //     (defined in CarrierConfiguration.TransmitCarrier.max_power_w) in dBW
@@ -123,8 +123,8 @@ message EirpLimits {
   // |-------------|---------|-----------------|----------------------------------------|
   //
   //
-  // An EIRP limit in this message is required for the antenna to transmit
-  // unless both Antenna.antenna_pattern and
+  // A per-link EIRP limit in this message is required for the antenna to
+  // transmit unless both Antenna.antenna_pattern and
   // CarrierConfiguration.TransmitCarrier.max_power_w are present.
   //
   // For multi-beam phased array antennas, this value should be interpreted as
@@ -136,6 +136,28 @@ message EirpLimits {
   // emissions must have been included in the assumptions used to compute the
   // main-lobe limit. The minimum applicable mask will be used.
   repeated EirpsdMask eirpsd_masks = 1;
+
+  // The maximum aggregate boresight-aligned beam-peak EIRP for this antenna,
+  // summed across all beams formed by the antenna, in dBW. If set, this
+  // constraint applies in addition to per-link EIRP limits.
+  //
+  // For conventional antennas, the boresight-aligned beam-peak EIRP is
+  // equivalent to EIRP. This field may be used interchangably with
+  // `maximum_eirp_dbw`.
+  //
+  // For phased-array antennas, the boresight-aligned beam-peak EIRP for a beam
+  // is the EIRP value had the beam been directed along the normal vector of
+  // the antenna. That is, with a scan loss of zero.
+  //
+  // As an example of how this value is used for an antenna capable of forming
+  // multiple beams, suppose an antenna is capable of forming 8 beams and has a
+  // maximum aggregate normal-axis equivalent EIRP of 12 dBW (15.85 W). In a
+  // given time interval, suppose the SDN Controller chooses to use all 8
+  // beams. In this case, each beam could have a normal-axis equivalent EIRP of
+  // 3 dBW (1.98 W). In a different time interval however, suppose the SDN
+  // Controller chooses to use only 4 beams. In this case, each beam could have
+  // a maximum normal-axis equivalent EIRP of 6 dBW (3.96 W).
+  double max_aggregate_boresight_aligned_eirp_dbw = 3;
 }
 
 // A range of frequencies.

@@ -78,21 +78,9 @@ message Antenna {
   // The aggregate maximum transmit power across all beams formed by this
   // antenna, in watts.
   //
-  // As an example of how this value is used for antennas that can form multiple
-  // beams, suppose an antenna is capable of forming 8 beams and has a
-  // maximum aggregate transmit power of 12 dBW (15.85 W). In a given time
-  // interval, suppose the SDN Controller chooses to use all 8 beams. In this
-  // case, each beam could have a transmit power of 3 dBW (1.98 W). In a
-  // different time interval however, suppose the SDN Controller chooses to use
-  // only 4 beams. In this case, each beam could have a maximum transmit power
-  // of 6 dBW (3.96 W).
-  //
-  // The max_power_w in nmts.ek.physical.Transmitter.TransmitCarrier can further
-  // constrain the maximum transmit power to model transmitters whose maximum
-  // transmit power varies with frequency.
-  //
-  // Required.
-  double max_transmit_power_w = 3;
+  // Deprecated: use EirpLimits.max_aggregate_boresight_aligned_eirp_dbw
+  // instead.
+  double max_transmit_power_w = 3 [deprecated = true];
 
   // Effective Isotropic Radiating Power (EIRP) limits.
   nmts.v1.types.physical.EirpLimits eirp_limits = 19;
