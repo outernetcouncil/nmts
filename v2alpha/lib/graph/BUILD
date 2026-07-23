@@ -41,6 +41,7 @@ go_test(
     ],
     embed = [":graph"],
     deps = [
+        "//v2alpha/lib/entityrelationship",
         "//v2alpha/proto:nmts_go_proto",
         "//v2alpha/proto/ek/logical:logical_go_proto",
         "@com_github_deckarep_golang_set_v2//:golang-set",
