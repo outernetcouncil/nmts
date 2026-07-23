@@ -327,10 +327,7 @@ message Modulator {
   //
   // Combined with the EK_SDN_AGENT's controller_to_agent_latency,
   // this defines the total latency between the SDN controller
-  // producing a schedule and the entity enacting it. Indirectly,
-  // this also imposes a minimum reconfiguration interval: the
-  // controller cannot schedule a subsequent reconfiguration sooner
-  // than this duration after the previous one.
+  // producing a schedule and the entity enacting it.
   google.protobuf.Duration enactment_latency = 8;
 }
 
@@ -392,9 +389,6 @@ message Demodulator {
   //
   // Combined with the EK_SDN_AGENT's controller_to_agent_latency,
   // this defines the total latency between the SDN controller
-  // producing a schedule and the entity enacting it. Indirectly,
-  // this also imposes a minimum reconfiguration interval: the
-  // controller cannot schedule a subsequent reconfiguration sooner
-  // than this duration after the previous one.
+  // producing a schedule and the entity enacting it.
   google.protobuf.Duration enactment_latency = 8;
 }
