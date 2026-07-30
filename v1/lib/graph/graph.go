@@ -17,6 +17,7 @@ package graph
 import (
 	"fmt"
 	"iter"
+	"maps"
 
 	"github.com/samber/lo"
 
@@ -110,6 +111,16 @@ func New() *Graph {
 	}
 }
 
+// Returns a copy of g. This is a shallow clone. The returned copy references
+// the same Node and Edge instances as the original.
+func Clone(g *Graph) *Graph {
+	return &Graph{
+		nodes:       maps.Clone(g.nodes),
+		nodesByKind: cloneMapOfMaps(g.nodesByKind),
+		edges:       cloneMapOfMaps(g.edges),
+	}
+}
+
 func (g *Graph) Node(id string) *Node {
 	return g.nodes[id]
 }
@@ -120,16 +131,14 @@ func (g *Graph) NodesOfKind(ek string) []*Node {
 
 func (g *Graph) UpsertEntity(entity *npb.Entity) (*Node, error) {
 	newEK := er.EntityKindStringFromProto(entity)
-	node := g.nodes[entity.GetId()]
-	if node != nil {
-		if node.GetKind() != newEK {
-			return nil, fmt.Errorf("node for ID %s already existed and had a different EK; old EK: %s, new EK: %s", node.GetID(), node.GetKind(), newEK)
-		}
-	} else {
-		node = &Node{}
+	if node := g.nodes[entity.GetId()]; node != nil && node.GetKind() != newEK {
+		return nil, fmt.Errorf("node for ID %s already existed and had a different EK; old EK: %s, new EK: %s", node.GetID(), node.GetKind(), newEK)
 	}
-	node.entity = entity
-	node.kind = newEK
+
+	node := &Node{
+		entity: entity,
+		kind:   newEK,
+	}
 	g.nodes[node.GetID()] = node
 
 	nodesOfKind := g.nodesByKind[newEK]
@@ -313,4 +322,15 @@ func (g *Graph) Edges(x, y string) []*Edge {
 		return nil
 	}
 	return xEdgesByNeighbor[y]
+}
+
+// cloneMapOfMaps creates a shallow-ish copy of a map of maps. All returned maps
+// are created new, but all map keys and values are set using ordinary
+// assignment.
+func cloneMapOfMaps[A comparable, B comparable, C any](m map[A]map[B]C) map[A]map[B]C {
+	clone := make(map[A]map[B]C, len(m))
+	for k, v := range m {
+		clone[k] = maps.Clone(v)
+	}
+	return clone
 }
