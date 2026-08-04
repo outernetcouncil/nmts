@@ -43,3 +43,39 @@ go_test(
         "@org_golang_google_protobuf//encoding/prototext",
     ],
 )
+
+# Benchmarks-only sibling of :entityrelationship_test, routed to the Pool=bench
+# Buildbarn executors and published to Bencher. Written out longhand rather
+# than via //bazel/bench:defs.bzl because nmts is a separate Bazel module
+# (org_outernetcouncil_nmts) and cannot load from the parent workspace. Keep in
+# sync with bazel/bench/defs.bzl there. Gazelle manages go_test rules by name
+# and only generates ":entityrelationship_test", so it leaves this target alone
+# -- but it also never updates these deps. Keep them in sync with
+# :entityrelationship_test above.
+go_test(
+    name = "entityrelationship_bench",
+    timeout = "eternal",
+    srcs = ["entity_test.go"],
+    args = [
+        "-test.bench=.",
+        "-test.run=^$$",
+        "-test.benchtime=2s",
+        "-test.count=1",
+        "-test.benchmem",
+    ],
+    exec_properties = {"test.Pool": "bench"},
+    msan = "off",
+    race = "off",
+    tags = [
+        "bench",
+        "bench_mr",
+        "manual",
+        "no-cache",
+        "no_ci_pipeline",
+    ],
+    deps = [
+        ":entityrelationship",
+        "//v1/proto:nmts_go_proto",
+        "@org_golang_google_protobuf//encoding/prototext",
+    ],
+)
