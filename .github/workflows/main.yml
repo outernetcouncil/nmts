@@ -24,8 +24,8 @@ jobs:
   build-and-test:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: |
             ~/.cache/bazelisk
@@ -37,4 +37,21 @@ jobs:
       - run: cd v0/examples; bazelisk test //...:all
       - run: cd v1/examples; bazelisk test //...:all
       - run: cd v2alpha/examples; bazelisk test //...:all
+
+  # The tag itself is pushed by the nmts-repo-tag job in the source repository;
+  # this turns it into a Release with generated notes.
+  create-release:
+    needs: [build-and-test]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          make_latest: legacy # determined based on the release creation date and higher semantic version
+          draft: false
+          generate_release_notes: true
 
