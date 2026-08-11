@@ -31,16 +31,21 @@ go_library(
     deps = [
         "//v1/proto:nmts_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",
+        "@org_golang_google_protobuf//proto",
     ],
 )
 
 go_test(
     name = "entityrelationship_test",
-    srcs = ["entity_test.go"],
+    srcs = [
+        "entity_test.go",
+        "fragments_test.go",
+    ],
     deps = [
         ":entityrelationship",
         "//v1/proto:nmts_go_proto",
         "@org_golang_google_protobuf//encoding/prototext",
+        "@org_golang_google_protobuf//proto",
     ],
 )
 
