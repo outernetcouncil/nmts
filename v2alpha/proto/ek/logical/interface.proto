@@ -17,6 +17,7 @@ syntax = "proto3";
 package nmts.v2alpha.ek.logical;
 
 import "google/protobuf/empty.proto";
+import "nmts/v2alpha/proto/ek/logical/common.proto";
 import "nmts/v2alpha/proto/types/ieee/ieee802.proto";
 import "nmts/v2alpha/proto/types/ietf/inet.proto";
 
@@ -86,7 +87,19 @@ message Interface {
   // results in enactments within the modeled network).
   types.ietf.IfAdminStatus admin_status = 5;
 
-  reserved 6 to 9;
+  // This Interface's role with respect to transit traffic.
+  //
+  // If specified, all EK_INTERFACEs that directly or transitively
+  // RK_TRAVERSES this Interface adopt this ForwardingRole as their
+  // *default* disposition; that is, the setting propagates *upward*
+  // through a stack of EK_INTERFACEs unless a higher-layer
+  // EK_INTERFACE specifies a role of its own.
+  //
+  // If this Interface does not specify a role it inherits any
+  // available value from a related EK_ROUTE_FN.
+  ForwardingRole forwarding_role = 6;
+
+  reserved 7 to 9;
 
   ///
   // Attributes specific to an interface "layer" or logical capabilities.

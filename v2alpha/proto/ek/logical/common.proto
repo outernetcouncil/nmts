@@ -1,0 +1,46 @@
+// Copyright (c) Outernet Council and Contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// This file contains messages and enums that are referenced throughout
+// the nmts.ek.logical package.
+
+syntax = "proto3";
+
+package nmts.v2alpha.ek.logical;
+
+option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.logical";
+option go_package = "outernetcouncil.org/nmts/v2alpha/proto/ek/logical";
+
+// The role of the associated NMTS Entity with respect to transit
+// traffic, i.e. traffic that is NOT originated or terminated by the
+// nearest associated Node (RFC 9473).
+enum ForwardingRole {
+  // Model consumers MUST define the default ForwardingRole behavior
+  // for their implementations. It is RECOMMENDED that UNSPECIFIED be
+  // treated as synonymous with TRANSIT for systems primarily modeling
+  // routers.
+  FORWARDING_ROLE_UNSPECIFIED = 0;
+
+  // This Entity is capable of forwarding traffic not originated or
+  // terminated by the nearest associated Node; it should be considered
+  // eligible for interior positions when constructing logical topologies
+  // that require traffic to transit this Entity.
+  FORWARDING_ROLE_TRANSIT = 1;
+
+  // This Entity is NOT capable of forwarding traffic other than that
+  // originated or terminated by the nearest associated Node. It should
+  // be considered ineligible for interior positions in a logical topology,
+  // but remains eligible as the first or last such Entity in a path.
+  FORWARDING_ROLE_ENDPOINT = 2;
+}

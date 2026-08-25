@@ -53,7 +53,7 @@ message LogicalPacketLink {
     // link by the router than `RK_CONTAINS` the `EK_INTERFACE` that
     // `RK_ORIGINATES` this link.
     types.ietf.SegmentId adjacency_sid = 2;
-    
+
     // Maximum SID Depth, specifically the RFC 8491 Link MSD-Type value.
     //
     // The proto3-default value of zero means no max SID depth is given.

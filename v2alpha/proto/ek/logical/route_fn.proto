@@ -18,6 +18,7 @@ package nmts.v2alpha.ek.logical;
 
 import "google/protobuf/duration.proto";
 
+import "nmts/v2alpha/proto/ek/logical/common.proto";
 import "nmts/v2alpha/proto/types/ietf/routing.proto";
 
 option java_package = "org.outernetcouncil.nmts.v2alpha.proto.ek.logical";
@@ -75,4 +76,13 @@ message RouteFn {
   // this defines the total latency between the SDN controller
   // producing a schedule and the entity enacting it.
   google.protobuf.Duration enactment_latency = 3;
+
+  // This RouteFn's role with respect to transit traffic.
+  //
+  // If specified, all EK_INTERFACEs with which this RouteFn has an
+  // association adopt this ForwardingRole as their *default*
+  // disposition. The set of associated EK_INTERFACEs is presently
+  // under-defined; specifying it requires further consideration, not
+  // least once IP forwarding tables are modeled.
+  ForwardingRole forwarding_role = 4;
 }

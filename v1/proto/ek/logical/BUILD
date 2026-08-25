@@ -42,10 +42,17 @@ proto_library(
 )
 
 proto_library(
+    name = "common_proto",
+    srcs = ["common.proto"],
+    import_prefix = "nmts",
+)
+
+proto_library(
     name = "interface_proto",
     srcs = ["interface.proto"],
     import_prefix = "nmts",
     deps = [
+        ":common_proto",
         "//v1/proto/types/ieee:ieee802_proto",
         "//v1/proto/types/ietf:inet_proto",
         "@protobuf//:empty_proto",
@@ -79,6 +86,7 @@ proto_library(
     srcs = ["route_fn.proto"],
     import_prefix = "nmts",
     deps = [
+        ":common_proto",
         "//v1/proto/types/ietf:routing_proto",
         "@protobuf//:duration_proto",
     ],
@@ -111,6 +119,7 @@ cpp_proto_library(
     protos = [
         ":access_fn_proto",
         ":bp_agent_fn_proto",
+        ":common_proto",
         ":interface_proto",
         ":internal_fabric_proto",
         ":logical_packet_link_proto",
@@ -134,6 +143,7 @@ go_proto_library(
     protos = [
         ":access_fn_proto",
         ":bp_agent_fn_proto",
+        ":common_proto",
         ":interface_proto",
         ":internal_fabric_proto",
         ":logical_packet_link_proto",
@@ -156,6 +166,7 @@ java_proto_library(
     protos = [
         ":access_fn_proto",
         ":bp_agent_fn_proto",
+        ":common_proto",
         ":interface_proto",
         ":internal_fabric_proto",
         ":logical_packet_link_proto",
@@ -178,6 +189,7 @@ python_proto_library(
     protos = [
         ":access_fn_proto",
         ":bp_agent_fn_proto",
+        ":common_proto",
         ":interface_proto",
         ":internal_fabric_proto",
         ":logical_packet_link_proto",
@@ -225,6 +237,19 @@ ts_proto_library(
 )
 
 ts_proto_library(
+    name = "common_ts_proto",
+    # Don't attempt to add source files.
+    copy_files = False,
+    # gen_connect_es is not currently compatible with json_types=true.
+    gen_connect_es = False,
+    node_modules = "//v1/proto:node_modules",
+    proto = ":common_proto",
+    protoc_gen_options = {
+        "json_types": "true",
+    },
+)
+
+ts_proto_library(
     name = "interface_ts_proto",
     # Don't attempt to add source files.
     copy_files = False,
@@ -236,6 +261,7 @@ ts_proto_library(
         "json_types": "true",
     },
     deps = [
+        ":common_ts_proto",
         "//v1/proto/types/ieee:ieee802_ts_proto",
         "//v1/proto/types/ietf:inet_ts_proto",
     ],
@@ -266,6 +292,7 @@ ts_proto_library(
         "json_types": "true",
     },
     deps = [
+        ":common_ts_proto",
         "//v1/proto/types/ietf:routing_ts_proto",
     ],
 )
@@ -295,6 +322,7 @@ ts_proto_library(
         "json_types": "true",
     },
     deps = [
+        ":common_ts_proto",
         "//v1/proto/types/ietf:routing_ts_proto",
     ],
 )
