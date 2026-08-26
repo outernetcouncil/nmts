@@ -67,6 +67,21 @@ build --per_file_copt=external/opencensus-cpp[~+]/.*@-Wno-unused-variable
 # not a -W flag, so it cannot be scoped per external repo via per_file_copt.
 build --features=-layering_check
 
+# Link Rust binaries with the cc toolchain's linker. rules_rs's rustc does not
+# ship the self-contained linker (rust-lld) in its sysroot, and under the
+# hermetic clang toolchain rustc asks for one anyway when it links a bin:
+#
+#   error: the self-contained linker was requested, but it wasn't found in the
+#   target's sysroot, or in rustc's sysroot
+#
+# This cannot live on the rs_toolchains tag in MODULE.bazel. extra_rustc_flags
+# there is keyed by target triple, so an aarch64 executor cross-building an
+# x86_64 target picks up the x86_64 entry, and the aarch64 rustc rejects the
+# option outright ("option `-C link-self-contained` is not supported on this
+# target"). A command-line flag is scoped to this repo, which only ever builds
+# x86_64.
+build --@rules_rust//rust/settings:extra_rustc_flag=-Clink-self-contained=no
+
 ##
 # Enable hermetic testing and compilation of Java using a JVM downloaded from a
 # remote repository.

@@ -18,7 +18,7 @@
 # -------------------------------------------------------------
 # This allows to publish bugfixes to the released version
 # through increments of MINOR segment.
-MINOR = 11
+MINOR = 12
 
 # Build metadata. Typically a unix timestamp when the version was landed on the main branch.
 # -------------------------------------------------------------
