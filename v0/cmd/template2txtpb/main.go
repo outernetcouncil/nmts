@@ -100,7 +100,7 @@ func run(args []string, stdin io.Reader, stdout io.Writer) error {
 	}
 
 	// Parse JSON data.
-	var data map[string]interface{}
+	var data map[string]any
 	if err := json.Unmarshal(jsonData, &data); err != nil {
 		return fmt.Errorf("parsing JSON input file: %w", err)
 	}

@@ -73,7 +73,7 @@ func exportProlog(appCtx *cli.Context) error {
 
 // collectQuery is a generic shortcut for executing a query and collecting its
 // results.
-func collectQuery[T any](p *prolog.Interpreter, q string, args ...interface{}) (results []T, resErr error) {
+func collectQuery[T any](p *prolog.Interpreter, q string, args ...any) (results []T, resErr error) {
 	sols, err := p.Query(q, args...)
 	if err != nil {
 		return nil, err

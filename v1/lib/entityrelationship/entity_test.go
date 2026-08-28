@@ -49,7 +49,7 @@ func TestEntityKindStringExamples(t *testing.T) {
 		parsed := mustUnmarshalEntity(t, tc.txtPb)
 		// Call twice: the result must be stable across repeated calls for the
 		// same entity.
-		for i := 0; i < 2; i++ {
+		for i := range 2 {
 			got := entityrelationship.EntityKindStringFromProto(parsed)
 			if got != tc.want {
 				t.Errorf("EntityKindStringFromProto(%s) call %d: wanted %q, got %q", tc.txtPb, i+1, tc.want, got)
@@ -71,15 +71,13 @@ func TestEntityKindStringConcurrentCallers(t *testing.T) {
 	}
 	var wg sync.WaitGroup
 	for range 8 {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		wg.Go(func() {
 			for i, tc := range entityKindStringTestCases {
 				if got := entityrelationship.EntityKindStringFromProto(parsed[i]); got != tc.want {
 					t.Errorf("EntityKindStringFromProto(%s): wanted %q, got %q", tc.txtPb, tc.want, got)
 				}
 			}
-		}()
+		})
 	}
 	wg.Wait()
 }

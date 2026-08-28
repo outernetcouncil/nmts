@@ -44,9 +44,9 @@ func EntityKindStringFromProto(e *npb.Entity) string {
 
 	ekString := ""
 	tag := kindType.Elem().Field(0).Tag.Get("protobuf")
-	for _, element := range strings.Split(tag, ",") {
-		if strings.HasPrefix(element, "name=") {
-			ekString = strings.ToUpper(strings.TrimPrefix(element, "name="))
+	for element := range strings.SplitSeq(tag, ",") {
+		if after, ok := strings.CutPrefix(element, "name="); ok {
+			ekString = strings.ToUpper(after)
 			break
 		}
 	}

@@ -32,9 +32,9 @@ func EntityKindStringFromProto(e *npb.Entity) string {
 	}
 
 	tag := reflect.TypeOf(kind).Elem().Field(0).Tag.Get("protobuf")
-	for _, element := range strings.Split(tag, ",") {
-		if strings.HasPrefix(element, "name=") {
-			return strings.ToUpper(strings.TrimPrefix(element, "name="))
+	for element := range strings.SplitSeq(tag, ",") {
+		if after, ok := strings.CutPrefix(element, "name="); ok {
+			return strings.ToUpper(after)
 		}
 	}
 

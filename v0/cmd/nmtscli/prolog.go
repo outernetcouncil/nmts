@@ -123,7 +123,7 @@ func entityNameToAtom(s string) string {
 
 // collectQuery is a generic shortcut for executing a query and collecting its
 // results.
-func collectQuery[T any](p *prolog.Interpreter, q string, args ...interface{}) ([]T, error) {
+func collectQuery[T any](p *prolog.Interpreter, q string, args ...any) ([]T, error) {
 	results := []T{}
 	sols, err := p.Query(q, args...)
 	if err != nil {

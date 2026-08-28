@@ -17,6 +17,7 @@ package graph
 import (
 	"fmt"
 	"iter"
+	"slices"
 
 	"github.com/samber/lo"
 
@@ -225,10 +226,8 @@ func (g *Graph) Neighbors(id string) []string {
 func (g *Graph) TryAddRelationship(relationship *npb.Relationship) (*Edge, bool) {
 	// The probe stays a stack value so the duplicate path allocates nothing.
 	probe := Edge{relationship: relationship}
-	for _, existing := range g.Edges(probe.GetA(), probe.GetZ()) {
-		if probe.Same(existing) {
-			return nil, false
-		}
+	if slices.ContainsFunc(g.Edges(probe.GetA(), probe.GetZ()), probe.Same) {
+		return nil, false
 	}
 	edge := &Edge{
 		relationship: relationship,
