@@ -15,6 +15,7 @@
 package validation
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -30,6 +31,25 @@ func IsEntityMinimallyWellFormed(entity *npb.Entity) error {
 	}
 	id := entity.Id
 
+	if err := IsEntityIDMinimallyWellFormed(id); err != nil {
+		return err
+	}
+
+	if er.EntityKindStringFromProto(entity) == "" {
+		return fmt.Errorf("Entity %q lacks an entity kind field", id)
+	}
+
+	return nil
+}
+
+// IsEntityIDMinimallyWellFormed checks that an Entity ID is non-empty, in
+// Unicode Normalization Form C, and free of leading and trailing whitespace.
+func IsEntityIDMinimallyWellFormed(id string) error {
+	// TODO: uuid.Validate(id)
+	if id == "" {
+		return fmt.Errorf("id must not be empty: %q", id)
+	}
+
 	// In keeping with https://google.aip.dev/210#normalization
 	// ensure Entity IDs are in Unicode Normal Form C.
 	if norm.NFC.String(id) != id {
@@ -42,16 +62,72 @@ func IsEntityMinimallyWellFormed(entity *npb.Entity) error {
 		return fmt.Errorf("id must not have lead nor trailing whitespace: '%s'", id)
 	}
 
-	// TODO: uuid.Validate(id)
-	if id == "" {
-		return fmt.Errorf("id must not be empty: %q", id)
-	}
-
-	if er.EntityKindStringFromProto(entity) == "" {
-		return fmt.Errorf("Entity %q lacks an entity kind field", id)
-	}
-
 	return nil
+}
+
+// IsRelationshipMinimallyWellFormed checks the properties a Relationship can
+// be held to on its own: both endpoints are minimally well formed and are not
+// the same entity, and a relationship kind is set.
+// Consistency with a surrounding model -- whether the endpoints refer to
+// Entities that exist, and whether the kind is permitted between those two
+// Entities' kinds -- requires a Collection or Graph and is checked elsewhere.
+func IsRelationshipMinimallyWellFormed(relationship *npb.Relationship) error {
+	if relationship == nil {
+		return fmt.Errorf("relationship MUST NOT be nil")
+	}
+	if err := IsEntityIDMinimallyWellFormed(relationship.A); err != nil {
+		return fmt.Errorf("relationship A endpoint: %w", err)
+	}
+	if err := IsEntityIDMinimallyWellFormed(relationship.Z); err != nil {
+		return fmt.Errorf("relationship Z endpoint: %w", err)
+	}
+	if relationship.A == relationship.Z {
+		return fmt.Errorf("relationship cannot be self-referential")
+	}
+	if relationship.Kind == npb.RK_RK_UNSPECIFIED {
+		return fmt.Errorf("relationship between %q and %q lacks a relationship kind", relationship.A, relationship.Z)
+	}
+	return nil
+}
+
+// ValidateFragment checks the properties a Fragment can be held to on its own:
+// every Entity and every Relationship is minimally well formed, no entity ID
+// appears more than once, and no (a, kind, z) tuple appears more than once.
+//
+// A Fragment is a subgraph, so the Entities a Relationship refers to need not be
+// carried within it. Endpoint existence and permitted entity-kind pairings
+// therefore cannot be resolved here; they require the surrounding Collection or
+// Graph. An empty Fragment is valid: whether one is meaningful is a matter for
+// the caller.
+//
+// Validation does not stop at the first problem; every problem found is
+// reported.
+func ValidateFragment(fragment *npb.Fragment) error {
+	var errs []error
+	seenEntityIDs := make(map[string]struct{}, len(fragment.GetEntity()))
+	for _, entity := range fragment.GetEntity() {
+		if err := IsEntityMinimallyWellFormed(entity); err != nil {
+			errs = append(errs, fmt.Errorf("invalid Entity: %w", err))
+		}
+		if _, ok := seenEntityIDs[entity.GetId()]; ok {
+			errs = append(errs, fmt.Errorf("duplicate entity id %q", entity.GetId()))
+		}
+		seenEntityIDs[entity.GetId()] = struct{}{}
+	}
+
+	seenRelationships := make(map[er.Relationship]struct{}, len(fragment.GetRelationship()))
+	for _, relationship := range fragment.GetRelationship() {
+		if err := IsRelationshipMinimallyWellFormed(relationship); err != nil {
+			errs = append(errs, fmt.Errorf("invalid Relationship: %w", err))
+		}
+		rel := er.RelationshipFromProto(relationship)
+		if _, ok := seenRelationships[rel]; ok {
+			errs = append(errs, fmt.Errorf("duplicate relationship %q", rel.String()))
+		}
+		seenRelationships[rel] = struct{}{}
+	}
+
+	return errors.Join(errs...)
 }
 
 type DefaultValidator struct{}

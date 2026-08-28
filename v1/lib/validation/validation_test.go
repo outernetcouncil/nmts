@@ -15,6 +15,7 @@
 package validation_test
 
 import (
+	"errors"
 	"testing"
 
 	"google.golang.org/protobuf/encoding/prototext"
@@ -563,5 +564,237 @@ func TestIsEntityMinimallyWellFormedChecksUnicodeNormalizationForm(t *testing.T)
 	}
 	if err := validation.IsEntityMinimallyWellFormed(entity); err == nil {
 		t.Fatalf("failed to minimally validate %q: %q", brokenUnicodeCombiningAcute, err)
+	}
+}
+
+func TestIsEntityIDMinimallyWellFormed(t *testing.T) {
+	tests := []struct {
+		name    string
+		id      string
+		wantErr bool
+	}{
+		{
+			name: "ascii id is valid",
+			id:   "cafe",
+		},
+		{
+			name: "precomposed unicode id is valid",
+			id:   "café",
+		},
+		{
+			name:    "empty id is invalid",
+			id:      "",
+			wantErr: true,
+		},
+		{
+			name:    "id with leading whitespace is invalid",
+			id:      " cafe",
+			wantErr: true,
+		},
+		{
+			name:    "id with trailing whitespace is invalid",
+			id:      "cafe ",
+			wantErr: true,
+		},
+		{
+			name:    "id not in Unicode Normalization Form C is invalid",
+			id:      "cafe\u0301",
+			wantErr: true,
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			err := validation.IsEntityIDMinimallyWellFormed(tc.id)
+			if (err != nil) != tc.wantErr {
+				t.Errorf("IsEntityIDMinimallyWellFormed() error = %v, wantErr %v", err, tc.wantErr)
+			}
+		})
+	}
+}
+
+func TestIsRelationshipMinimallyWellFormed(t *testing.T) {
+	tests := []struct {
+		name         string
+		relationship string
+		wantErr      bool
+	}{
+		{
+			name:         "fully specified relationship is valid",
+			relationship: `a: "platform" kind: RK_CONTAINS z: "port"`,
+		},
+		{
+			name:         "empty a endpoint is invalid",
+			relationship: `kind: RK_CONTAINS z: "port"`,
+			wantErr:      true,
+		},
+		{
+			name:         "empty z endpoint is invalid",
+			relationship: `a: "platform" kind: RK_CONTAINS`,
+			wantErr:      true,
+		},
+		{
+			name:         "a endpoint with surrounding whitespace is invalid",
+			relationship: `a: " platform " kind: RK_CONTAINS z: "port"`,
+			wantErr:      true,
+		},
+		{
+			name:         "z endpoint not in Unicode Normalization Form C is invalid",
+			relationship: `a: "platform" kind: RK_CONTAINS z: "cafe\u0301"`,
+			wantErr:      true,
+		},
+		{
+			name:         "self-referential relationship is invalid",
+			relationship: `a: "platform" kind: RK_CONTAINS z: "platform"`,
+			wantErr:      true,
+		},
+		{
+			name:         "unspecified kind is invalid",
+			relationship: `a: "platform" z: "port"`,
+			wantErr:      true,
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			relationship := new(npb.Relationship)
+			if err := prototext.Unmarshal([]byte(tc.relationship), relationship); err != nil {
+				t.Fatalf("failed to parse relationship: %v", err)
+			}
+			err := validation.IsRelationshipMinimallyWellFormed(relationship)
+			if (err != nil) != tc.wantErr {
+				t.Errorf("IsRelationshipMinimallyWellFormed() error = %v, wantErr %v", err, tc.wantErr)
+			}
+		})
+	}
+}
+
+func TestIsRelationshipMinimallyWellFormedFailsNil(t *testing.T) {
+	if err := validation.IsRelationshipMinimallyWellFormed(nil); err == nil {
+		t.Fatalf("failed to minimally invalidate nil")
+	}
+}
+
+// countErrors reports how many problems err holds, unwrapping the error
+// errors.Join returns when more than one problem was found.
+func countErrors(err error) int {
+	if err == nil {
+		return 0
+	}
+	var joined interface{ Unwrap() []error }
+	if errors.As(err, &joined) {
+		return len(joined.Unwrap())
+	}
+	return 1
+}
+
+func TestValidateFragment(t *testing.T) {
+	tests := []struct {
+		name     string
+		fragment string
+		wantErrs int
+	}{
+		{
+			name: "fragment of well formed, distinct elements is valid",
+			fragment: `
+				entity { id: "platform" ek_platform{} }
+				entity { id: "port" ek_port{} }
+				relationship { a: "platform" kind: RK_CONTAINS z: "port" }`,
+		},
+		{
+			name:     "empty fragment is valid",
+			fragment: ``,
+		},
+		{
+			name:     "entity lacking a kind is invalid",
+			fragment: `entity { id: "platform" }`,
+			wantErrs: 1,
+		},
+		{
+			name:     "entity with an empty id is invalid",
+			fragment: `entity { ek_platform{} }`,
+			wantErrs: 1,
+		},
+		{
+			name: "repeated entity id is invalid",
+			fragment: `
+				entity { id: "platform" ek_platform{} }
+				entity { id: "platform" ek_platform{} }`,
+			wantErrs: 1,
+		},
+		{
+			name: "relationship lacking a kind is invalid",
+			fragment: `
+				entity { id: "platform" ek_platform{} }
+				entity { id: "port" ek_port{} }
+				relationship { a: "platform" z: "port" }`,
+			wantErrs: 1,
+		},
+		{
+			name: "self-referential relationship is invalid",
+			fragment: `
+				entity { id: "fabric" ek_internal_fabric{} }
+				relationship { a: "fabric" kind: RK_DATA_TRANSITS z: "fabric" }`,
+			wantErrs: 1,
+		},
+		{
+			name: "repeated relationship tuple is invalid",
+			fragment: `
+				entity { id: "platform" ek_platform{} }
+				entity { id: "port" ek_port{} }
+				relationship { a: "platform" kind: RK_CONTAINS z: "port" }
+				relationship { a: "platform" kind: RK_CONTAINS z: "port" }`,
+			wantErrs: 1,
+		},
+		{
+			// Validation does not stop at the first problem; every Entity and
+			// every Relationship is checked and all errors are reported.
+			name: "every problem in the fragment is reported",
+			fragment: `
+				entity { id: "platform" }
+				entity { id: "platform" ek_platform{} }
+				relationship { a: "platform" kind: RK_CONTAINS z: "platform" }`,
+			wantErrs: 3,
+		},
+		{
+			name: "relationships between the same pair differing in kind are valid",
+			fragment: `
+				entity { id: "port" ek_port{} }
+				entity { id: "link" ek_physical_medium_link{} }
+				relationship { a: "port" kind: RK_ORIGINATES z: "link" }
+				relationship { a: "port" kind: RK_TERMINATES z: "link" }`,
+		},
+		{
+			// A Fragment is a subgraph: its relationships may refer to Entities
+			// held elsewhere in the model, so endpoints are not resolved here.
+			name:     "relationship referring to entities outside the fragment is valid",
+			fragment: `relationship { a: "platform" kind: RK_CONTAINS z: "port" }`,
+		},
+		{
+			// Whether a kind is permitted between two Entities' kinds requires
+			// the surrounding Collection or Graph; DefaultValidator rejects this
+			// pairing, ValidateFragment does not.
+			name: "relationship between an impermissible pair of entity kinds is valid",
+			fragment: `
+				entity { id: "platformA" ek_platform{} }
+				entity { id: "platformZ" ek_platform{} }
+				relationship { a: "platformA" kind: RK_CONTAINS z: "platformZ" }`,
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			fragment := new(npb.Fragment)
+			if err := prototext.Unmarshal([]byte(tc.fragment), fragment); err != nil {
+				t.Fatalf("failed to parse fragment: %v", err)
+			}
+			err := validation.ValidateFragment(fragment)
+			if got := countErrors(err); got != tc.wantErrs {
+				t.Errorf("ValidateFragment() error = %v, want %d errors", err, tc.wantErrs)
+			}
+		})
+	}
+}
+
+func TestValidateFragmentAcceptsNil(t *testing.T) {
+	if err := validation.ValidateFragment(nil); err != nil {
+		t.Errorf("ValidateFragment(nil) = %v, want no error", err)
 	}
 }
