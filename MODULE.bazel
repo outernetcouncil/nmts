@@ -28,7 +28,7 @@ bazel_dep(name = "rules_proto_grpc_cpp", version = "5.6.0")
 bazel_dep(name = "rules_proto_grpc_java", version = "5.6.0")
 bazel_dep(name = "rules_proto_grpc_python", version = "5.6.0")
 
-bazel_dep(name = "rules_rs", version = "0.0.94")
+bazel_dep(name = "rules_rs", version = "0.0.108")
 bazel_dep(name = "toolchains_protoc", version = "0.4.3")
 bazel_dep(name = "toolchains_llvm", version = "1.4.0")
 
@@ -195,7 +195,7 @@ use_repo(rs_toolchains, "default_rust_toolchains")
 rules_rust = use_extension("@rules_rs//rs:rules_rust.bzl", "rules_rust")
 use_repo(rules_rust, "rules_rust")
 
-register_toolchains("@default_rust_toolchains//:all")
+register_toolchains("@default_rust_toolchains//...")
 
 # Custom Prost toolchain
 register_toolchains(
