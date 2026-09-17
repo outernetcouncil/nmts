@@ -17,3 +17,8 @@ local_path_override(
     module_name = "org_outernetcouncil_nmts",
     path = "../../",
 )
+
+bazel_dep(name = "rules_rs", version = "0.0.108")
+
+rules_rust = use_extension("@rules_rs//rs:rules_rust.bzl", "rules_rust")
+use_repo(rules_rust, "rules_rust")
