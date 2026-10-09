@@ -298,6 +298,105 @@ message Modulator {
   reserved 1, 2;
 }
 
+// Models the imperfections of a modem's Adaptive Coding and Modulation (ACM)
+// control loop.
+//
+// A model observer may use this message to hold back a safety margin from the
+// predicted carrier to noise-plus-interference ratio before predicting the
+// MODCOD that would be selected. The margin accounts for error in the modem's
+// own estimate of signal quality, and for channel conditions that change
+// faster than the control loop can respond.
+//
+// The terms that this message contributes to the margin, in dB, are:
+//
+//   snr_measurement_error_db + fade_slope + noise_slope
+//
+// where
+//
+//   fade_slope  = R(A_rain) * control_loop_response_time
+//   noise_slope = 10 * log10(1 + (T_sky(A + fade_slope) - T_sky(A)) / T_sys)
+//
+// and
+//
+//   A_rain    is the rain attenuation on the link, in dB, as used in the
+//             predicted carrier to noise-plus-interference ratio on which the
+//             MODCOD is selected;
+//   R(A_rain) is fade_slope_control_points evaluated at A_rain, in dB/s;
+//   A         is the atmospheric attenuation on the path, excluding
+//             scintillation, in dB, as used in the same ratio;
+//   T_sys     is the receiver's system noise temperature, in K, as used in
+//             the same ratio;
+//   T_sky(A)  is the brightness temperature of the sky and ground seen by the
+//             receive antenna through a path attenuation of A, in K. ITU-R
+//             P.618-14 eq. (69) gives one model of it for an earth station.
+//
+// T_sky(A + fade_slope) - T_sky(A) is the rise in the receive antenna's noise
+// temperature as the fade deepens. It follows the model observer's own model
+// of how the antenna noise temperature varies with path attenuation; if the
+// observer treats it as constant for a receiver, noise_slope is zero.
+//
+// fade_slope applies while rain can occur on the path, that is, while part of
+// the path lies below the melting layer (the 0 degree Celsius isotherm), even
+// if A_rain is zero, because rain can begin within one control interval.
+// Where rain cannot occur, or where the model observer does not model rain,
+// fade_slope and noise_slope are zero.
+//
+// noise_slope is the rise in system noise as the deepening fade adds
+// emission from the atmosphere. It is largest for a receiver with a low noise
+// temperature looking at cold sky, and small for a receiver with a high noise
+// temperature, such as a typical satellite receiver.
+//
+// The margin is only meaningful for channels whose
+// CarrierToNoisePlusInterferenceThresholdToDataRateList contains more than one
+// threshold, since a channel with a single threshold has no MODCOD to select
+// between. In addition to the terms described by this message, the margin may
+// include terms that depend only on signal propagation, such as tropospheric
+// scintillation.
+//
+// The margin affects which MODCOD is selected, not whether a link can be
+// closed. If the predicted carrier to noise-plus-interference ratio meets the
+// lowest threshold without the margin but not with it, a model observer should
+// predict the lowest MODCOD.
+message AcmMargin {
+  // The error of the demodulator's estimate of the received signal-to-noise
+  // ratio, in dB. This value is added to the margin.
+  // Must be non-negative.
+  float snr_measurement_error_db = 1;
+
+  // The response time of the ACM control loop, from a change in channel
+  // conditions until the loop has selected the corresponding MODCOD. The rain
+  // fade slope described by fade_slope_control_points is multiplied by this
+  // duration to determine how far the channel may degrade before the loop
+  // responds.
+  // Must be positive if set.
+  // Required if fade_slope_control_points is not empty.
+  google.protobuf.Duration control_loop_response_time = 2;
+
+  // Relates the rain attenuation on a link to the rate at which a rain fade
+  // deepens.
+  message ControlPoint {
+    // The rain attenuation on the link, in dB.
+    // Must be non-negative.
+    float rain_attenuation_db = 1;
+
+    // The rate at which the rain fade deepens at this attenuation, in dB/s.
+    // Must be non-negative.
+    float fade_slope_db_per_second = 2;
+  }
+
+  // A piecewise-linear curve of the rain fade slope as a function of the rain
+  // attenuation on the link. At a given attenuation, the margin includes the
+  // fade slope multiplied by control_loop_response_time, as well as the
+  // increase in sky noise caused by the deepening rain fade.
+  //
+  // Control points must be ordered by strictly increasing rain_attenuation_db.
+  // A model observer should linearly interpolate between control points, and
+  // use the value of the nearest control point outside the range they cover. A
+  // single control point represents a constant fade slope. No fade slope is
+  // applied if this field is empty.
+  repeated ControlPoint fade_slope_control_points = 3;
+}
+
 // Models a demodulator.
 message Demodulator {
   // Tags that can be used to constrain the formation of wireless links.
@@ -329,9 +428,9 @@ message Demodulator {
   // Required.
   AccessProtocol access_protocol = 3;
 
-  // Defines constraints on the maximum aggregate bandwidth that can be 
+  // Defines constraints on the maximum aggregate bandwidth that can be
   // demodulated for each supported waveform.
-  repeated WaveformToChannelBandwidthAllocation 
+  repeated WaveformToChannelBandwidthAllocation
     waveform_to_channel_bandwidth_allocations = 4;
 
   // If present, indicates the DVB-S2 capabilities of the modem. DVB-S2
@@ -354,6 +453,11 @@ message Demodulator {
   // this defines the total latency between the SDN controller
   // producing a schedule and the entity enacting it.
   google.protobuf.Duration enactment_latency = 9;
+
+  // If present, models the imperfections of this demodulator's ACM control
+  // loop. If absent, the margin includes only terms that depend on signal
+  // propagation.
+  AcmMargin acm_margin = 10;
 
   reserved 1, 2;
 }
