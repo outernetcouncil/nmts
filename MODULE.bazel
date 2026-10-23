@@ -111,10 +111,13 @@ switched_rules.use_languages(
 
 # For TypeScript targets.
 bazel_dep(name = "aspect_rules_js", version = "3.0.3")
-bazel_dep(name = "rules_nodejs", version = "6.7.3")
+bazel_dep(name = "rules_nodejs", version = "6.7.7")
 
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
-node.toolchain()
+
+# Pinned, not left to the rules_nodejs default: Node before 22.23.4 embeds
+# eMudhra roots.
+node.toolchain(node_version = "22.23.4")
 
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm")
 npm.npm_translate_lock(
