@@ -167,7 +167,7 @@ register_toolchains(
 
 RUST_EDITION = "2024"
 
-RUST_VERSION = "1.94.1"
+RUST_VERSION = "1.99.1"
 
 # rules_rs toolchains. When this module is consumed by the Spacetime monorepo,
 # the toolchains extension is shared across the module graph and errors on
