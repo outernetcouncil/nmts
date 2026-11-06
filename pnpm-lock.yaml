@@ -12,10 +12,10 @@ importers:
     devDependencies:
       '@bufbuild/protobuf':
         specifier: ^2.2.2
-        version: 2.12.0
+        version: 2.16.0
       '@bufbuild/protoc-gen-es':
         specifier: ^2.2.0
-        version: 2.12.0(@bufbuild/protobuf@2.12.0)
+        version: 2.12.0(@bufbuild/protobuf@2.16.0)
       typescript:
         specifier: 5.4.5
         version: 5.4.5
@@ -24,10 +24,10 @@ importers:
     devDependencies:
       '@bufbuild/protobuf':
         specifier: ^2.2.2
-        version: 2.12.0
+        version: 2.16.0
       '@bufbuild/protoc-gen-es':
         specifier: ^2.2.0
-        version: 2.12.0(@bufbuild/protobuf@2.12.0)
+        version: 2.12.0(@bufbuild/protobuf@2.16.0)
       typescript:
         specifier: 5.4.5
         version: 5.4.5
@@ -36,6 +36,9 @@ packages:
 
   '@bufbuild/protobuf@2.12.0':
     resolution: {integrity: sha512-B/XlCaFIP8LOwzo+bz5uFzATYokcwCKQcghqnlfwSmM5eX/qTkvDBnDPs+gXtX/RyjxJ4DRikECcPJbyALA8FA==}
+
+  '@bufbuild/protobuf@2.16.0':
+    resolution: {integrity: sha512-FWa0sPlqYGJgpTs6OxBRcL/AW4JT0OIO+W1ajerluoTVh8CV0B7XM1qsNCRgnkSCkRCgOICKHRQlY17jrsm0+Q==}
 
   '@bufbuild/protoc-gen-es@2.12.0':
     resolution: {integrity: sha512-d9htF6jEkSwPbp9d/vSmZOBF7eeG18AvTMKmVg4I23afnrQOxL2w3WOXa9TaufMCyu24QakEUb4vux8apI5e7A==}
@@ -76,11 +79,13 @@ snapshots:
 
   '@bufbuild/protobuf@2.12.0': {}
 
-  '@bufbuild/protoc-gen-es@2.12.0(@bufbuild/protobuf@2.12.0)':
+  '@bufbuild/protobuf@2.16.0': {}
+
+  '@bufbuild/protoc-gen-es@2.12.0(@bufbuild/protobuf@2.16.0)':
     dependencies:
       '@bufbuild/protoplugin': 2.12.0
     optionalDependencies:
-      '@bufbuild/protobuf': 2.12.0
+      '@bufbuild/protobuf': 2.16.0
     transitivePeerDependencies:
       - supports-color
 
