@@ -22,3 +22,6 @@ trustPolicy: no-downgrade
 # Refuse transitive dependencies pulled from non-registry ("exotic") sources
 # such as arbitrary git URLs or tarballs.
 blockExoticSubdeps: true
+minimumReleaseAgeExclude:
+  # Renovate security update: pnpm@10.34.5
+  - pnpm@10.34.5
