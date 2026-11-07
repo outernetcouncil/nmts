@@ -8,7 +8,7 @@ require (
 	github.com/ichiban/prolog v1.2.2
 	github.com/samber/lo v1.53.0
 	github.com/urfave/cli/v2 v2.27.7
-	golang.org/x/text v0.43.0
+	golang.org/x/text v0.41.0
 	google.golang.org/protobuf v1.36.12
 )
 
