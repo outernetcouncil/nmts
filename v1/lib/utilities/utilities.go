@@ -20,7 +20,7 @@ import (
 	"os"
 	"strings"
 
-	set "github.com/deckarep/golang-set/v2"
+	set "github.com/deckarep/golang-set/v3"
 	"github.com/samber/lo"
 	"outernetcouncil.org/nmts/v1/lib/graph"
 	nmtspb "outernetcouncil.org/nmts/v1/proto"

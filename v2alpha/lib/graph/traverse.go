@@ -15,7 +15,7 @@
 package graph
 
 import (
-	set "github.com/deckarep/golang-set/v2"
+	set "github.com/deckarep/golang-set/v3"
 
 	npb "outernetcouncil.org/nmts/v2alpha/proto"
 )

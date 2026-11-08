@@ -17,7 +17,7 @@ package graph
 import (
 	"testing"
 
-	set "github.com/deckarep/golang-set/v2"
+	set "github.com/deckarep/golang-set/v3"
 
 	npb "outernetcouncil.org/nmts/v1/proto"
 )

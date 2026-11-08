@@ -3,7 +3,7 @@ module outernetcouncil.org/nmts
 go 1.27.0
 
 require (
-	github.com/deckarep/golang-set/v2 v2.9.0
+	github.com/deckarep/golang-set/v3 v3.0.0
 	github.com/google/go-cmp v0.7.0
 	github.com/ichiban/prolog v1.2.2
 	github.com/samber/lo v1.53.0

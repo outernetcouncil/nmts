@@ -28,7 +28,7 @@ go_library(
     deps = [
         "//v1/lib/entityrelationship",
         "//v1/proto:nmts_go_proto",
-        "@com_github_deckarep_golang_set_v2//:golang-set",
+        "@com_github_deckarep_golang_set_v3//:golang-set",
         "@com_github_samber_lo//:lo",
     ],
 )
@@ -44,7 +44,7 @@ go_test(
         "//v1/lib/entityrelationship",
         "//v1/proto:nmts_go_proto",
         "//v1/proto/ek/logical:logical_go_proto",
-        "@com_github_deckarep_golang_set_v2//:golang-set",
+        "@com_github_deckarep_golang_set_v3//:golang-set",
         "@com_github_google_go_cmp//cmp",
         "@com_github_samber_lo//:lo",
         "@org_golang_google_protobuf//encoding/prototext",
@@ -89,7 +89,7 @@ go_test(
         "//v1/lib/entityrelationship",
         "//v1/proto:nmts_go_proto",
         "//v1/proto/ek/logical:logical_go_proto",
-        "@com_github_deckarep_golang_set_v2//:golang-set",
+        "@com_github_deckarep_golang_set_v3//:golang-set",
         "@com_github_google_go_cmp//cmp",
         "@com_github_samber_lo//:lo",
         "@org_golang_google_protobuf//encoding/prototext",
