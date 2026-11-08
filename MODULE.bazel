@@ -14,7 +14,7 @@
 
 module(name = "org_outernetcouncil_nmts")
 
-bazel_dep(name = "gazelle", version = "0.54.0")
+bazel_dep(name = "gazelle", version = "0.51.3")
 bazel_dep(name = "googleapis", version = "0.0.0-20260514-1dbb1a14")
 bazel_dep(name = "googleapis-python", version = "1.0.0")
 bazel_dep(name = "googleapis-java", version = "1.0.0")
@@ -30,7 +30,7 @@ bazel_dep(name = "rules_proto_grpc_java", version = "5.6.0")
 bazel_dep(name = "rules_proto_grpc_python", version = "5.6.0")
 bazel_dep(name = "rules_jvm_external", version = "6.9")
 
-bazel_dep(name = "rules_rs", version = "0.2.1")
+bazel_dep(name = "rules_rs", version = "0.0.108")
 bazel_dep(name = "toolchains_llvm", version = "1.4.0")
 
 # Patch c-ares v1.19.1 to fix RBE build with strict header checking.
