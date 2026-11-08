@@ -3,5 +3,5 @@
   "version": "1.0.0",
   "description": "Root PNPM project for nmts.",
   "private": true,
-  "packageManager": "pnpm@12.17.0"
+  "packageManager": "pnpm@10.34.9"
 }
