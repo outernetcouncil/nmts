@@ -95,7 +95,7 @@ use_repo(maven, "maven")
 
 go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
 go_sdk.download(
-    version = "1.27.2",
+    version = "1.27.3",
 )
 
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
