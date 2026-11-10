@@ -2023,6 +2023,50 @@
         ]
       }
     },
+    "@@rules_nodejs+//nodejs:extensions.bzl%node": {
+      "26.13.0": {
+        "26.13.0-darwin_amd64": [
+          "node-v26.13.0-darwin-x64.tar.gz",
+          "node-v26.13.0-darwin-x64",
+          "525c9b29bb0263d687de60a4cec0e2a6db876a8eb032369e5795eca71e7c358e"
+        ],
+        "26.13.0-darwin_arm64": [
+          "node-v26.13.0-darwin-arm64.tar.gz",
+          "node-v26.13.0-darwin-arm64",
+          "d38bd5e5a2ddce6bbb5ce45e46e208337da4d51fffe611e567fd32073d6439f6"
+        ],
+        "26.13.0-linux_amd64": [
+          "node-v26.13.0-linux-x64.tar.xz",
+          "node-v26.13.0-linux-x64",
+          "d28a96af6c38596f6d9d97c0ee531c13d238d757742387d1928de822d959e997"
+        ],
+        "26.13.0-linux_arm64": [
+          "node-v26.13.0-linux-arm64.tar.xz",
+          "node-v26.13.0-linux-arm64",
+          "406fe3fbde1c054adff8b297c16fdb5af6659db327c1ac8acd46b56ef1af9a92"
+        ],
+        "26.13.0-linux_ppc64le": [
+          "node-v26.13.0-linux-ppc64le.tar.xz",
+          "node-v26.13.0-linux-ppc64le",
+          "1cf7c718f58471d14f699c9c39cf05d97f43c2e0a2f28e660fa6e36557f8ed6c"
+        ],
+        "26.13.0-linux_s390x": [
+          "node-v26.13.0-linux-s390x.tar.xz",
+          "node-v26.13.0-linux-s390x",
+          "1412eac54e27a6a888de8850cec5d238ed862baff82ec377601a0c3849cd6251"
+        ],
+        "26.13.0-windows_amd64": [
+          "node-v26.13.0-win-x64.zip",
+          "node-v26.13.0-win-x64",
+          "dcc60d59a0746999f99064a01c020445d54d84228c691cdbf25b49ac3b59150a"
+        ],
+        "26.13.0-windows_arm64": [
+          "node-v26.13.0-win-arm64.zip",
+          "node-v26.13.0-win-arm64",
+          "a9427139595156ef484e1fb08957676e09d4232368dd1743a2a9f93f3d241b14"
+        ]
+      }
+    },
     "@@rules_rs+//rs:extensions.bzl%crate": {
       "adler2_2.0.1": "{\"dependencies\":[{\"name\":\"core\",\"optional\":true,\"package\":\"rustc-std-workspace-core\",\"req\":\"^1.0.0\"}],\"features\":{\"default\":[\"std\"],\"rustc-dep-of-std\":[\"core\"],\"std\":[]}}",
       "ahash_0.8.12": "{\"dependencies\":[{\"name\":\"cfg-if\",\"req\":\"^1.0\"},{\"name\":\"const-random\",\"optional\":true,\"req\":\"^0.1.17\"},{\"features\":[\"html_reports\"],\"kind\":\"dev\",\"name\":\"criterion\",\"req\":\"^0.3.2\"},{\"kind\":\"dev\",\"name\":\"fnv\",\"req\":\"^1.0.5\"},{\"kind\":\"dev\",\"name\":\"fxhash\",\"req\":\"^0.2.1\"},{\"name\":\"getrandom\",\"optional\":true,\"req\":\"^0.3.1\"},{\"kind\":\"dev\",\"name\":\"hashbrown\",\"req\":\"^0.14.3\"},{\"kind\":\"dev\",\"name\":\"hex\",\"req\":\"^0.4.2\"},{\"kind\":\"dev\",\"name\":\"no-panic\",\"req\":\"^0.1.10\"},{\"default_features\":false,\"features\":[\"alloc\"],\"name\":\"once_cell\",\"req\":\"^1.18.0\",\"target\":\"cfg(not(all(target_arch = \\\"arm\\\", target_os = \\\"none\\\")))\"},{\"kind\":\"dev\",\"name\":\"pcg-mwc\",\"req\":\"^0.2.1\"},{\"name\":\"portable-atomic\",\"optional\":true,\"req\":\"^1.0.0\"},{\"kind\":\"dev\",\"name\":\"rand\",\"req\":\"^0.8.5\"},{\"kind\":\"dev\",\"name\":\"seahash\",\"req\":\"^4.0\"},{\"name\":\"serde\",\"optional\":true,\"req\":\"^1.0.117\"},{\"kind\":\"dev\",\"name\":\"serde_json\",\"req\":\"^1.0.59\"},{\"kind\":\"dev\",\"name\":\"smallvec\",\"req\":\"^1.13.1\"},{\"kind\":\"build\",\"name\":\"version_check\",\"req\":\"^0.9.4\"},{\"default_features\":false,\"features\":[\"simd\"],\"name\":\"zerocopy\",\"req\":\"^0.8.24\"}],\"features\":{\"atomic-polyfill\":[\"dep:portable-atomic\",\"once_cell/critical-section\"],\"compile-time-rng\":[\"const-random\"],\"default\":[\"std\",\"runtime-rng\"],\"nightly-arm-aes\":[],\"no-rng\":[],\"runtime-rng\":[\"getrandom\"],\"std\":[]}}",
