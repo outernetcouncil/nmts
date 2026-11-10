@@ -20,6 +20,7 @@ import (
 	"strings"
 
 	"golang.org/x/text/unicode/norm"
+	"google.golang.org/protobuf/reflect/protoreflect"
 	er "outernetcouncil.org/nmts/v2alpha/lib/entityrelationship"
 	"outernetcouncil.org/nmts/v2alpha/lib/graph"
 	npb "outernetcouncil.org/nmts/v2alpha/proto"
@@ -219,19 +220,90 @@ var permittedRelationships = map[allowedRelationship]struct{}{
 	{a: "EK_RECEIVER", rk: npb.RK_RK_SUPPORTS, z: "EK_CARRIER_CONFIGURATION"}:    {},
 }
 
+// subKindOneofs names, for each Entity kind that has one, the oneof in the
+// kind-specific message whose populated field gives the Entity's sub-kind:
+// the layer of an EK_INTERFACE or the payload of an EK_LOGICAL_PACKET_LINK.
+var subKindOneofs = map[string]protoreflect.Name{
+	"EK_INTERFACE":           "layer",
+	"EK_LOGICAL_PACKET_LINK": "payload",
+}
+
+// EntitySubKind returns the sub-kind of an Entity: the name of the field set
+// in the oneof listed for its kind in subKindOneofs, e.g. "mpls" for an
+// EK_INTERFACE with `mpls {}` or an EK_LOGICAL_PACKET_LINK with `mpls {}`.
+//
+// It returns "" if the Entity's kind has no sub-kinds or if none is set.
+func EntitySubKind(entity *npb.Entity) string {
+	oneofName, ok := subKindOneofs[er.EntityKindStringFromProto(entity)]
+	if !ok {
+		return ""
+	}
+	m := entity.ProtoReflect()
+	kindField := m.WhichOneof(m.Descriptor().Oneofs().ByName("kind"))
+	if kindField == nil || kindField.Message() == nil {
+		return ""
+	}
+	kindMsg := m.Get(kindField).Message()
+	oneof := kindMsg.Descriptor().Oneofs().ByName(oneofName)
+	if oneof == nil {
+		return ""
+	}
+	if set := kindMsg.WhichOneof(oneof); set != nil {
+		return string(set.Name())
+	}
+	return ""
+}
+
+// sameSubKindRelationships lists relationships whose endpoints must share a
+// sub-kind for the sub-kinds given: if either endpoint has one of the listed
+// sub-kinds, the other endpoint must have the same one.
+//
+// For example, an EK_LOGICAL_PACKET_LINK at the MPLS layer can only be
+// originated or terminated by an EK_INTERFACE also at the MPLS layer, and an
+// MPLS-layer EK_INTERFACE can only originate or terminate MPLS links.
+//
+// An endpoint whose sub-kind is not set is not checked, so partially
+// specified models keep validating.
+var sameSubKindRelationships = map[allowedRelationship][]string{
+	{a: "EK_INTERFACE", rk: npb.RK_RK_ORIGINATES, z: "EK_LOGICAL_PACKET_LINK"}: {"mpls"},
+	{a: "EK_INTERFACE", rk: npb.RK_RK_TERMINATES, z: "EK_LOGICAL_PACKET_LINK"}: {"mpls"},
+}
+
+// checkSubKinds applies sameSubKindRelationships to a relationship whose
+// entity kinds are already known to be permitted.
+func checkSubKinds(key allowedRelationship, rel er.Relationship, entityA, entityZ *npb.Entity) error {
+	subKinds, ok := sameSubKindRelationships[key]
+	if !ok {
+		return nil
+	}
+	subA := EntitySubKind(entityA)
+	subZ := EntitySubKind(entityZ)
+	if subA == "" || subZ == "" || subA == subZ {
+		return nil
+	}
+	for _, sub := range subKinds {
+		if subA == sub || subZ == sub {
+			return fmt.Errorf(
+				"unsupported relationship between entities: '%v': %s %q (%s) and %s %q (%s) must both be %q",
+				rel.String(), key.a, rel.A, subA, key.z, rel.Z, subZ, sub)
+		}
+	}
+	return nil
+}
+
 // Validate each relationship as it's loaded within the collection
 // context assembled up to that point.
 func (DefaultValidator) ValidateRelationship(coll *er.Collection, rel er.Relationship) error {
-	kindA := er.EntityKindStringFromProto(coll.Entities[rel.A])
-	kindZ := er.EntityKindStringFromProto(coll.Entities[rel.Z])
+	entityA := coll.Entities[rel.A]
+	entityZ := coll.Entities[rel.Z]
+	kindA := er.EntityKindStringFromProto(entityA)
+	kindZ := er.EntityKindStringFromProto(entityZ)
 
 	key := allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}
 	if _, ok := permittedRelationships[key]; ok {
-		return nil
+		// More detailed checks, after basic validity has been checked.
+		return checkSubKinds(key, rel, entityA, entityZ)
 	}
-
-	// More detailed checks can be added here, after basic validity
-	// has been checked and before the "default deny" error.
 
 	return fmt.Errorf("unsupported relationship between entites: '%v' i.e. '%v'", rel.String(), key)
 }
@@ -264,11 +336,9 @@ func (DefaultGraphValidator) ValidateRelationship(g *graph.Graph, rel er.Relatio
 
 	key := allowedRelationship{a: kindA, rk: rel.Kind, z: kindZ}
 	if _, ok := permittedRelationships[key]; ok {
-		return nil
+		// More detailed checks, after basic validity has been checked.
+		return checkSubKinds(key, rel, a.GetEntity(), z.GetEntity())
 	}
-
-	// More detailed checks can be added here, after basic validity
-	// has been checked and before the "default deny" error.
 
 	return fmt.Errorf("unsupported relationship between entites: '%v' i.e. '%v'", rel.String(), key)
 }

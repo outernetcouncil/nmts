@@ -16,6 +16,7 @@ package validation_test
 
 import (
 	"errors"
+	"strings"
 	"testing"
 
 	"google.golang.org/protobuf/encoding/prototext"
@@ -618,5 +619,177 @@ func TestValidateFragment(t *testing.T) {
 func TestValidateFragmentAcceptsNil(t *testing.T) {
 	if err := validation.ValidateFragment(nil); err != nil {
 		t.Errorf("ValidateFragment(nil) = %v, want no error", err)
+	}
+}
+
+func TestEntitySubKind(t *testing.T) {
+	for _, tc := range []struct {
+		entity string
+		want   string
+	}{
+		{entity: `id: "i" ek_interface{ mpls{} }`, want: "mpls"},
+		{entity: `id: "i" ek_interface{ ip{} }`, want: "ip"},
+		{entity: `id: "i" ek_interface{ eth{} }`, want: "eth"},
+		{entity: `id: "i" ek_interface{ name: "eth0" }`, want: ""},
+		{entity: `id: "l" ek_logical_packet_link{ mpls{} }`, want: "mpls"},
+		{entity: `id: "l" ek_logical_packet_link{ gse{ gse_label: 7 } }`, want: "gse"},
+		{entity: `id: "l" ek_logical_packet_link{}`, want: ""},
+		{entity: `id: "p" ek_port{}`, want: ""},
+		{entity: `id: "x"`, want: ""},
+	} {
+		entity := new(npb.Entity)
+		if err := prototext.Unmarshal([]byte(tc.entity), entity); err != nil {
+			t.Fatalf("failed to parse %q: %v", tc.entity, err)
+		}
+		if got := validation.EntitySubKind(entity); got != tc.want {
+			t.Errorf("EntitySubKind(%s) = %q, want %q", tc.entity, got, tc.want)
+		}
+	}
+	if got := validation.EntitySubKind(nil); got != "" {
+		t.Errorf("EntitySubKind(nil) = %q, want \"\"", got)
+	}
+}
+
+// subKindTestCases exercise the layer checks between EK_INTERFACE and
+// EK_LOGICAL_PACKET_LINK (https://github.com/outernetcouncil/nmts/issues/8).
+var subKindTestCases = []struct {
+	name    string
+	entityA string
+	rk      npb.RK
+	entityZ string
+	wantErr bool
+}{
+	{
+		name:    "mpls interface originates mpls link",
+		entityA: `id: "intf" ek_interface{ mpls{} }`,
+		rk:      npb.RK_RK_ORIGINATES,
+		entityZ: `id: "link" ek_logical_packet_link{ mpls{} }`,
+	},
+	{
+		name:    "mpls interface terminates mpls link",
+		entityA: `id: "intf" ek_interface{ mpls{} }`,
+		rk:      npb.RK_RK_TERMINATES,
+		entityZ: `id: "link" ek_logical_packet_link{ mpls{} }`,
+	},
+	{
+		name:    "ip interface originates mpls link",
+		entityA: `id: "intf" ek_interface{ ip{} }`,
+		rk:      npb.RK_RK_ORIGINATES,
+		entityZ: `id: "link" ek_logical_packet_link{ mpls{} }`,
+		wantErr: true,
+	},
+	{
+		name:    "eth interface terminates mpls link",
+		entityA: `id: "intf" ek_interface{ eth{} }`,
+		rk:      npb.RK_RK_TERMINATES,
+		entityZ: `id: "link" ek_logical_packet_link{ mpls{} }`,
+		wantErr: true,
+	},
+	{
+		name:    "mpls interface originates ip link",
+		entityA: `id: "intf" ek_interface{ mpls{} }`,
+		rk:      npb.RK_RK_ORIGINATES,
+		entityZ: `id: "link" ek_logical_packet_link{ ip{} }`,
+		wantErr: true,
+	},
+	{
+		name:    "layers not involving mpls are not constrained",
+		entityA: `id: "intf" ek_interface{ eth{} }`,
+		rk:      npb.RK_RK_ORIGINATES,
+		entityZ: `id: "link" ek_logical_packet_link{ ip{} }`,
+	},
+	{
+		name:    "interface without a layer is not checked",
+		entityA: `id: "intf" ek_interface{ name: "wan0" }`,
+		rk:      npb.RK_RK_ORIGINATES,
+		entityZ: `id: "link" ek_logical_packet_link{ mpls{} }`,
+	},
+	{
+		name:    "link without a payload is not checked",
+		entityA: `id: "intf" ek_interface{ mpls{} }`,
+		rk:      npb.RK_RK_TERMINATES,
+		entityZ: `id: "link" ek_logical_packet_link{}`,
+	},
+	{
+		name:    "other relationship kinds are not checked",
+		entityA: `id: "intf" ek_interface{ mpls{} }`,
+		rk:      npb.RK_RK_TRAVERSES,
+		entityZ: `id: "lower" ek_interface{ eth{} }`,
+	},
+}
+
+func TestCollectionValidatorChecksSubKinds(t *testing.T) {
+	for _, tc := range subKindTestCases {
+		t.Run(tc.name, func(t *testing.T) {
+			collection := er.NewCollection()
+			for _, text := range []string{tc.entityA, tc.entityZ} {
+				entity := new(npb.Entity)
+				if err := prototext.Unmarshal([]byte(text), entity); err != nil {
+					t.Fatalf("failed to parse %q: %v", text, err)
+				}
+				if err := collection.InsertEntity(entity); err != nil {
+					t.Fatalf("failed to insert %q: %v", text, err)
+				}
+			}
+			rel := er.Relationship{A: "intf", Kind: tc.rk, Z: "link"}
+			if tc.rk == npb.RK_RK_TRAVERSES {
+				rel.Z = "lower"
+			}
+			err := validation.DefaultValidator{}.ValidateRelationship(collection, rel)
+			if gotErr := err != nil; gotErr != tc.wantErr {
+				t.Errorf("ValidateRelationship(%v) error = %v, wantErr %v", rel, err, tc.wantErr)
+			}
+		})
+	}
+}
+
+func TestGraphValidatorChecksSubKinds(t *testing.T) {
+	for _, tc := range subKindTestCases {
+		t.Run(tc.name, func(t *testing.T) {
+			g := graph.New()
+			for _, text := range []string{tc.entityA, tc.entityZ} {
+				entity := new(npb.Entity)
+				if err := prototext.Unmarshal([]byte(text), entity); err != nil {
+					t.Fatalf("failed to parse %q: %v", text, err)
+				}
+				if _, err := g.UpsertEntity(entity); err != nil {
+					t.Fatalf("failed to upsert %q: %v", text, err)
+				}
+			}
+			rel := er.Relationship{A: "intf", Kind: tc.rk, Z: "link"}
+			if tc.rk == npb.RK_RK_TRAVERSES {
+				rel.Z = "lower"
+			}
+			err := validation.DefaultGraphValidator{}.ValidateRelationship(g, rel)
+			if gotErr := err != nil; gotErr != tc.wantErr {
+				t.Errorf("ValidateRelationship(%v) error = %v, wantErr %v", rel, err, tc.wantErr)
+			}
+		})
+	}
+}
+
+func TestSubKindErrorNamesBothLayers(t *testing.T) {
+	collection := er.NewCollection()
+	for _, text := range []string{
+		`id: "intf" ek_interface{ ip{} }`,
+		`id: "link" ek_logical_packet_link{ mpls{} }`,
+	} {
+		entity := new(npb.Entity)
+		if err := prototext.Unmarshal([]byte(text), entity); err != nil {
+			t.Fatal(err)
+		}
+		if err := collection.InsertEntity(entity); err != nil {
+			t.Fatal(err)
+		}
+	}
+	err := validation.DefaultValidator{}.ValidateRelationship(
+		collection, er.Relationship{A: "intf", Kind: npb.RK_RK_ORIGINATES, Z: "link"})
+	if err == nil {
+		t.Fatal("expected an error")
+	}
+	for _, want := range []string{`"intf" (ip)`, `"link" (mpls)`, `must both be "mpls"`} {
+		if !strings.Contains(err.Error(), want) {
+			t.Errorf("error %q does not mention %s", err, want)
+		}
 	}
 }
