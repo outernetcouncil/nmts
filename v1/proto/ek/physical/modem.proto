@@ -217,7 +217,8 @@ enum AccessProtocol {
 }
 
 // For a given waveform, this message defines constraints on the maximum
-// aggregate bandwidth that can be modulated or demodulated.
+// aggregate bandwidth that can be modulated or demodulated. The constraints
+// apply while the modem processes signals of that waveform.
 message WaveformToChannelBandwidthAllocation {
   // Use identical string values to refer to the same waveform across all
   // fields that reference a waveform, including Carrier.waveform and
@@ -329,6 +330,12 @@ message Modulator {
   // this defines the total latency between the SDN controller
   // producing a schedule and the entity enacting it.
   google.protobuf.Duration enactment_latency = 8;
+
+  // The time the modulator needs to switch to a different waveform. The
+  // modulator processes signals of one waveform at a time. While it switches,
+  // it processes no signals, so no link that uses it can be active. If absent,
+  // the switch takes no time.
+  google.protobuf.Duration reconfiguration_duration = 9;
 }
 
 // Models the imperfections of a modem's Adaptive Coding and Modulation (ACM)
@@ -495,4 +502,10 @@ message Demodulator {
   // loop. If absent, the margin includes only terms that depend on signal
   // propagation.
   AcmMargin acm_margin = 9;
+
+  // The time the demodulator needs to switch to a different waveform. The
+  // demodulator processes signals of one waveform at a time. While it switches,
+  // it processes no signals, so no link that uses it can be active. If absent,
+  // the switch takes no time.
+  google.protobuf.Duration reconfiguration_duration = 10;
 }
