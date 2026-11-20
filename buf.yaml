@@ -1,0 +1,18 @@
+version: v2
+
+deps:
+  - buf.build/googleapis/googleapis
+
+modules:
+  - path: .
+    name: buf.build/outernetcouncil/nmts
+
+lint:
+  use:
+    - MINIMAL
+  except:
+    - PACKAGE_DIRECTORY_MATCH
+
+breaking:
+  use:
+    - FILE
